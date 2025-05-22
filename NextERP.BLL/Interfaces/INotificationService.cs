@@ -1,0 +1,17 @@
+﻿using Microsoft.AspNetCore.Http;
+using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
+using NextERP.ModelBase.PagingResult;
+
+namespace NextERP.BLL.Interface
+{
+    public interface INotificationService
+    {
+        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, NotificationModel request);
+        public Task<APIBaseResult<bool>> Delete(string ids);
+        public Task<APIBaseResult<NotificationModel>> GetOne(Guid id);
+        public Task<APIBaseResult<PagingResult<NotificationModel>>> GetPaging(Filter filter);
+        public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
+        public Task<APIBaseResult<byte[]>> Export(Filter filter);
+    }
+}

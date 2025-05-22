@@ -1,0 +1,102 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NextERP.BLL.Interface;
+using NextERP.DAL.Models;
+using NextERP.ModelBase;
+using NextERP.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace NextERP.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
+    public class PositionsController : ControllerBase
+    {
+        private readonly IPositionService _positionService;
+
+        public PositionsController(IPositionService positionService)
+        {
+            _positionService = positionService;
+        }
+
+        [HttpPost(nameof(GetPositions))]
+        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(Filter filter)
+        {
+            var result = await _positionService.GetPaging(filter);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpGet($"{nameof(GetPosition)}/{{id}}")]
+        public async Task<ActionResult<Position>> GetPosition(Guid id)
+        {
+            var result = await _positionService.GetOne(id);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(CreateOrEditPosition))]
+        public async Task<ActionResult<Position>> CreateOrEditPosition([FromBody] PositionModel position)
+        {
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _positionService.CreateOrEdit(position.Id, position);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeletePosition))]
+        public async Task<IActionResult> DeletePosition(string ids)
+        {
+            var result = await _positionService.Delete(ids);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(ImportPosition))]
+        public async Task<ActionResult<Position>> ImportPosition()
+        {
+            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+
+            if (excelFile != null)
+            {
+                var result = await _positionService.Import(excelFile);
+                if (!result.IsSuccess)
+                    return BadRequest(result);
+
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost(nameof(ExportPosition))]
+        public async Task<IActionResult> ExportPosition(Filter filter)
+        {
+            var result = await _positionService.Export(filter);
+
+            if (!result.IsSuccess || result == null || result.Result == null)
+                return BadRequest(result);
+
+            var fileName = string.Format(Constants.FileName, ObjectNames.Position, DateTime.Now.ToString(Constants.DateTimeString));
+            return File(result.Result, Constants.ContentType, fileName);
+        }
+    }
+}
