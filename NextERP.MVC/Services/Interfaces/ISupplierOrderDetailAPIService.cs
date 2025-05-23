@@ -1,0 +1,14 @@
+﻿using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
+using NextERP.ModelBase.PagingResult;
+
+namespace NextERP.MVC.Services.Interfaces
+{
+    public interface ISupplierOrderDetailAPIService
+    {
+        public Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderDetailModel request);
+        public Task<APIBaseResult<bool>> Delete(string ids);
+        public Task<APIBaseResult<SupplierOrderDetailModel>> GetOne(Guid id);
+        public Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter);
+    }
+}
