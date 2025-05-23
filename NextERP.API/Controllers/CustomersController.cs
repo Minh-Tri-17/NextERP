@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _customerService = customerService;
         }
 
-        [HttpPost(nameof(GetCustomers))]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(Filter filter)
+        [HttpPost(nameof(CreateOrEditCustomer))]
+        public async Task<ActionResult<Customer>> CreateOrEditCustomer([FromBody] CustomerModel customer)
         {
-            var result = await _customerService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _customerService.CreateOrEdit(customer.Id, customer);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteCustomer))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteCustomer(string ids)
+        {
+            var result = await _customerService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditCustomer))]
-        public async Task<ActionResult<Customer>> CreateOrEditCustomer([FromBody] CustomerModel customer)
+        [HttpPost(nameof(GetCustomers))]
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _customerService.CreateOrEdit(customer.Id, customer);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteCustomer))]
-        public async Task<IActionResult> DeleteCustomer(string ids)
-        {
-            var result = await _customerService.Delete(ids);
+            var result = await _customerService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportCustomer))]
         public async Task<ActionResult<Customer>> ImportCustomer()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportCustomer))]
-        public async Task<IActionResult> ExportCustomer(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportCustomer(Filter filter)
         {
             var result = await _customerService.Export(filter);
 

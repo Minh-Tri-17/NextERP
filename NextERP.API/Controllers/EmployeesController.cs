@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpPost(nameof(GetEmployees))]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(Filter filter)
+        [HttpPost(nameof(CreateOrEditEmployee))]
+        public async Task<ActionResult<Employee>> CreateOrEditEmployee([FromBody] EmployeeModel employee)
         {
-            var result = await _employeeService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _employeeService.CreateOrEdit(employee.Id, employee);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteEmployee))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteEmployee(string ids)
+        {
+            var result = await _employeeService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditEmployee))]
-        public async Task<ActionResult<Employee>> CreateOrEditEmployee([FromBody] EmployeeModel employee)
+        [HttpPost(nameof(GetEmployees))]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _employeeService.CreateOrEdit(employee.Id, employee);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteEmployee))]
-        public async Task<IActionResult> DeleteEmployee(string ids)
-        {
-            var result = await _employeeService.Delete(ids);
+            var result = await _employeeService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportEmployee))]
         public async Task<ActionResult<Employee>> ImportEmployee()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportEmployee))]
-        public async Task<IActionResult> ExportEmployee(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportEmployee(Filter filter)
         {
             var result = await _employeeService.Export(filter);
 

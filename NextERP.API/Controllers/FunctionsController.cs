@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _functionService = functionService;
         }
 
-        [HttpPost(nameof(GetFunctions))]
-        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions(Filter filter)
+        [HttpPost(nameof(CreateOrEditFunction))]
+        public async Task<ActionResult<Function>> CreateOrEditFunction([FromBody] FunctionModel function)
         {
-            var result = await _functionService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _functionService.CreateOrEdit(function.Id, function);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteFunction))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteFunction(string ids)
+        {
+            var result = await _functionService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditFunction))]
-        public async Task<ActionResult<Function>> CreateOrEditFunction([FromBody] FunctionModel function)
+        [HttpPost(nameof(GetFunctions))]
+        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _functionService.CreateOrEdit(function.Id, function);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteFunction))]
-        public async Task<IActionResult> DeleteFunction(string ids)
-        {
-            var result = await _functionService.Delete(ids);
+            var result = await _functionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

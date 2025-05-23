@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _productCategoryService = productCategoryService;
         }
 
-        [HttpPost(nameof(GetProductCategories))]
-        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategories(Filter filter)
+        [HttpPost(nameof(CreateOrEditProductCategory))]
+        public async Task<ActionResult<ProductCategory>> CreateOrEditProductCategory([FromBody] ProductCategoryModel productCategory)
         {
-            var result = await _productCategoryService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _productCategoryService.CreateOrEdit(productCategory.Id, productCategory);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteProductCategory))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteProductCategory(string ids)
+        {
+            var result = await _productCategoryService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditProductCategory))]
-        public async Task<ActionResult<ProductCategory>> CreateOrEditProductCategory([FromBody] ProductCategoryModel productCategory)
+        [HttpPost(nameof(GetProductCategories))]
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategories(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _productCategoryService.CreateOrEdit(productCategory.Id, productCategory);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteProductCategory))]
-        public async Task<IActionResult> DeleteProductCategory(string ids)
-        {
-            var result = await _productCategoryService.Delete(ids);
+            var result = await _productCategoryService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportProductCategory))]
         public async Task<ActionResult<ProductCategory>> ImportProductCategory()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportProductCategory))]
-        public async Task<IActionResult> ExportProductCategory(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProductCategory(Filter filter)
         {
             var result = await _productCategoryService.Export(filter);
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _supplierOrderService = supplierOrderService;
         }
 
-        [HttpPost(nameof(GetSupplierOrders))]
-        public async Task<ActionResult<IEnumerable<SupplierOrder>>> GetSupplierOrders(Filter filter)
+        [HttpPost(nameof(CreateOrEditSupplierOrder))]
+        public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder([FromBody] SupplierOrderModel supplierOrder)
         {
-            var result = await _supplierOrderService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _supplierOrderService.CreateOrEdit(supplierOrder.Id, supplierOrder);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteSupplierOrder))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplierOrder(string ids)
+        {
+            var result = await _supplierOrderService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditSupplierOrder))]
-        public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder([FromBody] SupplierOrderModel supplierOrder)
+        [HttpPost(nameof(GetSupplierOrders))]
+        public async Task<ActionResult<IEnumerable<SupplierOrder>>> GetSupplierOrders(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _supplierOrderService.CreateOrEdit(supplierOrder.Id, supplierOrder);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteSupplierOrder))]
-        public async Task<IActionResult> DeleteSupplierOrder(string ids)
-        {
-            var result = await _supplierOrderService.Delete(ids);
+            var result = await _supplierOrderService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

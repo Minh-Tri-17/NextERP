@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _roleService = roleService;
         }
 
-        [HttpPost(nameof(GetRoles))]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles(Filter filter)
+        [HttpPost(nameof(CreateOrEditRole))]
+        public async Task<ActionResult<Role>> CreateOrEditRole([FromBody] RoleModel role)
         {
-            var result = await _roleService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _roleService.CreateOrEdit(role.Id, role);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteRole))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteRole(string ids)
+        {
+            var result = await _roleService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditRole))]
-        public async Task<ActionResult<Role>> CreateOrEditRole([FromBody] RoleModel role)
+        [HttpPost(nameof(GetRoles))]
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _roleService.CreateOrEdit(role.Id, role);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteRole))]
-        public async Task<IActionResult> DeleteRole(string ids)
-        {
-            var result = await _roleService.Delete(ids);
+            var result = await _roleService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportRole))]
         public async Task<ActionResult<Role>> ImportRole()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportRole))]
-        public async Task<IActionResult> ExportRole(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportRole(Filter filter)
         {
             var result = await _roleService.Export(filter);
 

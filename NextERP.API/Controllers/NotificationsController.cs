@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _notificationService = notificationService;
         }
 
-        [HttpPost(nameof(GetNotifications))]
-        public async Task<ActionResult<IEnumerable<Notification>>> GetNotifications(Filter filter)
+        [HttpPost(nameof(CreateOrEditNotification))]
+        public async Task<ActionResult<Notification>> CreateOrEditNotification([FromBody] NotificationModel notification)
         {
-            var result = await _notificationService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _notificationService.CreateOrEdit(notification.Id, notification);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteNotification))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteNotification(string ids)
+        {
+            var result = await _notificationService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditNotification))]
-        public async Task<ActionResult<Notification>> CreateOrEditNotification([FromBody] NotificationModel notification)
+        [HttpPost(nameof(GetNotifications))]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetNotifications(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _notificationService.CreateOrEdit(notification.Id, notification);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteNotification))]
-        public async Task<IActionResult> DeleteNotification(string ids)
-        {
-            var result = await _notificationService.Delete(ids);
+            var result = await _notificationService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportNotification))]
         public async Task<ActionResult<Notification>> ImportNotification()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportNotification))]
-        public async Task<IActionResult> ExportNotification(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportNotification(Filter filter)
         {
             var result = await _notificationService.Export(filter);
 

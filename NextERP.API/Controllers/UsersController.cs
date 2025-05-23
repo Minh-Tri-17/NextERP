@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost(nameof(GetUsers))]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers(Filter filter)
+        [HttpPost(nameof(CreateOrEditUser))]
+        public async Task<ActionResult<User>> CreateOrEditUser([FromBody] UserModel user)
         {
-            var result = await _userService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _userService.CreateOrEdit(user.Id, user);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteUser))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteUser(string ids)
+        {
+            var result = await _userService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditUser))]
-        public async Task<ActionResult<User>> CreateOrEditUser([FromBody] UserModel user)
+        [HttpPost(nameof(GetUsers))]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _userService.CreateOrEdit(user.Id, user);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteUser))]
-        public async Task<IActionResult> DeleteUser(string ids)
-        {
-            var result = await _userService.Delete(ids);
+            var result = await _userService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportUser))]
         public async Task<ActionResult<User>> ImportUser()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportUser))]
-        public async Task<IActionResult> ExportUser(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportUser(Filter filter)
         {
             var result = await _userService.Export(filter);
 

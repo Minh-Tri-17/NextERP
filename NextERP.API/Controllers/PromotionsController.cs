@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _promotionService = promotionService;
         }
 
-        [HttpPost(nameof(GetPromotions))]
-        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions(Filter filter)
+        [HttpPost(nameof(CreateOrEditPromotion))]
+        public async Task<ActionResult<Promotion>> CreateOrEditPromotion([FromBody] PromotionModel promotion)
         {
-            var result = await _promotionService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _promotionService.CreateOrEdit(promotion.Id, promotion);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeletePromotion))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePromotion(string ids)
+        {
+            var result = await _promotionService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditPromotion))]
-        public async Task<ActionResult<Promotion>> CreateOrEditPromotion([FromBody] PromotionModel promotion)
+        [HttpPost(nameof(GetPromotions))]
+        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _promotionService.CreateOrEdit(promotion.Id, promotion);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeletePromotion))]
-        public async Task<IActionResult> DeletePromotion(string ids)
-        {
-            var result = await _promotionService.Delete(ids);
+            var result = await _promotionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportPromotion))]
         public async Task<ActionResult<Promotion>> ImportPromotion()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPromotion))]
-        public async Task<IActionResult> ExportPromotion(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPromotion(Filter filter)
         {
             var result = await _promotionService.Export(filter);
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _leaveRequestService = leaveRequestService;
         }
 
-        [HttpPost(nameof(GetLeaveRequests))]
-        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests(Filter filter)
+        [HttpPost(nameof(CreateOrEditLeaveRequest))]
+        public async Task<ActionResult<LeaveRequest>> CreateOrEditLeaveRequest([FromBody] LeaveRequestModel leaveRequest)
         {
-            var result = await _leaveRequestService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _leaveRequestService.CreateOrEdit(leaveRequest.Id, leaveRequest);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteLeaveRequest))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteLeaveRequest(string ids)
+        {
+            var result = await _leaveRequestService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditLeaveRequest))]
-        public async Task<ActionResult<LeaveRequest>> CreateOrEditLeaveRequest([FromBody] LeaveRequestModel leaveRequest)
+        [HttpPost(nameof(GetLeaveRequests))]
+        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _leaveRequestService.CreateOrEdit(leaveRequest.Id, leaveRequest);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteLeaveRequest))]
-        public async Task<IActionResult> DeleteLeaveRequest(string ids)
-        {
-            var result = await _leaveRequestService.Delete(ids);
+            var result = await _leaveRequestService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportLeaveRequest))]
         public async Task<ActionResult<LeaveRequest>> ImportLeaveRequest()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportLeaveRequest))]
-        public async Task<IActionResult> ExportLeaveRequest(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportLeaveRequest(Filter filter)
         {
             var result = await _leaveRequestService.Export(filter);
 

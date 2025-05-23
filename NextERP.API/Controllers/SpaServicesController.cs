@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _spaServiceService = spaServiceService;
         }
 
-        [HttpPost(nameof(GetSpaServices))]
-        public async Task<ActionResult<IEnumerable<SpaService>>> GetSpaServices(Filter filter)
+        [HttpPost(nameof(CreateOrEditSpaService))]
+        public async Task<ActionResult<SpaService>> CreateOrEditSpaService([FromBody] SpaServiceModel spaService)
         {
-            var result = await _spaServiceService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _spaServiceService.CreateOrEdit(spaService.Id, spaService);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteSpaService))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteSpaService(string ids)
+        {
+            var result = await _spaServiceService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditSpaService))]
-        public async Task<ActionResult<SpaService>> CreateOrEditSpaService([FromBody] SpaServiceModel spaService)
+        [HttpPost(nameof(GetSpaServices))]
+        public async Task<ActionResult<IEnumerable<SpaService>>> GetSpaServices(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _spaServiceService.CreateOrEdit(spaService.Id, spaService);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteSpaService))]
-        public async Task<IActionResult> DeleteSpaService(string ids)
-        {
-            var result = await _spaServiceService.Delete(ids);
+            var result = await _spaServiceService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportSpaService))]
         public async Task<ActionResult<SpaService>> ImportSpaService()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSpaService))]
-        public async Task<IActionResult> ExportSpaService(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaService(Filter filter)
         {
             var result = await _spaServiceService.Export(filter);
 

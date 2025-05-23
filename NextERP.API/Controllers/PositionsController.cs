@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _positionService = positionService;
         }
 
-        [HttpPost(nameof(GetPositions))]
-        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(Filter filter)
+        [HttpPost(nameof(CreateOrEditPosition))]
+        public async Task<ActionResult<Position>> CreateOrEditPosition([FromBody] PositionModel position)
         {
-            var result = await _positionService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _positionService.CreateOrEdit(position.Id, position);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeletePosition))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePosition(string ids)
+        {
+            var result = await _positionService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditPosition))]
-        public async Task<ActionResult<Position>> CreateOrEditPosition([FromBody] PositionModel position)
+        [HttpPost(nameof(GetPositions))]
+        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _positionService.CreateOrEdit(position.Id, position);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeletePosition))]
-        public async Task<IActionResult> DeletePosition(string ids)
-        {
-            var result = await _positionService.Delete(ids);
+            var result = await _positionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportPosition))]
         public async Task<ActionResult<Position>> ImportPosition()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPosition))]
-        public async Task<IActionResult> ExportPosition(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPosition(Filter filter)
         {
             var result = await _positionService.Export(filter);
 

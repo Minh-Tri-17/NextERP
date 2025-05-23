@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _supplierOrderDetailService = supplierOrderDetailService;
         }
 
-        [HttpPost(nameof(GetSupplierOrderDetails))]
-        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails(Filter filter)
+        [HttpPost(nameof(CreateOrEditSupplierOrderDetail))]
+        public async Task<ActionResult<SupplierOrderDetail>> CreateOrEditSupplierOrderDetail([FromBody] SupplierOrderDetailModel supplierOrderDetail)
         {
-            var result = await _supplierOrderDetailService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _supplierOrderDetailService.CreateOrEdit(supplierOrderDetail.Id, supplierOrderDetail);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteSupplierOrderDetail))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplierOrderDetail(string ids)
+        {
+            var result = await _supplierOrderDetailService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditSupplierOrderDetail))]
-        public async Task<ActionResult<SupplierOrderDetail>> CreateOrEditSupplierOrderDetail([FromBody] SupplierOrderDetailModel supplierOrderDetail)
+        [HttpPost(nameof(GetSupplierOrderDetails))]
+        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _supplierOrderDetailService.CreateOrEdit(supplierOrderDetail.Id, supplierOrderDetail);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteSupplierOrderDetail))]
-        public async Task<IActionResult> DeleteSupplierOrderDetail(string ids)
-        {
-            var result = await _supplierOrderDetailService.Delete(ids);
+            var result = await _supplierOrderDetailService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

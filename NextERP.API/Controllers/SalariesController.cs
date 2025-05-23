@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _salaryService = salaryService;
         }
 
-        [HttpPost(nameof(GetSalaries))]
-        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries(Filter filter)
+        [HttpPost(nameof(CreateOrEditSalary))]
+        public async Task<ActionResult<Salary>> CreateOrEditSalary([FromBody] SalaryModel salary)
         {
-            var result = await _salaryService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _salaryService.CreateOrEdit(salary.Id, salary);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteSalary))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteSalary(string ids)
+        {
+            var result = await _salaryService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditSalary))]
-        public async Task<ActionResult<Salary>> CreateOrEditSalary([FromBody] SalaryModel salary)
+        [HttpPost(nameof(GetSalaries))]
+        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _salaryService.CreateOrEdit(salary.Id, salary);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteSalary))]
-        public async Task<IActionResult> DeleteSalary(string ids)
-        {
-            var result = await _salaryService.Delete(ids);
+            var result = await _salaryService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportSalary))]
         public async Task<ActionResult<Salary>> ImportSalary()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSalary))]
-        public async Task<IActionResult> ExportSalary(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSalary(Filter filter)
         {
             var result = await _salaryService.Export(filter);
 

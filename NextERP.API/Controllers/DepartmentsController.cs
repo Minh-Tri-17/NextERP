@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpPost(nameof(GetDepartments))]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments(Filter filter)
+        [HttpPost(nameof(CreateOrEditDepartment))]
+        public async Task<ActionResult<Department>> CreateOrEditDepartment([FromBody] DepartmentModel department)
         {
-            var result = await _departmentService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _departmentService.CreateOrEdit(department.Id, department);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteDepartment))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteDepartment(string ids)
+        {
+            var result = await _departmentService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditDepartment))]
-        public async Task<ActionResult<Department>> CreateOrEditDepartment([FromBody] DepartmentModel department)
+        [HttpPost(nameof(GetDepartments))]
+        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _departmentService.CreateOrEdit(department.Id, department);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteDepartment))]
-        public async Task<IActionResult> DeleteDepartment(string ids)
-        {
-            var result = await _departmentService.Delete(ids);
+            var result = await _departmentService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportDepartment))]
         public async Task<ActionResult<Department>> ImportDepartment()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportDepartment))]
-        public async Task<IActionResult> ExportDepartment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportDepartment(Filter filter)
         {
             var result = await _departmentService.Export(filter);
 

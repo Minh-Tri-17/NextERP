@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _supplierService = supplierService;
         }
 
-        [HttpPost(nameof(GetSuppliers))]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(Filter filter)
+        [HttpPost(nameof(CreateOrEditSupplier))]
+        public async Task<ActionResult<Supplier>> CreateOrEditSupplier([FromBody] SupplierModel supplier)
         {
-            var result = await _supplierService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _supplierService.CreateOrEdit(supplier.Id, supplier);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteSupplier))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplier(string ids)
+        {
+            var result = await _supplierService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditSupplier))]
-        public async Task<ActionResult<Supplier>> CreateOrEditSupplier([FromBody] SupplierModel supplier)
+        [HttpPost(nameof(GetSuppliers))]
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _supplierService.CreateOrEdit(supplier.Id, supplier);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteSupplier))]
-        public async Task<IActionResult> DeleteSupplier(string ids)
-        {
-            var result = await _supplierService.Delete(ids);
+            var result = await _supplierService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportSupplier))]
         public async Task<ActionResult<Supplier>> ImportSupplier()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSupplier))]
-        public async Task<IActionResult> ExportSupplier(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplier(Filter filter)
         {
             var result = await _supplierService.Export(filter);
 

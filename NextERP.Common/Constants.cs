@@ -13,6 +13,7 @@
         public const string DateCreate = "DateCreate";
         public const string DateUpdate = "DateUpdate";
         public const string FileName = "{0}_{1}.xlsx";
+        public const string ExcelFiles = "ExcelFiles";
         public const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         public const string DateTimeString = "yyyyMMddHHmmss";
         public const string DateFirstFormatDash = "dd-MM-yyyy";

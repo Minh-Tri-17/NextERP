@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _appointmentService = appointmentService;
         }
 
-        [HttpPost(nameof(GetAppointments))]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(Filter filter)
+        [HttpPost(nameof(CreateOrEditAppointment))]
+        public async Task<ActionResult<Appointment>> CreateOrEditAppointment([FromBody] AppointmentModel appointment)
         {
-            var result = await _appointmentService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _appointmentService.CreateOrEdit(appointment.Id, appointment);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteAppointment))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteAppointment(string ids)
+        {
+            var result = await _appointmentService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditAppointment))]
-        public async Task<ActionResult<Appointment>> CreateOrEditAppointment([FromBody] AppointmentModel appointment)
+        [HttpPost(nameof(GetAppointments))]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _appointmentService.CreateOrEdit(appointment.Id, appointment);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteAppointment))]
-        public async Task<IActionResult> DeleteAppointment(string ids)
-        {
-            var result = await _appointmentService.Delete(ids);
+            var result = await _appointmentService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportAppointment))]
         public async Task<ActionResult<Appointment>> ImportAppointment()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,15 +89,14 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAppointment))]
-        public async Task<IActionResult> ExportAppointment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAppointment(Filter filter)
         {
             var result = await _appointmentService.Export(filter);
 
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 
-            var fileName = string.Format(Constants.FileName, ObjectNames.Appointment, DateTime.Now.ToString(Constants.DateTimeString));
-            return File(result.Result, Constants.ContentType, fileName);
+            return Ok(result);
         }
     }
 }

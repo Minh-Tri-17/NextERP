@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _attendanceService = attendanceService;
         }
 
-        [HttpPost(nameof(GetAttendances))]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Filter filter)
+        [HttpPost(nameof(CreateOrEditAttendance))]
+        public async Task<ActionResult<Attendance>> CreateOrEditAttendance([FromBody] AttendanceModel attendance)
         {
-            var result = await _attendanceService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _attendanceService.CreateOrEdit(attendance.Id, attendance);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteAttendance))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteAttendance(string ids)
+        {
+            var result = await _attendanceService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditAttendance))]
-        public async Task<ActionResult<Attendance>> CreateOrEditAttendance([FromBody] AttendanceModel attendance)
+        [HttpPost(nameof(GetAttendances))]
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _attendanceService.CreateOrEdit(attendance.Id, attendance);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteAttendance))]
-        public async Task<IActionResult> DeleteAttendance(string ids)
-        {
-            var result = await _attendanceService.Delete(ids);
+            var result = await _attendanceService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -71,7 +72,7 @@ namespace NextERP.API.Controllers
         [HttpPost(nameof(ImportAttendance))]
         public async Task<ActionResult<Attendance>> ImportAttendance()
         {
-            IFormFile excelFile = Request.Form.Files["ExcelFiles"]!;
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
@@ -88,7 +89,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAttendance))]
-        public async Task<IActionResult> ExportAttendance(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAttendance(Filter filter)
         {
             var result = await _attendanceService.Export(filter);
 

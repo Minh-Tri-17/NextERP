@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,23 @@ namespace NextERP.API.Controllers
             _invoiceService = invoiceService;
         }
 
-        [HttpPost(nameof(GetInvoices))]
-        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices(Filter filter)
+        [HttpPost(nameof(CreateOrEditInvoice))]
+        public async Task<ActionResult<Invoice>> CreateOrEditInvoice([FromBody] InvoiceModel invoice)
         {
-            var result = await _invoiceService.GetPaging(filter);
+            // Sau này mở rộng cho phép truyền file xuống 
+            //IFormFile excelFile = Request.Form.Files["Files"]!;
+
+            var result = await _invoiceService.CreateOrEdit(invoice.Id, invoice);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeleteInvoice))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteInvoice(string ids)
+        {
+            var result = await _invoiceService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -45,23 +59,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost(nameof(CreateOrEditInvoice))]
-        public async Task<ActionResult<Invoice>> CreateOrEditInvoice([FromBody] InvoiceModel invoice)
+        [HttpPost(nameof(GetInvoices))]
+        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices(Filter filter)
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
-
-            var result = await _invoiceService.CreateOrEdit(invoice.Id, invoice);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpDelete(nameof(DeleteInvoice))]
-        public async Task<IActionResult> DeleteInvoice(string ids)
-        {
-            var result = await _invoiceService.Delete(ids);
+            var result = await _invoiceService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
