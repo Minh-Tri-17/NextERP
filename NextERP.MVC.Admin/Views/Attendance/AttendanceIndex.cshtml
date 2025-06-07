@@ -1,0 +1,173 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.AttendanceModel
+
+@{
+    ViewData["Title"] = TableName.Attendance;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    {
+        (TableName.Attendance + "List", "", true),
+    };
+}
+
+<div class="main-container">
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
+
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-success create-edit-button create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Create
+                </button>
+                <button type="button" class="btn btn-warning create-edit-button edit-button disabled" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Edit
+                </button>
+                <input type="text" name="Ids" id="Ids" hidden />
+                <button type="button" class="btn btn-danger delete-button disabled" localize-content>
+                    Delete
+                </button>
+                <button type="button" class="btn btn-secondary import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
+                    Import
+                </button>
+                <button type="button" class="btn btn-secondary export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
+                    Export
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target=".filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" class="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+            </div>
+        </form>
+
+        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@ 
+        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+    </section>
+
+    <!--& TABLE -->
+    <section class="table-wrapper card" id="attendance-table"></section>
+
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ActionName.Attendance.AttendanceForm, Model)
+        @await Component.InvokeAsync("Import", TableName.Attendance)
+        @await Component.InvokeAsync("Export", TableName.Attendance)
+    </section>
+</div>
+
+<script>
+    let attendanceId;
+
+    $(document).ready(function () {
+        loadAttendances();
+    });
+
+    $(".refresh-list").click(function(){
+        loadAttendances();
+    });
+
+    $(document).on("change", ".@TableName.Attendance-checkbox", function () {
+        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+        attendanceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val() : "";
+
+        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+        const length = $(".@TableName.Attendance-checkbox:checked").length
+        checkLengthCheckbox(length, "edit-button", "create-button", "delete-button", "@TableName.Attendance-checkbox");
+    });
+
+    $(".create-edit-button").click(function () {
+        // Lưu giá trị cho field Id trên form
+        $("#@AttributeNames.Attendance.AttendanceId").val(attendanceId);
+
+        $(".only-save-button").css("display",  attendanceId ? "none" : "block");
+
+        fetch('@Url.Action("CreateOrEdit", TableName.Attendance)/' + attendanceId, {
+            method: "GET",
+        }).then(response => {
+                return response.json();
+            }).then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Attendance.WorkDate").val(data.workDate);
+                $("#@AttributeNames.Attendance.InTime").val(data.inTime);
+                $("#@AttributeNames.Attendance.OutTime").val(data.outTime);
+                $("#@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
+                $("#@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
+                $("#@AttributeNames.Attendance.Note").val(data.note);
+            })
+    });
+
+    $(".delete-button").click(function () {
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const ids = $(".@TableName.Attendance-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val();
+        }).get().join(",");
+
+        $("#Ids").val(ids);
+
+        const form = $(this).closest("form");
+        const formData = new FormData(form[0]);
+
+        fetch('@Url.Action("Delete", TableName.Attendance)', {
+            method: "POST",
+            body: formData
+        }).then(response => {
+                loadAttendances();
+                return response.json();
+            }).then(data => {
+                attendanceId = "";
+
+                showMessage(data);
+            })
+    });
+
+    $(".search-button").click(function () {
+        loadAttendances();
+    })
+
+    $(".clear-button").click(function () {
+        $("#filter-name").val("");
+
+        loadAttendances();
+    })
+
+    function loadAttendances(pageIndex) {
+        // Khỏi tạo filter và gán giá trị
+        const keyWord = $('#filter-name').val();
+
+        let filter = new FormData();
+        filter.append("@Constants.PageIndex", pageIndex);
+        filter.append("@Constants.KeyWord", keyWord);
+
+        $(".loader").css("display", "flex");
+
+        fetch('@Url.Action("GetList", TableName.Attendance)', {
+            method: "POST",
+            body: filter
+        }).then(response => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "@TableName.Attendance-checkbox");
+
+                // Gọi hàm parseResponse để xử lý response trả về
+                return parseResponse(response);
+            }).then(result  => {
+                if (result.type === 'html') {
+                    $("#attendance-table").html(result.data);
+
+                    $(".loader").css("display", "none");
+
+                    // Gọi hàm tableScrollHandler để xử lý cuộn bảng
+                    tableScrollHandler();
+
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    attendanceId = "";
+                }
+                else if (result.type === 'json') {
+                    $(".loader").css("display", "none");
+                    
+                    showMessage(result.data);
+                }
+            });
+    }
+</script>

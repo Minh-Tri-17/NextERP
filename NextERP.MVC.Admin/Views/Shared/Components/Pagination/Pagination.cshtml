@@ -1,0 +1,55 @@
+﻿@{
+    var request = ViewContext.HttpContext.Request;
+    var urlTemplate = Url.Action() + "?pageIndex={0}";
+    foreach (var key in request.Query.Keys)
+    {
+        if (key == "pageIndex")
+        {
+            continue;
+        }
+
+        if (request.Query[key].Count > 1)
+        {
+            foreach (var item in (string[])request.Query[key]!)
+            {
+                urlTemplate += "&" + key + "=" + item;
+            }
+        }
+        else
+        {
+            urlTemplate += "&" + key + "=" + request.Query[key];
+        }
+    }
+
+    var startIndex = Math.Max(Model.PageIndex - 5, 1);
+    var finishIndex = Math.Min(Model.PageIndex + 5, Model.PageCount);
+}
+
+<div class="pagination-container">
+    <nav>
+        <ul class="pagination pagination-sm">
+            <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                <a class="page-link" href="#" data-page="@(Model.PageIndex - 1)"><i class="fa-solid fa-angle-left"></i></a>
+            </li>
+            @for (var i = startIndex; i <= finishIndex; i++)
+            {
+                if (i == Model.PageIndex)
+                {
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="@i">@i</a>
+                    </li>
+                }
+            }
+            <li class="page-item @(Model.PageIndex == Model.PageCount ? "disabled" : "")">
+                <a class="page-link" href="#" data-page="@(Model.PageIndex + 1)"><i class="fa-solid fa-angle-right"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <span>@Model.PageRecord/@Model.TotalRecord</span>
+</div>

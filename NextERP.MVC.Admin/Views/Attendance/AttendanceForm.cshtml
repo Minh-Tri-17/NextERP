@@ -1,0 +1,105 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.AttendanceModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="@AttributeNames.Attendance.AttendanceId" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.AttendanceCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.AttendanceCode" type="text" asp-for="AttendanceCode" disabled required />
+                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkDate</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkDate" type="datetime-local" asp-for="WorkDate" required />
+                            <div class="invalid-feedback" localize-content>InvalidTime</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.InTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.InTime</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.InTime" type="datetime-local" asp-for="InTime" required />
+                            <div class="invalid-feedback" localize-content>InvalidTime</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.OutTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OutTime</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OutTime" type="datetime-local" asp-for="OutTime" required />
+                            <div class="invalid-feedback" localize-content>InvalidTime</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.WorkingHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkingHours</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkingHours" type="number" asp-for="WorkingHours" required />
+                            <div class="invalid-feedback" localize-content>InvalidNumber</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.OvertimeHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OvertimeHours</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OvertimeHours" type="number" asp-for="OvertimeHours" required />
+                            <div class="invalid-feedback" localize-content>InvalidNumber</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Attendance.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Attendance.Note" rows="3" asp-for="Note" required></textarea>
+                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const form = $(this).closest("form");
+        const formData = new FormData(form[0]);
+        const formElement = form[0];
+
+        // Kiểm tra tính hợp lệ của form
+        if (!formElement.checkValidity()) {
+            // Nếu form không hợp lệ, hiển thị thông báo lỗi
+            formElement.classList.add("was-validated");
+        }
+        else {
+            fetch('@Url.Action("CreateOrEdit", TableName.Attendance)', {
+                method: "POST",
+                body: formData
+            }).then(response => {
+                    loadAttendances();
+                    return response.json();
+                }).then(data => {
+                    showMessage(data);
+                })
+        }
+    });
+</script>

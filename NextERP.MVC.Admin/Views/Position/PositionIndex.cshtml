@@ -1,0 +1,12 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.PositionModel
+
+@{
+    ViewData["Title"] = TableName.Position;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    {
+        (TableName.Position + "List", "", true),
+    };
+}

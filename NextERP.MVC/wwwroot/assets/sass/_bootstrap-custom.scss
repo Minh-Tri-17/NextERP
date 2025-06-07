@@ -1,0 +1,71 @@
+@use "variable" as *;
+
+.form-control,
+.form-select,
+.form-check,
+.page-link,
+.form-check-input {
+  &:focus {
+    border: 1px solid $primary-color;
+    box-shadow: $shadow-md;
+  }
+}
+
+.form-check-input:checked {
+  background-color: $background-dark;
+  color: $text-light;
+  border: 1px solid $primary-color;
+  box-shadow: $shadow-md;
+}
+
+.offcanvas-start {
+  max-width: 250px;
+}
+
+.page-item {
+  &.active .page-link {
+    background-color: $background-dark;
+    color: $text-light;
+    border: 1px solid $border-color;
+  }
+
+  .page-link {
+    color: $text-primary;
+  }
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  color: $text-primary;
+  transition: $transition-normal $ease-in-out;
+
+  &.sticky-active {
+    background-color: $background-dark;
+    color: $text-light;
+    transition: $transition-normal $ease-in-out;
+  }
+
+  th::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.table td {
+  color: $text-secondary;
+
+  &:hover {
+    color: $text-secondary;
+    background-color: $background-mid;
+  }
+}
+
+.carousel-inner {
+  width: 200px;
+}
+
+.modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}

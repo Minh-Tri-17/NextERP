@@ -1,0 +1,12 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.EmployeeModel
+
+@{
+    ViewData["Title"] = TableName.Employee;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    {
+        (TableName.Employee + "List", "", true),
+    };
+}

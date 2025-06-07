@@ -1,0 +1,163 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.AppointmentModel
+
+@{
+    ViewData["Title"] = TableName.Appointment;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+{
+        (TableName.Appointment + "List", "", true),
+    };
+}
+
+<div class="calendar-content">
+    <!--& CALENDAR -->
+    <section class="calendar-wrapper card" id="calendar"></section>
+
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ActionName.Appointment.AppointmentForm, Model)
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadAppointments();
+    });
+
+    function loadAppointments() {
+        let filter = new FormData();
+
+        $(".loader").css("display", "flex");
+
+        fetch('@Url.Action("GetList", TableName.Appointment)', {
+            method: "POST",
+            body: filter
+        }).then(response => {
+            // Gọi hàm parseResponse để xử lý response trả về
+            return response.json();
+        }).then(result => {
+            //! FullCalendar yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
+            const calendarEl = document.getElementById("calendar");
+
+            //? Xử lý để hiển thị đúng (cộng thêm 1 ngày tạm thời) vì Fullcalendar vẽ sự kiện không tính ngày kết thúc
+            const events = result.map((event) => {
+                    const formatDate = (dateStr) => {
+                        const date = moment(dateStr);
+                        return date.format("HH:mm:ss") === "00:00:00"
+                            ? date.format("YYYY-MM-DD")
+                            : date.format("YYYY-MM-DDTHH:mm:ss");
+                    };
+
+                    const getColorByStatus = (status) => {
+                        switch (status) {
+                            case "@Enums.AppointmentStatus.Booked":
+                                return "#3d7dcf"; // xanh dương
+                            case "@Enums.AppointmentStatus.InProgress":
+                                return "#8a2be2"; // Tím
+                            case "@Enums.AppointmentStatus.Completed":
+                                return "#28a745"; // xanh lá
+                            case "@Enums.AppointmentStatus.Cancelled":
+                                return "#dc3545"; // đỏ
+                            case "@Enums.AppointmentStatus.Missed":
+                                return "#f0bd00"; // vàng
+                            case "@Enums.AppointmentStatus.Rescheduled":
+                                return "#6a6a6a"; // Xám
+                            default:
+                                return "#776b5d"; // Nâu
+                        }
+                    };
+
+                    return {
+                        ...event,
+                        start: formatDate(event.start),
+                        end: formatDate(moment(event.end)),
+                        color: getColorByStatus(event.status),
+                        allDay: event.allDay
+                    };
+                });
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                themeSystem: "bootstrap5",
+                editable: true, //? Kéo thả sự kiện
+                eventResizableFromStart: true, //? Thay đổi độ dài sự kiện
+                dayMaxEvents: true, //? Xem thêm sự kiện
+                selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
+                select: function (info) {
+                      const start = info.start;
+                      let end = info.end;
+
+                      end = new Date(info.end);
+                      end.setDate(end.getDate() - 1);
+
+                      const formatDateTime = (date) => {
+                      const options = { hour12: false };
+                      return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
+                  };
+
+                  $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
+                  $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
+
+                  //? Mở modal khi chọn ngày trên lịch
+                  const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
+                  exportModal.show();
+                },
+                eventDidMount: function (info) {
+                    const status = info.event.extendedProps.status;
+                    const getBgColorByStatus = (status) => {
+                        switch (status) {
+                            case "@Enums.AppointmentStatus.Booked":
+                                return "#c4e3f8"; // xanh dương
+                            case "@Enums.AppointmentStatus.InProgress":
+                                return "#e0c3fc"; // Tím
+                            case "@Enums.AppointmentStatus.Completed":
+                                return "#d4f8c4"; // xanh lá
+                            case "@Enums.AppointmentStatus.Cancelled":
+                                return "#f8d4d4"; // đỏ
+                            case "@Enums.AppointmentStatus.Missed":
+                                return "#ffe5a8"; // vàng
+                            case "@Enums.AppointmentStatus.Rescheduled":
+                                return "#b4b4b8"; // Xám
+                            default:
+                                return "#b0a695"; // Nâu
+                        }
+                    };
+
+                    const bgColor = getBgColorByStatus(status);
+
+                    if (info.event.allDay) {
+                        const mainFrame = info.el.querySelector('.fc-event-title-container');
+                        mainFrame.style.setProperty('background-color', bgColor, 'important');
+                    } else {
+                        info.el.style.setProperty('background-color', bgColor, 'important');
+                    }
+
+                    //? Thêm tooltip dùng thư viện Tippy.js
+                    tippy(info.el, {
+                        content: info.event.extendedProps.description,
+                        allowHTML: true,
+                        theme: "light",
+                        animation: "shift-away",
+                        delay: [100, 0],
+                        placement: "top",
+                    });
+                },
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,timeGridWeek,timeGridDay", //? Lịch theo ngày/tuần/tháng
+                },
+                events: events,
+            });
+
+            calendar.render();
+
+            $(".loader").css("display", "none");
+
+            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+            attendanceId = "";
+            });
+    }
+</script>

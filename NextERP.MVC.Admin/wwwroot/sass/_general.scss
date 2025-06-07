@@ -1,0 +1,53 @@
+@use "variable" as *;
+
+.btn-icon {
+    border: none;
+    background: none;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: $shadow-sm;
+    padding: $pd-3;
+    background-color: #ffffff;
+}
+
+.btn {
+    color: #ffffff !important;
+    border: none;
+    transition: $transition-normal $ease-in-out;
+    min-width: 100px;
+}
+
+$button-colors: ( primary: ( $primary-light-color, $primary-color, ), success: ( $success-light-color, $success-color, ), danger: ( $danger-light-color, $danger-color, ), warning: ( $warning-light-color, $warning-color, ), info: ( $info-light-color, $info-color, ), secondary: ( $secondary-light-color, $secondary-color, ), );
+
+@each $name, $colors in $button-colors {
+    .btn-#{$name} {
+        color: $text-secondary !important;
+        background-color: nth($colors, 1) !important;
+
+        &:hover {
+            box-shadow: -4px 5px 5px nth($colors, 2) !important;
+            transform: translateY(-2px) translateX(2px);
+        }
+    }
+}
+
+.btn-outline-secondary {
+    color: $secondary-color !important;
+
+    &:hover {
+        color: #ffffff !important;
+    }
+}
+
+.btn-outline-primary {
+    color: $primary-color !important;
+    border: 1px solid $primary-color !important;
+
+    &:hover {
+        color: #ffffff !important;
+        background-color: $primary-light-color !important;
+        border: 1px solid $primary-color !important;
+    }
+}

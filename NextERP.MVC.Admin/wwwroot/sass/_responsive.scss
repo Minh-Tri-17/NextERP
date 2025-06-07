@@ -1,0 +1,25 @@
+@use "variable" as *;
+
+@media (min-height: 615px) and (max-height: 715px) {
+    .table-wrapper {
+        height: calc($h-100 - 21%) !important;
+    }
+}
+
+@media (min-height: 415px) and (max-height: 615px) {
+    .table-wrapper {
+        max-height: calc($h-100 - 26%) !important;
+    }
+}
+
+@media (max-height: 415px) {
+    .table-wrapper {
+        max-height: calc($h-100 - 31%) !important;
+    }
+}
+
+@media (max-width: 989px) {
+    .header {
+        width: $w-100 !important;
+    }
+}

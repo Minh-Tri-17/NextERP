@@ -1,0 +1,48 @@
+@use "base";
+@use "general";
+@use "bootstrap-custom";
+@use "variable" as *;
+@use "mixins" as *;
+
+.login-wrapper {
+    @include flex-center();
+    min-height: $h-100;
+    background-color: #f8f5f2;
+    position: relative;
+
+    .login-container,
+    .forgot-container {
+        position: absolute;
+        width: 400px;
+        transition: transform 0.6s ease, opacity 0.6s ease;
+        backface-visibility: hidden;
+    }
+
+    .login-container {
+        z-index: 2;
+        transform: rotateY(0deg);
+    }
+
+    .forgot-container {
+        z-index: 1;
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    &.show-forgot {
+        .login-container {
+            transform: rotateY(-180deg);
+            opacity: 0;
+        }
+
+        .forgot-container {
+            transform: rotateY(0deg);
+            opacity: 1;
+            z-index: 2;
+        }
+    }
+
+    .login-actions {
+        @include flex-between();
+    }
+}

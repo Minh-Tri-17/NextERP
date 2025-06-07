@@ -1,0 +1,79 @@
+﻿@use "variable" as *;
+// Nên !important để sau này bootstrap có update thuộc tính thì không lỗi
+.form-control,
+.form-select,
+.form-check,
+.page-link,
+.form-check-input {
+    &:focus {
+        border: 1px solid $primary-color !important;
+        box-shadow: $shadow-md !important;
+    }
+}
+
+.form-check-input:checked {
+    background-color: $background-dark !important;
+    color: $text-light !important;
+    border: 1px solid $primary-color !important;
+    box-shadow: $shadow-md !important;
+}
+
+.offcanvas-start {
+    max-width: 250px !important;
+}
+
+.page-item {
+    &.active .page-link {
+        background-color: $background-dark !important;
+        color: $text-light !important;
+        border: 1px solid $border-color !important;
+    }
+
+    .page-link {
+        color: $text-primary !important;
+    }
+}
+
+thead {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    color: $text-primary !important;
+    transition: $transition-normal $ease-in-out !important;
+
+    &.sticky-active {
+        background-color: $background-dark !important;
+        color: $text-light !important;
+        transition: $transition-normal $ease-in-out !important;
+    }
+}
+
+.table td {
+    color: $text-secondary !important;
+
+    &:hover {
+        color: $text-secondary !important;
+        background-color: $background-mid !important;
+    }
+}
+
+.carousel-inner {
+    width: 200px;
+}
+
+.modal {
+    z-index: $z-index-4 !important;
+
+    .modal-body {
+        max-height: calc(100vh - 200px) !important;
+        overflow-y: auto !important;
+    }
+}
+
+.position-fixed {
+    z-index: $z-index-4 !important;
+}
+
+.bg-primary {
+    background-color: $primary-color !important;
+}

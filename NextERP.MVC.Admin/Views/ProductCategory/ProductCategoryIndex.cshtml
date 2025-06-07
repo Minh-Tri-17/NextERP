@@ -1,0 +1,12 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.ProductCategoryModel
+
+@{
+    ViewData["Title"] = TableName.ProductCategory;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    {
+        (TableName.ProductCategory + "List", "", true),
+    };
+}

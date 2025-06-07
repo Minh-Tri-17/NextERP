@@ -1,0 +1,12 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.PromotionModel
+
+@{
+    ViewData["Title"] = TableName.Promotion;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    {
+        (TableName.Promotion + "List", "", true),
+    };
+}

@@ -1,0 +1,148 @@
+﻿@using NextERP.Util
+@model string
+
+<div class="modal fade" id="export-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>ExportData</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="export-options" id="inlineRadio1" value="all" checked />
+                        <label class="form-check-label" for="inlineRadio1" localize-content>AllPage</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="export-options" id="inlineRadio2" value="current" />
+                        <label class="form-check-label" for="inlineRadio2" localize-content>CurrentPage</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="export-options" id="inlineRadio3" value="item" />
+                        <label class="form-check-label" for="inlineRadio3" localize-content>SelectRow</label>
+                    </div>
+                    <div class="progress" style="display: none;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                             role="progressbar"
+                             style="width: 0%"
+                             aria-valuenow="0"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-primary start-export-button" localize-content>StartExport</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".start-export-button").click(function () {
+        const formData = createInitialFilterFormData();
+
+        const MIN_LOADING_TIME = 3000;
+        let progressValue = 0;
+
+        $(".progress").show();
+        $(".progress-bar").css("width", "0%").attr("aria-valuenow", 0).text("0%");
+
+        setTimeout(() => {
+            const startTime = Date.now();
+            const fakeProgress = setInterval(() => {
+                if (progressValue < 90) {
+                    progressValue += 5;
+                    $(".progress-bar").css("width", progressValue + "%").attr("aria-valuenow", progressValue).text(progressValue + "%");
+                }
+            }, 200);
+
+            fetch('@Url.Action("Export", Model)', {
+                method: "POST",
+                body: formData
+            }).then(response => {
+                    exportedResponse = response;
+
+                    return response.blob();
+                }).then(blob => {
+                    const elapsed = Date.now() - startTime;
+                    const remaining = Math.max(MIN_LOADING_TIME - elapsed, 0);
+
+                    setTimeout(() => {
+                        clearInterval(fakeProgress);
+                        $(".progress-bar").css("width", "100%").attr("aria-valuenow", 100).text("100%");
+             
+                        // Lấy tên file từ header nếu có
+                        const disposition = exportedResponse.headers.get("Content-Disposition");
+                        const fileName = extractFileNameFromDisposition(disposition);
+
+                        // Tạo URL tạm thời cho dữ liệu Blob
+                        const url = URL.createObjectURL(blob);
+                        // Tạo phần tử <a> ẩn để kích hoạt tải file
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = fileName;
+                        a.click();
+                        // Thu hồi URL Blob tạm để tránh rò rỉ bộ nhớ
+                        URL.revokeObjectURL(url);
+                    }, remaining);
+                })
+        }, 500);
+    });
+
+    function createInitialFilterFormData() {
+        const pageIndex = $("#current-page-index").val();
+        const keyword = $('#filter-name').val();
+        const selectedValue = $('input[name="export-options"]:checked').val();
+        const ids = $(".@Model-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@($"{Model}Id")"]').val();
+        }).get().join(",");
+
+        const formData = new FormData();
+        formData.append("PageIndex", pageIndex);
+        formData.append("KeyWord", keyword);
+
+        switch (selectedValue) {
+            case "all":
+                formData.append("AllowPaging", false);
+                break;
+            case "current":
+                formData.append("AllowPaging", true);
+                break;
+            case "item":
+                formData.append("AllowPaging", false);
+                formData.append("Ids", ids);
+                break;
+            default:
+        }
+
+        return formData;
+    }
+
+    function extractFileNameFromDisposition(disposition) {
+        if (!disposition) return "export.xlsx";
+
+        // Tách chuỗi header thành mảng các phần, loại bỏ khoảng trắng, tìm phần chứa tên file (filename= hoặc filename*=)
+        const match = disposition
+            .split(";")
+            .map(s => s.trim())
+            .find(s => s.toLowerCase().startsWith("filename=") || s.toLowerCase().startsWith("filename*="));
+
+        if (match) {
+            const raw = match.split("=")[1];
+
+             // Loại bỏ dấu nháy đơn hoặc nháy kép ở đầu/cuối, và giải mã URL encoded tên file để đảm bảo tên chuẩn
+            return decodeURIComponent(raw.replace(/(^['"]|['"]$)/g, ""));
+        }
+
+        return "export.xlsx";
+    }
+
+    $(".export-button").click(function () {
+        $(".progress").hide();
+        $(".progress-bar").css("width", "0%").attr("aria-valuenow", 0);
+    });
+</script>
