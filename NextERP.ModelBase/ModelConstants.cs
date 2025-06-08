@@ -223,7 +223,7 @@ namespace NextERP.ModelBase
 
     public class ActionName
     {
-        public const string AdminIndex = "AdminIndex";
+        public const string DashboardIndex = "DashboardIndex";
         public const string AccountIndex = "AccountIndex";
 
         public class Appointment

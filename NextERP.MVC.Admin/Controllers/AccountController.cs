@@ -32,7 +32,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             // Kiểm tra xem user đã login chưa, nếu đã đăng nhập thì chuyển thẳng tới trang Home
             if (User.Identity != null && User.Identity.IsAuthenticated)
-                return RedirectToAction(ActionName.AdminIndex, "Admin");
+                return RedirectToAction(ActionName.DashboardIndex, "Dashboard");
 
             return View();
         }
@@ -80,7 +80,7 @@ namespace NextERP.MVC.Admin.Controllers
                     bool isCustomer = request.GroupRole == GroupRole.Customer.ToString();
 
                     if (isAdmin)
-                        return RedirectToAction(ActionName.AdminIndex, "Admin");
+                        return RedirectToAction(ActionName.DashboardIndex, "Dashboard");
                     else if (isEmployee)
                         return View();// RedirectToAction(Constants.Index, "Employee");
                     else if (isCustomer)

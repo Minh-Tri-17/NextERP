@@ -7,13 +7,13 @@ using System.Text;
 
 namespace NextERP.MVC.Admin.Services.Services
 {
-    public class AdminAPIService : BaseAPIService, IAdminAPIService
+    public class DashboardAPIService : BaseAPIService, IDashboardAPIService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public AdminAPIService(IHttpClientFactory httpClientFactory, IHttpContextAccessor contextAccessor, IConfiguration configuration) : base(httpClientFactory, contextAccessor, configuration)
+        public DashboardAPIService(IHttpClientFactory httpClientFactory, IHttpContextAccessor contextAccessor, IConfiguration configuration) : base(httpClientFactory, contextAccessor, configuration)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;

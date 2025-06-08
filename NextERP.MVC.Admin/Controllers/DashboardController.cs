@@ -5,17 +5,17 @@ using NextERP.MVC.Admin.Services.Interfaces;
 
 namespace NextERP.MVC.Admin.Controllers
 {
-    public class AdminController : BaseController
+    public class DashboardController : BaseController
     {
-        private readonly IAdminAPIService _adminAPIService;
+        private readonly IDashboardAPIService _dashboardAPIService;
 
-        public AdminController(IAdminAPIService adminAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
+        public DashboardController(IDashboardAPIService dashboardAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
-            _adminAPIService = adminAPIService;
+            _dashboardAPIService = dashboardAPIService;
         }
 
         [HttpGet]
-        public IActionResult AdminIndex()
+        public IActionResult DashboardIndex()
         {
             ViewBag.UserId = GetInfor()[0];
             return View();

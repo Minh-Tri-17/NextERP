@@ -16,7 +16,7 @@ namespace NextERP.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
-    public class AdminController : ControllerBase
+    public class DashboardController : ControllerBase
     {
 
     }

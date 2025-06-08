@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NextERP.MVC.Admin.Services.Interfaces
 {
-    public interface IAdminAPIService
+    public interface IDashboardAPIService
     {
     }
 }

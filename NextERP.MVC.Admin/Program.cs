@@ -20,7 +20,7 @@ builder.Services.AddScoped<IDepartmentAPIService, DepartmentAPIService>();
 builder.Services.AddScoped<IEmployeeAPIService, EmployeeAPIService>();
 builder.Services.AddScoped<IFeedbackAPIService, FeedbackAPIService>();
 builder.Services.AddScoped<IFunctionAPIService, FunctionAPIService>();
-builder.Services.AddScoped<IAdminAPIService, AdminAPIService>();
+builder.Services.AddScoped<IDashboardAPIService, DashboardAPIService>();
 builder.Services.AddScoped<IInvoiceDetailAPIService, InvoiceDetailAPIService>();
 builder.Services.AddScoped<IInvoiceAPIService, InvoiceAPIService>();
 builder.Services.AddScoped<ILeaveRequestAPIService, LeaveRequestAPIService>();
@@ -99,6 +99,6 @@ app.UseAuthentication();// 🔑 Xác thực
 app.UseAuthorization();// 🔐 Phân quyền
 app.MapControllerRoute(
     name: "default",
-    pattern: "{culture=vi}/{controller=Admin}/{action=AdminIndex}/{id?}"
+    pattern: "{culture=vi}/{controller=Dashboard}/{action=DashboardIndex}/{id?}"
 );
 app.Run();

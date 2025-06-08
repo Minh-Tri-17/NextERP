@@ -46,15 +46,15 @@
         <!--& SIDEBAR -->
         <aside class="sidebar d-none d-lg-block">
             <div class="sidebar-header">
-                <a class="logo" asp-action="AdminIndex" asp-controller="Admin">
+                <a class="logo" asp-action="@ActionName.DashboardIndex" asp-controller="Dashboard">
                     <img src="~/images/logo.png" alt="Logo" />
                     <h3>NextERP</h3>
                 </a>
             </div>
 
             <ul class="sidebar-menu">
-                <li class="sidebar-menu-item @Html.IsActive("Admin", "AdminIndex", "active")">
-                    <a asp-action="AdminIndex" asp-controller="Admin">
+                <li class="sidebar-menu-item @Html.IsActive("Dashboard", @ActionName.DashboardIndex, "active")">
+                    <a asp-action="@ActionName.DashboardIndex" asp-controller="Dashboard">
                         <span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
                     </a>
                 </li>
@@ -246,15 +246,15 @@
         <div class="offcanvas offcanvas-start" id="offcanvas-menu">
             <aside class="sidebar">
                 <div class="sidebar-header">
-                    <a class="logo" asp-action="AdminIndex" asp-controller="Admin">
+                    <a class="logo" asp-action="@ActionName.DashboardIndex" asp-controller="Dashboard">
                         <img src="~/images/logo.png" alt="Logo" />
                         <h3>NextERP</h3>
                     </a>
                 </div>
 
                 <ul class="sidebar-menu">
-                    <li class="sidebar-menu-item @Html.IsActive("Admin", "AdminIndex", "active")">
-                        <a asp-action="AdminIndex" asp-controller="Admin">
+                    <li class="sidebar-menu-item @Html.IsActive("Dashboard", @ActionName.DashboardIndex, "active")">
+                        <a asp-action="@ActionName.DashboardIndex" asp-controller="Dashboard">
                             <span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
                         </a>
                     </li>
@@ -451,7 +451,7 @@
                     <button class="btn-icon" id="toggle-menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-menu">
                         <img src="~/images/menu.png" alt="Mở/Đóng menu" />
                     </button>
-                    <a class="logo" asp-action="AdminIndex" asp-controller="Admin">
+                    <a class="logo" asp-action="@ActionName.DashboardIndex" asp-controller="Dashboard">
                         <img src="~/images/logo.png" alt="Logo" />
                     </a>
                 </div>
@@ -648,8 +648,8 @@
                                     @culture
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/vi/Admin/SetCultureCookie?cltr=vi&returnUrl=/vi" localize-content>Vietnamese</a></li>
-                                    <li><a class="dropdown-item" href="/en/Admin/SetCultureCookie?cltr=en&returnUrl=/en" localize-content>English</a></li>
+                                    <li><a class="dropdown-item" href="/vi/Dashboard/SetCultureCookie?cltr=vi&returnUrl=/vi" localize-content>Vietnamese</a></li>
+                                    <li><a class="dropdown-item" href="/en/Dashboard/SetCultureCookie?cltr=en&returnUrl=/en" localize-content>English</a></li>
                                 </ul>
                             </div>
                         </div>

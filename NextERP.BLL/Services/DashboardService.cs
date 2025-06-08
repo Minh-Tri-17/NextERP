@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
-    public class AdminService : IAdminService
+    public class DashboardService : IDashboardService
     {
     }
 }

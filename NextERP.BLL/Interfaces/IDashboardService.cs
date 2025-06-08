@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Interface
 {
-    public interface IAdminService
+    public interface IDashboardService
     {
     }
 }
