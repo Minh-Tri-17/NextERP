@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NextERP.DAL.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace NextERP.ModelBase
 {
@@ -85,6 +86,9 @@ namespace NextERP.ModelBase
 
     public partial class ProductModel : Product
     {
+        [DataType(DataType.Upload)]
+        public List<IFormFile>? ImageFiles { get; set; }
+        public List<string> Base64Images { get; set; } = new List<string>();
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
     }

@@ -45,6 +45,8 @@ public partial class NextErpContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
+    public virtual DbSet<ProductImage> ProductImages { get; set; }
+
     public virtual DbSet<Promotion> Promotions { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -56,6 +58,8 @@ public partial class NextErpContext : DbContext
     public virtual DbSet<SpaService> SpaServices { get; set; }
 
     public virtual DbSet<SpaServiceCategory> SpaServiceCategories { get; set; }
+
+    public virtual DbSet<SpaServiceImage> SpaServiceImages { get; set; }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
@@ -188,6 +192,13 @@ public partial class NextErpContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
+        modelBuilder.Entity<ProductImage>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductImages).HasConstraintName("FK_ProductImage_Products");
+        });
+
         modelBuilder.Entity<Promotion>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
@@ -228,6 +239,13 @@ public partial class NextErpContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK_ServiceCategories");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<SpaServiceImage>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.SpaService).WithMany(p => p.SpaServiceImages).HasConstraintName("FK_SpaServiceImage_SpaService");
         });
 
         modelBuilder.Entity<Supplier>(entity =>

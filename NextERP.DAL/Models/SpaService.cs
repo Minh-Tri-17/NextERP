@@ -82,4 +82,7 @@ public partial class SpaService
     [ForeignKey("SpaServiceCategoryId")]
     [InverseProperty("SpaServices")]
     public virtual SpaServiceCategory? SpaServiceCategory { get; set; }
+
+    [InverseProperty("SpaService")]
+    public virtual ICollection<SpaServiceImage> SpaServiceImages { get; set; } = new List<SpaServiceImage>();
 }
