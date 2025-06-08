@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, ProductModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(ProductModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var product = new Product();
                 DataHelper.MapAudit(request, product, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var product = await _context.Products.FindAsync(id);
+                var product = await _context.Products.FindAsync(request.Id);
                 if (product == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

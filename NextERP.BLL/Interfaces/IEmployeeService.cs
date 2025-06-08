@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IEmployeeService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, EmployeeModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(EmployeeModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<EmployeeModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<EmployeeModel>>> GetPaging(Filter filter);

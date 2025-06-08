@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, BranchModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(BranchModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var branch = new Branch();
                 DataHelper.MapAudit(request, branch, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var branch = await _context.Branches.FindAsync(id);
+                var branch = await _context.Branches.FindAsync(request.Id);
                 if (branch == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

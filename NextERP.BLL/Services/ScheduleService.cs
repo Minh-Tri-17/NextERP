@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, ScheduleModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(ScheduleModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var schedule = new Schedule();
                 DataHelper.MapAudit(request, schedule, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var schedule = await _context.Schedules.FindAsync(id);
+                var schedule = await _context.Schedules.FindAsync(request.Id);
                 if (schedule == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

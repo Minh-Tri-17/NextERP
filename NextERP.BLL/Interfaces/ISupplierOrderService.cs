@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface ISupplierOrderService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, SupplierOrderModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<SupplierOrderModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<SupplierOrderModel>>> GetPaging(Filter filter);

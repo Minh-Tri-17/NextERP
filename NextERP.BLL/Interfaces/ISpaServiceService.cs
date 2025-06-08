@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface ISpaServiceService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, SpaServiceModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(SpaServiceModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<SpaServiceModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<SpaServiceModel>>> GetPaging(Filter filter);

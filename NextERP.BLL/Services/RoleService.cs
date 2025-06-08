@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, RoleModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(RoleModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var role = new Role();
                 DataHelper.MapAudit(request, role, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var role = await _context.Roles.FindAsync(id);
+                var role = await _context.Roles.FindAsync(request.Id);
                 if (role == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

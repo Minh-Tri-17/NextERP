@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, SpaServiceModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(SpaServiceModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var spaService = new SpaService();
                 DataHelper.MapAudit(request, spaService, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var spaService = await _context.SpaServices.FindAsync(id);
+                var spaService = await _context.SpaServices.FindAsync(request.Id);
                 if (spaService == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

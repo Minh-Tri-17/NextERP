@@ -27,9 +27,12 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, UserModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(UserModel request)
         {
-            if (id == Guid.Empty)
+            var passwordHashed = PasswordHasher.HashPassword(request.Password);
+            request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
+
+            if (request.Id == Guid.Empty)
             {
                 var user = new User();
                 DataHelper.MapAudit(request, user, _currentUser.UserName);
@@ -44,7 +47,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var user = await _context.Users.FindAsync(id);
+                var user = await _context.Users.FindAsync(request.Id);
                 if (user == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

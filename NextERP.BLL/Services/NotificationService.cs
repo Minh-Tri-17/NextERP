@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, NotificationModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(NotificationModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var notification = new Notification();
                 DataHelper.MapAudit(request, notification, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var notification = await _context.Notifications.FindAsync(id);
+                var notification = await _context.Notifications.FindAsync(request.Id);
                 if (notification == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

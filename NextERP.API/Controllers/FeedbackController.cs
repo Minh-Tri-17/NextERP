@@ -32,7 +32,7 @@ namespace NextERP.API.Controllers
             // Sau này mở rộng cho phép truyền file xuống 
             //IFormFile excelFile = Request.Form.Files["Files"]!;
 
-            var result = await _feedbackService.CreateOrEdit(feedback.Id, feedback);
+            var result = await _feedbackService.CreateOrEdit(feedback);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

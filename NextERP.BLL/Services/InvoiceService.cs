@@ -24,9 +24,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, InvoiceModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var invoice = new Invoice();
                 DataHelper.MapAudit(request, invoice, _currentUser.UserName);
@@ -41,7 +41,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var invoice = await _context.Invoices.FindAsync(id);
+                var invoice = await _context.Invoices.FindAsync(request.Id);
                 if (invoice == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

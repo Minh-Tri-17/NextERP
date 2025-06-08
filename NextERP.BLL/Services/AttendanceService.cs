@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, AttendanceModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(AttendanceModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var attendance = new Attendance();
                 DataHelper.MapAudit(request, attendance, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var attendance = await _context.Attendances.FindAsync(id);
+                var attendance = await _context.Attendances.FindAsync(request.Id);
                 if (attendance == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

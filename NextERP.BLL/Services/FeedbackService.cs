@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, FeedbackModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(FeedbackModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var feedback = new Feedback();
                 DataHelper.MapAudit(request, feedback, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var feedback = await _context.Feedbacks.FindAsync(id);
+                var feedback = await _context.Feedbacks.FindAsync(request.Id);
                 if (feedback == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

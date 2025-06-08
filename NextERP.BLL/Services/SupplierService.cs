@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, SupplierModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var supplier = new Supplier();
                 DataHelper.MapAudit(request, supplier, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var supplier = await _context.Suppliers.FindAsync(id);
+                var supplier = await _context.Suppliers.FindAsync(request.Id);
                 if (supplier == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

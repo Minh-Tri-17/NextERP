@@ -32,7 +32,7 @@ namespace NextERP.API.Controllers
             // Sau này mở rộng cho phép truyền file xuống 
             //IFormFile excelFile = Request.Form.Files["Files"]!;
 
-            var result = await _spaServiceCategoryService.CreateOrEdit(spaServiceCategory.Id, spaServiceCategory);
+            var result = await _spaServiceCategoryService.CreateOrEdit(spaServiceCategory);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

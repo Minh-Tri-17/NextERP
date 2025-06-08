@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, SpaServiceCategoryModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(SpaServiceCategoryModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var appointment = new SpaServiceCategory();
                 DataHelper.MapAudit(request, appointment, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var appointment = await _context.SpaServiceCategories.FindAsync(id);
+                var appointment = await _context.SpaServiceCategories.FindAsync(request.Id);
                 if (appointment == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

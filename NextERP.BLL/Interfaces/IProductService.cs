@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IProductService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, ProductModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(ProductModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<ProductModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<ProductModel>>> GetPaging(Filter filter);

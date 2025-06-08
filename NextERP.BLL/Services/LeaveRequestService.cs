@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, LeaveRequestModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(LeaveRequestModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var leaveRequest = new LeaveRequest();
                 DataHelper.MapAudit(request, leaveRequest, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var leaveRequest = await _context.LeaveRequests.FindAsync(id);
+                var leaveRequest = await _context.LeaveRequests.FindAsync(request.Id);
                 if (leaveRequest == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

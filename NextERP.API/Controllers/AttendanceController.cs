@@ -32,7 +32,7 @@ namespace NextERP.API.Controllers
             // Sau này mở rộng cho phép truyền file xuống 
             //IFormFile excelFile = Request.Form.Files["Files"]!;
 
-            var result = await _attendanceService.CreateOrEdit(attendance.Id, attendance);
+            var result = await _attendanceService.CreateOrEdit(attendance);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

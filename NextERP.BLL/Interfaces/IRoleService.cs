@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IRoleService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, RoleModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(RoleModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<RoleModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<RoleModel>>> GetPaging(Filter filter);

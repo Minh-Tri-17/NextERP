@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IAppointmentService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, AppointmentModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(AppointmentModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<AppointmentModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<AppointmentModel>>> GetPaging(Filter filter);

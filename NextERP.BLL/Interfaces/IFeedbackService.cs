@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IFeedbackService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, FeedbackModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(FeedbackModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<FeedbackModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<FeedbackModel>>> GetPaging(Filter filter);

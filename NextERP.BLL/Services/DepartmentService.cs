@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, DepartmentModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(DepartmentModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var department = new Department();
                 DataHelper.MapAudit(request, department, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var department = await _context.Departments.FindAsync(id);
+                var department = await _context.Departments.FindAsync(request.Id);
                 if (department == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

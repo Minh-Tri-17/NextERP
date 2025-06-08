@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, PromotionModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(PromotionModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var promotion = new Promotion();
                 DataHelper.MapAudit(request, promotion, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var promotion = await _context.Promotions.FindAsync(id);
+                var promotion = await _context.Promotions.FindAsync(request.Id);
                 if (promotion == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

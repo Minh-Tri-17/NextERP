@@ -27,9 +27,9 @@ namespace NextERP.BLL.Service
             _currentUser = currentUser;
         }
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(Guid id, TrainingSessionModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(TrainingSessionModel request)
         {
-            if (id == Guid.Empty)
+            if (request.Id == Guid.Empty)
             {
                 var trainingSession = new TrainingSession();
                 DataHelper.MapAudit(request, trainingSession, _currentUser.UserName);
@@ -44,7 +44,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var trainingSession = await _context.TrainingSessions.FindAsync(id);
+                var trainingSession = await _context.TrainingSessions.FindAsync(request.Id);
                 if (trainingSession == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 

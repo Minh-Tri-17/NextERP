@@ -60,7 +60,7 @@ function showMessage(message) {
             .text("")
             .removeClass("toast show toast-body text-bg-success text-bg-danger")
             .addClass("d-none");
-    }, 6000);
+    }, 10000);
 }
 
 function parseResponse(response) {

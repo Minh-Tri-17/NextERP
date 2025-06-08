@@ -7,7 +7,7 @@ namespace NextERP.BLL.Interface
 {
     public interface IBranchService
     {
-        public Task<APIBaseResult<bool>> CreateOrEdit(Guid id, BranchModel request);
+        public Task<APIBaseResult<bool>> CreateOrEdit(BranchModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<BranchModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<BranchModel>>> GetPaging(Filter filter);
