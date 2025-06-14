@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="Views\Attendance\AttendanceForm.cshtml" />
+    <None Include="Views\Product\ProductForm.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

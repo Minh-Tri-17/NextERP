@@ -79,11 +79,11 @@
                 method: "POST",
                 body: formData
             }).then(response => {
-                    loadAppointments();
-                    return response.json();
-                }).then(data => {
-                    showMessage(data);
-                })
+                loadAppointments();
+                return response.json();
+            }).then(data => {
+                showMessage(data);
+            })
         }
     });
 </script>

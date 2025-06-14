@@ -5,7 +5,7 @@ function initEvents() {
 
 initEvents();
 
-//& Close validation form
+//& Đóng validation form
 function initCloseValidation() {
     $(document).on("hidden.bs.modal", ".modal", function () {
         const modal = $(this);
@@ -20,6 +20,7 @@ function initCloseValidation() {
     });
 }
 
+//& Kiểm tra độ dài checkbox để bật/tắt nút
 function checkLengthCheckbox(length, editButton, createButton, deleteButton, idForm) {
     const selectedCheckboxCount = length == null || length == undefined
         ? $('.' + idForm + ':checked').length : length;
@@ -40,6 +41,8 @@ function checkLengthCheckbox(length, editButton, createButton, deleteButton, idF
         $('.' + deleteButton).removeClass(' disabled');
     }
 }
+
+//& Hiển thị thông báo thành công hoặc thất bại
 function showMessage(message) {
     // Xác định có phải thông báo thành công hay không
     const isSuccess = message.startsWith("S:");
@@ -63,6 +66,7 @@ function showMessage(message) {
     }, 10000);
 }
 
+//& Chuyển đổi response thành JSON hoặc HTML dựa vào content type
 function parseResponse(response) {
     const contentType = response.headers.get("content-type");
 
@@ -71,4 +75,35 @@ function parseResponse(response) {
     } else {
         return response.text().then(data => ({ type: 'html', data }));
     }
+}
+
+//& Sau khi load dữ liệu thành công, ẩn loader và xử lý cuộn bảng
+function affterCallAPISuccess() {
+    $(".loader").css("display", "none");
+
+    // Gọi hàm tableScrollHandler để xử lý cuộn bảng
+    tableScrollHandler();
+}
+
+//& Format cho date
+function formatDateToInput(dateStr) {
+    if (!dateStr) return '';
+
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = (d.getMonth() + 1).toString().padStart(2, '0');
+    const dd = d.getDate().toString().padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+//& Format cho time
+function formatTimeToInput(dateStr) {
+    if (!dateStr) return '';
+
+    const d = new Date(dateStr);
+    const hh = d.getHours().toString().padStart(2, '0');
+    const min = d.getMinutes().toString().padStart(2, '0');
+
+    return `${hh}:${min}`;
 }

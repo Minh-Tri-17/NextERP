@@ -375,98 +375,92 @@
   <data name="ExportFailed" xml:space="preserve">
     <value>F:Xuất dữ liệu thất bại</value>
   </data>
-  <data name="đăng nhập67" xml:space="preserve">
-    <value />
+  <data name="ProductCode" xml:space="preserve">
+    <value>Mã sản phẩm</value>
   </data>
   <data name="NotFoundGetList" xml:space="preserve">
     <value>F:Lấy danh sách dữ liệu không thành công: Kết quả danh sách là null</value>
   </data>
-  <data name="đăng nhập68" xml:space="preserve">
-    <value />
+  <data name="ProductName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
   </data>
   <data name="NotFoundGet" xml:space="preserve">
     <value>F:Cập nhật dữ liệu không thành công: Không tìm thấy ID</value>
   </data>
-  <data name="đăng nhập69" xml:space="preserve">
-    <value />
+  <data name="QuantityInStock" xml:space="preserve">
+    <value>Số lượng tồn</value>
   </data>
   <data name="NotFoundUpdate" xml:space="preserve">
     <value>F:Lấy dữ liệu không thành công: Không tìm thấy ID</value>
   </data>
-  <data name="đăng nhập70" xml:space="preserve">
-    <value />
+  <data name="Price" xml:space="preserve">
+    <value>Giá</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>F:Không tìm thấy tệp hoặc tệp trống</value>
   </data>
-  <data name="đăng nhập71" xml:space="preserve">
-    <value />
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Ngày hết hạn</value>
   </data>
   <data name="ExportData" xml:space="preserve">
     <value>Xuất dữ liệu</value>
   </data>
-  <data name="đăng nhập72" xml:space="preserve">
-    <value />
+  <data name="ImageFiles" xml:space="preserve">
+    <value>Tệp ảnh</value>
   </data>
   <data name="ImportData" xml:space="preserve">
     <value>Nhập dữ liệu</value>
   </data>
-  <data name="đăng nhập73" xml:space="preserve">
-    <value />
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Nhà sản xuất</value>
   </data>
   <data name="StartImport" xml:space="preserve">
     <value>Bắt đầu nhập liệu</value>
   </data>
-  <data name="đăng nhập74" xml:space="preserve">
-    <value />
+  <data name="CountryOfOrigin" xml:space="preserve">
+    <value>Nơi xuất xứ</value>
   </data>
   <data name="StartExport" xml:space="preserve">
     <value>Bắt đầu xuất liệu</value>
   </data>
-  <data name="đăng nhập75" xml:space="preserve">
-    <value />
+  <data name="ReorderLevel" xml:space="preserve">
+    <value>Mức tồn tối thiẻu</value>
   </data>
   <data name="AllPage" xml:space="preserve">
     <value>Tất cả trang</value>
   </data>
-  <data name="đăng nhập76" xml:space="preserve">
-    <value />
+  <data name="Note" xml:space="preserve">
+    <value>Ghi chú</value>
   </data>
   <data name="CurrentPage" xml:space="preserve">
     <value>Trang hiện tại</value>
   </data>
-  <data name="đăng nhập77" xml:space="preserve">
-    <value />
+  <data name="AttendanceCode" xml:space="preserve">
+    <value>Mã chấm công</value>
   </data>
   <data name="SelectRow" xml:space="preserve">
     <value>Dòng đang chọn</value>
   </data>
-  <data name="đăng nhập78" xml:space="preserve">
-    <value />
+  <data name="WorkDate" xml:space="preserve">
+    <value>Ngày công</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Tải tệp lên</value>
   </data>
-  <data name="đăng nhập79" xml:space="preserve">
-    <value />
+  <data name="InTime" xml:space="preserve">
+    <value>Giờ vào</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Tìm kiếm</value>
   </data>
-  <data name="đăng nhập80" xml:space="preserve">
-    <value />
+  <data name="OutTime" xml:space="preserve">
+    <value>Giờ ra</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>Dọn dẹp</value>
   </data>
-  <data name="đăng nhập81" xml:space="preserve">
-    <value />
-  </data>
   <data name="SearchCode" xml:space="preserve">
     <value>Tìm mã</value>
-  </data>
-  <data name="đăng nhập82" xml:space="preserve">
-    <value />
   </data>
   <data name="SearchStatus" xml:space="preserve">
     <value>Tìm trạng thái</value>
@@ -545,5 +539,11 @@
   </data>
   <data name="đăng nhập95" xml:space="preserve">
     <value />
+  </data>
+  <data name="đăng nhập82" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Base64Images" xml:space="preserve">
+    <value>Ảnh</value>
   </data>
 </root>

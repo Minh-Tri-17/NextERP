@@ -78,24 +78,24 @@
     });
 
     $(".create-edit-button").click(function () {
-        // Lưu giá trị cho field Id trên form
-        $("#@AttributeNames.Attendance.AttendanceId").val(attendanceId);
-
         $(".only-save-button").css("display",  attendanceId ? "none" : "block");
 
         fetch('@Url.Action("CreateOrEdit", TableName.Attendance)/' + attendanceId, {
             method: "GET",
         }).then(response => {
-                return response.json();
-            }).then(data => {
-                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Attendance.WorkDate").val(data.workDate);
-                $("#@AttributeNames.Attendance.InTime").val(data.inTime);
-                $("#@AttributeNames.Attendance.OutTime").val(data.outTime);
-                $("#@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
-                $("#@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
-                $("#@AttributeNames.Attendance.Note").val(data.note);
-            })
+            return response.json();
+        }).then(data => {
+            // Lưu giá trị cho field Id trên form
+            $("#@AttributeNames.Attendance.AttendanceId").val(attendanceId);
+            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+            $("#@AttributeNames.Attendance.AttendanceCode").val(data.attendanceCode);
+            $("#@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
+            $("#@AttributeNames.Attendance.WorkDate").val(formatDateToInput(data.workDate));
+            $("#@AttributeNames.Attendance.InTime").val(formatTimeToInput(data.inTime));
+            $("#@AttributeNames.Attendance.OutTime").val(formatTimeToInput(data.outTime));
+            $("#@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
+            $("#@AttributeNames.Attendance.Note").val(data.note);
+        })
     });
 
     $(".delete-button").click(function () {
@@ -113,13 +113,17 @@
             method: "POST",
             body: formData
         }).then(response => {
-                loadAttendances();
-                return response.json();
-            }).then(data => {
-                attendanceId = "";
+            loadAttendances();
+            return response.json();
+        }).then(data => {
+            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+            affterCallAPISuccess();
 
-                showMessage(data);
-            })
+            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+            attendanceId = "";
+
+            showMessage(data);
+        })
     });
 
     $(".search-button").click(function () {
@@ -146,28 +150,27 @@
             method: "POST",
             body: filter
         }).then(response => {
-                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-                checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "@TableName.Attendance-checkbox");
+            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+            checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "@TableName.Attendance-checkbox");
 
-                // Gọi hàm parseResponse để xử lý response trả về
-                return parseResponse(response);
-            }).then(result  => {
-                if (result.type === 'html') {
-                    $("#attendance-table").html(result.data);
+            // Gọi hàm parseResponse để xử lý response trả về
+            return parseResponse(response);
+        }).then(result => {
+            if (result.type === 'html') {
+                $("#attendance-table").html(result.data);
 
-                    $(".loader").css("display", "none");
+                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+                affterCallAPISuccess();
+            }
+            else if (result.type === 'json') {
+                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+                affterCallAPISuccess();
 
-                    // Gọi hàm tableScrollHandler để xử lý cuộn bảng
-                    tableScrollHandler();
+                showMessage(result.data);
+            }
 
-                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                    attendanceId = "";
-                }
-                else if (result.type === 'json') {
-                    $(".loader").css("display", "none");
-                    
-                    showMessage(result.data);
-                }
-            });
+            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+            attendanceId = "";
+        });
     }
 </script>

@@ -24,7 +24,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkDate" type="datetime-local" asp-for="WorkDate" required />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkDate" type="date" asp-for="WorkDate" required />
                             <div class="invalid-feedback" localize-content>InvalidTime</div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.InTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.InTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.InTime" type="datetime-local" asp-for="InTime" required />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.InTime" type="time" asp-for="InTime" required />
                             <div class="invalid-feedback" localize-content>InvalidTime</div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.OutTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OutTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OutTime" type="datetime-local" asp-for="OutTime" required />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OutTime" type="time" asp-for="OutTime" required />
                             <div class="invalid-feedback" localize-content>InvalidTime</div>
                         </div>
                     </div>
@@ -95,11 +95,11 @@
                 method: "POST",
                 body: formData
             }).then(response => {
-                    loadAttendances();
-                    return response.json();
-                }).then(data => {
-                    showMessage(data);
-                })
+                loadAttendances();
+                return response.json();
+            }).then(data => {
+                showMessage(data);
+            })
         }
     });
 </script>

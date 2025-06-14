@@ -86,23 +86,23 @@
                 dayMaxEvents: true, //? Xem thêm sự kiện
                 selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
                 select: function (info) {
-                      const start = info.start;
-                      let end = info.end;
+                        const start = info.start;
+                        let end = info.end;
 
-                      end = new Date(info.end);
-                      end.setDate(end.getDate() - 1);
+                        end = new Date(info.end);
+                        end.setDate(end.getDate() - 1);
 
-                      const formatDateTime = (date) => {
-                      const options = { hour12: false };
-                      return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
-                  };
+                        const formatDateTime = (date) => {
+                        const options = { hour12: false };
+                        return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
+                    };
 
-                  $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
-                  $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
+                    $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
+                    $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
 
-                  //? Mở modal khi chọn ngày trên lịch
-                  const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
-                  exportModal.show();
+                    //? Mở modal khi chọn ngày trên lịch
+                    const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
+                    exportModal.show();
                 },
                 eventDidMount: function (info) {
                     const status = info.event.extendedProps.status;
@@ -155,9 +155,6 @@
             calendar.render();
 
             $(".loader").css("display", "none");
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            attendanceId = "";
-            });
+        });
     }
 </script>
