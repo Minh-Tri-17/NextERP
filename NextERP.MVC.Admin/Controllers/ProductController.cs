@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using NextERP.ModelBase;
 using NextERP.MVC.Admin.Services.Interfaces;
 using NextERP.Util;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace NextERP.MVC.Admin.Controllers
 {
@@ -38,7 +41,29 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return PartialView(ActionName.Product.ProductList, result.Result);
+            foreach (var product in result!.Result!.Items!)
+            {
+                List<string> base64Images = new List<string>();
+
+                foreach (var productImage in product.ProductImages)
+                {
+                    var imageBytes = await _productAPIService.GetImageBytes(DataHelper.GetGuid(productImage.ProductId), DataHelper.GetString(productImage.ImagePath));
+
+                    using (var image = Image.Load<Rgba32>(imageBytes, out IImageFormat format))
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            image.Save(ms, format); // Lưu lại đúng định dạng gốc
+                            string base64Image = $"data:{format.DefaultMimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
+                            base64Images.Add(base64Image);
+                        }
+                    }
+                }
+
+                product.Base64Images = base64Images;
+            }
+
+            return PartialView(ActionName.Product.ProductList, result);
         }
 
         [HttpPost]
