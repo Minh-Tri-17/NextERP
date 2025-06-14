@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditAppointment))]
-        public async Task<ActionResult<Appointment>> CreateOrEditAppointment([FromBody] AppointmentModel appointment)
+        public async Task<ActionResult<Appointment>> CreateOrEditAppointment()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var appointment = new AppointmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (appointment != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    appointment.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(body);
+            }
+
+            if (appointment == null)
+                return BadRequest();
 
             var result = await _appointmentService.CreateOrEdit(appointment);
             if (!result.IsSuccess)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditFunction))]
-        public async Task<ActionResult<Function>> CreateOrEditFunction([FromBody] FunctionModel function)
+        public async Task<ActionResult<Function>> CreateOrEditFunction()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var function = new FunctionModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    function = JsonConvert.DeserializeObject<FunctionModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (function != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    function.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    function = JsonConvert.DeserializeObject<FunctionModel>(body);
+            }
+
+            if (function == null)
+                return BadRequest();
 
             var result = await _functionService.CreateOrEdit(function);
             if (!result.IsSuccess)

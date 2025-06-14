@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditSalary))]
-        public async Task<ActionResult<Salary>> CreateOrEditSalary([FromBody] SalaryModel salary)
+        public async Task<ActionResult<Salary>> CreateOrEditSalary()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var salary = new SalaryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (salary != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    salary.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(body);
+            }
+
+            if (salary == null)
+                return BadRequest();
 
             var result = await _salaryService.CreateOrEdit(salary);
             if (!result.IsSuccess)

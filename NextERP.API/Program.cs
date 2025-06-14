@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -56,6 +57,15 @@ builder.Services.AddCors(p => p.AddPolicy("FrontendCorsPolicy", build =>
 {
     build.WithOrigins("http://localhost:2026", "https://localhost:20268").AllowAnyMethod().AllowAnyHeader();
 }));
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 209715200; // 200 MB
+});
+// Cấu hình request body size cho toàn bộ server
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 209715200; // 200 MB
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

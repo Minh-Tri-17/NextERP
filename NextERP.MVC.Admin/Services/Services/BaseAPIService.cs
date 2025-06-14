@@ -1,9 +1,9 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 using System.Net.Http.Headers;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NextERP.MVC.Admin.Services.Services
 {
@@ -45,7 +45,16 @@ namespace NextERP.MVC.Admin.Services.Services
         /// <returns></returns>
         private async Task<TResponse> ReadResponse<TResponse>(HttpResponseMessage response)
         {
-            // Nếu kiểu dữ liệu trả về là mảng byte (dùng cho tải file)
+            var contentType = response.Content.Headers.ContentType?.MediaType;
+
+            // Nếu kiểu dữ liệu trả về là byte[] hoặc là file/hình ảnh
+            if (typeof(TResponse) == typeof(byte[]) || (contentType != null && contentType.StartsWith("image/")))
+            {
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                return (TResponse)(object)bytes!;
+            }
+
+            // Nếu kiểu dữ liệu trả về là APIBaseResult<byte[]>
             if (typeof(TResponse) == typeof(APIBaseResult<byte[]>))
             {
                 var contentString = await response.Content.ReadAsStringAsync();
@@ -53,7 +62,7 @@ namespace NextERP.MVC.Admin.Services.Services
                 return (TResponse)(object)result!;
             }
 
-            // Nếu là dữ liệu dạng JSON, đọc chuỗi nội dung
+            // Mặc định: đọc chuỗi JSON
             var body = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResponse>(body)!;
         }
@@ -68,8 +77,58 @@ namespace NextERP.MVC.Admin.Services.Services
         protected async Task<TResponse> PostAsync<TResponse, TRequest>(string url, TRequest request)
         {
             using var client = CreateAuthorizedClient();
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Lấy tất cả các file từ các thuộc tính của request
+            var fileProps = typeof(TRequest).GetProperties()
+                .Where(p => typeof(IFormFile).IsAssignableFrom(p.PropertyType)
+                || typeof(IEnumerable<IFormFile>).IsAssignableFrom(p.PropertyType))
+                .ToList();
+
+            var files = fileProps.SelectMany(s =>
+               {
+                   var value = s.GetValue(request);
+                   return value switch
+                   {
+                       IFormFile f => new[] { f },
+                       IEnumerable<IFormFile> fs => fs,
+                       _ => Enumerable.Empty<IFormFile>()
+                   };
+               }).ToList();
+
+            HttpContent content;
+
+            // Nếu có file đính kèm, sử dụng MultipartFormDataContent để gửi dữ liệu và file ngược lại sử dụng json đơn giản
+            if (files.Any())
+            {
+                var multipartContent = new MultipartFormDataContent();
+
+                // Thêm các thuộc tính đơn giản (không phải file) của request vào multipartContent
+                var jsonProps = typeof(TRequest).GetProperties()
+                    .Where(p => !fileProps.Contains(p))
+                    .ToDictionary(p => p.Name, p => p.GetValue(request));
+
+                multipartContent.Add(new StringContent(JsonConvert.SerializeObject(jsonProps), Encoding.UTF8), "Json");
+
+                // Thêm các file đính kèm vào multipartContent
+                foreach (var file in files)
+                {
+                    var streamContent = new StreamContent(file.OpenReadStream());
+                    streamContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = Constants.Files,
+                        FileName = $"\"{file.FileName}\""
+                    };
+                    streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+                    multipartContent.Add(streamContent, file.Name, file.FileName);
+                }
+
+                content = multipartContent;
+            }
+            else
+            {
+                content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            }
 
             var response = await client.PostAsync(url, content);
             return await ReadResponse<TResponse>(response);

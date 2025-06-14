@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditPosition))]
-        public async Task<ActionResult<Position>> CreateOrEditPosition([FromBody] PositionModel position)
+        public async Task<ActionResult<Position>> CreateOrEditPosition()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var position = new PositionModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    position = JsonConvert.DeserializeObject<PositionModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (position != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    position.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    position = JsonConvert.DeserializeObject<PositionModel>(body);
+            }
+
+            if (position == null)
+                return BadRequest();
 
             var result = await _positionService.CreateOrEdit(position);
             if (!result.IsSuccess)

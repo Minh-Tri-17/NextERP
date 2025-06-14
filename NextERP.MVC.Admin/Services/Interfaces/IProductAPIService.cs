@@ -12,5 +12,6 @@ namespace NextERP.MVC.Admin.Services.Interfaces
         public Task<APIBaseResult<PagingResult<ProductModel>>> GetPaging(Filter filter);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
         public Task<APIBaseResult<byte[]>> Export(Filter filter);
+        public Task<byte[]> GetImageBytes(Guid? productId, string imagePath);
     }
 }

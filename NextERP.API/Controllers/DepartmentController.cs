@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditDepartment))]
-        public async Task<ActionResult<Department>> CreateOrEditDepartment([FromBody] DepartmentModel department)
+        public async Task<ActionResult<Department>> CreateOrEditDepartment()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var department = new DepartmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (department != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    department.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(body);
+            }
+
+            if (department == null)
+                return BadRequest();
 
             var result = await _departmentService.CreateOrEdit(department);
             if (!result.IsSuccess)

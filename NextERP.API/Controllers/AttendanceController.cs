@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditAttendance))]
-        public async Task<ActionResult<Attendance>> CreateOrEditAttendance([FromBody] AttendanceModel attendance)
+        public async Task<ActionResult<Attendance>> CreateOrEditAttendance()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var attendance = new AttendanceModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (attendance != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    attendance.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(body);
+            }
+
+            if (attendance == null)
+                return BadRequest();
 
             var result = await _attendanceService.CreateOrEdit(attendance);
             if (!result.IsSuccess)

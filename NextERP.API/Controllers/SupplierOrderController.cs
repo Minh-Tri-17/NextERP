@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditSupplierOrder))]
-        public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder([FromBody] SupplierOrderModel supplierOrder)
+        public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var supplierOrder = new SupplierOrderModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    supplierOrder = JsonConvert.DeserializeObject<SupplierOrderModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (supplierOrder != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    supplierOrder.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    supplierOrder = JsonConvert.DeserializeObject<SupplierOrderModel>(body);
+            }
+
+            if (supplierOrder == null)
+                return BadRequest();
 
             var result = await _supplierOrderService.CreateOrEdit(supplierOrder);
             if (!result.IsSuccess)

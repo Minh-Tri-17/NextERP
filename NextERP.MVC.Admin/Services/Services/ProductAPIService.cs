@@ -49,5 +49,10 @@ namespace NextERP.MVC.Admin.Services.Services
         {
             return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportProduct, filter);
         }
+
+        public async Task<byte[]> GetImageBytes(Guid? productId, string imagePath)
+        {
+            return await GetAsync<byte[]>(string.Format(Constants.UrlGetImageProduct, productId, imagePath));
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,32 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditProduct))]
-        public async Task<ActionResult<Product>> CreateOrEditProduct([FromBody] ProductModel product)
+        public async Task<ActionResult<Product>> CreateOrEditProduct()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var product = new ProductModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    product = JsonConvert.DeserializeObject<ProductModel>(json!);
+
+                if (product != null)
+                {
+                    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                    product.ImageFiles = files;
+                }
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    product = JsonConvert.DeserializeObject<ProductModel>(body);
+            }
+
+            if (product == null)
+                return BadRequest();
 
             var result = await _productService.CreateOrEdit(product);
             if (!result.IsSuccess)
@@ -96,6 +119,14 @@ namespace NextERP.API.Controllers
                 return BadRequest(result);
 
             return Ok(result);
+        }
+
+        [HttpGet($"{nameof(GetImage)}/{{productId}}/Image/{{imagePath}}")]
+        public async Task<IActionResult> GetImage(Guid productId, string imagePath)
+        {
+            byte[] imageData = await _productService.GetImageBytes(productId, imagePath);
+
+            return File(imageData, "image/jpg");
         }
     }
 }

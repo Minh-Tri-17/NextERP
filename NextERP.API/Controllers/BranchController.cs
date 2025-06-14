@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
@@ -27,10 +28,33 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(CreateOrEditBranch))]
-        public async Task<ActionResult<Branch>> CreateOrEditBranch([FromBody] BranchModel branch)
+        public async Task<ActionResult<Branch>> CreateOrEditBranch()
         {
-            // Sau này mở rộng cho phép truyền file xuống 
-            //IFormFile excelFile = Request.Form.Files["Files"]!;
+            var branch = new BranchModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (branch != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    branch.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(body);
+            }
+
+            if (branch == null)
+                return BadRequest();
 
             var result = await _branchService.CreateOrEdit(branch);
             if (!result.IsSuccess)
