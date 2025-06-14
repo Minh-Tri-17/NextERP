@@ -7,6 +7,7 @@
         public const string BaseAddress = "BaseAddress";
         public const string Id = "Id";
         public const string Code = "Code";
+        public const string ImageFiles = "ImageFiles";
         public const string PageIndex = "PageIndex";
         public const string PageSize = "PageSize";
         public const string IsDelete = "IsDelete";
@@ -14,23 +15,28 @@
         public const string UserUpdate = "UserUpdate";
         public const string DateCreate = "DateCreate";
         public const string DateUpdate = "DateUpdate";
-        public const string FileName = "{0}_{1}.xlsx";
         public const string ExcelFiles = "ExcelFiles";
-        public const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        public const string DateTimeString = "yyyyMMddHHmmssfff";
-        public const string DateFirstFormatDash = "dd-MM-yyyy";
-        public const string DateLastFormatDash = "yyyy-MM-dd";
-        public const string DateFirstFormatSlash = "dd/MM/yyyy";
-        public const string DateLastFormatSlash = "yyyy/MM/dd";
+        public const string Files = "Files";
         public const string Filter = "Filter";
-
-        #region View
-
         public const string SearchBox = "SearchBox";
         public const string Pagination = "Pagination";
         public const string DateFrom = "DateFrom";
         public const string DateTo = "DateTo";
         public const string KeyWord = "KeyWord";
+        public const string Base64Images = "Base64Images";
+
+        #region Format
+
+        public const string FileName = "{0}_{1}.xlsx";
+        public const string Currency = "$";
+        public const string DateTimeString = "yyyyMMddHHmmssfff";
+        public const string DateFirstFormatDash = "dd-MM-yyyy";
+        public const string DateLastFormatDash = "yyyy-MM-dd";
+        public const string DateFirstFormatSlash = "dd/MM/yyyy";
+        public const string DateLastFormatSlash = "yyyy/MM/dd";
+        public const string DateTimeFormatDash = "dd-MM-yyyy HH:mm";
+        public const string DateTimeFormatSlash = "dd/MM/yyyy HH:mm";
+        public const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         #endregion
 
@@ -188,6 +194,7 @@
         public const string UrlGetProducts = "/api/Product/GetProducts";
         public const string UrlImportProduct = "/api/Product/ImportProduct";
         public const string UrlExportProduct = "/api/Product/ExportProduct";
+        public const string UrlGetImageProduct = "/api/Product/GetImage/{0}/Image/{1}";
 
         #endregion
 

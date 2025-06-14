@@ -90,7 +90,8 @@ namespace NextERP.Util
             // Nếu giá trị là string và có thể chuyển đổi thành DateTime, thì thực hiện chuyển đổi
             var stringDateTime = GetString(value);
 
-            string[] formats = { Constants.DateFirstFormatDash, Constants.DateLastFormatDash, Constants.DateFirstFormatSlash, Constants.DateLastFormatSlash };
+            string[] formats = { Constants.DateFirstFormatDash, Constants.DateLastFormatDash, Constants.DateFirstFormatSlash,
+                Constants.DateLastFormatSlash, Constants.DateTimeFormatDash, Constants.DateTimeFormatSlash };
 
             if (DateTime.TryParseExact(stringDateTime, formats, null, System.Globalization.DateTimeStyles.None, out var parsed))
                 return parsed;
@@ -204,7 +205,7 @@ namespace NextERP.Util
                     .SetValue(destination, !string.IsNullOrEmpty(currentUser) ? currentUser : null);
 
                 // Sinh mã code tự động nếu là bản ghi mới và thuộc tính Code tồn tại
-                var tableName = typeof(TDestination).Name;
+                var tableName = GetTableName<TDestination>();
                 var codeProp = destinationProps.FirstOrDefault(p => p.Name == tableName + Constants.Code && p.PropertyType == typeof(string));
                 if (codeProp != null)
                 {
@@ -238,8 +239,8 @@ namespace NextERP.Util
                 destinationProps.FirstOrDefault(p => p.Name == Constants.DateCreate)?
                      .SetValue(destination, valueDateCreate);
 
-                var valueCode = destinationProps.FirstOrDefault(p => p.Name == typeof(TDestination).Name + Constants.Code)?.GetValue(destination);
-                destinationProps.FirstOrDefault(p => p.Name == typeof(TDestination).Name + Constants.Code)?
+                var valueCode = destinationProps.FirstOrDefault(p => p.Name == GetTableName<TDestination>() + Constants.Code)?.GetValue(destination);
+                destinationProps.FirstOrDefault(p => p.Name == GetTableName<TDestination>() + Constants.Code)?
                   .SetValue(destination, valueCode);
 
                 var valueIsDelete = destinationProps.FirstOrDefault(p => p.Name == Constants.IsDelete)?.GetValue(destination);
@@ -259,8 +260,7 @@ namespace NextERP.Util
         /// <param name="sourceList"></param>
         /// <param name="destinationList"></param>
         /// <param name="userName"></param>
-        public static void MapListAudit<TSource, TDestination>(List<TSource> sourceList, List<TDestination> destinationList,
-            string userName) where TDestination : new()
+        public static void MapListAudit<TSource, TDestination>(List<TSource> sourceList, List<TDestination> destinationList, string userName) where TDestination : new()
         {
             if (sourceList == null || destinationList == null)
                 return;
@@ -440,7 +440,7 @@ namespace NextERP.Util
             var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             var headers = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-              .Where(x => x.Name != Constants.Id && x.GetMethod != null && !x.GetMethod.IsVirtual)
+              .Where(s => s.Name != Constants.Id && s.GetMethod != null && !s.GetMethod.IsVirtual)
               .Select(p => p.Name)
               .ToList();
 
@@ -485,7 +485,7 @@ namespace NextERP.Util
                 case null:
                     return null;
                 case DateTime dt:
-                    return dt.ToString(Constants.DateFirstFormatDash);
+                    return dt.ToString(Constants.DateTimeFormatDash);
                 case bool b:
                     return b ? "Yes" : "No";
                 case Enum e:

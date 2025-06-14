@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NextERP.ModelBase;
-using NextERP.ModelBase.APIResult;
-using NextERP.ModelBase.PagingResult;
 using NextERP.Util;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
