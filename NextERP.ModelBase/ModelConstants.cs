@@ -560,11 +560,13 @@ namespace NextERP.ModelBase
         {
             public const string ProductId = "ProductId";
             public const string ProductCode = "ProductCode";
+            public const string ProductName = "ProductName";
             public const string QuantityInStock = "QuantityInStock";
             public const string Price = "Price";
             public const string ExpirationDate = "ExpirationDate";
             public const string Photo = "Photo";
             public const string Manufacturer = "Manufacturer";
+            public const string ImageFiles = "ImageFiles";
             public const string CountryOfOrigin = "CountryOfOrigin";
             public const string ReorderLevel = "ReorderLevel";
             public const string Note = "Note";

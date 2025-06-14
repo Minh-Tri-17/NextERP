@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using NextERP.DAL.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace NextERP.ModelBase
 {
@@ -89,6 +90,13 @@ namespace NextERP.ModelBase
         [DataType(DataType.Upload)]
         public List<IFormFile>? ImageFiles { get; set; }
         public List<string> Base64Images { get; set; } = new List<string>();
+
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public partial class ProductImageModel : ProductImage
+    {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
     }
@@ -129,6 +137,12 @@ namespace NextERP.ModelBase
         public int PageSize { get; set; }
     }
 
+    public partial class SpaServiceImageModel : SpaServiceImage
+    {
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+    }
+
     public partial class SpaServiceCategoryModel : SpaServiceCategory
     {
         public int PageIndex { get; set; }
@@ -163,6 +177,7 @@ namespace NextERP.ModelBase
     {
         public bool Remember { get; set; } = false;
         public string Password { get; set; } = string.Empty;
+
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
     }
@@ -175,6 +190,7 @@ namespace NextERP.ModelBase
         public DateTime? DateTo { get; set; }
         public string? KeyWord { get; set; }
         public bool AllowPaging { get; set; } = true;
+        public bool IsNotDelete { get; set; } = true;
         public string? Ids { get; set; }
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;

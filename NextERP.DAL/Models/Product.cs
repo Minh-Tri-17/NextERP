@@ -27,10 +27,6 @@ public partial class Product
     [Column(TypeName = "datetime")]
     public DateTime? ExpirationDate { get; set; }
 
-    [StringLength(500)]
-    [Unicode(false)]
-    public string? Photo { get; set; }
-
     [StringLength(50)]
     public string? Manufacturer { get; set; }
 

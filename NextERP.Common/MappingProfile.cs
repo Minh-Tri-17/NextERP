@@ -219,6 +219,21 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            CreateMap<ProductImage, ProductImageModel>().ReverseMap()
+                .ForMember(dest => dest.UserCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.DateCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.ProductImageCode, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.IsDelete, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
+
+            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
             CreateMap<ProductCategory, ProductCategoryModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -302,6 +317,21 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.SpaServiceCode, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.IsDelete, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
+
+            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            CreateMap<SpaServiceImage, SpaServiceImageModel>().ReverseMap()
+                .ForMember(dest => dest.UserCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.DateCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.SpaServiceImageCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.IsDelete, opt =>
