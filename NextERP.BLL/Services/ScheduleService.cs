@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(ScheduleModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var schedule = new Schedule();
                 DataHelper.MapAudit(request, schedule, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var schedule = await _context.Schedules.FindAsync(request.Id);
+                var schedule = await _context.Schedules.FindAsync(id);
                 if (schedule == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listSchedule = await _context.Schedules
-                .Where(x => listScheduleId.Contains(x.Id))
+                .Where(s => listScheduleId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var schedule in listSchedule)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var schedule = await _context.Schedules
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (schedule == null)
                 return new APIErrorResult<ScheduleModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<ScheduleModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Schedule> query = _context.Schedules
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Schedule> query = _context.Schedules.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.ScheduleCode)
-                    && x.ScheduleCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.ScheduleCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listScheduleId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listScheduleId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listSchedule = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listSchedule.Any())
-                return new APIErrorResult<PagingResult<ScheduleModel>>(Messages.NotFoundGetList);
 
             var listScheduleModel = DataHelper.MappingList<Schedule, ScheduleModel>(listSchedule);
             var pageResult = new PagingResult<ScheduleModel>()

@@ -11,6 +11,7 @@ using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,19 +21,53 @@ namespace NextERP.BLL.Service
     {
         private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
         private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
+        private readonly IStorageService _storageService; // Dùng để lưu trữ file, có thể là trên đám mây hoặc hệ thống tập tin cục bộ
 
-        public ProductService(NextErpContext context, ICurrentUserService currentUser)
+        public ProductService(NextErpContext context, ICurrentUserService currentUser, IStorageService storageService)
         {
             _context = context;
             _currentUser = currentUser;
+            _storageService = storageService;
         }
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(ProductModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var product = new Product();
                 DataHelper.MapAudit(request, product, _currentUser.UserName);
+
+                if (request.ImageFiles != null)
+                {
+                    var listProductImage = new List<ProductImage>();
+
+                    bool isFirstImage = true;
+
+                    foreach (var file in request.ImageFiles)
+                    {
+                        var productImage = new ProductImage();
+                        var productImageModel = new ProductImageModel()
+                        {
+                            ProductId = product.Id,
+                            IsPrimary = isFirstImage,
+                            ImagePath = await SaveFile(file),
+                        };
+
+                        DataHelper.MapAudit(productImageModel, productImage, _currentUser.UserName);
+
+                        listProductImage.Add(productImage);
+
+                        isFirstImage = false;
+                    }
+
+                    product.ProductImages = listProductImage;
+                }
 
                 await _context.Products.AddAsync(product);
 
@@ -44,11 +79,60 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var product = await _context.Products.FindAsync(request.Id);
+                var product = await _context.Products.FindAsync(id);
                 if (product == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
                 DataHelper.MapAudit(request, product, _currentUser.UserName);
+
+                if (request.ImageFiles != null && request.ImageFiles.Any())
+                {
+                    var listImageFileOld = await _context.ProductImages
+                        .Where(s => s.ProductId == product.Id)
+                        .Select(s => new ProductImageModel
+                        {
+                            Id = s.Id,
+                            ImagePath = s.ImagePath,
+                        })
+                        .ToListAsync();
+
+                    // Xóa các ảnh củ trong database và trong folder theo productId
+                    if (listImageFileOld.Count > 0)
+                    {
+                        foreach (var imgaeFileOld in listImageFileOld)
+                        {
+                            if (imgaeFileOld != null && imgaeFileOld.ImagePath != null)
+                            {
+                                await _storageService.DeleteFileAsync(imgaeFileOld.ImagePath);
+                                _context.ProductImages.Remove(imgaeFileOld);
+                            }
+                        }
+                    }
+
+                    // Tạo ảnh mới vào trong database và trong folder
+                    var listProductImage = new List<ProductImage>();
+
+                    bool isFirstImage = true;
+
+                    foreach (var file in request.ImageFiles)
+                    {
+                        var productImage = new ProductImage();
+                        var productImageModel = new ProductImageModel()
+                        {
+                            ProductId = product.Id,
+                            IsPrimary = isFirstImage,
+                            ImagePath = await SaveFile(file),
+                        };
+
+                        DataHelper.MapAudit(productImageModel, productImage, _currentUser.UserName);
+
+                        listProductImage.Add(productImage);
+
+                        isFirstImage = false;
+                    }
+
+                    product.ProductImages = listProductImage;
+                }
 
                 var result = await _context.SaveChangesAsync();
                 if (result > 0)
@@ -66,12 +150,31 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listProduct = await _context.Products
-                .Where(x => listProductId.Contains(x.Id))
+                .Where(s => listProductId.Contains(s.Id))
                 .ToListAsync();
+
+            var listProductID = listProduct.Select(s => s.Id).ToList();
+            var listProductImage = await _context.ProductImages
+                    .Where(s => s.ProductId.HasValue && listProductID.Contains(s.ProductId.Value))
+                    .Select(s => new ProductImageModel
+                    {
+                        Id = s.Id,
+                        ProductId = s.ProductId,
+                        ImagePath = s.ImagePath
+                    })
+                    .ToListAsync();
 
             foreach (var product in listProduct)
             {
                 product.IsDelete = true;
+
+                var listProductImageByProduct = listProductImage.Where(s => s.ProductId == product.Id).ToList();
+
+                foreach (var productImageByProduct in listProductImageByProduct)
+                {
+                    if (productImageByProduct.ImagePath != null)
+                        await _storageService.DeleteFileAsync(productImageByProduct.ImagePath);
+                }
             }
 
             var result = await _context.SaveChangesAsync();
@@ -85,7 +188,7 @@ namespace NextERP.BLL.Service
         {
             var product = await _context.Products
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (product == null)
                 return new APIErrorResult<ProductModel>(Messages.NotFoundGet);
@@ -97,42 +200,22 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<ProductModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Product> query = _context.Products
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Product> query = _context.Products.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.ProductCode)
-                    && x.ProductCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.ProductCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listProductId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listProductId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listProduct = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
 
-            if (!listProduct.Any())
-                return new APIErrorResult<PagingResult<ProductModel>>(Messages.NotFoundGetList);
+            foreach (var item in listProduct)
+            {
+                item.ProductImages = _context.ProductImages.Where(s => s.ProductId.HasValue && s.ProductId == item.Id).ToList();
+            }
 
             var listProductModel = DataHelper.MappingList<Product, ProductModel>(listProduct);
             var pageResult = new PagingResult<ProductModel>()
@@ -206,6 +289,23 @@ namespace NextERP.BLL.Service
                 return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
 
             return new APIErrorResult<byte[]>(Messages.ExportFailed);
+        }
+
+        public Task<byte[]> GetImageBytes(Guid productId, string imagePath)
+        {
+            var fullImagePath = _storageService.GetFileUrl(imagePath);
+            byte[] imageData = System.IO.File.ReadAllBytes(fullImagePath);
+
+            return Task.FromResult(imageData);
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            string originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{DateTime.Now.ToString(Constants.DateTimeString)}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+
+            return fileName;
         }
     }
 }

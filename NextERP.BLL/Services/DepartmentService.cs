@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(DepartmentModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var department = new Department();
                 DataHelper.MapAudit(request, department, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var department = await _context.Departments.FindAsync(request.Id);
+                var department = await _context.Departments.FindAsync(id);
                 if (department == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listDepartment = await _context.Departments
-                .Where(x => listDepartmentId.Contains(x.Id))
+                .Where(s => listDepartmentId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var department in listDepartment)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var department = await _context.Departments
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (department == null)
                 return new APIErrorResult<DepartmentModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<DepartmentModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Department> query = _context.Departments
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Department> query = _context.Departments.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.DepartmentCode)
-                    && x.DepartmentCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.DepartmentCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listDepartmentId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listDepartmentId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listDepartment = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listDepartment.Any())
-                return new APIErrorResult<PagingResult<DepartmentModel>>(Messages.NotFoundGetList);
 
             var listDepartmentModel = DataHelper.MappingList<Department, DepartmentModel>(listDepartment);
             var pageResult = new PagingResult<DepartmentModel>()

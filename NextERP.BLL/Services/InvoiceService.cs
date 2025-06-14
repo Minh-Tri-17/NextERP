@@ -26,7 +26,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var invoice = new Invoice();
                 DataHelper.MapAudit(request, invoice, _currentUser.UserName);
@@ -41,7 +47,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var invoice = await _context.Invoices.FindAsync(request.Id);
+                var invoice = await _context.Invoices.FindAsync(id);
                 if (invoice == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -63,7 +69,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listInvoice = await _context.Invoices
-                .Where(x => listInvoiceId.Contains(x.Id))
+                .Where(s => listInvoiceId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var invoice in listInvoice)
@@ -82,7 +88,7 @@ namespace NextERP.BLL.Service
         {
             var invoice = await _context.Invoices
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (invoice == null)
                 return new APIErrorResult<InvoiceModel>(Messages.NotFoundGet);
@@ -94,26 +100,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<InvoiceModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Invoice> query = _context.Invoices
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Invoice> query = _context.Invoices.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
+            query = query.ApplyCommonFilters(filter, s => s.InvoiceCode!, s => s.IsDelete, s => s.Id);
 
-                query = query.Where(x => !string.IsNullOrEmpty(x.InvoiceCode)
-                    && x.InvoiceCode.ToLower().Contains(keyword));
-            }
+            var totalCount = await query.CountAsync();
+
+            query = query.ApplyPaging(filter);
 
             var listInvoice = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
-                .Skip((filter.PageIndex - 1) * filter.PageSize)
-                .Take(filter.PageSize)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listInvoice.Any())
-                return new APIErrorResult<PagingResult<InvoiceModel>>(Messages.NotFoundGetList);
 
             var listInvoiceModel = DataHelper.MappingList<Invoice, InvoiceModel>(listInvoice);
             var pageResult = new PagingResult<InvoiceModel>()

@@ -32,7 +32,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(AppointmentModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var appointment = new Appointment();
                 DataHelper.MapAudit(request, appointment, _currentUser.UserName);
@@ -47,7 +53,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var appointment = await _context.Appointments.FindAsync(request.Id);
+                var appointment = await _context.Appointments.FindAsync(id);
                 if (appointment == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -69,7 +75,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listAppointment = await _context.Appointments
-                .Where(x => listAppointmentId.Contains(x.Id))
+                .Where(s => listAppointmentId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var appointment in listAppointment)
@@ -88,7 +94,7 @@ namespace NextERP.BLL.Service
         {
             var appointment = await _context.Appointments
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (appointment == null)
                 return new APIErrorResult<AppointmentModel>(Messages.NotFoundGet);
@@ -100,42 +106,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<AppointmentModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Appointment> query = _context.Appointments
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Appointment> query = _context.Appointments.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.AppointmentCode)
-                    && x.AppointmentCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.AppointmentCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listAppointmentId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listAppointmentId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listAppointment = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listAppointment.Any())
-                return new APIErrorResult<PagingResult<AppointmentModel>>(Messages.NotFoundGetList);
 
             var listAppointmentModel = DataHelper.MappingList<Appointment, AppointmentModel>(listAppointment);
             var pageResult = new PagingResult<AppointmentModel>()

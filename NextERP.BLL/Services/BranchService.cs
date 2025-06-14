@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(BranchModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var branch = new Branch();
                 DataHelper.MapAudit(request, branch, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var branch = await _context.Branches.FindAsync(request.Id);
+                var branch = await _context.Branches.FindAsync(id);
                 if (branch == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listBranch = await _context.Branches
-                .Where(x => listBranchId.Contains(x.Id))
+                .Where(s => listBranchId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var branch in listBranch)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var branch = await _context.Branches
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (branch == null)
                 return new APIErrorResult<BranchModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<BranchModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Branch> query = _context.Branches
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Branch> query = _context.Branches.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.BranchCode)
-                    && x.BranchCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.BranchCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listBranchId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listBranchId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listBranch = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listBranch.Any())
-                return new APIErrorResult<PagingResult<BranchModel>>(Messages.NotFoundGetList);
 
             var listBranchModel = DataHelper.MappingList<Branch, BranchModel>(listBranch);
             var pageResult = new PagingResult<BranchModel>()

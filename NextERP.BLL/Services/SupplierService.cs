@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var supplier = new Supplier();
                 DataHelper.MapAudit(request, supplier, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var supplier = await _context.Suppliers.FindAsync(request.Id);
+                var supplier = await _context.Suppliers.FindAsync(id);
                 if (supplier == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listSupplier = await _context.Suppliers
-                .Where(x => listSupplierId.Contains(x.Id))
+                .Where(s => listSupplierId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var supplier in listSupplier)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var supplier = await _context.Suppliers
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (supplier == null)
                 return new APIErrorResult<SupplierModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<SupplierModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Supplier> query = _context.Suppliers
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Supplier> query = _context.Suppliers.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.SupplierCode)
-                    && x.SupplierCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.SupplierCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listSupplierId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listSupplierId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listSupplier = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listSupplier.Any())
-                return new APIErrorResult<PagingResult<SupplierModel>>(Messages.NotFoundGetList);
 
             var listSupplierModel = DataHelper.MappingList<Supplier, SupplierModel>(listSupplier);
             var pageResult = new PagingResult<SupplierModel>()

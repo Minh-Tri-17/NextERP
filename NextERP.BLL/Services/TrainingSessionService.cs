@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(TrainingSessionModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var trainingSession = new TrainingSession();
                 DataHelper.MapAudit(request, trainingSession, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var trainingSession = await _context.TrainingSessions.FindAsync(request.Id);
+                var trainingSession = await _context.TrainingSessions.FindAsync(id);
                 if (trainingSession == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listTrainingSession = await _context.TrainingSessions
-                .Where(x => listTrainingSessionId.Contains(x.Id))
+                .Where(s => listTrainingSessionId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var trainingSession in listTrainingSession)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var trainingSession = await _context.TrainingSessions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (trainingSession == null)
                 return new APIErrorResult<TrainingSessionModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<TrainingSessionModel>>> GetPaging(Filter filter)
         {
-            IQueryable<TrainingSession> query = _context.TrainingSessions
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<TrainingSession> query = _context.TrainingSessions.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.TrainingSessionCode)
-                    && x.TrainingSessionCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.TrainingSessionCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listTrainingSessionId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listTrainingSessionId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listTrainingSession = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listTrainingSession.Any())
-                return new APIErrorResult<PagingResult<TrainingSessionModel>>(Messages.NotFoundGetList);
 
             var listTrainingSessionModel = DataHelper.MappingList<TrainingSession, TrainingSessionModel>(listTrainingSession);
             var pageResult = new PagingResult<TrainingSessionModel>()

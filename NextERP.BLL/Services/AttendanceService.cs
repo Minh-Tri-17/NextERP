@@ -8,11 +8,6 @@ using NextERP.ModelBase.APIResult;
 using NextERP.ModelBase.PagingResult;
 using NextERP.Util;
 using NPOI.XSSF.UserModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
@@ -29,7 +24,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(AttendanceModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var attendance = new Attendance();
                 DataHelper.MapAudit(request, attendance, _currentUser.UserName);
@@ -44,7 +45,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var attendance = await _context.Attendances.FindAsync(request.Id);
+                var attendance = await _context.Attendances.FindAsync(id);
                 if (attendance == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +67,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listAttendance = await _context.Attendances
-                .Where(x => listAttendanceId.Contains(x.Id))
+                .Where(s => listAttendanceId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var attendance in listAttendance)
@@ -85,7 +86,7 @@ namespace NextERP.BLL.Service
         {
             var attendance = await _context.Attendances
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (attendance == null)
                 return new APIErrorResult<AttendanceModel>(Messages.NotFoundGet);
@@ -97,42 +98,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<AttendanceModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Attendance> query = _context.Attendances
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Attendance> query = _context.Attendances.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.AttendanceCode)
-                    && x.AttendanceCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.AttendanceCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listAttendanceId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listAttendanceId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listAttendance = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listAttendance.Any())
-                return new APIErrorResult<PagingResult<AttendanceModel>>(Messages.NotFoundGetList);
 
             var listAttendanceModel = DataHelper.MappingList<Attendance, AttendanceModel>(listAttendance);
             var pageResult = new PagingResult<AttendanceModel>()

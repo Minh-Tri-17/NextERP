@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(NotificationModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var notification = new Notification();
                 DataHelper.MapAudit(request, notification, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var notification = await _context.Notifications.FindAsync(request.Id);
+                var notification = await _context.Notifications.FindAsync(id);
                 if (notification == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listNotification = await _context.Notifications
-                .Where(x => listNotificationId.Contains(x.Id))
+                .Where(s => listNotificationId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var notification in listNotification)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var notification = await _context.Notifications
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (notification == null)
                 return new APIErrorResult<NotificationModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<NotificationModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Notification> query = _context.Notifications
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Notification> query = _context.Notifications.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.NotificationCode)
-                    && x.NotificationCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.NotificationCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listNotificationId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listNotificationId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listNotification = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listNotification.Any())
-                return new APIErrorResult<PagingResult<NotificationModel>>(Messages.NotFoundGetList);
 
             var listNotificationModel = DataHelper.MappingList<Notification, NotificationModel>(listNotification);
             var pageResult = new PagingResult<NotificationModel>()

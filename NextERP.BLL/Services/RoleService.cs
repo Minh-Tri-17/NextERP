@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(RoleModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var role = new Role();
                 DataHelper.MapAudit(request, role, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var role = await _context.Roles.FindAsync(request.Id);
+                var role = await _context.Roles.FindAsync(id);
                 if (role == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listRole = await _context.Roles
-                .Where(x => listRoleId.Contains(x.Id))
+                .Where(s => listRoleId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var role in listRole)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var role = await _context.Roles
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (role == null)
                 return new APIErrorResult<RoleModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<RoleModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Role> query = _context.Roles
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Role> query = _context.Roles.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.RoleCode)
-                    && x.RoleCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.RoleCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listRoleId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listRoleId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listRole = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listRole.Any())
-                return new APIErrorResult<PagingResult<RoleModel>>(Messages.NotFoundGetList);
 
             var listRoleModel = DataHelper.MappingList<Role, RoleModel>(listRole);
             var pageResult = new PagingResult<RoleModel>()

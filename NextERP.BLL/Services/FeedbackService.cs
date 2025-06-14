@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(FeedbackModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var feedback = new Feedback();
                 DataHelper.MapAudit(request, feedback, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var feedback = await _context.Feedbacks.FindAsync(request.Id);
+                var feedback = await _context.Feedbacks.FindAsync(id);
                 if (feedback == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listFeedback = await _context.Feedbacks
-                .Where(x => listFeedbackId.Contains(x.Id))
+                .Where(s => listFeedbackId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var feedback in listFeedback)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var feedback = await _context.Feedbacks
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (feedback == null)
                 return new APIErrorResult<FeedbackModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<FeedbackModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Feedback> query = _context.Feedbacks
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Feedback> query = _context.Feedbacks.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.FeedbackCode)
-                    && x.FeedbackCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.FeedbackCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listFeedbackId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listFeedbackId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listFeedback = await query
-                .OrderByDescending(x => x.DateFeedback)
+                .OrderByDescending(s => s.DateFeedback)
                 .ToListAsync();
-
-            if (!listFeedback.Any())
-                return new APIErrorResult<PagingResult<FeedbackModel>>(Messages.NotFoundGetList);
 
             var listFeedbackModel = DataHelper.MappingList<Feedback, FeedbackModel>(listFeedback);
             var pageResult = new PagingResult<FeedbackModel>()

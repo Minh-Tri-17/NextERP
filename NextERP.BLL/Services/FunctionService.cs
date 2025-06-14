@@ -27,7 +27,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(FunctionModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var function = new Function();
                 DataHelper.MapAudit(request, function, _currentUser.UserName);
@@ -42,7 +48,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var function = await _context.Functions.FindAsync(request.Id);
+                var function = await _context.Functions.FindAsync(id);
                 if (function == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -64,7 +70,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listFunction = await _context.Functions
-                .Where(x => listFunctionId.Contains(x.Id))
+                .Where(s => listFunctionId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var function in listFunction)
@@ -83,7 +89,7 @@ namespace NextERP.BLL.Service
         {
             var function = await _context.Functions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (function == null)
                 return new APIErrorResult<FunctionModel>(Messages.NotFoundGet);
@@ -97,24 +103,11 @@ namespace NextERP.BLL.Service
         {
             IQueryable<Function> query = _context.Functions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
-
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.FunctionCode)
-                    && x.FunctionCode.ToLower().Contains(keyword));
-            }
+                .Where(s => s.IsDelete != true);
 
             var listFunction = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
-                .Skip((filter.PageIndex - 1) * filter.PageSize)
-                .Take(filter.PageSize)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listFunction.Any())
-                return new APIErrorResult<PagingResult<FunctionModel>>(Messages.NotFoundGetList);
 
             var listFunctionModel = DataHelper.MappingList<Function, FunctionModel>(listFunction);
             var pageResult = new PagingResult<FunctionModel>()

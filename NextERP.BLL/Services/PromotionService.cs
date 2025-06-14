@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(PromotionModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var promotion = new Promotion();
                 DataHelper.MapAudit(request, promotion, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var promotion = await _context.Promotions.FindAsync(request.Id);
+                var promotion = await _context.Promotions.FindAsync(id);
                 if (promotion == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listPromotion = await _context.Promotions
-                .Where(x => listPromotionId.Contains(x.Id))
+                .Where(s => listPromotionId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var promotion in listPromotion)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var promotion = await _context.Promotions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (promotion == null)
                 return new APIErrorResult<PromotionModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<PromotionModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Promotion> query = _context.Promotions
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Promotion> query = _context.Promotions.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.PromotionCode)
-                    && x.PromotionCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.PromotionCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listPromotionId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listPromotionId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listPromotion = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listPromotion.Any())
-                return new APIErrorResult<PagingResult<PromotionModel>>(Messages.NotFoundGetList);
 
             var listPromotionModel = DataHelper.MappingList<Promotion, PromotionModel>(listPromotion);
             var pageResult = new PagingResult<PromotionModel>()

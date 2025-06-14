@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(SalaryModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var salary = new Salary();
                 DataHelper.MapAudit(request, salary, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var salary = await _context.Salaries.FindAsync(request.Id);
+                var salary = await _context.Salaries.FindAsync(id);
                 if (salary == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listSalary = await _context.Salaries
-                .Where(x => listSalaryId.Contains(x.Id))
+                .Where(s => listSalaryId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var salary in listSalary)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var salary = await _context.Salaries
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (salary == null)
                 return new APIErrorResult<SalaryModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<SalaryModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Salary> query = _context.Salaries
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Salary> query = _context.Salaries.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.SalaryCode)
-                    && x.SalaryCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.SalaryCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listSalaryId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listSalaryId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listSalary = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listSalary.Any())
-                return new APIErrorResult<PagingResult<SalaryModel>>(Messages.NotFoundGetList);
 
             var listSalaryModel = DataHelper.MappingList<Salary, SalaryModel>(listSalary);
             var pageResult = new PagingResult<SalaryModel>()

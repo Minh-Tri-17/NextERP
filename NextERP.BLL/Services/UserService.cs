@@ -32,7 +32,13 @@ namespace NextERP.BLL.Service
             var passwordHashed = PasswordHasher.HashPassword(request.Password);
             request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
 
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var user = new User();
                 DataHelper.MapAudit(request, user, _currentUser.UserName);
@@ -47,7 +53,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var user = await _context.Users.FindAsync(request.Id);
+                var user = await _context.Users.FindAsync(id);
                 if (user == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -69,7 +75,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listUser = await _context.Users
-                .Where(x => listUserId.Contains(x.Id))
+                .Where(s => listUserId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var user in listUser)
@@ -88,7 +94,7 @@ namespace NextERP.BLL.Service
         {
             var user = await _context.Users
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (user == null)
                 return new APIErrorResult<UserModel>(Messages.NotFoundGet);
@@ -100,42 +106,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<UserModel>>> GetPaging(Filter filter)
         {
-            IQueryable<User> query = _context.Users
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<User> query = _context.Users.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.UserCode)
-                    && x.UserCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.UserCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listUserId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listUserId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listUser = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listUser.Any())
-                return new APIErrorResult<PagingResult<UserModel>>(Messages.NotFoundGetList);
 
             var listUserModel = DataHelper.MappingList<User, UserModel>(listUser);
             var pageResult = new PagingResult<UserModel>()

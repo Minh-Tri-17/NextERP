@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(LeaveRequestModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var leaveRequest = new LeaveRequest();
                 DataHelper.MapAudit(request, leaveRequest, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var leaveRequest = await _context.LeaveRequests.FindAsync(request.Id);
+                var leaveRequest = await _context.LeaveRequests.FindAsync(id);
                 if (leaveRequest == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listLeaveRequest = await _context.LeaveRequests
-                .Where(x => listLeaveRequestId.Contains(x.Id))
+                .Where(s => listLeaveRequestId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var leaveRequest in listLeaveRequest)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var leaveRequest = await _context.LeaveRequests
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (leaveRequest == null)
                 return new APIErrorResult<LeaveRequestModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<LeaveRequestModel>>> GetPaging(Filter filter)
         {
-            IQueryable<LeaveRequest> query = _context.LeaveRequests
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<LeaveRequest> query = _context.LeaveRequests.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.LeaveRequestCode)
-                    && x.LeaveRequestCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.LeaveRequestCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listLeaveRequestId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listLeaveRequestId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listLeaveRequest = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listLeaveRequest.Any())
-                return new APIErrorResult<PagingResult<LeaveRequestModel>>(Messages.NotFoundGetList);
 
             var listLeaveRequestModel = DataHelper.MappingList<LeaveRequest, LeaveRequestModel>(listLeaveRequest);
             var pageResult = new PagingResult<LeaveRequestModel>()

@@ -26,7 +26,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceDetailModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var invoiceDetail = new InvoiceDetail();
                 DataHelper.MapAudit(request, invoiceDetail, _currentUser.UserName);
@@ -41,7 +47,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var invoiceDetail = await _context.InvoiceDetails.FindAsync(request.Id);
+                var invoiceDetail = await _context.InvoiceDetails.FindAsync(id);
                 if (invoiceDetail == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -63,7 +69,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listInvoiceDetail = await _context.InvoiceDetails
-                .Where(x => listInvoiceDetailId.Contains(x.Id))
+                .Where(s => listInvoiceDetailId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var invoiceDetail in listInvoiceDetail)
@@ -82,7 +88,7 @@ namespace NextERP.BLL.Service
         {
             var invoiceDetail = await _context.InvoiceDetails
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (invoiceDetail == null)
                 return new APIErrorResult<InvoiceDetailModel>(Messages.NotFoundGet);
@@ -96,24 +102,11 @@ namespace NextERP.BLL.Service
         {
             IQueryable<InvoiceDetail> query = _context.InvoiceDetails
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
-
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.InvoiceDetailCode)
-                    && x.InvoiceDetailCode.ToLower().Contains(keyword));
-            }
+                .Where(s => s.IsDelete != true);
 
             var listInvoiceDetail = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
-                .Skip((filter.PageIndex - 1) * filter.PageSize)
-                .Take(filter.PageSize)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listInvoiceDetail.Any())
-                return new APIErrorResult<PagingResult<InvoiceDetailModel>>(Messages.NotFoundGetList);
 
             var listInvoiceDetailModel = DataHelper.MappingList<InvoiceDetail, InvoiceDetailModel>(listInvoiceDetail);
             var pageResult = new PagingResult<InvoiceDetailModel>()

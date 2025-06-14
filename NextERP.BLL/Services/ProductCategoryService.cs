@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(ProductCategoryModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var productCategory = new ProductCategory();
                 DataHelper.MapAudit(request, productCategory, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var productCategory = await _context.ProductCategories.FindAsync(request.Id);
+                var productCategory = await _context.ProductCategories.FindAsync(id);
                 if (productCategory == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listProductCategory = await _context.ProductCategories
-                .Where(x => listProductCategoryId.Contains(x.Id))
+                .Where(s => listProductCategoryId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var productCategory in listProductCategory)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var productCategory = await _context.ProductCategories
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (productCategory == null)
                 return new APIErrorResult<ProductCategoryModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<ProductCategoryModel>>> GetPaging(Filter filter)
         {
-            IQueryable<ProductCategory> query = _context.ProductCategories
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<ProductCategory> query = _context.ProductCategories.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.ProductCategoryCode)
-                    && x.ProductCategoryCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.ProductCategoryCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listProductCategoryId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listProductCategoryId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listProductCategory = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listProductCategory.Any())
-                return new APIErrorResult<PagingResult<ProductCategoryModel>>(Messages.NotFoundGetList);
 
             var listProductCategoryModel = DataHelper.MappingList<ProductCategory, ProductCategoryModel>(listProductCategory);
             var pageResult = new PagingResult<ProductCategoryModel>()

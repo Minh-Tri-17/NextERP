@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(SpaServiceCategoryModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var appointment = new SpaServiceCategory();
                 DataHelper.MapAudit(request, appointment, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var appointment = await _context.SpaServiceCategories.FindAsync(request.Id);
+                var appointment = await _context.SpaServiceCategories.FindAsync(id);
                 if (appointment == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listSpaServiceCategory = await _context.SpaServiceCategories
-                .Where(x => listSpaServiceCategoryId.Contains(x.Id))
+                .Where(s => listSpaServiceCategoryId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var appointment in listSpaServiceCategory)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var appointment = await _context.SpaServiceCategories
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (appointment == null)
                 return new APIErrorResult<SpaServiceCategoryModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<SpaServiceCategoryModel>>> GetPaging(Filter filter)
         {
-            IQueryable<SpaServiceCategory> query = _context.SpaServiceCategories
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<SpaServiceCategory> query = _context.SpaServiceCategories.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.SpaServiceCategoryCode)
-                    && x.SpaServiceCategoryCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.SpaServiceCategoryCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listSpaServiceCategoryId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listSpaServiceCategoryId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listSpaServiceCategory = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listSpaServiceCategory.Any())
-                return new APIErrorResult<PagingResult<SpaServiceCategoryModel>>(Messages.NotFoundGetList);
 
             var listSpaServiceCategoryModel = DataHelper.MappingList<SpaServiceCategory, SpaServiceCategoryModel>(listSpaServiceCategory);
             var pageResult = new PagingResult<SpaServiceCategoryModel>()

@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(PositionModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var position = new Position();
                 DataHelper.MapAudit(request, position, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var position = await _context.Positions.FindAsync(request.Id);
+                var position = await _context.Positions.FindAsync(id);
                 if (position == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listPosition = await _context.Positions
-                .Where(x => listPositionId.Contains(x.Id))
+                .Where(s => listPositionId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var position in listPosition)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var position = await _context.Positions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (position == null)
                 return new APIErrorResult<PositionModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<PositionModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Position> query = _context.Positions
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Position> query = _context.Positions.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.PositionCode)
-                    && x.PositionCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.PositionCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listPositionId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listPositionId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listPosition = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listPosition.Any())
-                return new APIErrorResult<PagingResult<PositionModel>>(Messages.NotFoundGetList);
 
             var listPositionModel = DataHelper.MappingList<Position, PositionModel>(listPosition);
             var pageResult = new PagingResult<PositionModel>()

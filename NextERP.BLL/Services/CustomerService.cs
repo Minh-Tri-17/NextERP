@@ -29,7 +29,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(CustomerModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var customer = new Customer();
                 DataHelper.MapAudit(request, customer, _currentUser.UserName);
@@ -44,7 +50,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var customer = await _context.Customers.FindAsync(request.Id);
+                var customer = await _context.Customers.FindAsync(id);
                 if (customer == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -66,7 +72,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listCustomer = await _context.Customers
-                .Where(x => listCustomerId.Contains(x.Id))
+                .Where(s => listCustomerId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var customer in listCustomer)
@@ -85,7 +91,7 @@ namespace NextERP.BLL.Service
         {
             var customer = await _context.Customers
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (customer == null)
                 return new APIErrorResult<CustomerModel>(Messages.NotFoundGet);
@@ -97,42 +103,17 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<CustomerModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Customer> query = _context.Customers
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
+            IQueryable<Customer> query = _context.Customers.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.CustomerCode)
-                    && x.CustomerCode.ToLower().Contains(keyword));
-            }
+            query = query.ApplyCommonFilters(filter, s => s.CustomerCode!, s => s.IsDelete, s => s.Id);
 
             var totalCount = await query.CountAsync();
 
-            if (filter.AllowPaging)
-            {
-                query = query.Skip((filter.PageIndex - 1) * filter.PageSize)
-                    .Take(filter.PageSize);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                List<Guid> listCustomerId = filter.Ids.Split(',')
-                     .Select(id => DataHelper.GetGuid(id.Trim()))
-                     .Where(guid => guid != Guid.Empty)
-                     .ToList();
-
-                query = query.Where(x => listCustomerId.Contains(x.Id));
-            }
+            query = query.ApplyPaging(filter);
 
             var listCustomer = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listCustomer.Any())
-                return new APIErrorResult<PagingResult<CustomerModel>>(Messages.NotFoundGetList);
 
             var listCustomerModel = DataHelper.MappingList<Customer, CustomerModel>(listCustomer);
             var pageResult = new PagingResult<CustomerModel>()

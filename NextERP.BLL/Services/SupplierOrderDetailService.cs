@@ -26,7 +26,13 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderDetailModel request)
         {
-            if (request.Id == Guid.Empty)
+            #region Check null request and create variable
+
+            var id = DataHelper.GetGuid(request.Id);
+
+            #endregion
+
+            if (id == Guid.Empty)
             {
                 var supplierOrderDetail = new SupplierOrderDetail();
                 DataHelper.MapAudit(request, supplierOrderDetail, _currentUser.UserName);
@@ -41,7 +47,7 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var supplierOrderDetail = await _context.SupplierOrderDetails.FindAsync(request.Id);
+                var supplierOrderDetail = await _context.SupplierOrderDetails.FindAsync(id);
                 if (supplierOrderDetail == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
@@ -63,7 +69,7 @@ namespace NextERP.BLL.Service
                 .ToList();
 
             var listSupplierOrderDetail = await _context.SupplierOrderDetails
-                .Where(x => listSupplierOrderDetailId.Contains(x.Id))
+                .Where(s => listSupplierOrderDetailId.Contains(s.Id))
                 .ToListAsync();
 
             foreach (var supplierOrderDetail in listSupplierOrderDetail)
@@ -82,7 +88,7 @@ namespace NextERP.BLL.Service
         {
             var supplierOrderDetail = await _context.SupplierOrderDetails
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (supplierOrderDetail == null)
                 return new APIErrorResult<SupplierOrderDetailModel>(Messages.NotFoundGet);
@@ -96,24 +102,11 @@ namespace NextERP.BLL.Service
         {
             IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(x => x.IsDelete != true);
-
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-
-                query = query.Where(x => !string.IsNullOrEmpty(x.SupplierOrderDetailCode)
-                    && x.SupplierOrderDetailCode.ToLower().Contains(keyword));
-            }
+                .Where(s => s.IsDelete != true);
 
             var listSupplierOrderDetail = await query
-                .OrderByDescending(x => x.DateUpdate ?? x.DateCreate)
-                .Skip((filter.PageIndex - 1) * filter.PageSize)
-                .Take(filter.PageSize)
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
-
-            if (!listSupplierOrderDetail.Any())
-                return new APIErrorResult<PagingResult<SupplierOrderDetailModel>>(Messages.NotFoundGetList);
 
             var listSupplierOrderDetailModel = DataHelper.MappingList<SupplierOrderDetail, SupplierOrderDetailModel>(listSupplierOrderDetail);
             var pageResult = new PagingResult<SupplierOrderDetailModel>()
