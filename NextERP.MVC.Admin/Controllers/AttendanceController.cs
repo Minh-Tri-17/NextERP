@@ -72,6 +72,16 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> DeletePermanently(string ids)
+        {
+            var result = await _attendanceAPIService.DeletePermanently(ids);
+            if (!DataHelper.IsNotNull(result))
+                return Json(Localization(result.Message));
+
+            return Json(Localization(result.Message));
+        }
+
+        [HttpPost]
         public async Task<ActionResult> Import(IFormFile file)
         {
             if (file == null || file.Length == 0)

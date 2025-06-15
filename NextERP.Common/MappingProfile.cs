@@ -153,9 +153,6 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.InvoiceDetailCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
-                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.IsDelete, opt =>
-                    opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
@@ -227,9 +224,6 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.ProductImageCode, opt =>
-                    opt.Condition((src, dest, srcMember, destMember, context) =>
-                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.IsDelete, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
@@ -333,9 +327,6 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.SpaServiceImageCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
-                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.IsDelete, opt =>
-                    opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
@@ -392,9 +383,6 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.SupplierOrderDetailCode, opt =>
-                    opt.Condition((src, dest, srcMember, destMember, context) =>
-                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.IsDelete, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 

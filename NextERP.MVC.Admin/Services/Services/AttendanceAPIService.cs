@@ -30,6 +30,11 @@ namespace NextERP.MVC.Admin.Services.Services
             return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeleteAttendance}?ids={ids}");
         }
 
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeletePermanentlyAttendance}?ids={ids}");
+        }
+
         public async Task<APIBaseResult<AttendanceModel>> GetOne(Guid id)
         {
             return await GetAsync<APIBaseResult<AttendanceModel>>($"{Constants.UrlGetAttendance}/{id}");

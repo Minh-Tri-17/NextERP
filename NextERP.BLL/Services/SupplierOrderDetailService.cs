@@ -61,7 +61,7 @@ namespace NextERP.BLL.Service
             }
         }
 
-        public async Task<APIBaseResult<bool>> Delete(string ids)
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
             List<Guid> listSupplierOrderDetailId = ids.Split(',')
                 .Select(id => DataHelper.GetGuid(id.Trim()))
@@ -74,7 +74,7 @@ namespace NextERP.BLL.Service
 
             foreach (var supplierOrderDetail in listSupplierOrderDetail)
             {
-                supplierOrderDetail.IsDelete = true;
+                _context.SupplierOrderDetails.Remove(supplierOrderDetail); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();
@@ -100,9 +100,7 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter)
         {
-            IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(s => s.IsDelete != true);
+            IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
             var listSupplierOrderDetail = await query
                 .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)

@@ -96,7 +96,7 @@ namespace NextERP.BLL.Service
                         })
                         .ToListAsync();
 
-                    // Xóa các ảnh củ trong database và trong folder theo productId
+                    // Xóa các ảnh củ trong database và trong folder theo $productId
                     if (listImageFileOld.Count > 0)
                     {
                         foreach (var imgaeFileOld in listImageFileOld)
@@ -167,7 +167,39 @@ namespace NextERP.BLL.Service
             foreach (var product in listProduct)
             {
                 product.IsDelete = true;
+            }
 
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listProductId = ids.Split(',')
+                .Select(id => DataHelper.GetGuid(id.Trim()))
+                .Where(guid => guid != Guid.Empty)
+                .ToList();
+
+            var listProduct = await _context.Products
+                .Where(s => listProductId.Contains(s.Id))
+                .ToListAsync();
+
+            var listProductID = listProduct.Select(s => s.Id).ToList();
+            var listProductImage = await _context.ProductImages
+                    .Where(s => s.ProductId.HasValue && listProductID.Contains(s.ProductId.Value))
+                    .Select(s => new ProductImageModel
+                    {
+                        Id = s.Id,
+                        ProductId = s.ProductId,
+                        ImagePath = s.ImagePath
+                    })
+                    .ToListAsync();
+
+            foreach (var product in listProduct)
+            {
                 var listProductImageByProduct = listProductImage.Where(s => s.ProductId == product.Id).ToList();
 
                 foreach (var productImageByProduct in listProductImageByProduct)
@@ -175,6 +207,9 @@ namespace NextERP.BLL.Service
                     if (productImageByProduct.ImagePath != null)
                         await _storageService.DeleteFileAsync(productImageByProduct.ImagePath);
                 }
+
+                _context.ProductImages.RemoveRange(listProductImageByProduct);
+                _context.Products.Remove(product);
             }
 
             var result = await _context.SaveChangesAsync();

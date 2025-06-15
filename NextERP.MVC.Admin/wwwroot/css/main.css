@@ -794,7 +794,7 @@ thead.sticky-active {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-.main .main-wrapper .main-container .filter-panel .filter-actions .refresh-list {
+.main .main-wrapper .main-container .filter-panel .filter-actions #refresh-list {
   display: flex;
   justify-content: space-between;
   align-items: center;

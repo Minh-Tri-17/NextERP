@@ -74,7 +74,30 @@ namespace NextERP.BLL.Service
 
             foreach (var invoice in listInvoice)
             {
-                invoice.IsDelete = true;
+                invoice.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listInvoiceId = ids.Split(',')
+                 .Select(id => DataHelper.GetGuid(id.Trim()))
+                 .Where(guid => guid != Guid.Empty)
+                 .ToList();
+
+            var listInvoice = await _context.Invoices
+                .Where(s => listInvoiceId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var invoice in listInvoice)
+            {
+                _context.Invoices.Remove(invoice); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

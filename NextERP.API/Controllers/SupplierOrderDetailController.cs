@@ -66,7 +66,7 @@ namespace NextERP.API.Controllers
         [HttpDelete(nameof(DeleteSupplierOrderDetail))]
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplierOrderDetail(string ids)
         {
-            var result = await _supplierOrderDetailService.Delete(ids);
+            var result = await _supplierOrderDetailService.DeletePermanently(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

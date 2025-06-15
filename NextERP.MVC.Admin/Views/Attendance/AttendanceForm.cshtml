@@ -81,9 +81,9 @@
 
 <script>
     $(".save-button").click(function () {
-        const form = $(this).closest("form");
-        const formData = new FormData(form[0]);
-        const formElement = form[0];
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
 
         // Kiểm tra tính hợp lệ của form
         if (!formElement.checkValidity()) {

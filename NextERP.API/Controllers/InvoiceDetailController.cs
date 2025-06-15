@@ -66,7 +66,7 @@ namespace NextERP.API.Controllers
         [HttpDelete(nameof(DeleteInvoiceDetail))]
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteInvoiceDetail(string ids)
         {
-            var result = await _invoiceDetailService.Delete(ids);
+            var result = await _invoiceDetailService.DeletePermanently(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

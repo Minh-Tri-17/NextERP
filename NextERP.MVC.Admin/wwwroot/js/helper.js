@@ -8,10 +8,10 @@ initEvents();
 //& Đóng validation form
 function initCloseValidation() {
     $(document).on("hidden.bs.modal", ".modal", function () {
-        const modal = $(this);
+        const $modal = $(this);
 
         setTimeout(() => {
-            modal.find("form.needs-validation")
+            $modal.find("form.needs-validation")
                 .removeClass("was-validated")
                 .trigger("reset")
                 .find(".is-invalid, .is-valid")
@@ -21,24 +21,44 @@ function initCloseValidation() {
 }
 
 //& Kiểm tra độ dài checkbox để bật/tắt nút
-function checkLengthCheckbox(length, editButton, createButton, deleteButton, idForm) {
-    const selectedCheckboxCount = length == null || length == undefined
-        ? $('.' + idForm + ':checked').length : length;
+function checkLengthCheckbox(length, editButton, createButton, deleteButton, deletePermanentlyButton, idForm) {
+    const selectedCheckboxCount = length == null || length == undefined ? $('.' + idForm + ':checked').length : length;
+    const $isDelete = $("#is-delete").is(":checked");
 
-    if (selectedCheckboxCount == 1) {
-        $('.' + editButton).removeClass(' disabled');
-        $('.' + createButton).addClass(' disabled');
-        $('.' + deleteButton).removeClass(' disabled');
-    }
-    else if (selectedCheckboxCount == 0) {
-        $('.' + editButton).addClass(' disabled');
-        $('.' + createButton).removeClass(' disabled');
-        $('.' + deleteButton).addClass(' disabled');
+    const $editBtn = $('.' + editButton);
+    const $createBtn = $('.' + createButton);
+    const $deleteBtn = $('.' + deleteButton);
+    const $deletePermanentlyBtn = $('.' + deletePermanentlyButton);
+
+    if ($isDelete) {
+        if (selectedCheckboxCount === 0) {
+            $deletePermanentlyBtn.addClass('disabled');
+        } else {
+            $deletePermanentlyBtn.removeClass('disabled');
+        }
+
+        // Không cần thao tác với create/edit/delete khi đang ở trạng thái "is-delete"
+        $createBtn.addClass('disabled');
+        $editBtn.addClass('disabled');
+        $deleteBtn.addClass('disabled');
     }
     else {
-        $('.' + editButton).addClass(' disabled');
-        $('.' + createButton).addClass(' disabled');
-        $('.' + deleteButton).removeClass(' disabled');
+        if (selectedCheckboxCount === 0) {
+            $editBtn.addClass('disabled');
+            $createBtn.removeClass('disabled');
+            $deleteBtn.addClass('disabled');
+        } else if (selectedCheckboxCount === 1) {
+            $editBtn.removeClass('disabled');
+            $createBtn.addClass('disabled');
+            $deleteBtn.removeClass('disabled');
+        } else {
+            $editBtn.addClass('disabled');
+            $createBtn.addClass('disabled');
+            $deleteBtn.removeClass('disabled');
+        }
+
+        // Không cần thao tác với delete permanently khi đang khác trạng thái "is-delete"
+        $deletePermanentlyBtn.addClass('disabled');
     }
 }
 

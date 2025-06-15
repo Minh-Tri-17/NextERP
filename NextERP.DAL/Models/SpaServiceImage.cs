@@ -25,8 +25,6 @@ public partial class SpaServiceImage
     [Column("SpaServiceID")]
     public Guid? SpaServiceId { get; set; }
 
-    public bool? IsDelete { get; set; }
-
     [StringLength(1500)]
     public string? Note { get; set; }
 

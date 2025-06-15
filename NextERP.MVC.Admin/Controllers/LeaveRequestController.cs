@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NextERP.ModelBase;
 using NextERP.MVC.Admin.Services.Interfaces;
+using NextERP.MVC.Admin.Services.Services;
 using NextERP.Util;
 
 namespace NextERP.MVC.Admin.Controllers
@@ -69,6 +70,16 @@ namespace NextERP.MVC.Admin.Controllers
                 return Json(Localization(result.Message));
 
             return RedirectToAction(ActionName.LeaveRequest.LeaveRequestIndex, Localization(result.Message));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeletePermanently(string ids)
+        {
+            var result = await _leaveRequestAPIService.DeletePermanently(ids);
+            if (!DataHelper.IsNotNull(result))
+                return Json(Localization(result.Message));
+
+            return Json(Localization(result.Message));
         }
 
         [HttpPost]

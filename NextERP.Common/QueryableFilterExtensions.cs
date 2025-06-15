@@ -13,7 +13,13 @@ namespace NextERP.Util
             Expression<Func<T, bool?>> isDeleteSelector,
             Expression<Func<T, Guid>> idSelector)
         {
-            if (filter.IsNotDelete)
+            if (filter.IsDelete)
+            {
+                // Truy xuất tên property từ biểu thức isDeleteSelector
+                var isDeletePropName = ((MemberExpression)isDeleteSelector.Body).Member.Name;
+                query = query.Where(s => EF.Property<bool?>(s, isDeletePropName) == true);
+            }
+            else
             {
                 // Truy xuất tên property từ biểu thức isDeleteSelector
                 var isDeletePropName = ((MemberExpression)isDeleteSelector.Body).Member.Name;
@@ -23,6 +29,7 @@ namespace NextERP.Util
             if (!string.IsNullOrEmpty(filter.KeyWord))
             {
                 var keyword = filter.KeyWord.Trim().ToLower();
+                // Truy xuất tên property từ biểu thức codeSelector
                 var codePropName = ((MemberExpression)codeSelector.Body).Member.Name;
                 query = query.Where(s =>
                     EF.Functions.Like(
@@ -38,6 +45,7 @@ namespace NextERP.Util
                     .Where(guid => guid != Guid.Empty)
                     .ToList();
 
+                // Truy xuất tên property từ biểu thức idSelector
                 var idPropName = ((MemberExpression)idSelector.Body).Member.Name;
                 query = query.Where(s => listIds.Contains(EF.Property<Guid>(s, idPropName)));
             }

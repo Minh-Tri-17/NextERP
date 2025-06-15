@@ -190,7 +190,7 @@ namespace NextERP.ModelBase
         public DateTime? DateTo { get; set; }
         public string? KeyWord { get; set; }
         public bool AllowPaging { get; set; } = true;
-        public bool IsNotDelete { get; set; } = true;
+        public bool IsDelete { get; set; } = false;
         public string? Ids { get; set; }
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;

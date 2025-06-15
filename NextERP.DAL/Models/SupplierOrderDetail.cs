@@ -30,8 +30,6 @@ public partial class SupplierOrderDetail
     [Column("ProductID")]
     public Guid? ProductId { get; set; }
 
-    public bool? IsDelete { get; set; }
-
     [StringLength(1500)]
     public string? Note { get; set; }
 

@@ -61,7 +61,7 @@ namespace NextERP.BLL.Service
             }
         }
 
-        public async Task<APIBaseResult<bool>> Delete(string ids)
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
             List<Guid> listInvoiceDetailId = ids.Split(',')
                 .Select(id => DataHelper.GetGuid(id.Trim()))
@@ -74,7 +74,7 @@ namespace NextERP.BLL.Service
 
             foreach (var invoiceDetail in listInvoiceDetail)
             {
-                invoiceDetail.IsDelete = true;
+                _context.InvoiceDetails.Remove(invoiceDetail); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();
@@ -100,9 +100,7 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<InvoiceDetailModel>>> GetPaging(Filter filter)
         {
-            IQueryable<InvoiceDetail> query = _context.InvoiceDetails
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(s => s.IsDelete != true);
+            IQueryable<InvoiceDetail> query = _context.InvoiceDetails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
             var listInvoiceDetail = await query
                 .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)

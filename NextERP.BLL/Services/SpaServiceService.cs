@@ -77,7 +77,30 @@ namespace NextERP.BLL.Service
 
             foreach (var spaService in listSpaService)
             {
-                spaService.IsDelete = true;
+                spaService.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listSpaServiceId = ids.Split(',')
+               .Select(id => DataHelper.GetGuid(id.Trim()))
+               .Where(guid => guid != Guid.Empty)
+               .ToList();
+
+            var listSpaService = await _context.SpaServices
+                .Where(s => listSpaServiceId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var spaService in listSpaService)
+            {
+                _context.SpaServices.Remove(spaService); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

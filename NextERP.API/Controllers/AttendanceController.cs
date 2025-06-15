@@ -73,6 +73,16 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
+        [HttpDelete(nameof(DeletePermanentlyAttendance))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyAttendance(string ids)
+        {
+            var result = await _attendanceService.DeletePermanently(ids);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpGet($"{nameof(GetAttendance)}/{{id}}")]
         public async Task<ActionResult<Attendance>> GetAttendance(Guid id)
         {

@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace NextERP.DAL.Models;
 
@@ -25,8 +24,6 @@ public partial class ProductImage
 
     [Column("ProductID")]
     public Guid? ProductId { get; set; }
-
-    public bool? IsDelete { get; set; }
 
     [StringLength(1500)]
     public string? Note { get; set; }

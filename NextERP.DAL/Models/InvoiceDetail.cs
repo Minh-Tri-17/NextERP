@@ -36,8 +36,6 @@ public partial class InvoiceDetail
     [Column("ServiceID")]
     public Guid? ServiceId { get; set; }
 
-    public bool? IsDelete { get; set; }
-
     [StringLength(1500)]
     public string? Note { get; set; }
 

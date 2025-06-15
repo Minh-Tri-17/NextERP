@@ -25,7 +25,7 @@ namespace NextERP.MVC.Admin.Services.Services
             return await PostAsync<APIBaseResult<bool>, InvoiceDetailModel>(Constants.UrlCreateOrEditInvoiceDetail, request);
         }
 
-        public async Task<APIBaseResult<bool>> Delete(string ids)
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
             return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeleteInvoiceDetail}?ids={ids}");
         }

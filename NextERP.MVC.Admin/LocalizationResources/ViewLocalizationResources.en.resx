@@ -465,8 +465,8 @@
   <data name="SearchStatus" xml:space="preserve">
     <value>Search status</value>
   </data>
-  <data name="đăng nhập83" xml:space="preserve">
-    <value />
+  <data name="IsDelete" xml:space="preserve">
+    <value>Is delete</value>
   </data>
   <data name="SearchDateFrom" xml:space="preserve">
     <value>Search date from</value>
@@ -540,10 +540,10 @@
   <data name="đăng nhập95" xml:space="preserve">
     <value />
   </data>
-  <data name="đăng nhập82" xml:space="preserve">
-    <value />
-  </data>
   <data name="Base64Images" xml:space="preserve">
     <value>Images</value>
+  </data>
+  <data name="DeletePermanently" xml:space="preserve">
+    <value>Delete Permanently</value>
   </data>
 </root>

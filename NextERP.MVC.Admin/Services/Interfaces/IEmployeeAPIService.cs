@@ -8,6 +8,7 @@ namespace NextERP.MVC.Admin.Services.Interfaces
     {
         public Task<APIBaseResult<bool>> CreateOrEdit(EmployeeModel request);
         public Task<APIBaseResult<bool>> Delete(string ids);
+        public Task<APIBaseResult<bool>> DeletePermanently(string ids);
         public Task<APIBaseResult<EmployeeModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<EmployeeModel>>> GetPaging(Filter filter);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);

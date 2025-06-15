@@ -11,14 +11,14 @@ function handleSidebarClick() {
     $(".sidebar-menu-item > a").click(function () {
         if ($(this).closest(".submenu").length) return;
 
-        const currentIcon = $(this).find("i.fa-plus, i.fa-minus");
-        toggleIconAnimation(currentIcon, !currentIcon.hasClass("fa-minus"));
+        const $currentIcon = $(this).find("i.fa-plus, i.fa-minus");
+        toggleIconAnimation($currentIcon, !$currentIcon.hasClass("fa-minus"));
 
         $(".sidebar-menu-item > a")
             .not(this)
             .each(function () {
-                const otherIcon = $(this).find("i.fa-minus");
-                if (otherIcon.length) toggleIconAnimation(otherIcon, false);
+                const $otherIcon = $(this).find("i.fa-minus");
+                if ($otherIcon.length) toggleIconAnimation($otherIcon, false);
             });
     });
 }

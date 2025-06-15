@@ -77,7 +77,30 @@ namespace NextERP.BLL.Service
 
             foreach (var productCategory in listProductCategory)
             {
-                productCategory.IsDelete = true;
+                productCategory.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listProductCategoryId = ids.Split(',')
+                 .Select(id => DataHelper.GetGuid(id.Trim()))
+                 .Where(guid => guid != Guid.Empty)
+                 .ToList();
+
+            var listProductCategory = await _context.ProductCategories
+                .Where(s => listProductCategoryId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var productCategory in listProductCategory)
+            {
+                _context.ProductCategories.Remove(productCategory); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

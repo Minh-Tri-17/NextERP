@@ -77,7 +77,30 @@ namespace NextERP.BLL.Service
 
             foreach (var branch in listBranch)
             {
-                branch.IsDelete = true;
+                branch.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listBranchId = ids.Split(',')
+                 .Select(id => DataHelper.GetGuid(id.Trim()))
+                 .Where(guid => guid != Guid.Empty)
+                 .ToList();
+
+            var listBranch = await _context.Branches
+                .Where(s => listBranchId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var branch in listBranch)
+            {
+                _context.Branches.Remove(branch); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

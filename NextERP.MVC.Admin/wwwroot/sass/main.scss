@@ -49,7 +49,7 @@
                     gap: $mr-2;
                     flex-wrap: wrap;
 
-                    .refresh-list {
+                    #refresh-list {
                         @include flex-between();
                         font-size: $fs-4;
                     }
@@ -274,10 +274,10 @@
         .calendar-content {
             margin: $mr-2;
 
-            .fc-button{
+            .fc-button {
                 text-transform: capitalize;
-            } 
-            
+            }
+
             .fc-button-primary {
                 background-color: $primary-color;
                 border: none;

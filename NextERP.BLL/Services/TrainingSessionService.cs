@@ -77,7 +77,30 @@ namespace NextERP.BLL.Service
 
             foreach (var trainingSession in listTrainingSession)
             {
-                trainingSession.IsDelete = true;
+                trainingSession.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listTrainingSessionId = ids.Split(',')
+                .Select(id => DataHelper.GetGuid(id.Trim()))
+                .Where(guid => guid != Guid.Empty)
+                .ToList();
+
+            var listTrainingSession = await _context.TrainingSessions
+                .Where(s => listTrainingSessionId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var trainingSession in listTrainingSession)
+            {
+                _context.TrainingSessions.Remove(trainingSession); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

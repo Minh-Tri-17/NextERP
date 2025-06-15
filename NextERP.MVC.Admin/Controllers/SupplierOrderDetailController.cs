@@ -64,7 +64,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(string ids)
         {
-            var result = await _supplierOrderDetailAPIService.Delete(ids);
+            var result = await _supplierOrderDetailAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

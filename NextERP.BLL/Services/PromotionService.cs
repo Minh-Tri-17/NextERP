@@ -77,7 +77,30 @@ namespace NextERP.BLL.Service
 
             foreach (var promotion in listPromotion)
             {
-                promotion.IsDelete = true;
+                promotion.IsDelete = true; // Đánh dấu là đã xóa
+            }
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
+
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listPromotionId = ids.Split(',')
+               .Select(id => DataHelper.GetGuid(id.Trim()))
+               .Where(guid => guid != Guid.Empty)
+               .ToList();
+
+            var listPromotion = await _context.Promotions
+                .Where(s => listPromotionId.Contains(s.Id))
+                .ToListAsync();
+
+            foreach (var promotion in listPromotion)
+            {
+                _context.Promotions.Remove(promotion); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();

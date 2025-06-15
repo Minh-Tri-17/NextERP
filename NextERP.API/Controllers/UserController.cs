@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NextERP.BLL.Interface;
+using NextERP.BLL.Service;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
 using NextERP.ModelBase.APIResult;
@@ -67,6 +68,16 @@ namespace NextERP.API.Controllers
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteUser(string ids)
         {
             var result = await _userService.Delete(ids);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete(nameof(DeletePermanentlyUser))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyUser(string ids)
+        {
+            var result = await _userService.DeletePermanently(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
