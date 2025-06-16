@@ -53,6 +53,11 @@
                         @include flex-between();
                         font-size: $fs-4;
                     }
+
+                    #is-delete {
+                        font-size: $fs-4;
+                        margin-right: $mr-2;
+                    }
                 }
 
                 .filter-inputs {
@@ -97,6 +102,10 @@
                         font-size: $fs-4;
                         font-weight: $fw-4;
                         color: $text-primary;
+                    }
+
+                    .highlight {
+                        background-color: $primary-light-color;
                     }
                 }
 

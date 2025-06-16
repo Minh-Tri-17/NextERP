@@ -800,6 +800,10 @@ thead.sticky-active {
   align-items: center;
   font-size: 1.25rem;
 }
+.main .main-wrapper .main-container .filter-panel .filter-actions #is-delete {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
 .main .main-wrapper .main-container .filter-panel .filter-inputs {
   overflow-x: hidden;
   margin-top: 0.5rem;
@@ -836,6 +840,9 @@ thead.sticky-active {
   font-size: 1.25rem;
   font-weight: 600;
   color: #776b5d;
+}
+.main .main-wrapper .main-container .table-wrapper .table-container .highlight {
+  background-color: #b0a695;
 }
 .main .main-wrapper .main-container .table-wrapper .pagination-container {
   display: flex;

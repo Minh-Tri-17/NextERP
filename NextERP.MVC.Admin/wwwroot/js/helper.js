@@ -103,6 +103,9 @@ function affterCallAPISuccess() {
 
     // Gọi hàm tableScrollHandler để xử lý cuộn bảng
     tableScrollHandler();
+
+    // Gọi hàm sortableHandler để xử lý kéo thả row
+    sortableHandler();
 }
 
 //& Format cho date

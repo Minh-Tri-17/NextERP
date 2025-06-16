@@ -29,7 +29,6 @@ namespace NextERP.BLL.Service
 
             var username = DataHelper.GetString(request.Username);
             var password = DataHelper.GetString(request.Password);
-            var hashedPassword = DataHelper.GetString(request.PasswordHash);
 
             #endregion
 
@@ -37,7 +36,7 @@ namespace NextERP.BLL.Service
             if (user == null)
                 return new APIErrorResult<string>(string.Format(Messages.UserNameNotExist, username));
 
-            var checkPassword = PasswordHasher.VerifyPassword(password, hashedPassword);
+            var checkPassword = PasswordHasher.VerifyPassword(password, DataHelper.GetString(user.PasswordHash));
             if (checkPassword == false)
                 return new APIErrorResult<string>(string.Format(Messages.UserNameOrPasswordIncorrect, username, password));
 

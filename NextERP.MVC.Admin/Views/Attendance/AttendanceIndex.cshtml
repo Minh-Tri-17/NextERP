@@ -43,7 +43,7 @@
                 </button>
                 <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
                 <div class="d-flex align-items-center ms-2 pb-2">
-                    <input class="form-check-input" type="checkbox" style="font-size: 1.25rem; margin-right: 5px" value="" id="is-delete">
+                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
                     <label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
                 </div>
             </div>
@@ -75,11 +75,11 @@
         loadAttendances();
     });
 
-    $("#is-delete").change(function () {
+    $("#is-delete").change(function () { 
         loadAttendances();
     })
 
-    $(document).on("change", ".@TableName.Attendance-checkbox", function () {
+    $(document).on("change", ".@TableName.Attendance-checkbox", function () { 
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
         $attendanceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val() : "";
 

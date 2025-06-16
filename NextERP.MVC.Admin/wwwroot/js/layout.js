@@ -8,7 +8,7 @@ initEvents();
 
 //& Xử lý sự kiện click sidebar menu
 function handleSidebarClick() {
-    $(".sidebar-menu-item > a").click(function () {
+    $(".sidebar-menu-item > a").on("click", function () {
         if ($(this).closest(".submenu").length) return;
 
         const $currentIcon = $(this).find("i.fa-plus, i.fa-minus");
@@ -40,7 +40,7 @@ function toggleIconAnimation($icon, toMinus) {
 
 //& Xử lý chế độ sáng / tối
 function handleDarkModeToggle() {
-    $(".dark-mode input").change(function () {
+    $(".dark-mode input").on("change", function () {
         if ($(this).is(":checked")) {
             $(".header ").css("background-color", "#2f2f2f");
             $(".layout-wrapper").css("background-color", "#2f2f2f");

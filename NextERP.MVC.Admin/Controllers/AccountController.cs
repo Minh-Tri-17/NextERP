@@ -119,6 +119,7 @@ namespace NextERP.MVC.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Response.Cookies.Delete(Constants.Token);
             return RedirectToAction(ActionName.AccountIndex, "Account");
         }
     }

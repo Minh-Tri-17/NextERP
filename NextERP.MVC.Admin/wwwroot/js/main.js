@@ -1,13 +1,3 @@
-//* Khởi tạo tất cả sự kiện
-function InitEvents() {
-    InitTableScroll();
-    InitRandomColors();
-    InitSortable();
-    InitCheckedGroup();
-    InitCheckedAll();
-    InitDataWithDelay();
-}
-
 //& Cuộn bảng: Sticky thead
 function tableScrollHandler() {
     const tableContainer = document.querySelector(".table-container");
@@ -18,47 +8,27 @@ function tableScrollHandler() {
     }
 }
 
-//& Gán màu ngẫu nhiên cho các item
-function InitRandomColors() {
-    const colors = ["#d4f8c4", "#ffe5a8", "#f8d4d4", "#c4e3f8", "#b0a695", "#b4b4b8", "#e0c3fc"];
-    const items = $(".new-user-item").toArray();
-    const shuffledColors = [...colors].sort(() => Math.random() - 0.5);
-
-    items.forEach((item, index) => {
-        const colorIndex = index < shuffledColors.length ? index : Math.floor(Math.random() * shuffledColors.length);
-        $(item).css("background-color", shuffledColors[colorIndex]);
-    });
-}
-
 //& Kéo thả nhóm
-function InitSortable() {
+function sortableHandler() {
     $(".sortable-group").each(function () {
         new Sortable(this, {
-            group: {
-                name: "nested",
-                pull: "clone",
-                put: true,
-            },
             animation: 150,
+            swap: true,
+            swapClass: 'highlight',
             fallbackOnBody: true,
             swapThreshold: 0.65,
+            handle: "td",
         });
     });
 }
+
+//& Phần dưới chưa dùng
 
 //& Check toàn nhóm
 function InitCheckedGroup() {
     $(".group-toggle").on("change", function () {
         const isChecked = $(this).prop("checked");
         $(this).closest("tbody").find(".form-check-input").prop("checked", isChecked);
-    });
-}
-
-//& Check tất cả
-function InitCheckedAll() {
-    $(".check-all").on("change", function () {
-        const isChecked = $(this).prop("checked");
-        $(this).find(".form-check-input").prop("checked", isChecked);
     });
 }
 
@@ -76,6 +46,18 @@ function InitDataWithDelay() {
             RenderChartLine();
         }, 200);
     }, 3000);
+}
+
+//& Gán màu ngẫu nhiên cho các item
+function InitRandomColors() {
+    const colors = ["#d4f8c4", "#ffe5a8", "#f8d4d4", "#c4e3f8", "#b0a695", "#b4b4b8", "#e0c3fc"];
+    const items = $(".new-user-item").toArray();
+    const shuffledColors = [...colors].sort(() => Math.random() - 0.5);
+
+    items.forEach((item, index) => {
+        const colorIndex = index < shuffledColors.length ? index : Math.floor(Math.random() * shuffledColors.length);
+        $(item).css("background-color", shuffledColors[colorIndex]);
+    });
 }
 
 //& Hiệu ứng tăng số
