@@ -17,7 +17,7 @@ public partial class ProductCategory
     public string? ProductCategoryCode { get; set; }
 
     [StringLength(150)]
-    public string? CategoryName { get; set; }
+    public string? ProductCategoryName { get; set; }
 
     public bool? IsDelete { get; set; }
 

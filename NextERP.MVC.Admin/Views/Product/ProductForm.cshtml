@@ -114,7 +114,7 @@
             formElement.classList.add("was-validated");
         }
         else {
-            fetch('@Url.Action("CreateOrEdit", TableName.Product)', {
+            fetch('@Url.Action(Constants.CreateOrEdit, TableName.Product)', {
                 method: "POST",
                 body: formData
             }).then(response => {

@@ -221,7 +221,7 @@ namespace NextERP.ModelBase
         }
     }
 
-    public class ActionName
+    public class ScreenName
     {
         public const string DashboardIndex = "DashboardIndex";
         public const string AccountIndex = "AccountIndex";

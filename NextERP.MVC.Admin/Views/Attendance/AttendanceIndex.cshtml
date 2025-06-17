@@ -58,7 +58,7 @@
 
     <!--& MODAL -->
     <section class="modal-wrapper">
-        @await Html.PartialAsync(ActionName.Attendance.AttendanceForm, Model)
+        @await Html.PartialAsync(ScreenName.Attendance.AttendanceForm, Model)
         @await Component.InvokeAsync("Import", TableName.Attendance)
         @await Component.InvokeAsync("Export", TableName.Attendance)
     </section>
@@ -91,7 +91,7 @@
     $(".create-edit-button").click(function () {
         $(".only-save-button").css("display",  $attendanceId ? "none" : "block");
 
-        fetch('@Url.Action("CreateOrEdit", TableName.Attendance)/' + $attendanceId, {
+        fetch('@Url.Action(Constants.CreateOrEdit, TableName.Attendance)/' + $attendanceId, {
             method: "GET",
         }).then(response => {
             return response.json();
@@ -120,7 +120,7 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch('@Url.Action("Delete", TableName.Attendance)', {
+        fetch('@Url.Action(Constants.Delete, TableName.Attendance)', {
             method: "POST",
             body: formData
         }).then(response => {
@@ -148,7 +148,7 @@
          const $form = $(this).closest("form");
          const formData = new FormData($form[0]);
 
-         fetch('@Url.Action("DeletePermanently", TableName.Attendance)', {
+         fetch('@Url.Action(Constants.DeletePermanently, TableName.Attendance)', {
              method: "POST",
              body: formData
          }).then(response => {
@@ -187,7 +187,7 @@
 
         $(".loader").css("display", "flex");
 
-        fetch('@Url.Action("GetList", TableName.Attendance)', {
+        fetch('@Url.Action(Constants.GetList, TableName.Attendance)', {
             method: "POST",
             body: filter
         }).then(response => {

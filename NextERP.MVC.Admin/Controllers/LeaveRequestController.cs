@@ -39,7 +39,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return PartialView(ActionName.LeaveRequest.LeaveRequestList, result);
+            return PartialView(ScreenName.LeaveRequest.LeaveRequestList, result);
         }
 
         [HttpPost]
@@ -69,7 +69,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return RedirectToAction(ActionName.LeaveRequest.LeaveRequestIndex, Localization(result.Message));
+            return RedirectToAction(ScreenName.LeaveRequest.LeaveRequestIndex, Localization(result.Message));
         }
 
         [HttpPost]

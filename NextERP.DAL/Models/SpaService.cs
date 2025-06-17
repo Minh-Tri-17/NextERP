@@ -30,9 +30,6 @@ public partial class SpaService
 
     public bool? IsPromotional { get; set; }
 
-    [MaxLength(500)]
-    public byte[]? SpaServiceImage { get; set; }
-
     [StringLength(50)]
     public string? SpaServiceLevel { get; set; }
 

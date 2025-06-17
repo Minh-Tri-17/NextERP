@@ -32,7 +32,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             // Kiểm tra xem user đã login chưa, nếu đã đăng nhập thì chuyển thẳng tới trang Home
             if (User.Identity != null && User.Identity.IsAuthenticated)
-                return RedirectToAction(ActionName.DashboardIndex, "Dashboard");
+                return RedirectToAction(ScreenName.DashboardIndex, "Dashboard");
 
             return View();
         }
@@ -80,7 +80,7 @@ namespace NextERP.MVC.Admin.Controllers
                     bool isCustomer = request.GroupRole == GroupRole.Customer.ToString();
 
                     if (isAdmin)
-                        return RedirectToAction(ActionName.DashboardIndex, "Dashboard");
+                        return RedirectToAction(ScreenName.DashboardIndex, "Dashboard");
                     else if (isEmployee)
                         return View();// RedirectToAction(Constants.Index, "Employee");
                     else if (isCustomer)
@@ -120,7 +120,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Response.Cookies.Delete(Constants.Token);
-            return RedirectToAction(ActionName.AccountIndex, "Account");
+            return RedirectToAction(ScreenName.AccountIndex, "Account");
         }
     }
 }

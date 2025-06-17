@@ -64,7 +64,7 @@ namespace NextERP.MVC.Admin.Controllers
                 product.Base64Images = base64Images;
             }
 
-            return PartialView(ActionName.Product.ProductList, result);
+            return PartialView(ScreenName.Product.ProductList, result);
         }
 
         [HttpPost]

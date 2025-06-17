@@ -394,8 +394,8 @@ p {
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border: none;
   background-color: #ffffff;
   display: flex;
@@ -403,8 +403,8 @@ p {
   align-items: center;
 }
 .layout-content .header .header-center .search-form button img {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .layout-content .header .header-center .search-form button:hover img {

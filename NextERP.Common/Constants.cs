@@ -24,6 +24,10 @@
         public const string DateTo = "DateTo";
         public const string KeyWord = "KeyWord";
         public const string Base64Images = "Base64Images";
+        public const string CreateOrEdit = "CreateOrEdit";
+        public const string GetList = "GetList";
+        public const string Delete = "Delete";
+        public const string DeletePermanently = "DeletePermanently";
 
         #region Format
 

@@ -17,7 +17,7 @@
 
     <!--& MODAL -->
     <section class="modal-wrapper">
-        @await Html.PartialAsync(ActionName.Appointment.AppointmentForm, Model)
+        @await Html.PartialAsync(ScreenName.Appointment.AppointmentForm, Model)
     </section>
 </div>
 
@@ -31,7 +31,7 @@
 
         $(".loader").css("display", "flex");
 
-        fetch('@Url.Action("GetList", TableName.Appointment)', {
+        fetch('@Url.Action(Constants.GetList, TableName.Appointment)', {
             method: "POST",
             body: filter
         }).then(response => {

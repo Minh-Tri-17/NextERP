@@ -37,7 +37,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (string.IsNullOrWhiteSpace(cookiesToken))
             {
                 // Nếu không có thông tin phiên, Redirect đến trang Index trong Controller Account
-                context.Result = new RedirectToActionResult(ActionName.AccountIndex, "Account", null);
+                context.Result = new RedirectToActionResult(ScreenName.AccountIndex, "Account", null);
             }
             else
             {
@@ -52,7 +52,7 @@ namespace NextERP.MVC.Admin.Controllers
                         HttpContext.Response.Cookies.Delete(Constants.Token);
 
                         // Redirect đến trang Index trong Controller Account
-                        context.Result = new RedirectToActionResult(ActionName.AccountIndex, "Account", null);
+                        context.Result = new RedirectToActionResult(ScreenName.AccountIndex, "Account", null);
                     }
                 }
             }
