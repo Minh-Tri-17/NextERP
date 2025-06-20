@@ -108,14 +108,14 @@ namespace NextERP.BLL.Service
                 return new APIErrorResult<bool>(string.Format(Messages.UserNameExist, username));
 
             // Mặc định gán quyền cho khách hàng là Customer
-            var role = await _context.Roles.FirstOrDefaultAsync(s => s.RoleName != null
-                && s.RoleName.ToLower() == Enums.GroupRole.Customer.ToString().ToLower());
-            if (role == null)
+            var listRole = await _context.Roles.Where(s => !string.IsNullOrEmpty(s.GroupRole)
+                && s.GroupRole.Contains(Enums.GroupRole.Customer.ToString())).Select(s => s.RoleName).ToListAsync();
+            if (listRole == null || listRole.Count() == 0)
                 return new APIErrorResult<bool>(Messages.RoleNotExist);
 
             var passwordHashed = PasswordHasher.HashPassword(password);
             request.PasswordHash = passwordHashed;
-            request.RoleIds = DataHelper.GetString(role.Id.ToString());
+            request.RoleIds = string.Join(";", listRole);
 
             var user = new User();
             DataHelper.MapAudit(request, user, string.Empty);

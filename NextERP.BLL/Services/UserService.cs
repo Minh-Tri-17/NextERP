@@ -29,14 +29,21 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(UserModel request)
         {
-            var passwordHashed = PasswordHasher.HashPassword(request.Password);
-            request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
-
             #region Check null request and create variable
 
             var id = DataHelper.GetGuid(request.Id);
+            var groupRole = DataHelper.GetString(request.GroupRole);
+            var passwordHashed = PasswordHasher.HashPassword(request.Password);
 
             #endregion
+
+            var listRole = await _context.Roles.Where(s => !string.IsNullOrEmpty(s.GroupRole)
+                    && s.GroupRole.Contains(groupRole)).Select(s => s.RoleName).ToListAsync();
+            if (listRole == null || listRole.Count() == 0)
+                return new APIErrorResult<bool>(Messages.RoleNotExist);
+
+            request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
+            request.RoleIds = string.Join(";", listRole);
 
             if (id == Guid.Empty)
             {
@@ -117,7 +124,7 @@ namespace NextERP.BLL.Service
         {
             var user = await _context.Users
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id && s.Id != Guid.Empty);
 
             if (user == null)
                 return new APIErrorResult<UserModel>(Messages.NotFoundGet);
@@ -129,7 +136,7 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<UserModel>>> GetPaging(Filter filter)
         {
-            IQueryable<User> query = _context.Users.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+            IQueryable<User> query = _context.Users.AsNoTracking().Where(s => s.Id != Guid.Empty); // Không theo dõi thay đổi của thực thể
 
             query = query.ApplyCommonFilters(filter, s => s.UserCode!, s => s.IsDelete, s => s.Id);
 
