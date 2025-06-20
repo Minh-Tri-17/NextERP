@@ -17,10 +17,10 @@ public partial class Appointment
     public string? AppointmentCode { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? AppointmentDate { get; set; }
+    public DateTime AppointmentDate { get; set; }
 
     [StringLength(50)]
-    public string? AppointmentStatus { get; set; }
+    public string AppointmentStatus { get; set; } = null!;
 
     [Column(TypeName = "decimal(18, 0)")]
     public decimal? TotalCost { get; set; }

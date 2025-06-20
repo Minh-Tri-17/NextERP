@@ -3,7 +3,7 @@
 @using NextERP.ModelBase.APIResult
 @using NextERP.ModelBase.PagingResult
 @using NextERP.Util
-@model APIBaseResult<PagingResult<AttendanceModel>>
+@model APIBaseResult<PagingResult<EmployeeModel>>
 
 <div class="table-container">
     <table class="table table-hover me-2">
@@ -18,7 +18,7 @@
                 @{
                     var excludedFields = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
 
-                    var listField = typeof(AttendanceModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    var listField = typeof(EmployeeModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Where(s => s.Name != null && !excludedFields.Contains(s.Name, StringComparer.OrdinalIgnoreCase)
                     && s.PropertyType != typeof(Guid) && s.PropertyType != typeof(Guid?)
                     && s.GetMethod != null && !s.GetMethod.IsVirtual)
@@ -41,9 +41,9 @@
                 {
                     <tr>
                         <td>
-                            <input type="hidden" name="@AttributeNames.Attendance.AttendanceId" value="@row.Id" />
+                            <input type="hidden" name="@AttributeNames.Employee.EmployeeId" value="@row.Id" />
                             <div class="form-check">
-                                <input class="form-check-input @TableName.Attendance-checkbox" type="checkbox" />
+                                <input class="form-check-input @TableName.Employee-checkbox" type="checkbox" />
                             </div>
                         </td>
                         <td>@counter</td>
@@ -81,15 +81,15 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadAttendances($pageIndex);
+        loadEmployees($pageIndex);
     });
 
     $(".check-all").change(function () {
-        // Gán giá trị cho tất cả checkbox Attendance-checkbox
-        $(".@TableName.Attendance-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+        // Gán giá trị cho tất cả checkbox Employee-checkbox
+        $(".@TableName.Employee-checkbox").prop("checked", $(this).is(":checked") ? true : false);
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.Attendance-checkbox:checked").length;
-        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Attendance-checkbox");
+        const $length = $(".@TableName.Employee-checkbox:checked").length;
+        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Employee-checkbox");
     });
 </script>

@@ -1,0 +1,194 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.EmployeeModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="@AttributeNames.Employee.EmployeeId" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.EmployeeCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EmployeeCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.EmployeeCode" type="text" asp-for="EmployeeCode" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.Dob" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Dob</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.Dob" type="date" asp-for="Dob" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Dob" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.HireDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HireDate</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.HireDate" type="date" asp-for="HireDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.HireDate" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.FullName" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.FullName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.FullName" type="text" asp-for="FullName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.FullName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.PhoneNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.PhoneNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.PhoneNumber" type="text" asp-for="PhoneNumber" min="10" max="10" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.PhoneNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.Gender" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Gender</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Employee.Gender" asp-for="Gender">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.Gender)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Gender" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.Address" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Address</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Employee.Address" rows="3" asp-for="Address"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Address" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.NationalId" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.NationalId</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.NationalId" type="text" asp-for="NationalId" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.NationalId" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.Email" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Email</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.Email" type="email" asp-for="Email" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Email" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.EducationLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EducationLevel</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Employee.EducationLevel" asp-for="EducationLevel">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.EducationLevel)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.EducationLevel" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.BankAccountNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.BankAccountNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.BankAccountNumber" type="text" asp-for="BankAccountNumber" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.BankAccountNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.HealthInsuranceNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HealthInsuranceNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.HealthInsuranceNumber" type="text" asp-for="HealthInsuranceNumber" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.HealthInsuranceNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.SocialInsuranceNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.SocialInsuranceNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.SocialInsuranceNumber" type="text" asp-for="SocialInsuranceNumber" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.SocialInsuranceNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.TaxCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.TaxCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Employee.TaxCode" type="text" asp-for="TaxCode" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.TaxCode" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.OperatingStatus</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Employee.OperatingStatus" asp-for="OperatingStatus">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.OperatingStatus" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Employee.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Employee.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Note" localize-content></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
+
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Employee)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadEmployees();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
+    });
+</script>

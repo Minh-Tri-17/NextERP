@@ -91,14 +91,13 @@
     $(".create-edit-button").click(function () {
         $(".only-save-button").css("display",  $productId ? "none" : "block");
 
-        fetch('@Url.Action(Constants.CreateOrEdit, TableName.Product)/' + $productId, {
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, {
             method: "GET",
         }).then(response => {
             return response.json();
         }).then(data => {
-            // Lưu giá trị cho field Id trên form
-            $("#@AttributeNames.Product.ProductId").val($productId);
             // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+            $("#@AttributeNames.Product.ProductId").val(data.id);
             $("#@AttributeNames.Product.ProductCode").val(data.productCode);
             $("#@AttributeNames.Product.ProductName").val(data.productName);
             $("#@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
@@ -122,7 +121,7 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch('@Url.Action(Constants.Delete, TableName.Product)', {
+        fetch("@Url.Action(Constants.Delete, TableName.Product)", {
             method: "POST",
             body: formData
         }).then(response => {
@@ -150,7 +149,7 @@
          const $form = $(this).closest("form");
          const formData = new FormData($form[0]);
 
-         fetch('@Url.Action(Constants.DeletePermanently, TableName.Product)', {
+         fetch("@Url.Action(Constants.DeletePermanently, TableName.Product)", {
              method: "POST",
              body: formData
          }).then(response => {
@@ -179,7 +178,7 @@
 
     function loadProducts(pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $('#filter-name').val();
+        const $keyWord = $("#filter-name").val();
         const $isDelete = $("#is-delete").is(":checked");
 
         let filter = new FormData();
@@ -189,7 +188,7 @@
 
         $(".loader").css("display", "flex");
 
-        fetch('@Url.Action(Constants.GetList, TableName.Product)', {
+        fetch("@Url.Action(Constants.GetList, TableName.Product)", {
             method: "POST",
             body: filter
         }).then(response => {
@@ -199,13 +198,13 @@
             // Gọi hàm parseResponse để xử lý response trả về
             return parseResponse(response);
         }).then(result => {
-            if (result.type === 'html') {
+            if (result.type === "html") {
                 $("#product-table").html(result.data);
 
                 // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
                 affterCallAPISuccess();
             }
-            else if (result.type === 'json') {
+            else if (result.type === "json") {
                 // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
                 affterCallAPISuccess();
 

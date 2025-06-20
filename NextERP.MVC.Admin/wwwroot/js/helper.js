@@ -72,7 +72,7 @@ function showMessage(message) {
     const cleanMessage = message.replace(/^S:\s*|^F:\s*/, '');
 
     $("#success-msg")
-        .text(cleanMessage)
+        .html(cleanMessage)
         .removeClass("d-none")
         .addClass("toast show toast-body")
         .toggleClass("text-bg-success", isSuccess)
@@ -129,4 +129,23 @@ function formatTimeToInput(dateStr) {
     const min = d.getMinutes().toString().padStart(2, '0');
 
     return `${hh}:${min}`;
+}
+
+//& Hiển thị lỗi validation cho từng field + lỗi tổng hợp
+function showInvalid(errors) {
+    let allMessages = [];
+
+    errors.forEach(error => {
+        // Ghi lỗi cạnh field tương ứng
+        $(`#invalid-${error.field}`).text(error.message);
+
+        // Đánh dấu bắt buộc
+        $(`[name="${error.field}"]`).prop("required", true);
+
+        // Thu thập để show lỗi tổng
+        allMessages.push(`* ${error.message}`);
+    });
+
+    // Show lỗi tổng hợp (nếu bạn muốn hiện toast/thông báo riêng)
+    showMessage(allMessages.join("<br/>"));
 }

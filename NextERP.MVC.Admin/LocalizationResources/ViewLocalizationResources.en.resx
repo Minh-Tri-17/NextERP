@@ -144,18 +144,6 @@
   <data name="BackLogin" xml:space="preserve">
     <value>Back login</value>
   </data>
-  <data name="InvalidUsername" xml:space="preserve">
-    <value>Please enter username</value>
-  </data>
-  <data name="InvalidPassword" xml:space="preserve">
-    <value>Please enter a 6 character password</value>
-  </data>
-  <data name="InvalidNewPassword" xml:space="preserve">
-    <value>Please enter a new password of 6 characters.</value>
-  </data>
-  <data name="InvalidPhoneNumberRegistered" xml:space="preserve">
-    <value>Please enter phone number with 10 characters</value>
-  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -351,26 +339,14 @@
   <data name="ExportSuccess" xml:space="preserve">
     <value>S:Export data success</value>
   </data>
-  <data name="InvalidTime" xml:space="preserve">
-    <value>Please enter time</value>
-  </data>
   <data name="CreateFailed" xml:space="preserve">
     <value>F:Create data failed</value>
-  </data>
-  <data name="InvalidStatus" xml:space="preserve">
-    <value>Please enter status</value>
   </data>
   <data name="UpdateFailed" xml:space="preserve">
     <value>F:Update data failed</value>
   </data>
-  <data name="InvalidNumber" xml:space="preserve">
-    <value>Please enter number</value>
-  </data>
   <data name="ImportFailed" xml:space="preserve">
     <value>F:Import data failed</value>
-  </data>
-  <data name="InvalidText" xml:space="preserve">
-    <value>Please enter text</value>
   </data>
   <data name="ExportFailed" xml:space="preserve">
     <value>F:Export data failed</value>
@@ -561,8 +537,8 @@
   <data name="RequestStatus" xml:space="preserve">
     <value>Request status</value>
   </data>
-  <data name="zstring113" xml:space="preserve">
-    <value />
+  <data name="AppointmentRescheduled" xml:space="preserve">
+    <value>Appointment rescheduled</value>
   </data>
   <data name="Dob" xml:space="preserve">
     <value>Day of birthday</value>
@@ -573,8 +549,8 @@
   <data name="UnitPrice" xml:space="preserve">
     <value>Unit price</value>
   </data>
-  <data name="zstring105" xml:space="preserve">
-    <value />
+  <data name="ColorDanger" xml:space="preserve">
+    <value>Red color</value>
   </data>
   <data name="HireDate" xml:space="preserve">
     <value>Hire date</value>
@@ -585,8 +561,8 @@
   <data name="CategoryName" xml:space="preserve">
     <value>Category name</value>
   </data>
-  <data name="zstring121" xml:space="preserve">
-    <value />
+  <data name="HighSchool" xml:space="preserve">
+    <value>HighSchool</value>
   </data>
   <data name="OperatingStatus" xml:space="preserve">
     <value>Operating status</value>
@@ -609,8 +585,8 @@
   <data name="NotificationContent" xml:space="preserve">
     <value>Notification content</value>
   </data>
-  <data name="zstring117" xml:space="preserve">
-    <value />
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
   </data>
   <data name="TotalSpent" xml:space="preserve">
     <value>Total spent</value>
@@ -621,8 +597,8 @@
   <data name="LeaveStartDate" xml:space="preserve">
     <value>Leave start date</value>
   </data>
-  <data name="zstring109" xml:space="preserve">
-    <value />
+  <data name="AppointmentBooked" xml:space="preserve">
+    <value>Appointment booked</value>
   </data>
   <data name="DateFeedback" xml:space="preserve">
     <value>Feedback date</value>
@@ -633,8 +609,8 @@
   <data name="StartDate" xml:space="preserve">
     <value>Start date</value>
   </data>
-  <data name="zstring125" xml:space="preserve">
-    <value />
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
@@ -657,8 +633,8 @@
   <data name="NotificationCode" xml:space="preserve">
     <value>Notification code</value>
   </data>
-  <data name="zstring115" xml:space="preserve">
-    <value />
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
   </data>
   <data name="JoinDate" xml:space="preserve">
     <value>Join date</value>
@@ -669,8 +645,8 @@
   <data name="LeaveRequestCode" xml:space="preserve">
     <value>Leave request code</value>
   </data>
-  <data name="zstring107" xml:space="preserve">
-    <value />
+  <data name="ColorSuccess" xml:space="preserve">
+    <value>Green color</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
@@ -681,8 +657,8 @@
   <data name="PromotionName" xml:space="preserve">
     <value>Promotion name</value>
   </data>
-  <data name="zstring123" xml:space="preserve">
-    <value />
+  <data name="College" xml:space="preserve">
+    <value>College</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>Full name</value>
@@ -705,8 +681,8 @@
   <data name="PositionName" xml:space="preserve">
     <value>Position name</value>
   </data>
-  <data name="zstring119" xml:space="preserve">
-    <value />
+  <data name="PrimarySchool" xml:space="preserve">
+    <value>PrimarySchool</value>
   </data>
   <data name="DepartmentName" xml:space="preserve">
     <value>Department name</value>
@@ -717,8 +693,8 @@
   <data name="TotalLeaveDays" xml:space="preserve">
     <value>Total leave days</value>
   </data>
-  <data name="zstring111" xml:space="preserve">
-    <value />
+  <data name="AppointmentCancelled" xml:space="preserve">
+    <value>Appointment cancelled</value>
   </data>
   <data name="FunctionName" xml:space="preserve">
     <value>Function name</value>
@@ -729,8 +705,8 @@
   <data name="RoleCode" xml:space="preserve">
     <value>Role code</value>
   </data>
-  <data name="zstring127" xml:space="preserve">
-    <value />
+  <data name="Professor" xml:space="preserve">
+    <value>Professor</value>
   </data>
   <data name="BranchName" xml:space="preserve">
     <value>Branch name</value>
@@ -753,8 +729,8 @@
   <data name="ApprovalDate" xml:space="preserve">
     <value>Approval date</value>
   </data>
-  <data name="zstring114" xml:space="preserve">
-    <value />
+  <data name="AppointmentInProgress" xml:space="preserve">
+    <value>Appointment in progress</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -765,8 +741,8 @@
   <data name="TotalPrice" xml:space="preserve">
     <value>Total price</value>
   </data>
-  <data name="zstring106" xml:space="preserve">
-    <value />
+  <data name="ColorInfo" xml:space="preserve">
+    <value>Blue color</value>
   </data>
   <data name="FeedbackCode" xml:space="preserve">
     <value>Feedback code</value>
@@ -777,8 +753,8 @@
   <data name="PromotionCode" xml:space="preserve">
     <value>Promotion cde</value>
   </data>
-  <data name="zstring122" xml:space="preserve">
-    <value />
+  <data name="Intermediate" xml:space="preserve">
+    <value>Intermediate</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Customer code</value>
@@ -801,8 +777,8 @@
   <data name="PositionCode" xml:space="preserve">
     <value>Position code</value>
   </data>
-  <data name="zstring118" xml:space="preserve">
-    <value />
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="DepartmentCode" xml:space="preserve">
     <value>Department code</value>
@@ -813,8 +789,8 @@
   <data name="LeaveEndDate" xml:space="preserve">
     <value>Leave end date</value>
   </data>
-  <data name="zstring110" xml:space="preserve">
-    <value />
+  <data name="AppointmentCompleted" xml:space="preserve">
+    <value>Appointment completed</value>
   </data>
   <data name="FunctionCode" xml:space="preserve">
     <value>Function code</value>
@@ -825,8 +801,8 @@
   <data name="EndDate" xml:space="preserve">
     <value>End date</value>
   </data>
-  <data name="zstring126" xml:space="preserve">
-    <value />
+  <data name="Doctor" xml:space="preserve">
+    <value>Doctor</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone number</value>
@@ -849,8 +825,8 @@
   <data name="NotificationName" xml:space="preserve">
     <value>Notification name</value>
   </data>
-  <data name="zstring116" xml:space="preserve">
-    <value />
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
   </data>
   <data name="LoyaltyPoints" xml:space="preserve">
     <value>Loyalty points</value>
@@ -861,8 +837,8 @@
   <data name="RequestDate" xml:space="preserve">
     <value>Request date</value>
   </data>
-  <data name="zstring108" xml:space="preserve">
-    <value />
+  <data name="ColorWarning" xml:space="preserve">
+    <value>Yellow color</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
@@ -873,8 +849,8 @@
   <data name="DiscountPercentage" xml:space="preserve">
     <value>Discount percentage</value>
   </data>
-  <data name="zstring124" xml:space="preserve">
-    <value />
+  <data name="University" xml:space="preserve">
+    <value>University</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
@@ -885,8 +861,8 @@
   <data name="Quantity" xml:space="preserve">
     <value>Quantity</value>
   </data>
-  <data name="zstring104" xml:space="preserve">
-    <value />
+  <data name="ColorPrimary" xml:space="preserve">
+    <value>Primary color</value>
   </data>
   <data name="TaxCode" xml:space="preserve">
     <value>Tax code</value>
@@ -897,8 +873,8 @@
   <data name="ProductCategoryCode" xml:space="preserve">
     <value>Product category code</value>
   </data>
-  <data name="zstring120" xml:space="preserve">
-    <value />
+  <data name="SecondarySchool" xml:space="preserve">
+    <value>SecondarySchool</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>Number of employees</value>
@@ -909,8 +885,8 @@
   <data name="LeaveDayType" xml:space="preserve">
     <value>Leave day type</value>
   </data>
-  <data name="zstring112" xml:space="preserve">
-    <value />
+  <data name="AppointmentMissed" xml:space="preserve">
+    <value>Appointment missed</value>
   </data>
   <data name="InvoiceCode" xml:space="preserve">
     <value>Invoice code</value>
@@ -921,7 +897,31 @@
   <data name="GroupRole" xml:space="preserve">
     <value>Group role</value>
   </data>
-  <data name="zstring128" xml:space="preserve">
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="zstring134" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring136" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>is required.</value>
+  </data>
+  <data name="zstring135" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="zstring137" xml:space="preserve">
     <value />
   </data>
 </root>

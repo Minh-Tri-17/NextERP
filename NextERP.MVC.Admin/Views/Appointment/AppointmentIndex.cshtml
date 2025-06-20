@@ -31,7 +31,7 @@
 
         $(".loader").css("display", "flex");
 
-        fetch('@Url.Action(Constants.GetList, TableName.Appointment)', {
+        fetch("@Url.Action(Constants.GetList, TableName.Appointment)", {
             method: "POST",
             body: filter
         }).then(response => {
@@ -52,17 +52,17 @@
 
                     const getColorByStatus = (status) => {
                         switch (status) {
-                            case "@Enums.AppointmentStatus.Booked":
+                            case "@Enums.AppointmentStatus.AppointmentBooked":
                                 return "#3d7dcf"; // xanh dương
-                            case "@Enums.AppointmentStatus.InProgress":
+                            case "@Enums.AppointmentStatus.AppointmentInProgress":
                                 return "#8a2be2"; // Tím
-                            case "@Enums.AppointmentStatus.Completed":
+                            case "@Enums.AppointmentStatus.AppointmentCompleted":
                                 return "#28a745"; // xanh lá
-                            case "@Enums.AppointmentStatus.Cancelled":
+                            case "@Enums.AppointmentStatus.AppointmentCancelled":
                                 return "#dc3545"; // đỏ
-                            case "@Enums.AppointmentStatus.Missed":
+                            case "@Enums.AppointmentStatus.AppointmentMissed":
                                 return "#f0bd00"; // vàng
-                            case "@Enums.AppointmentStatus.Rescheduled":
+                            case "@Enums.AppointmentStatus.AppointmentRescheduled":
                                 return "#6a6a6a"; // Xám
                             default:
                                 return "#776b5d"; // Nâu
@@ -108,17 +108,17 @@
                     const status = info.event.extendedProps.status;
                     const getBgColorByStatus = (status) => {
                         switch (status) {
-                            case "@Enums.AppointmentStatus.Booked":
+                            case "@Enums.AppointmentStatus.AppointmentBooked":
                                 return "#c4e3f8"; // xanh dương
-                            case "@Enums.AppointmentStatus.InProgress":
+                            case "@Enums.AppointmentStatus.AppointmentInProgress":
                                 return "#e0c3fc"; // Tím
-                            case "@Enums.AppointmentStatus.Completed":
+                            case "@Enums.AppointmentStatus.AppointmentCompleted":
                                 return "#d4f8c4"; // xanh lá
-                            case "@Enums.AppointmentStatus.Cancelled":
+                            case "@Enums.AppointmentStatus.AppointmentCancelled":
                                 return "#f8d4d4"; // đỏ
-                            case "@Enums.AppointmentStatus.Missed":
+                            case "@Enums.AppointmentStatus.AppointmentMissed":
                                 return "#ffe5a8"; // vàng
-                            case "@Enums.AppointmentStatus.Rescheduled":
+                            case "@Enums.AppointmentStatus.AppointmentRescheduled":
                                 return "#b4b4b8"; // Xám
                             default:
                                 return "#b0a695"; // Nâu
@@ -128,10 +128,10 @@
                     const bgColor = getBgColorByStatus(status);
 
                     if (info.event.allDay) {
-                        const mainFrame = info.el.querySelector('.fc-event-title-container');
-                        mainFrame.style.setProperty('background-color', bgColor, 'important');
+                        const mainFrame = info.el.querySelector(".fc-event-title-container");
+                        mainFrame.style.setProperty("background-color", bgColor, "important");
                     } else {
-                        info.el.style.setProperty('background-color', bgColor, 'important');
+                        info.el.style.setProperty("background-color", bgColor, "important");
                     }
 
                     //? Thêm tooltip dùng thư viện Tippy.js

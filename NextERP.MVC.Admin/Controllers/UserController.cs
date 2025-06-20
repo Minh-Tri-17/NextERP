@@ -10,15 +10,22 @@ namespace NextERP.MVC.Admin.Controllers
     public class UserController : BaseController
     {
         private readonly IUserAPIService _userAPIService;
+        private readonly IEmployeeAPIService _employeeAPIService;
 
-        public UserController(IUserAPIService userAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
+        public UserController(IUserAPIService userAPIService, IEmployeeAPIService employeeAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _userAPIService = userAPIService;
+            _employeeAPIService = employeeAPIService;
         }
 
         [HttpGet]
-        public IActionResult UserIndex()
+        public async Task<IActionResult> UserIndexAsync()
         {
+            var filterEmployee = new Filter();
+            var listEmployee = await _employeeAPIService.GetPaging(filterEmployee);
+            if (DataHelper.ListIsNotNull(listEmployee))
+                ViewBag.ListEmployee = listEmployee!.Result!.Items;
+
             return View(new UserModel());
         }
 
@@ -45,19 +52,12 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrEdit(UserModel request)
         {
+            if (!ModelState.IsValid)
+                return GetModelStateErrors();
+
             var result = await _userAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-            {
-                foreach (var modelStateEntry in ModelState.Values)
-                {
-                    foreach (var error in modelStateEntry.Errors)
-                    {
-                        result.Message += $" - {error.ErrorMessage}";
-                    }
-                }
-
                 return Json(Localization(result.Message));
-            }
 
             return Json(Localization(result.Message));
         }

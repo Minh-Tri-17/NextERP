@@ -17,11 +17,11 @@ public partial class Employee
     public string? EmployeeCode { get; set; }
 
     [StringLength(50)]
-    public string? FullName { get; set; }
+    public string FullName { get; set; } = null!;
 
     [StringLength(10)]
     [Unicode(false)]
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     [StringLength(5)]
     public string? Gender { get; set; }
@@ -39,7 +39,7 @@ public partial class Employee
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [StringLength(150)]
     public string? Photo { get; set; }
@@ -126,7 +126,4 @@ public partial class Employee
 
     [InverseProperty("Employee")]
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-
-    [InverseProperty("Employee")]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

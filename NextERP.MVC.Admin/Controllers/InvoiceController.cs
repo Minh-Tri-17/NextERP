@@ -45,19 +45,12 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrEdit(InvoiceModel request)
         {
+            if (!ModelState.IsValid)
+                return GetModelStateErrors();
+
             var result = await _invoiceAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-            {
-                foreach (var modelStateEntry in ModelState.Values)
-                {
-                    foreach (var error in modelStateEntry.Errors)
-                    {
-                        result.Message += $" - {error.ErrorMessage}";
-                    }
-                }
-
                 return Json(Localization(result.Message));
-            }
 
             return Json(Localization(result.Message));
         }

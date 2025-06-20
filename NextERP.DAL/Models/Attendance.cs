@@ -17,13 +17,13 @@ public partial class Attendance
     public string? AttendanceCode { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? WorkDate { get; set; }
+    public DateTime WorkDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? InTime { get; set; }
+    public DateTime InTime { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? OutTime { get; set; }
+    public DateTime OutTime { get; set; }
 
     public int? WorkingHours { get; set; }
 

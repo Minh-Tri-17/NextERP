@@ -17,7 +17,7 @@ public partial class Product
     public string? ProductCode { get; set; }
 
     [StringLength(150)]
-    public string? ProductName { get; set; }
+    public string ProductName { get; set; } = null!;
 
     public int? QuantityInStock { get; set; }
 
@@ -33,7 +33,7 @@ public partial class Product
     [StringLength(50)]
     public string? CountryOfOrigin { get; set; }
 
-    public int? ReorderLevel { get; set; }
+    public int ReorderLevel { get; set; }
 
     [Column("SupplierID")]
     public Guid? SupplierId { get; set; }

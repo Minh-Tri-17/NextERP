@@ -67,12 +67,4 @@ public partial class User
     [StringLength(50)]
     [Unicode(false)]
     public string? UserUpdate { get; set; }
-
-    [ForeignKey("CustomerId")]
-    [InverseProperty("Users")]
-    public virtual Customer? Customer { get; set; }
-
-    [ForeignKey("EmployeeId")]
-    [InverseProperty("Users")]
-    public virtual Employee? Employee { get; set; }
 }

@@ -61,7 +61,7 @@ namespace NextERP.MVC.Admin.Controllers
             base.OnActionExecuted(context);
         }
 
-        public ClaimsPrincipal ValidateToken(string jwtToken)
+        private ClaimsPrincipal ValidateToken(string jwtToken)
         {
             IdentityModelEventSource.ShowPII = true;
 
@@ -110,9 +110,42 @@ namespace NextERP.MVC.Admin.Controllers
 
         #endregion
 
+        #region ModelState Error Handling and Localization
+
         protected string Localization(string key)
         {
             return _localizer.GetLocalizedString(key);
         }
+
+        protected JsonResult GetModelStateErrors()
+        {
+            var errors = ModelState
+                .Where(x => x.Value!.Errors.Any())
+                .SelectMany(x => x.Value!.Errors, (entry, error) =>
+                {
+                    var field = entry.Key;
+                    // Phân tích loại lỗi từ nội dung thông báo
+                    var errorType = GetErrorType(error.ErrorMessage);
+
+                    string message = $"{Localization(field)} {Localization(errorType)}";
+
+                    return new { Field = field, Message = message };
+                })
+                .ToList();
+
+            return Json(errors);
+        }
+
+        private static string GetErrorType(string message)
+        {
+            if (message.Contains("required", StringComparison.OrdinalIgnoreCase))
+                return "Required";
+            if (message.Contains("valid e-mail", StringComparison.OrdinalIgnoreCase))
+                return "Regex";
+
+            return "Other";
+        }
+
+        #endregion
     }
 }

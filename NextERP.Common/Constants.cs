@@ -57,7 +57,7 @@
 
         public const string UrlCreateOrEditAppointment = "/api/Appointment/CreateOrEditAppointment";
         public const string UrlDeleteAppointment = "/api/Appointment/DeleteAppointment";
-        public const string UrlDeletePermanentlyAppointment = "/api/Attendance/DeletePermanentlyAppointment";
+        public const string UrlDeletePermanentlyAppointment = "/api/Appointment/DeletePermanentlyAppointment";
         public const string UrlGetAppointment = "/api/Appointment/GetAppointment";
         public const string UrlGetAppointments = "/api/Appointment/GetAppointments";
         public const string UrlImportAppointment = "/api/Appointment/ImportAppointment";
@@ -81,7 +81,7 @@
 
         public const string UrlCreateOrEditBranch = "/api/Branch/CreateOrEditBranch";
         public const string UrlDeleteBranch = "/api/Branch/DeleteBranch";
-        public const string UrlDeletePermanentlyBranch = "/api/Attendance/DeletePermanentlyBranch";
+        public const string UrlDeletePermanentlyBranch = "/api/Branch/DeletePermanentlyBranch";
         public const string UrlGetBranch = "/api/Branch/GetBranch";
         public const string UrlGetBranches = "/api/Branch/GetBranches";
         public const string UrlImportBranch = "/api/Branch/ImportBranch";
@@ -93,7 +93,7 @@
 
         public const string UrlCreateOrEditCustomer = "/api/Customer/CreateOrEditCustomer";
         public const string UrlDeleteCustomer = "/api/Customer/DeleteCustomer";
-        public const string UrlDeletePermanentlyCustomer = "/api/Attendance/DeletePermanentlyCustomer";
+        public const string UrlDeletePermanentlyCustomer = "/api/Customer/DeletePermanentlyCustomer";
         public const string UrlGetCustomer = "/api/Customer/GetCustomer";
         public const string UrlGetCustomers = "/api/Customer/GetCustomers";
         public const string UrlImportCustomer = "/api/Customer/ImportCustomer";
@@ -105,7 +105,7 @@
 
         public const string UrlCreateOrEditDepartment = "/api/Department/CreateOrEditDepartment";
         public const string UrlDeleteDepartment = "/api/Department/DeleteDepartment";
-        public const string UrlDeletePermanentlyDepartment = "/api/Attendance/DeletePermanentlyDepartment";
+        public const string UrlDeletePermanentlyDepartment = "/api/Department/DeletePermanentlyDepartment";
         public const string UrlGetDepartment = "/api/Department/GetDepartment";
         public const string UrlGetDepartments = "/api/Department/GetDepartments";
         public const string UrlImportDepartment = "/api/Department/ImportDepartment";
@@ -117,7 +117,7 @@
 
         public const string UrlCreateOrEditEmployee = "/api/Employee/CreateOrEditEmployee";
         public const string UrlDeleteEmployee = "/api/Employee/DeleteEmployee";
-        public const string UrlDeletePermanentlyEmployee = "/api/Attendance/DeletePermanentlyEmployee";
+        public const string UrlDeletePermanentlyEmployee = "/api/Employee/DeletePermanentlyEmployee";
         public const string UrlGetEmployee = "/api/Employee/GetEmployee";
         public const string UrlGetEmployees = "/api/Employee/GetEmployees";
         public const string UrlImportEmployee = "/api/Employee/ImportEmployee";
@@ -129,7 +129,7 @@
 
         public const string UrlCreateOrEditFeedback = "/api/Feedback/CreateOrEditFeedback";
         public const string UrlDeleteFeedback = "/api/Feedback/DeleteFeedback";
-        public const string UrlDeletePermanentlyFeedback = "/api/Attendance/DeletePermanentlyFeedback";
+        public const string UrlDeletePermanentlyFeedback = "/api/Feedback/DeletePermanentlyFeedback";
         public const string UrlGetFeedback = "/api/Feedback/GetFeedback";
         public const string UrlGetFeedbacks = "/api/Feedback/GetFeedbacks";
         public const string UrlImportFeedback = "/api/Feedback/ImportFeedback";
@@ -141,7 +141,7 @@
 
         public const string UrlCreateOrEditFunction = "/api/Function/CreateOrEditFunction";
         public const string UrlDeleteFunction = "/api/Function/DeleteFunction";
-        public const string UrlDeletePermanentlyFunction = "/api/Attendance/DeletePermanentlyFunction";
+        public const string UrlDeletePermanentlyFunction = "/api/Function/DeletePermanentlyFunction";
         public const string UrlGetFunction = "/api/Function/GetFunction";
         public const string UrlGetFunctions = "/api/Function/GetFunctions";
 
@@ -151,7 +151,7 @@
 
         public const string UrlCreateOrEditInvoice = "/api/Invoice/CreateOrEditInvoice";
         public const string UrlDeleteInvoice = "/api/Invoice/DeleteInvoice";
-        public const string UrlDeletePermanentlyInvoice = "/api/Attendance/DeletePermanentlyInvoice";
+        public const string UrlDeletePermanentlyInvoice = "/api/Invoice/DeletePermanentlyInvoice";
         public const string UrlGetInvoice = "/api/Invoice/GetInvoice";
         public const string UrlGetInvoices = "/api/Invoice/GetInvoices";
 
@@ -170,7 +170,7 @@
 
         public const string UrlCreateOrEditLeaveRequest = "/api/LeaveRequest/CreateOrEditLeaveRequest";
         public const string UrlDeleteLeaveRequest = "/api/LeaveRequest/DeleteLeaveRequest";
-        public const string UrlDeletePermanentlyLeaveRequest = "/api/Attendance/DeletePermanentlyLeaveRequest";
+        public const string UrlDeletePermanentlyLeaveRequest = "/api/LeaveRequest/DeletePermanentlyLeaveRequest";
         public const string UrlGetLeaveRequest = "/api/LeaveRequest/GetLeaveRequest";
         public const string UrlGetLeaveRequests = "/api/LeaveRequest/GetLeaveRequests";
         public const string UrlImportLeaveRequest = "/api/LeaveRequest/ImportLeaveRequest";
@@ -182,7 +182,7 @@
 
         public const string UrlCreateOrEditNotification = "/api/Notification/CreateOrEditNotification";
         public const string UrlDeleteNotification = "/api/Notification/DeleteNotification";
-        public const string UrlDeletePermanentlyNotification = "/api/Attendance/DeletePermanentlyNotification";
+        public const string UrlDeletePermanentlyNotification = "/api/Notification/DeletePermanentlyNotification";
         public const string UrlGetNotification = "/api/Notification/GetNotification";
         public const string UrlGetNotifications = "/api/Notification/GetNotifications";
         public const string UrlImportNotification = "/api/Notification/ImportNotification";
@@ -194,7 +194,7 @@
 
         public const string UrlCreateOrEditPosition = "/api/Position/CreateOrEditPosition";
         public const string UrlDeletePosition = "/api/Position/DeletePosition";
-        public const string UrlDeletePermanentlyPosition = "/api/Attendance/DeletePermanentlyPosition";
+        public const string UrlDeletePermanentlyPosition = "/api/Position/DeletePermanentlyPosition";
         public const string UrlGetPosition = "/api/Position/GetPosition";
         public const string UrlGetPositions = "/api/Position/GetPositions";
         public const string UrlImportPosition = "/api/Position/ImportPosition";
@@ -243,7 +243,7 @@
 
         public const string UrlCreateOrEditRole = "/api/Role/CreateOrEditRole";
         public const string UrlDeleteRole = "/api/Role/DeleteRole";
-        public const string UrlDeletePermanentlyRole = "/api/Attendance/DeletePermanentlyRole";
+        public const string UrlDeletePermanentlyRole = "/api/Role/DeletePermanentlyRole";
         public const string UrlGetRole = "/api/Role/GetRole";
         public const string UrlGetRoles = "/api/Role/GetRoles";
         public const string UrlImportRole = "/api/Role/ImportRole";
@@ -255,7 +255,7 @@
 
         public const string UrlCreateOrEditSalary = "/api/Salary/CreateOrEditSalary";
         public const string UrlDeleteSalary = "/api/Salary/DeleteSalary";
-        public const string UrlDeletePermanentlySalary = "/api/Attendance/DeletePermanentlySalary";
+        public const string UrlDeletePermanentlySalary = "/api/Salary/DeletePermanentlySalary";
         public const string UrlGetSalary = "/api/Salary/GetSalary";
         public const string UrlGetSalaries = "/api/Salary/GetSalaries";
         public const string UrlImportSalary = "/api/Salary/ImportSalary";
@@ -267,7 +267,7 @@
 
         public const string UrlCreateOrEditSchedule = "/api/Schedule/CreateOrEditSchedule";
         public const string UrlDeleteSchedule = "/api/Schedule/DeleteSchedule";
-        public const string UrlDeletePermanentlySchedule = "/api/Attendance/DeletePermanentlySchedule";
+        public const string UrlDeletePermanentlySchedule = "/api/Schedule/DeletePermanentlySchedule";
         public const string UrlGetSchedule = "/api/Schedule/GetSchedule";
         public const string UrlGetSchedules = "/api/Schedule/GetSchedules";
         public const string UrlImportSchedule = "/api/Schedule/ImportSchedule";
@@ -334,7 +334,7 @@
 
         public const string UrlCreateOrEditTrainingSession = "/api/TrainingSession/CreateOrEditTrainingSession";
         public const string UrlDeleteTrainingSession = "/api/TrainingSession/DeleteTrainingSession";
-        public const string UrlDeletePermanentlyTrainingSession = "/api/Attendance/DeletePermanentlyTrainingSession";
+        public const string UrlDeletePermanentlyTrainingSession = "/api/TrainingSession/DeletePermanentlyTrainingSession";
         public const string UrlGetTrainingSession = "/api/TrainingSession/GetTrainingSession";
         public const string UrlGetTrainingSessions = "/api/TrainingSession/GetTrainingSessions";
         public const string UrlImportTrainingSession = "/api/TrainingSession/ImportTrainingSession";

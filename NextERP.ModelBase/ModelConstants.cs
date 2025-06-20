@@ -709,7 +709,10 @@ namespace NextERP.ModelBase
             public const string LastLoginDate = "LastLoginDate";
             public const string OperatingStatus = "OperatingStatus";
             public const string GroupRole = "GroupRole";
+            public const string Roles = "Roles";
             public const string RoleIds = "RoleIds";
+            public const string Remember = "Remember";
+            public const string PasswordHash = "PasswordHash";
             public const string Note = "Note";
         }
     }

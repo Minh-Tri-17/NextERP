@@ -16,40 +16,39 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ProductCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ProductCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductCode" type="text" asp-for="ProductCode" disabled required />
-                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductCode" type="text" asp-for="ProductCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ProductName" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ProductName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductName" type="text" asp-for="ProductName" required />
-                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductName" type="text" asp-for="ProductName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ProductName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.QuantityInStock" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.QuantityInStock</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.QuantityInStock" type="number" asp-for="QuantityInStock" required />
-                            <div class="invalid-feedback" localize-content>InvalidNumber</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.QuantityInStock" type="number" asp-for="QuantityInStock" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.QuantityInStock" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Price" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Price</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Price" type="number" asp-for="Price" required />
-                            <div class="invalid-feedback" localize-content>InvalidNumber</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Price" type="number" asp-for="Price" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Price" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ExpirationDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ExpirationDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ExpirationDate" type="date" asp-for="ExpirationDate" required />
-                            <div class="invalid-feedback" localize-content>InvalidTime</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ExpirationDate" type="date" asp-for="ExpirationDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ExpirationDate" localize-content></div>
                         </div>
                     </div>
 
@@ -63,32 +62,32 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Manufacturer" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Manufacturer</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Manufacturer" type="text" asp-for="Manufacturer" required />
-                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Manufacturer" type="text" asp-for="Manufacturer" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Manufacturer" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.CountryOfOrigin" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.CountryOfOrigin</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.CountryOfOrigin" type="text" asp-for="CountryOfOrigin" required />
-                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.CountryOfOrigin" type="text" asp-for="CountryOfOrigin" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.CountryOfOrigin" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ReorderLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ReorderLevel</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ReorderLevel" type="number" asp-for="ReorderLevel" required />
-                            <div class="invalid-feedback" localize-content>InvalidNumber</div>
+                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ReorderLevel" type="number" asp-for="ReorderLevel" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ReorderLevel" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Product.Note" rows="3" asp-for="Note" required></textarea>
-                            <div class="invalid-feedback" localize-content>InvalidText</div>
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Product.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Note" localize-content></div>
                         </div>
                     </div>
                 </div>
@@ -107,22 +106,22 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
 
-        // Kiểm tra tính hợp lệ của form
-        if (!formElement.checkValidity()) {
-            // Nếu form không hợp lệ, hiển thị thông báo lỗi
-            formElement.classList.add("was-validated");
-        }
-        else {
-            fetch('@Url.Action(Constants.CreateOrEdit, TableName.Product)', {
-                method: "POST",
-                body: formData
-            }).then(response => {
-                loadProducts();
-                return response.json();
-            }).then(data => {
-                showMessage(data);
-            })
-        }
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Product)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadProducts();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
     });
 </script>

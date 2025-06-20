@@ -144,18 +144,6 @@
   <data name="BackLogin" xml:space="preserve">
     <value>Quay về đăng nhập</value>
   </data>
-  <data name="InvalidUsername" xml:space="preserve">
-    <value>Vui lòng nhập tên người dùng</value>
-  </data>
-  <data name="InvalidPassword" xml:space="preserve">
-    <value>Vui lòng nhập mật khẩu đủ 6 ký tự</value>
-  </data>
-  <data name="InvalidNewPassword" xml:space="preserve">
-    <value>Vui lòng nhập mật khẩu mới đủ 6 ký tự</value>
-  </data>
-  <data name="InvalidPhoneNumberRegistered" xml:space="preserve">
-    <value>Vui lòng nhập sđt đủ 10 ký tự</value>
-  </data>
   <data name="English" xml:space="preserve">
     <value>Tiếng Anh</value>
   </data>
@@ -351,26 +339,14 @@
   <data name="ExportSuccess" xml:space="preserve">
     <value>S:Xuất dữ liệu thành công</value>
   </data>
-  <data name="InvalidTime" xml:space="preserve">
-    <value>Vui lòng chọn thời gian</value>
-  </data>
   <data name="CreateFailed" xml:space="preserve">
     <value>F:Thêm dữ liệu thất bại</value>
-  </data>
-  <data name="InvalidStatus" xml:space="preserve">
-    <value>Vui lòng chọn trạng thái</value>
   </data>
   <data name="UpdateFailed" xml:space="preserve">
     <value>F:Cập nhật dữ liệu thất bại</value>
   </data>
-  <data name="InvalidNumber" xml:space="preserve">
-    <value>Vui lòng nhập số</value>
-  </data>
   <data name="ImportFailed" xml:space="preserve">
     <value>F:Nhập dữ liệu thất bại</value>
-  </data>
-  <data name="InvalidText" xml:space="preserve">
-    <value>Vui lòng nhập văn bản</value>
   </data>
   <data name="ExportFailed" xml:space="preserve">
     <value>F:Xuất dữ liệu thất bại</value>
@@ -561,8 +537,8 @@
   <data name="RequestStatus" xml:space="preserve">
     <value>Trạng thái yêu cầu</value>
   </data>
-  <data name="zstring113" xml:space="preserve">
-    <value />
+  <data name="AppointmentRescheduled" xml:space="preserve">
+    <value>Lịch hẹn đã được lên lại</value>
   </data>
   <data name="Dob" xml:space="preserve">
     <value>Ngày sinh</value>
@@ -573,8 +549,8 @@
   <data name="UnitPrice" xml:space="preserve">
     <value>Đơn giá</value>
   </data>
-  <data name="zstring105" xml:space="preserve">
-    <value />
+  <data name="ColorDanger" xml:space="preserve">
+    <value>Màu đỏ</value>
   </data>
   <data name="HireDate" xml:space="preserve">
     <value>Ngày vào làm</value>
@@ -585,8 +561,8 @@
   <data name="CategoryName" xml:space="preserve">
     <value>Tên danh mục</value>
   </data>
-  <data name="zstring121" xml:space="preserve">
-    <value />
+  <data name="HighSchool" xml:space="preserve">
+    <value>Trung học phổ thông</value>
   </data>
   <data name="OperatingStatus" xml:space="preserve">
     <value>Trạng thái hoạt động</value>
@@ -609,8 +585,8 @@
   <data name="NotificationContent" xml:space="preserve">
     <value>Nội dung thông báo</value>
   </data>
-  <data name="zstring117" xml:space="preserve">
-    <value />
+  <data name="Other" xml:space="preserve">
+    <value>Khác</value>
   </data>
   <data name="TotalSpent" xml:space="preserve">
     <value>Tổng chi tiêu</value>
@@ -621,8 +597,8 @@
   <data name="LeaveStartDate" xml:space="preserve">
     <value>Ngày bắt đầu nghỉ phép</value>
   </data>
-  <data name="zstring109" xml:space="preserve">
-    <value />
+  <data name="AppointmentBooked" xml:space="preserve">
+    <value>Lịch hẹn đã được đặt</value>
   </data>
   <data name="DateFeedback" xml:space="preserve">
     <value>Ngày phản hồi</value>
@@ -633,8 +609,8 @@
   <data name="StartDate" xml:space="preserve">
     <value>Ngày bắt đầu</value>
   </data>
-  <data name="zstring125" xml:space="preserve">
-    <value />
+  <data name="Master" xml:space="preserve">
+    <value>Thạc sĩ</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
@@ -657,8 +633,8 @@
   <data name="NotificationCode" xml:space="preserve">
     <value>Mã thông báo</value>
   </data>
-  <data name="zstring115" xml:space="preserve">
-    <value />
+  <data name="Male" xml:space="preserve">
+    <value>Nam</value>
   </data>
   <data name="JoinDate" xml:space="preserve">
     <value>Ngày tham gia</value>
@@ -669,8 +645,8 @@
   <data name="LeaveRequestCode" xml:space="preserve">
     <value>Mã ngày nghỉ</value>
   </data>
-  <data name="zstring107" xml:space="preserve">
-    <value />
+  <data name="ColorSuccess" xml:space="preserve">
+    <value>Màu xanh lá</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>Điểm đánh giá</value>
@@ -681,8 +657,8 @@
   <data name="PromotionName" xml:space="preserve">
     <value>Tên khuyến mãi</value>
   </data>
-  <data name="zstring123" xml:space="preserve">
-    <value />
+  <data name="College" xml:space="preserve">
+    <value>Trường cao đẳng</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>Họ tên</value>
@@ -705,8 +681,8 @@
   <data name="PositionName" xml:space="preserve">
     <value>Tên chức vụ</value>
   </data>
-  <data name="zstring119" xml:space="preserve">
-    <value />
+  <data name="PrimarySchool" xml:space="preserve">
+    <value>Tiếu học</value>
   </data>
   <data name="DepartmentName" xml:space="preserve">
     <value>Tên phòng ban</value>
@@ -717,8 +693,8 @@
   <data name="TotalLeaveDays" xml:space="preserve">
     <value>Tổng số ngày nghỉ</value>
   </data>
-  <data name="zstring111" xml:space="preserve">
-    <value />
+  <data name="AppointmentCancelled" xml:space="preserve">
+    <value>Lịch hẹn đã bị hủy</value>
   </data>
   <data name="FunctionName" xml:space="preserve">
     <value>Tên chức năng</value>
@@ -729,8 +705,8 @@
   <data name="RoleCode" xml:space="preserve">
     <value>Mã quyền</value>
   </data>
-  <data name="zstring127" xml:space="preserve">
-    <value />
+  <data name="Professor" xml:space="preserve">
+    <value>Giáo sư</value>
   </data>
   <data name="BranchName" xml:space="preserve">
     <value>Tên chi nhánh</value>
@@ -753,8 +729,8 @@
   <data name="ApprovalDate" xml:space="preserve">
     <value>Ngày phê duyệt</value>
   </data>
-  <data name="zstring114" xml:space="preserve">
-    <value />
+  <data name="AppointmentInProgress" xml:space="preserve">
+    <value>Lich hẹn đang được xử lý</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -765,8 +741,8 @@
   <data name="TotalPrice" xml:space="preserve">
     <value>Tổng giá</value>
   </data>
-  <data name="zstring106" xml:space="preserve">
-    <value />
+  <data name="ColorInfo" xml:space="preserve">
+    <value>Màu xanh dương</value>
   </data>
   <data name="FeedbackCode" xml:space="preserve">
     <value>Mã phản hồi</value>
@@ -777,8 +753,8 @@
   <data name="PromotionCode" xml:space="preserve">
     <value>Mã khuyến mãi</value>
   </data>
-  <data name="zstring122" xml:space="preserve">
-    <value />
+  <data name="Intermediate" xml:space="preserve">
+    <value>Trung cấp</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Mã khách hàng</value>
@@ -801,8 +777,8 @@
   <data name="PositionCode" xml:space="preserve">
     <value>Mã chức vụ</value>
   </data>
-  <data name="zstring118" xml:space="preserve">
-    <value />
+  <data name="Unknown" xml:space="preserve">
+    <value>Không xác định</value>
   </data>
   <data name="DepartmentCode" xml:space="preserve">
     <value>Mã phòng ban</value>
@@ -813,8 +789,8 @@
   <data name="LeaveEndDate" xml:space="preserve">
     <value>Ngày kết thúc nghỉ phép</value>
   </data>
-  <data name="zstring110" xml:space="preserve">
-    <value />
+  <data name="AppointmentCompleted" xml:space="preserve">
+    <value>Lịch hẹn đã được hoàn thành</value>
   </data>
   <data name="FunctionCode" xml:space="preserve">
     <value>Mã chức năng</value>
@@ -825,8 +801,8 @@
   <data name="EndDate" xml:space="preserve">
     <value>Ngày kết thúc</value>
   </data>
-  <data name="zstring126" xml:space="preserve">
-    <value />
+  <data name="Doctor" xml:space="preserve">
+    <value>Tiền sĩ</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Số điện thoại</value>
@@ -849,8 +825,8 @@
   <data name="NotificationName" xml:space="preserve">
     <value>Tên thông báo</value>
   </data>
-  <data name="zstring116" xml:space="preserve">
-    <value />
+  <data name="Female" xml:space="preserve">
+    <value>Nữ</value>
   </data>
   <data name="LoyaltyPoints" xml:space="preserve">
     <value>Điểm tích lũy</value>
@@ -861,8 +837,8 @@
   <data name="RequestDate" xml:space="preserve">
     <value>Ngày yêu cầu</value>
   </data>
-  <data name="zstring108" xml:space="preserve">
-    <value />
+  <data name="ColorWarning" xml:space="preserve">
+    <value>Màu vàng</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Bình luận</value>
@@ -873,8 +849,8 @@
   <data name="DiscountPercentage" xml:space="preserve">
     <value>Tỷ lệ chiết khấu</value>
   </data>
-  <data name="zstring124" xml:space="preserve">
-    <value />
+  <data name="University" xml:space="preserve">
+    <value>Đại học</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Giới tính</value>
@@ -885,8 +861,8 @@
   <data name="Quantity" xml:space="preserve">
     <value>Số lượng</value>
   </data>
-  <data name="zstring104" xml:space="preserve">
-    <value />
+  <data name="ColorPrimary" xml:space="preserve">
+    <value>Màu chính</value>
   </data>
   <data name="TaxCode" xml:space="preserve">
     <value>Mã số thuế</value>
@@ -897,8 +873,8 @@
   <data name="ProductCategoryCode" xml:space="preserve">
     <value>Mã danh mục sản phẩm</value>
   </data>
-  <data name="zstring120" xml:space="preserve">
-    <value />
+  <data name="SecondarySchool" xml:space="preserve">
+    <value>Trung học cơ sở</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>Số lượng nhân viên</value>
@@ -909,8 +885,8 @@
   <data name="LeaveDayType" xml:space="preserve">
     <value>Loại ngày nghỉ</value>
   </data>
-  <data name="zstring112" xml:space="preserve">
-    <value />
+  <data name="AppointmentMissed" xml:space="preserve">
+    <value>Lịch hẹn đã bị bỏ lỡ</value>
   </data>
   <data name="InvoiceCode" xml:space="preserve">
     <value>Mã hóa đơn</value>
@@ -921,7 +897,31 @@
   <data name="GroupRole" xml:space="preserve">
     <value>Nhóm quyền</value>
   </data>
-  <data name="zstring128" xml:space="preserve">
+  <data name="Active" xml:space="preserve">
+    <value>Hoạt động</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Xem</value>
+  </data>
+  <data name="zstring134" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring136" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Ngưng hoạt động</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>không được bỏ trống</value>
+  </data>
+  <data name="zstring135" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Mật khẩu không được bỏ trống</value>
+  </data>
+  <data name="zstring137" xml:space="preserve">
     <value />
   </data>
 </root>

@@ -24,19 +24,21 @@
                         <label for="@AttributeNames.Appointment.AppointmentDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.AppointmentDate</label>
                         <div class="col-md-12">
                             <input type="datetime-local" class="form-control form-control-sm" id="@AttributeNames.Appointment.AppointmentDate" asp-for="AppointmentDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.AppointmentDate" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.AppointmentStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.AppointmentStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select" id="@AttributeNames.Appointment.AppointmentStatus" asp-for="AppointmentStatus">
-                                <option value="" selected></option>
+                            <select class="form-select form-select-sm" id="@AttributeNames.Appointment.AppointmentStatus" asp-for="AppointmentStatus">
+                                <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.AppointmentStatus)))
                                 {
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.AppointmentStatus" localize-content></div>
                         </div>
                     </div>
 
@@ -44,6 +46,7 @@
                         <label for="@AttributeNames.Appointment.TotalCost" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.TotalCost</label>
                         <div class="col-md-12">
                             <input type="number" class="form-control form-control-sm" id="@AttributeNames.Appointment.TotalCost" asp-for="TotalCost" disabled />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.TotalCost" localize-content></div>
                         </div>
                     </div>
 
@@ -51,6 +54,7 @@
                         <label for="@AttributeNames.Appointment.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" id="@AttributeNames.Appointment.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.Note" localize-content></div>
                         </div>
                     </div>
                 </div>
@@ -68,22 +72,22 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
 
-        // Kiểm tra tính hợp lệ của form
-        if (!formElement.checkValidity()) {
-            // Nếu form không hợp lệ, hiển thị thông báo lỗi
-            formElement.classList.add("was-validated");
-        }
-        else {
-            fetch('@Url.Action(Constants.CreateOrEdit, TableName.Appointment)', {
-                method: "POST",
-                body: formData
-            }).then(response => {
-                loadAppointments();
-                return response.json();
-            }).then(data => {
-                showMessage(data);
-            })
-        }
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Appointment)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadAppointments();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
     });
 </script>

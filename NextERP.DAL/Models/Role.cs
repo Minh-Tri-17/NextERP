@@ -18,13 +18,13 @@ public partial class Role
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? GroupRole { get; set; }
+    public string GroupRole { get; set; } = null!;
 
     [StringLength(150)]
-    public string? RoleName { get; set; }
+    public string RoleName { get; set; } = null!;
 
-    [StringLength(50)]
-    public string? Permissions { get; set; }
+    [StringLength(150)]
+    public string Permissions { get; set; } = null!;
 
     public bool? IsDelete { get; set; }
 
