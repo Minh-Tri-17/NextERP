@@ -10,8 +10,8 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <input type="hidden" id="@AttributeNames.Appointment.AppointmentId" asp-for="Id" />
+                <div class="modal-body"> 
+                    <input  id="@AttributeNames.Appointment.AppointmentId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.AppointmentCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.AppointmentCode</label>
@@ -23,7 +23,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.AppointmentDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.AppointmentDate</label>
                         <div class="col-md-12">
-                            <input type="datetime-local" class="form-control form-control-sm" id="@AttributeNames.Appointment.AppointmentDate" asp-for="AppointmentDate" />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Appointment.AppointmentDate" type="datetime-local" asp-for="AppointmentDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.AppointmentDate" localize-content></div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.TotalCost" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.TotalCost</label>
                         <div class="col-md-12">
-                            <input type="number" class="form-control form-control-sm" id="@AttributeNames.Appointment.TotalCost" asp-for="TotalCost" disabled />
+                            <input  class="form-control form-control-sm" id="@AttributeNames.Appointment.TotalCost" type="number" asp-for="TotalCost" disabled />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.TotalCost" localize-content></div>
                         </div>
                     </div>

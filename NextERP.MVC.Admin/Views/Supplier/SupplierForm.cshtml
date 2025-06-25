@@ -1,0 +1,105 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.SupplierModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="@AttributeNames.Supplier.SupplierId" type="hidden" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.SupplierCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.SupplierCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Supplier.SupplierCode" type="text" asp-for="SupplierCode" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.SupplierName" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.SupplierName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Supplier.SupplierName" type="text" asp-for="SupplierName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.SupplierName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.ContactName" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.ContactName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Supplier.ContactName" type="text" asp-for="ContactName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.ContactName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.PhoneNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.PhoneNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Supplier.PhoneNumber" type="text" asp-for="PhoneNumber" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.PhoneNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.Address" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.Address</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Supplier.Address" rows="3" asp-for="Address"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.Address" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.Email" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.Email</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Supplier.Email" type="email" asp-for="Email" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.Email" localize-content></div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Supplier.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Supplier.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Supplier.Note" localize-content></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
+
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadSuppliers();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
+    });
+</script>

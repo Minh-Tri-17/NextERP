@@ -46,7 +46,7 @@ namespace NextERP.MVC.Admin.Controllers
             {
                 var calendar = new Calendar();
 
-                calendar.Title = DataHelper.GetString(item.AppointmentCode); // Sau này đổi thành tên khách hàng
+                calendar.Title = DataHelper.GetString(item.Customer?.FullName);
                 calendar.Status = DataHelper.GetString(item.AppointmentStatus);
                 calendar.Description = DataHelper.GetString(item.Note);
                 calendar.Start = DataHelper.GetDateTime(item.AppointmentDate);

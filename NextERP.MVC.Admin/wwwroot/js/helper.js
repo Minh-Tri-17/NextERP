@@ -108,6 +108,17 @@ function affterCallAPISuccess() {
     sortableHandler();
 }
 
+//& Format cho month
+function formatMonthToInput(dateStr) {
+    if (!dateStr) return '';
+
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = (d.getMonth() + 1).toString().padStart(2, '0');
+
+    return `${yyyy}-${mm}`;
+}
+
 //& Format cho date
 function formatDateToInput(dateStr) {
     if (!dateStr) return '';

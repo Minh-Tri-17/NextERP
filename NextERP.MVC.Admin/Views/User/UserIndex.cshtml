@@ -54,7 +54,7 @@
     </section>
 
     <!--& TABLE -->
-    <section class="table-wrapper card" id="user-table"></section>
+    <section class="table-wrapper card" id="@TableName.User-table"></section>
 
     <!--& MODAL -->
     <section class="modal-wrapper">
@@ -196,7 +196,7 @@
             return parseResponse(response);
         }).then(result => {
             if (result.type === "html") {
-                $("#user-table").html(result.data);
+                $("#@TableName.User-table").html(result.data);
 
                 // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
                 affterCallAPISuccess();

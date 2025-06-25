@@ -1,0 +1,110 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.PromotionModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="@AttributeNames.Promotion.PromotionId" type="hidden" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.PromotionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.PromotionCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.PromotionCode" type="text" asp-for="PromotionCode" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.PromotionName" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.PromotionName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.PromotionName" type="text" asp-for="PromotionName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.PromotionName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.StartDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.StartDate</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.StartDate" type="date" asp-for="StartDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.StartDate" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.EndDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.EndDate</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.EndDate" type="date" asp-for="EndDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.EndDate" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.DiscountPercentage" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.DiscountPercentage</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.DiscountPercentage" type="number" asp-for="DiscountPercentage" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.DiscountPercentage" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.OperatingStatus</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Promotion.OperatingStatus" asp-for="OperatingStatus">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.OperatingStatus" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Promotion.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Promotion.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.Note" localize-content></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
+
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadPromotions();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
+    });
+</script>

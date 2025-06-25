@@ -1,0 +1,95 @@
+﻿@using System.Reflection
+@using NextERP.ModelBase
+@using NextERP.ModelBase.APIResult
+@using NextERP.ModelBase.PagingResult
+@using NextERP.Util
+@model APIBaseResult<PagingResult<BranchModel>>
+
+<div class="table-container">
+    <table class="table table-hover me-2">
+        <thead>
+            <tr>
+                <th>
+                    <div class="form-check">
+                        <input class="check-all form-check-input" type="checkbox" />
+                    </div>
+                </th>
+                <th>#</th>
+                @{
+                    var excludedFields = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
+
+                    var listField = typeof(BranchModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(s => s.Name != null && !excludedFields.Contains(s.Name, StringComparer.OrdinalIgnoreCase)
+                    && s.PropertyType != typeof(Guid) && s.PropertyType != typeof(Guid?)
+                    && s.GetMethod != null && !s.GetMethod.IsVirtual)
+                    .ToList();
+
+                    foreach (var item in listField)
+                    {
+                        <th localize-content>@item.Name</th>
+                    }
+                }
+            </tr>
+        </thead>
+
+        <tbody class="sortable-group">
+            @if (DataHelper.ListIsNotNull(Model))
+            {
+                int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
+
+                foreach (var row in Model!.Result!.Items!)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="@AttributeNames.Branch.BranchId" value="@row.Id" />
+                            <div class="form-check">
+                                <input class="form-check-input @TableName.Branch-checkbox" type="checkbox" />
+                            </div>
+                        </td>
+                        <td>@counter</td>
+                        @foreach (var field in listField)
+                        {
+                            var value = field.GetValue(row);
+                            <td>@(value ?? "")</td>
+                        }
+                    </tr>
+
+                    counter++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (DataHelper.ListIsNotNull(Model))
+{
+    <nav id="pagination-container" aria-label="Page navigation">
+        @await Component.InvokeAsync(Constants.Pagination, Model.Result)
+    </nav>
+}
+
+<script>
+    $("#pagination-container").on("click", ".page-link", function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển trang
+
+        const $pageIndex = $(this).data("page");
+        if (!$pageIndex) return;
+
+        $("#current-page-index").val($pageIndex);
+
+        // Xử lý active
+        $("#pagination-container .page-item").removeClass("active");
+        $(this).parent().addClass("active");
+
+        loadBranchs($pageIndex);
+    });
+
+    $(".check-all").change(function () {
+        // Gán giá trị cho tất cả checkbox Branch-checkbox
+        $(".@TableName.Branch-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+
+        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+        const $length = $(".@TableName.Branch-checkbox:checked").length;
+        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Branch-checkbox");
+    });
+</script>

@@ -54,7 +54,7 @@
     </section>
 
     <!--& TABLE -->
-    <section class="table-wrapper card" id="attendance-table"></section>
+    <section class="table-wrapper card" id="@TableName.Attendance-table"></section>
 
     <!--& MODAL -->
     <section class="modal-wrapper">
@@ -75,11 +75,11 @@
         loadAttendances();
     });
 
-    $("#is-delete").change(function () { 
+    $("#is-delete").change(function () {
         loadAttendances();
     })
 
-    $(document).on("change", ".@TableName.Attendance-checkbox", function () { 
+    $(document).on("change", ".@TableName.Attendance-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
         $attendanceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val() : "";
 
@@ -197,7 +197,7 @@
             return parseResponse(response);
         }).then(result => {
             if (result.type === "html") {
-                $("#attendance-table").html(result.data);
+                $("#@TableName.Attendance-table").html(result.data);
 
                 // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
                 affterCallAPISuccess();

@@ -31,7 +31,7 @@ public partial class LeaveRequest
     public string? LeaveDayType { get; set; }
 
     [StringLength(50)]
-    public string? RequestStatus { get; set; }
+    public string? ApprovalStatus { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? ApprovalDate { get; set; }

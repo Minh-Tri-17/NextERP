@@ -6,7 +6,209 @@
     ViewData["Title"] = TableName.Department;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
-    {
+{
         (TableName.Department + "List", "", true),
     };
 }
+
+<div class="main-container">
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
+
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-success create-edit-button create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Create
+                </button>
+                <button type="button" class="btn btn-warning create-edit-button edit-button disabled" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Edit
+                </button>
+                <input type="text" name="Ids" id="Ids" hidden />
+                <button type="button" class="btn btn-danger delete-button disabled" localize-content>
+                    Delete
+                </button>
+                <button type="button" class="btn btn-danger delete-permanently-button disabled" localize-content>
+                    DeletePermanently
+                </button>
+                <button type="button" class="btn btn-secondary import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
+                    Import
+                </button>
+                <button type="button" class="btn btn-secondary export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
+                    Export
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target=".filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+                <div class="d-flex align-items-center ms-2 pb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
+                    <label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
+                </div>
+            </div>
+        </form>
+
+        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@
+        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+    </section>
+
+    <!--& TABLE -->
+    <section class="table-wrapper card" id="@TableName.Department-table"></section>
+
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ScreenName.Department.DepartmentForm, Model)
+        @await Component.InvokeAsync("Import", TableName.Department)
+        @await Component.InvokeAsync("Export", TableName.Department)
+    </section>
+</div>
+
+<script>
+    let $departmentId;
+
+    $(document).ready(function () {
+        loadDepartments();
+    });
+
+    $("#refresh-list").click(function(){
+        loadDepartments();
+    });
+
+    $("#is-delete").change(function () {
+        loadDepartments();
+    })
+
+    $(document).on("change", ".@TableName.Department-checkbox", function () {
+        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+        $departmentId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val() : "";
+
+        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+        const $length = $(".@TableName.Department-checkbox:checked").length;
+        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Department-checkbox");
+    });
+
+    $(".create-edit-button").click(function () {
+        $(".only-save-button").css("display",  $departmentId ? "none" : "block");
+
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Department)/" + $departmentId, {
+            method: "GET",
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+            $("#@AttributeNames.Department.DepartmentId").val(data.id);
+            $("#@AttributeNames.Department.DepartmentCode").val(data.departmentCode);
+            $("#@AttributeNames.Department.DepartmentName").val(data.departmentName);
+            $("#@AttributeNames.Department.NumberOfEmployees").val(data.numberOfEmployees);
+            $("#@AttributeNames.Department.OperatingStatus").val(data.operatingStatus);
+            $("#@AttributeNames.Department.Note").val(data.note);
+        })
+    });
+
+    $(".delete-button").click(function () {
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Department-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val();
+        }).get().join(",");
+
+        $("#Ids").val($ids);
+
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+
+        fetch("@Url.Action(Constants.Delete, TableName.Department)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadDepartments();
+            return response.json();
+        }).then(data => {
+            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+            affterCallAPISuccess();
+
+            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+            $departmentId = "";
+
+            showMessage(data);
+        })
+    });
+
+    $(".delete-permanently-button").click(function () {
+         // Lấy tất cả các Id của các checkbox đã chọn
+         const $ids = $(".@TableName.Department-checkbox:checked").map(function () {
+             return $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val();
+         }).get().join(",");
+
+         $("#Ids").val($ids);
+
+         const $form = $(this).closest("form");
+         const formData = new FormData($form[0]);
+
+         fetch("@Url.Action(Constants.DeletePermanently, TableName.Department)", {
+             method: "POST",
+             body: formData
+         }).then(response => {
+             loadDepartments();
+             return response.json();
+         }).then(data => {
+             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+             affterCallAPISuccess();
+
+             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+             $departmentId = "";
+
+             showMessage(data);
+         })
+    });
+
+    $(".search-button").click(function () {
+        loadDepartments();
+    })
+
+    $(".clear-button").click(function () {
+        $("#filter-name").val("");
+
+        loadDepartments();
+    })
+
+    function loadDepartments(pageIndex) {
+        // Khỏi tạo filter và gán giá trị
+        const $keyWord = $("#filter-name").val();
+        const $isDelete = $("#is-delete").is(":checked");
+
+        let filter = new FormData();
+        filter.append("@Constants.PageIndex", pageIndex);
+        filter.append("@Constants.KeyWord", $keyWord);
+        filter.append("@Constants.IsDelete", $isDelete);
+
+        $(".loader").css("display", "flex");
+
+        fetch("@Url.Action(Constants.GetList, TableName.Department)", {
+            method: "POST",
+            body: filter
+        }).then(response => {
+            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+            checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Department-checkbox");
+
+            // Gọi hàm parseResponse để xử lý response trả về
+            return parseResponse(response);
+        }).then(result => {
+            if (result.type === "html") {
+                $("#@TableName.Department-table").html(result.data);
+
+                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+                affterCallAPISuccess();
+            }
+            else if (result.type === "json") {
+                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
+                affterCallAPISuccess();
+
+                showMessage(result.data);
+            }
+
+            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+            $departmentId = "";
+        });
+    }
+</script>

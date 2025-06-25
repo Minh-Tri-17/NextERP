@@ -230,7 +230,6 @@ namespace NextERP.ModelBase
         {
             public const string AppointmentIndex = "AppointmentIndex";
             public const string AppointmentForm = "AppointmentForm";
-            public const string AppointmentList = "AppointmentList";
         }
 
         public class Attendance
@@ -348,13 +347,12 @@ namespace NextERP.ModelBase
         {
             public const string ScheduleIndex = "ScheduleIndex";
             public const string ScheduleForm = "ScheduleForm";
-            public const string ScheduleList = "ScheduleList";
         }
 
         public class SpaService
         {
             public const string SpaServiceIndex = "SpaServiceIndex";
-            public const string SpaServicForm = "SpaServiceForm";
+            public const string SpaServiceForm = "SpaServiceForm";
             public const string SpaServiceList = "SpaServiceList";
         }
 
@@ -532,7 +530,7 @@ namespace NextERP.ModelBase
             public const string LeaveEndDate = "LeaveEndDate";
             public const string TotalLeaveDays = "TotalLeaveDays";
             public const string LeaveDayType = "LeaveDayType";
-            public const string RequestStatus = "RequestStatus";
+            public const string ApprovalStatus = "ApprovalStatus";
             public const string ApprovalDate = "ApprovalDate";
             public const string ApprovedByIds = "ApprovedByIds";
             public const string Note = "Note";
@@ -576,7 +574,7 @@ namespace NextERP.ModelBase
         {
             public const string ProductCategoryId = "ProductCategoryId";
             public const string ProductCategoryCode = "ProductCategoryCode";
-            public const string CategoryName = "CategoryName";
+            public const string ProductCategoryName = "ProductCategoryName";
             public const string Note = "Note";
         }
 

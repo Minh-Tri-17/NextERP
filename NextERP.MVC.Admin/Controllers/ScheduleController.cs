@@ -35,11 +35,27 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(Filter filter)
         {
+            filter.AllowPaging = false;
             var result = await _scheduleAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return PartialView(ScreenName.Schedule.ScheduleList, result);
+            var listCalendar = new List<Calendar>();
+
+            foreach (var item in result.Result!.Items!)
+            {
+                var calendar = new Calendar();
+
+                calendar.Title = DataHelper.GetString(item.Employee?.FullName);
+                calendar.Description = DataHelper.GetString(item.Note);
+                calendar.Start = DataHelper.GetDateTime(item.WorkDate);
+                calendar.End = DataHelper.GetDateTime(item.WorkDate);
+                calendar.AllDay = DataHelper.GetDateTime(item.WorkDate).TimeOfDay == TimeSpan.Zero ? true : false;
+
+                listCalendar.Add(calendar);
+            }
+
+            return Json(listCalendar);
         }
 
         [HttpPost]

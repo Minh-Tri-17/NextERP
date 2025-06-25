@@ -16,7 +16,8 @@ public partial class Salary
     [Unicode(false)]
     public string? SalaryCode { get; set; }
 
-    public int? SalaryMonth { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? SalaryMonth { get; set; }
 
     [Column(TypeName = "decimal(18, 0)")]
     public decimal? GrossSalary { get; set; }

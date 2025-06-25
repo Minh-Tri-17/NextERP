@@ -903,11 +903,11 @@
   <data name="View" xml:space="preserve">
     <value>Xem</value>
   </data>
-  <data name="zstring134" xml:space="preserve">
-    <value />
+  <data name="SessionCompleted" xml:space="preserve">
+    <value>Buổi đào tạo đã kết thúc</value>
   </data>
-  <data name="zstring136" xml:space="preserve">
-    <value />
+  <data name="SessionCancelled" xml:space="preserve">
+    <value>Buổi đào tạo đã bị hủy</value>
   </data>
   <data name="Inactive" xml:space="preserve">
     <value>Ngưng hoạt động</value>
@@ -915,13 +915,58 @@
   <data name="Required" xml:space="preserve">
     <value>không được bỏ trống</value>
   </data>
-  <data name="zstring135" xml:space="preserve">
-    <value />
+  <data name="SessionOngoing" xml:space="preserve">
+    <value>Buổi đào tạo đang diễn ra</value>
   </data>
   <data name="InvalidPassword" xml:space="preserve">
     <value>Mật khẩu không được bỏ trống</value>
   </data>
-  <data name="zstring137" xml:space="preserve">
+  <data name="AnnualLeave" xml:space="preserve">
+    <value>Phép năm</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Đã duyệt</value>
+  </data>
+  <data name="PersonalLeave" xml:space="preserve">
+    <value>Nghỉ do lý do cá nhân</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Nâng cao</value>
+  </data>
+  <data name="UnpaidLeave" xml:space="preserve">
+    <value>Nghỉ không lương</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>Đã từ chối</value>
+  </data>
+  <data name="Submitted" xml:space="preserve">
+    <value>Đã yêu cầu</value>
+  </data>
+  <data name="zstring151" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SickLeave" xml:space="preserve">
+    <value>Nghỉ bệnh</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Đã hủy</value>
+  </data>
+  <data name="CompensatoryLeave" xml:space="preserve">
+    <value>Nghỉ phép bù</value>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>Cao cấp</value>
+  </data>
+  <data name="MaternityLeave" xml:space="preserve">
+    <value>Nghỉ thai sản</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Cơ bản</value>
+  </data>
+  <data name="InReview" xml:space="preserve">
+    <value>Đang xem xét</value>
+  </data>
+  <data name="zstring152" xml:space="preserve">
     <value />
   </data>
 </root>

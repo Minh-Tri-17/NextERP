@@ -1,0 +1,148 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.CustomerModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input  id="@AttributeNames.Customer.CustomerId" type="hidden" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.CustomerCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.CustomerCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.CustomerCode" type="text" asp-for="CustomerCode" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.Dob" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.Dob</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.Dob" type="date" asp-for="Dob" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.Dob" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.FullName" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.FullName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.FullName" type="text" asp-for="FullName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.FullName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.PhoneNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.PhoneNumber</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.PhoneNumber" type="text" asp-for="PhoneNumber" min="10" max="10" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.PhoneNumber" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.Gender" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.Gender</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Customer.Gender" asp-for="Gender">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.Gender)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.Gender" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.JoinDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.JoinDate</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.JoinDate" type="date" asp-for="JoinDate" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.JoinDate" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.LoyaltyPoints" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.LoyaltyPoints</label>
+                        <div class="col-md-12">
+                            <input  class="form-control form-control-sm" id="@AttributeNames.Customer.LoyaltyPoints" type="number" asp-for="LoyaltyPoints" disabled />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.LoyaltyPoints" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.TotalSpent" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.TotalSpent</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.TotalSpent" type="number" asp-for="TotalSpent" disabled />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.TotalSpent" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.Email" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.Email</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.Email" type="email" asp-for="Email" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.Email" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.OperatingStatus</label>
+                        <div class="col-md-12">
+                            <select class="form-select form-select-sm" id="@AttributeNames.Customer.OperatingStatus" asp-for="OperatingStatus">
+                                <option value=""></option>
+                                @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+                                {
+                                    <option value="@item" localize-content>@item</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.OperatingStatus" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.Customer.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" id="@AttributeNames.Customer.Note" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.Note" localize-content></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        // Set Id = Guid.Empty để không bị validation
+        formData.set("@Constants.Id", "@Guid.Empty");
+
+        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Customer)", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            loadCustomers();
+            return response.json();
+        }).then(data => {
+            if (data && Array.isArray(data)) {
+                showInvalid(data);
+
+                // Nếu form không hợp lệ, hiển thị thông báo lỗi
+                formElement.classList.add("was-validated");
+            }
+        });
+    });
+</script>
