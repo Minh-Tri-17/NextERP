@@ -142,6 +142,8 @@ namespace NextERP.MVC.Admin.Controllers
                 return "Required";
             if (message.Contains("valid e-mail", StringComparison.OrdinalIgnoreCase))
                 return "Regex";
+            if (message.Contains("is invalid", StringComparison.OrdinalIgnoreCase))
+                return "Invalid";
 
             return "Other";
         }
