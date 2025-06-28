@@ -67,6 +67,8 @@ builder.WebHost.ConfigureKestrel(options =>
     options.Limits.MaxRequestBodySize = 209715200; // 200 MB
 });
 
+builder.WebHost.UseUrls("http://0.0.0.0:20258");
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
