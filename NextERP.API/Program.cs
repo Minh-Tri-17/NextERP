@@ -61,16 +61,19 @@ builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 209715200; // 200 MB
 });
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
 // Cấu hình request body size cho toàn bộ server
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Limits.MaxRequestBodySize = 209715200; // 200 MB
 });
 
-builder.WebHost.UseUrls("http://0.0.0.0:20258");
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 #endregion
 

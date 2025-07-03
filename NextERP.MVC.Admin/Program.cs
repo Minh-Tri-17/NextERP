@@ -44,9 +44,6 @@ builder.Services.AddScoped<IUserAPIService, UserAPIService>();
 
 #region Base 
 
-builder.Services.AddRazorPages();
-builder.Services.AddHttpClient();
-
 var cultures = new[]
 {
     new CultureInfo("en"),
@@ -54,7 +51,7 @@ var cultures = new[]
 };
 
 builder.Services.AddControllersWithViews()
-.AddExpressLocalization<ExpressLocalizationResources, ViewLocalizationResources>(ops =>
+    .AddExpressLocalization<ExpressLocalizationResources, ViewLocalizationResources>(ops =>
 {
     ops.UseAllCultureProviders = true;
     ops.ResourcesPath = "LocalizationResources";
@@ -65,13 +62,21 @@ builder.Services.AddControllersWithViews()
         o.DefaultRequestCulture = new RequestCulture("vi");
     };
 });
+builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 #endregion
 
 #region Cookie Auth
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-.AddCookie(options =>
+    .AddCookie(options =>
 {
     options.LoginPath = "/vi/Account/AccountIndex";
     options.AccessDeniedPath = "/User/Forbidden/";
