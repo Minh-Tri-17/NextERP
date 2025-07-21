@@ -20,12 +20,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class AttendanceController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IAttendanceService _attendanceService;
 
         public AttendanceController(IAttendanceService attendanceService)
         {
             _attendanceService = attendanceService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditAttendance))]
         public async Task<ActionResult<Attendance>> CreateOrEditAttendance()
@@ -131,5 +137,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

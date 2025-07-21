@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class PromotionController : BaseController
     {
+        #region Infrastructure
+
         private readonly IPromotionAPIService _promotionAPIService;
 
         public PromotionController(IPromotionAPIService promotionAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _promotionAPIService = promotionAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult PromotionIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Promotion, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

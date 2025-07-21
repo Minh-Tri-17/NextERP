@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class ProductCategoryController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IProductCategoryService _productCategoryService;
 
         public ProductCategoryController(IProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditProductCategory))]
         public async Task<ActionResult<ProductCategory>> CreateOrEditProductCategory()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

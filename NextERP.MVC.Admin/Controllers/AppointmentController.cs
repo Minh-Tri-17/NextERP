@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class AppointmentController : BaseController
     {
+        #region Infrastructure
+
         private readonly IAppointmentAPIService _appointmentAPIService;
 
         public AppointmentController(IAppointmentAPIService appointmentAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _appointmentAPIService = appointmentAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult AppointmentIndex()
@@ -115,5 +121,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Appointment, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

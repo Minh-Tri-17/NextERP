@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class NotificationController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly INotificationService _notificationService;
 
         public NotificationController(INotificationService notificationService)
         {
             _notificationService = notificationService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditNotification))]
         public async Task<ActionResult<Notification>> CreateOrEditNotification()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

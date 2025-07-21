@@ -16,6 +16,8 @@ namespace NextERP.BLL.Service
 {
     public class FunctionService : IFunctionService
     {
+        #region Infrastructure
+
         private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
         private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
@@ -24,6 +26,10 @@ namespace NextERP.BLL.Service
             _context = context;
             _currentUser = currentUser;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(FunctionModel request)
         {
@@ -144,5 +150,11 @@ namespace NextERP.BLL.Service
 
             return new APISuccessResult<PagingResult<FunctionModel>>(Messages.GetListResultSuccess, pageResult);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

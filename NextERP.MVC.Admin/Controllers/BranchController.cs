@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class BranchController : BaseController
     {
+        #region Infrastructure
+
         private readonly IBranchAPIService _branchAPIService;
 
         public BranchController(IBranchAPIService branchAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _branchAPIService = branchAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult BranchIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Branch, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

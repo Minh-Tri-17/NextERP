@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class SpaServiceCategoryController : BaseController
     {
+        #region Infrastructure
+
         private readonly ISpaServiceCategoryAPIService _spaServiceCategoryAPIService;
 
         public SpaServiceCategoryController(ISpaServiceCategoryAPIService spaServiceCategoryAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _spaServiceCategoryAPIService = spaServiceCategoryAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult SpaServiceCategoryIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.SpaServiceCategory, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

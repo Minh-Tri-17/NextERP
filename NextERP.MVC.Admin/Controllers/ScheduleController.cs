@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class ScheduleController : BaseController
     {
+        #region Infrastructure
+
         private readonly IScheduleAPIService _scheduleAPIService;
 
         public ScheduleController(IScheduleAPIService scheduleAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _scheduleAPIService = scheduleAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult ScheduleIndex()
@@ -114,5 +120,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Schedule, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

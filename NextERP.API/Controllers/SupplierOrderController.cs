@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class SupplierOrderController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ISupplierOrderService _supplierOrderService;
 
         public SupplierOrderController(ISupplierOrderService supplierOrderService)
         {
             _supplierOrderService = supplierOrderService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditSupplierOrder))]
         public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder()
@@ -103,5 +109,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

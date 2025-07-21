@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class CustomerController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ICustomerService _customerService;
 
         public CustomerController(ICustomerService customerService)
         {
             _customerService = customerService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditCustomer))]
         public async Task<ActionResult<Customer>> CreateOrEditCustomer()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

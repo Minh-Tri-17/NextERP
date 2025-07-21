@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class FunctionController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IFunctionService _functionService;
 
         public FunctionController(IFunctionService functionService)
         {
             _functionService = functionService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditFunction))]
         public async Task<ActionResult<Function>> CreateOrEditFunction()
@@ -103,5 +109,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

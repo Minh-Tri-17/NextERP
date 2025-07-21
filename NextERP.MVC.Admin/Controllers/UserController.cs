@@ -9,6 +9,8 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class UserController : BaseController
     {
+        #region Infrastructure
+
         private readonly IUserAPIService _userAPIService;
         private readonly IEmployeeAPIService _employeeAPIService;
 
@@ -17,6 +19,10 @@ namespace NextERP.MVC.Admin.Controllers
             _userAPIService = userAPIService;
             _employeeAPIService = employeeAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public async Task<IActionResult> UserIndexAsync()
@@ -105,5 +111,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.User, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class DepartmentController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IDepartmentService _departmentService;
 
         public DepartmentController(IDepartmentService departmentService)
         {
             _departmentService = departmentService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditDepartment))]
         public async Task<ActionResult<Department>> CreateOrEditDepartment()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

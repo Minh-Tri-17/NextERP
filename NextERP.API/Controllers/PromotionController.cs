@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class PromotionController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IPromotionService _promotionService;
 
         public PromotionController(IPromotionService promotionService)
         {
             _promotionService = promotionService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditPromotion))]
         public async Task<ActionResult<Promotion>> CreateOrEditPromotion()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

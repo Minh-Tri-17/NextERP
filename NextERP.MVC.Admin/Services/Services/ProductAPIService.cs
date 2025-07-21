@@ -8,6 +8,8 @@ namespace NextERP.MVC.Admin.Services.Services
 {
     public class ProductAPIService : BaseAPIService, IProductAPIService
     {
+        #region Infrastructure
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -19,6 +21,10 @@ namespace NextERP.MVC.Admin.Services.Services
             _configuration = configuration;
             _contextAccessor = contextAccessor;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(ProductModel request)
         {
@@ -55,9 +61,15 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportProduct, filter);
         }
 
+        #endregion
+
+        #region Custom Operations
+
         public async Task<byte[]> GetImageBytes(Guid? productId, string imagePath)
         {
             return await GetAsync<byte[]>(string.Format(Constants.UrlGetImageProduct, productId, imagePath));
         }
+
+        #endregion
     }
 }

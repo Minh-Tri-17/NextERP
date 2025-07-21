@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class TrainingSessionController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ITrainingSessionService _trainingSessionService;
 
         public TrainingSessionController(ITrainingSessionService trainingSessionService)
         {
             _trainingSessionService = trainingSessionService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditTrainingSession))]
         public async Task<ActionResult<TrainingSession>> CreateOrEditTrainingSession()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

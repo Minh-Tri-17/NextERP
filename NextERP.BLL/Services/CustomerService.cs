@@ -18,6 +18,8 @@ namespace NextERP.BLL.Service
 {
     public class CustomerService : ICustomerService
     {
+        #region Infrastructure
+
         private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
         private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
@@ -26,6 +28,10 @@ namespace NextERP.BLL.Service
             _context = context;
             _currentUser = currentUser;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(CustomerModel request)
         {
@@ -211,5 +217,11 @@ namespace NextERP.BLL.Service
 
             return new APIErrorResult<byte[]>(Messages.ExportFailed);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class SupplierController : BaseController
     {
+        #region Infrastructure
+
         private readonly ISupplierAPIService _supplierAPIService;
 
         public SupplierController(ISupplierAPIService supplierAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _supplierAPIService = supplierAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult SupplierIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Supplier, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

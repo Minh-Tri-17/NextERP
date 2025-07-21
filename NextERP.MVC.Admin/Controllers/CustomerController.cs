@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class CustomerController : BaseController
     {
+        #region Infrastructure
+
         private readonly ICustomerAPIService _customerAPIService;
 
         public CustomerController(ICustomerAPIService customerAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _customerAPIService = customerAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult CustomerIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Customer, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class SalaryController : BaseController
     {
+        #region Infrastructure
+
         private readonly ISalaryAPIService _salaryAPIService;
 
         public SalaryController(ISalaryAPIService salaryAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _salaryAPIService = salaryAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult SalaryIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Salary, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -8,12 +8,22 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class AttendanceController : BaseController
     {
+        #region Infrastructure
+
         private readonly IAttendanceAPIService _attendanceAPIService;
 
         public AttendanceController(IAttendanceAPIService attendanceAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _attendanceAPIService = attendanceAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
 
         [HttpGet]
         public IActionResult AttendanceIndex()
@@ -97,5 +107,7 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Appointment, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
     }
 }

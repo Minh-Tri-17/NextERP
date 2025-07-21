@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class RoleController : BaseController
     {
+        #region Infrastructure
+
         private readonly IRoleAPIService _roleAPIService;
 
         public RoleController(IRoleAPIService roleAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _roleAPIService = roleAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult RoleIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Role, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

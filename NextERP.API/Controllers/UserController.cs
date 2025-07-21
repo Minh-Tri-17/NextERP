@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class UserController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditUser))]
         public async Task<ActionResult<User>> CreateOrEditUser()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

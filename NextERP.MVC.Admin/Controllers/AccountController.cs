@@ -15,6 +15,8 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class AccountController : Controller
     {
+        #region Infrastructure
+
         private readonly IAccountAPIService _accountAPIService;
         private readonly IRoleAPIService _roleAPIService;
         private readonly IConfiguration _configuration;
@@ -26,6 +28,14 @@ namespace NextERP.MVC.Admin.Controllers
             _configuration = configuration;
             _roleAPIService = roleAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
 
         [HttpGet]
         public IActionResult AccountIndex()
@@ -122,5 +132,7 @@ namespace NextERP.MVC.Admin.Controllers
             HttpContext.Response.Cookies.Delete(Constants.Token);
             return RedirectToAction(ScreenName.AccountIndex, "Account");
         }
+
+        #endregion
     }
 }

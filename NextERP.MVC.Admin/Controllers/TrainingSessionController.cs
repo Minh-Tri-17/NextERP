@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class TrainingSessionController : BaseController
     {
+        #region Infrastructure
+
         private readonly ITrainingSessionAPIService _trainingSessionAPIService;
 
         public TrainingSessionController(ITrainingSessionAPIService trainingSessionAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _trainingSessionAPIService = trainingSessionAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult TrainingSessionIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.TrainingSession, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

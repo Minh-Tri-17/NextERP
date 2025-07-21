@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class ProductController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IProductService _productService;
 
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditProduct))]
         public async Task<ActionResult<Product>> CreateOrEditProduct()
@@ -132,6 +138,10 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
+        #endregion
+
+        #region Custom Operations
+
         [HttpGet($"{nameof(GetImage)}/{{productId}}/Image/{{imagePath}}")]
         public async Task<IActionResult> GetImage(Guid productId, string imagePath)
         {
@@ -139,5 +149,7 @@ namespace NextERP.API.Controllers
 
             return File(imageData, "image/jpg");
         }
+
+        #endregion
     }
 }

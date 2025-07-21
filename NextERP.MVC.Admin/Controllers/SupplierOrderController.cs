@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class SupplierOrderController : BaseController
     {
+        #region Infrastructure
+
         private readonly ISupplierOrderAPIService _supplierOrderAPIService;
 
         public SupplierOrderController(ISupplierOrderAPIService supplierOrderAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _supplierOrderAPIService = supplierOrderAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult SupplierOrderIndex()
@@ -74,5 +80,11 @@ namespace NextERP.MVC.Admin.Controllers
 
             return Json(Localization(result.Message));
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

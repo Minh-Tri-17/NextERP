@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class BranchController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IBranchService _branchService;
 
         public BranchController(IBranchService branchService)
         {
             _branchService = branchService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditBranch))]
         public async Task<ActionResult<Branch>> CreateOrEditBranch()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

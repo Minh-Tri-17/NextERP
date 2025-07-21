@@ -18,6 +18,16 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class DashboardController : ControllerBase
     {
+        #region Infrastructure
 
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

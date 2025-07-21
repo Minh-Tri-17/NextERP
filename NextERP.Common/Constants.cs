@@ -4,7 +4,7 @@
     {
         public const string Context = "Context";
         public const string Token = "Token";
-        public const string BaseAddress = "BaseAddress";
+        public const string APIAddress = "APIAddress";
         public const string Id = "Id";
         public const string Code = "Code";
         public const string ImageFiles = "ImageFiles";

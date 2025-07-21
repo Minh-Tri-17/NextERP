@@ -8,6 +8,8 @@ namespace NextERP.MVC.Admin.Services.Services
 {
     public class TrainingSessionAPIService : BaseAPIService, ITrainingSessionAPIService
     {
+        #region Infrastructure
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -19,6 +21,10 @@ namespace NextERP.MVC.Admin.Services.Services
             _configuration = configuration;
             _contextAccessor = contextAccessor;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(TrainingSessionModel request)
         {
@@ -54,5 +60,11 @@ namespace NextERP.MVC.Admin.Services.Services
         {
             return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportTrainingSession, filter);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

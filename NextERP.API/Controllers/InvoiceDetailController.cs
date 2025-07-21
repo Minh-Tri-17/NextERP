@@ -20,12 +20,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class InvoiceDetailController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IInvoiceDetailService _invoiceDetailService;
 
         public InvoiceDetailController(IInvoiceDetailService invoiceDetailService)
         {
             _invoiceDetailService = invoiceDetailService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditInvoiceDetail))]
         public async Task<ActionResult<InvoiceDetail>> CreateOrEditInvoiceDetail()
@@ -92,5 +98,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

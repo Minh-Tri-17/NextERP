@@ -9,6 +9,8 @@ namespace NextERP.MVC.Admin.Services.Services
 {
     public class AccountAPIService : BaseAPIService, IAccountAPIService
     {
+        #region Infrastructure
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -20,14 +22,23 @@ namespace NextERP.MVC.Admin.Services.Services
             _contextAccessor = contextAccessor;
         }
 
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
+
         public async Task<APIBaseResult<string>> Auth(UserModel request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var baseAddress = _configuration[Constants.APIAddress];
             // Tạo client không có Bearer Token
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[Constants.BaseAddress]);
+            client.BaseAddress = new Uri(baseAddress);
             var response = await client.PostAsync(Constants.UrlAuthentication, httpContent);
 
             if (response.IsSuccessStatusCode)
@@ -41,9 +52,10 @@ namespace NextERP.MVC.Admin.Services.Services
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var baseAddress = _configuration[Constants.APIAddress];
             // Tạo client không có Bearer Token
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[Constants.BaseAddress]);
+            client.BaseAddress = new Uri(baseAddress);
             var response = await client.PostAsync(Constants.UrlRegister, httpContent);
 
             if (response.IsSuccessStatusCode)
@@ -51,5 +63,7 @@ namespace NextERP.MVC.Admin.Services.Services
 
             return JsonConvert.DeserializeObject<APISuccessResult<bool>>(await response.Content.ReadAsStringAsync())!;
         }
+
+        #endregion
     }
 }

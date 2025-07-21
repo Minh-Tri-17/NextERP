@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class AppointmentController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IAppointmentService _appointmentService;
 
         public AppointmentController(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditAppointment))]
         public async Task<ActionResult<Appointment>> CreateOrEditAppointment()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

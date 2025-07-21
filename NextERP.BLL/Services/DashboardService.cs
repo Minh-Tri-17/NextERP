@@ -9,5 +9,16 @@ namespace NextERP.BLL.Service
 {
     public class DashboardService : IDashboardService
     {
+        #region Infrastructure
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

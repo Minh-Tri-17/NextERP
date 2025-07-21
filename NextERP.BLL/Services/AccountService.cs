@@ -14,6 +14,8 @@ namespace NextERP.BLL.Service
 {
     public class AccountService : IAccountService
     {
+        #region Infrastructure
+
         private readonly NextErpContext _context;
         private readonly IConfiguration _config;
 
@@ -22,6 +24,14 @@ namespace NextERP.BLL.Service
             _context = context;
             _config = config;
         }
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
 
         public async Task<APIBaseResult<string>> Auth(UserModel request)
         {
@@ -127,5 +137,7 @@ namespace NextERP.BLL.Service
 
             return new APIErrorResult<bool>();
         }
+
+        #endregion
     }
 }

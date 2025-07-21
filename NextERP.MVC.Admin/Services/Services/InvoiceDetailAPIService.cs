@@ -8,6 +8,8 @@ namespace NextERP.MVC.Admin.Services.Services
 {
     public class InvoiceDetailAPIService : BaseAPIService, IInvoiceDetailAPIService
     {
+        #region Infrastructure
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -19,6 +21,10 @@ namespace NextERP.MVC.Admin.Services.Services
             _configuration = configuration;
             _contextAccessor = contextAccessor;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceDetailModel request)
         {
@@ -39,5 +45,11 @@ namespace NextERP.MVC.Admin.Services.Services
         {
             return await PostAsync<APIBaseResult<PagingResult<InvoiceDetailModel>>, Filter>($"{Constants.UrlGetInvoiceDetails}/{Constants.Filter}", filter);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

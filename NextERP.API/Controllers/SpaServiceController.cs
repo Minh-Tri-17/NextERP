@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class SpaServiceController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ISpaServiceService _spaServiceService;
 
         public SpaServiceController(ISpaServiceService spaServiceService)
         {
             _spaServiceService = spaServiceService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditSpaService))]
         public async Task<ActionResult<SpaService>> CreateOrEditSpaService()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

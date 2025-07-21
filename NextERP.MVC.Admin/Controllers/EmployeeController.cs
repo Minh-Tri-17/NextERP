@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class EmployeeController : BaseController
     {
+        #region Infrastructure
+
         private readonly IEmployeeAPIService _employeeAPIService;
 
         public EmployeeController(IEmployeeAPIService employeeAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _employeeAPIService = employeeAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult EmployeeIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Employee, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

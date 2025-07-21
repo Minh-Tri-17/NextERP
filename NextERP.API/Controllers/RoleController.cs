@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class RoleController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IRoleService _roleService;
 
         public RoleController(IRoleService roleService)
         {
             _roleService = roleService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditRole))]
         public async Task<ActionResult<Role>> CreateOrEditRole()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

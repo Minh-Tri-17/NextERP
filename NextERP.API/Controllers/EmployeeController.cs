@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class EmployeeController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IEmployeeService _employeeService;
 
         public EmployeeController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditEmployee))]
         public async Task<ActionResult<Employee>> CreateOrEditEmployee()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

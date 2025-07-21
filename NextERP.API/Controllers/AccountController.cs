@@ -12,12 +12,22 @@ namespace NextERP.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IAccountService _accountService;
 
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
 
         [HttpPost(nameof(Authentication))]
         public async Task<ActionResult<User>> Authentication()
@@ -90,5 +100,7 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
     }
 }

@@ -8,12 +8,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class InvoiceDetailController : BaseController
     {
+        #region Infrastructure
+
         private readonly IInvoiceDetailAPIService _invoiceDetailAPIService;
 
         public InvoiceDetailController(IInvoiceDetailAPIService invoiceDetailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _invoiceDetailAPIService = invoiceDetailAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult InvoiceDetailIndex()
@@ -63,5 +69,11 @@ namespace NextERP.MVC.Admin.Controllers
 
             return Json(Localization(result.Message));
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

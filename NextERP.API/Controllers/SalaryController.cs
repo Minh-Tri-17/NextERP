@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class SalaryController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ISalaryService _salaryService;
 
         public SalaryController(ISalaryService salaryService)
         {
             _salaryService = salaryService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditSalary))]
         public async Task<ActionResult<Salary>> CreateOrEditSalary()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

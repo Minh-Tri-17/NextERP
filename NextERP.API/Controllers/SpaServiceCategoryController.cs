@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class SpaServiceCategoryController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ISpaServiceCategoryService _spaServiceCategoryService;
 
         public SpaServiceCategoryController(ISpaServiceCategoryService spaServiceCategoryService)
         {
             _spaServiceCategoryService = spaServiceCategoryService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditSpaServiceCategory))]
         public async Task<ActionResult<SpaServiceCategory>> CreateOrEditSpaServiceCategory()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

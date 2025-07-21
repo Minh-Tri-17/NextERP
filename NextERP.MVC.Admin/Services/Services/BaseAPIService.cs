@@ -9,6 +9,8 @@ namespace NextERP.MVC.Admin.Services.Services
 {
     public class BaseAPIService
     {
+        #region Infrastructure
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -20,6 +22,10 @@ namespace NextERP.MVC.Admin.Services.Services
             _contextAccessor = contextAccessor;
         }
 
+        #endregion
+
+        #region Default Operations
+
         /// <summary>
         /// Tạo một đối tượng HttpClient có kèm theo token xác thực (Bearer Token) lấy từ cookies.
         /// </summary>
@@ -29,9 +35,10 @@ namespace NextERP.MVC.Admin.Services.Services
             // Lấy token từ cookies hiện tại của người dùng
             var cookiesToken = _contextAccessor?.HttpContext?.Request.Cookies[Constants.Token];
 
+            var baseAddress = _configuration[Constants.APIAddress];
             // Tạo mới một HttpClient thông qua IHttpClientFactory
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[Constants.BaseAddress]); // Thiết lập địa chỉ cơ sở của API từ cấu hình appsettings.json
+            client.BaseAddress = new Uri(baseAddress); // Thiết lập địa chỉ cơ sở của API từ cấu hình appsettings.json
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cookiesToken); // Thiết lập Authorization header dạng Bearer Token
 
             return client;
@@ -85,15 +92,15 @@ namespace NextERP.MVC.Admin.Services.Services
                 .ToList();
 
             var files = fileProps.SelectMany(s =>
-               {
-                   var value = s.GetValue(request);
-                   return value switch
-                   {
-                       IFormFile f => new[] { f },
-                       IEnumerable<IFormFile> fs => fs,
-                       _ => Enumerable.Empty<IFormFile>()
-                   };
-               }).ToList();
+            {
+                var value = s.GetValue(request);
+                return value switch
+                {
+                    IFormFile f => new[] { f },
+                    IEnumerable<IFormFile> fs => fs,
+                    _ => Enumerable.Empty<IFormFile>()
+                };
+            }).ToList();
 
             HttpContent content;
 
@@ -165,5 +172,11 @@ namespace NextERP.MVC.Admin.Services.Services
             var response = await client.PostAsync(url, content);
             return await ReadResponse<TResponse>(response);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

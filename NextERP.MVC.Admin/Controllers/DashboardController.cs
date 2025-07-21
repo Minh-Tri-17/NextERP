@@ -7,6 +7,8 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class DashboardController : BaseController
     {
+        #region Infrastructure
+
         private readonly IDashboardAPIService _dashboardAPIService;
 
         public DashboardController(IDashboardAPIService dashboardAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
@@ -14,12 +16,20 @@ namespace NextERP.MVC.Admin.Controllers
             _dashboardAPIService = dashboardAPIService;
         }
 
+        #endregion
+
+        #region Default Operations
+
         [HttpGet]
         public IActionResult DashboardIndex()
         {
             ViewBag.UserId = GetInfor()[0];
             return View();
         }
+
+        #endregion
+
+        #region Custom Operations
 
         [HttpGet]
         public IActionResult SetCultureCookie(string cltr, string returnUrl)
@@ -31,5 +41,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             return LocalRedirect(returnUrl);
         }
+
+        #endregion
     }
 }

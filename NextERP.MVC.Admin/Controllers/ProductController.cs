@@ -12,12 +12,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class ProductController : BaseController
     {
+        #region Infrastructure
+
         private readonly IProductAPIService _productAPIService;
 
         public ProductController(IProductAPIService productAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _productAPIService = productAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult ProductIndex()
@@ -123,5 +129,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Product, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

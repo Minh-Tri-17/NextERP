@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class LeaveRequestController : BaseController
     {
+        #region Infrastructure
+
         private readonly ILeaveRequestAPIService _leaveRequestAPIService;
 
         public LeaveRequestController(ILeaveRequestAPIService leaveRequestAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _leaveRequestAPIService = leaveRequestAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult LeaveRequestIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.LeaveRequest, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

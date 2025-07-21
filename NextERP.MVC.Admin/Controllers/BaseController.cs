@@ -13,15 +13,24 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class BaseController : Controller
     {
+        #region Infrastructure
+
         private readonly IConfiguration _configuration;
         private readonly ISharedCultureLocalizer _localizer;
-
 
         public BaseController(IConfiguration configuration, ISharedCultureLocalizer localizer)
         {
             _configuration = configuration;
             _localizer = localizer;
         }
+
+        #endregion
+
+        #region Default Operations
+
+        #endregion
+
+        #region Custom Operations
 
         #region Authentication check
 
@@ -147,6 +156,8 @@ namespace NextERP.MVC.Admin.Controllers
 
             return "Other";
         }
+
+        #endregion
 
         #endregion
     }

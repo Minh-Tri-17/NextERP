@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class FeedbackController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IFeedbackService _feedbackService;
 
         public FeedbackController(IFeedbackService feedbackService)
         {
             _feedbackService = feedbackService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditFeedback))]
         public async Task<ActionResult<Feedback>> CreateOrEditFeedback()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class LeaveRequestController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly ILeaveRequestService _leaveRequestService;
 
         public LeaveRequestController(ILeaveRequestService leaveRequestService)
         {
             _leaveRequestService = leaveRequestService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditLeaveRequest))]
         public async Task<ActionResult<LeaveRequest>> CreateOrEditLeaveRequest()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

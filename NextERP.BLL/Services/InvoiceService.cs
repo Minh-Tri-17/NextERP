@@ -15,6 +15,8 @@ namespace NextERP.BLL.Service
 {
     public class InvoiceService : IInvoiceService
     {
+        #region Infrastructure
+
         private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
         private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
@@ -23,6 +25,10 @@ namespace NextERP.BLL.Service
             _context = context;
             _currentUser = currentUser;
         }
+
+        #endregion
+
+        #region Default Operations
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceModel request)
         {
@@ -147,5 +153,11 @@ namespace NextERP.BLL.Service
 
             return new APISuccessResult<PagingResult<InvoiceModel>>(Messages.GetListResultSuccess, pageResult);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

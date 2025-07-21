@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class FeedbackController : BaseController
     {
+        #region Infrastructure
+
         private readonly IFeedbackAPIService _feedbackAPIService;
 
         public FeedbackController(IFeedbackAPIService feedbackAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _feedbackAPIService = feedbackAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult FeedbackIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Feedback, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

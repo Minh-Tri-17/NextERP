@@ -9,12 +9,18 @@ namespace NextERP.MVC.Admin.Controllers
 {
     public class PositionController : BaseController
     {
+        #region Infrastructure
+
         private readonly IPositionAPIService _positionAPIService;
 
         public PositionController(IPositionAPIService positionAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _positionAPIService = positionAPIService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpGet]
         public IActionResult PositionIndex()
@@ -98,5 +104,11 @@ namespace NextERP.MVC.Admin.Controllers
             var fileName = string.Format(Constants.FileName, TableName.Position, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class PositionController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IPositionService _positionService;
 
         public PositionController(IPositionService positionService)
         {
             _positionService = positionService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditPosition))]
         public async Task<ActionResult<Position>> CreateOrEditPosition()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }

@@ -21,12 +21,18 @@ namespace NextERP.API.Controllers
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
     public class ScheduleController : ControllerBase
     {
+        #region Infrastructure
+
         private readonly IScheduleService _scheduleService;
 
         public ScheduleController(IScheduleService scheduleService)
         {
             _scheduleService = scheduleService;
         }
+
+        #endregion
+
+        #region Default Operations
 
         [HttpPost(nameof(CreateOrEditSchedule))]
         public async Task<ActionResult<Schedule>> CreateOrEditSchedule()
@@ -132,5 +138,11 @@ namespace NextERP.API.Controllers
 
             return Ok(result);
         }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
     }
 }
