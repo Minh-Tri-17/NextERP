@@ -80,8 +80,8 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete(nameof(DeletePermanentlyCategory))]
-        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyCategory(string ids)
+        [HttpDelete(nameof(DeletePermanentlyProductCategory))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyProductCategory(string ids)
         {
             var result = await _productCategoryService.DeletePermanently(ids);
             if (!result.IsSuccess)
