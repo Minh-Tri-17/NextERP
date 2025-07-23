@@ -36,191 +36,6 @@ namespace NextERP.ModelBase
         public const string User = "User";
     }
 
-    public class IDName
-    {
-        public class Appointment
-        {
-            public const string appointmentDelete = "appointmentDelete";
-            public const string appointmentTable = "appointmentTable";
-            public const string appointmentImport = "appointmentImport";
-        }
-
-        public class Attendance
-        {
-            public const string attendanceDelete = "attendanceDelete";
-            public const string attendanceTable = "attendanceTable";
-            public const string attendanceImport = "attendanceImport";
-        }
-
-        public class Branch
-        {
-            public const string branchDelete = "branchDelete";
-            public const string branchTable = "branchTable";
-            public const string branchImport = "branchImport";
-        }
-
-        public class Customer
-        {
-            public const string customerDelete = "customerDelete";
-            public const string customerTable = "customerTable";
-            public const string customerImport = "customerImport";
-        }
-
-        public class Department
-        {
-            public const string departmentDelete = "departmentDelete";
-            public const string departmentTable = "departmentTable";
-            public const string departmentImport = "departmentImport";
-        }
-
-        public class Employee
-        {
-            public const string employeeDelete = "employeeDelete";
-            public const string employeeTable = "employeeTable";
-            public const string employeeImport = "employeeImport";
-        }
-
-        public class Feedback
-        {
-            public const string feedbackDelete = "feedbackDelete";
-            public const string feedbackTable = "feedbackTable";
-            public const string feedbackImport = "feedbackImport";
-        }
-
-        public class Function
-        {
-            public const string functionDelete = "functionDelete";
-            public const string functionTable = "functionTable";
-            public const string functionImport = "functionImport";
-        }
-
-        public class Invoice
-        {
-            public const string invoiceDelete = "invoiceDelete";
-            public const string invoiceTable = "invoiceTable";
-            public const string invoiceImport = "invoiceImport";
-        }
-
-        public class InvoiceDetail
-        {
-            public const string invoiceDetailDelete = "invoiceDetailDelete";
-            public const string invoiceDetailTable = "invoiceDetailTable";
-            public const string invoiceDetailImport = "invoiceDetailImport";
-        }
-
-        public class LeaveRequest
-        {
-            public const string leaveRequestDelete = "leaveRequestDelete";
-            public const string leaveRequestTable = "leaveRequestTable";
-            public const string leaveRequestImport = "leaveRequestImport";
-        }
-
-        public class Notification
-        {
-            public const string notificationDelete = "notificationDelete";
-            public const string notificationTable = "notificationTable";
-            public const string notificationImport = "notificationImport";
-        }
-
-        public class Position
-        {
-            public const string positionDelete = "positionDelete";
-            public const string positionTable = "positionTable";
-            public const string positionImport = "positionImport";
-        }
-
-        public class Product
-        {
-            public const string productDelete = "productDelete";
-            public const string productTable = "productTable";
-            public const string productImport = "productImport";
-        }
-
-        public class ProductCategory
-        {
-            public const string productCategoryDelete = "productCategoryDelete";
-            public const string productCategoryTable = "productCategoryTable";
-            public const string productCategoryImport = "productCategoryImport";
-        }
-
-        public class Promotion
-        {
-            public const string promotionDelete = "promotionDelete";
-            public const string promotionTable = "promotionTable";
-            public const string promotionImport = "promotionImport";
-        }
-
-        public class Role
-        {
-            public const string roleDelete = "roleDelete";
-            public const string roleTable = "roleTable";
-            public const string roleImport = "roleImport";
-        }
-
-        public class Salary
-        {
-            public const string salaryDelete = "salaryDelete";
-            public const string salaryTable = "salaryTable";
-            public const string salaryImport = "salaryImport";
-        }
-
-        public class Schedule
-        {
-            public const string scheduleDelete = "scheduleDelete";
-            public const string scheduleTable = "scheduleTable";
-            public const string scheduleImport = "scheduleImport";
-        }
-
-        public class SpaService
-        {
-            public const string serviceDelete = "serviceDelete";
-            public const string serviceTable = "serviceTable";
-            public const string serviceImport = "serviceImport";
-        }
-
-        public class SpaServiceCategory
-        {
-            public const string serviceCategoryDelete = "serviceCategoryDelete";
-            public const string serviceCategoryTable = "serviceCategoryTable";
-            public const string serviceCategoryImport = "serviceCategoryImport";
-        }
-
-        public class Supplier
-        {
-            public const string supplierDelete = "supplierDelete";
-            public const string supplierTable = "supplierTable";
-            public const string supplierImport = "supplierImport";
-        }
-
-        public class SupplierOrder
-        {
-            public const string supplierOrderDelete = "supplierOrderDelete";
-            public const string supplierOrderTable = "supplierOrderTable";
-            public const string supplierOrderImport = "supplierOrderImport";
-        }
-
-        public class SupplierOrderDetail
-        {
-            public const string supplierOrderDetailDelete = "supplierOrderDetailDelete";
-            public const string supplierOrderDetailTable = "supplierOrderDetailTable";
-            public const string supplierOrderDetailImport = "supplierOrderDetailImport";
-        }
-
-        public class TrainingSession
-        {
-            public const string trainingSessionDelete = "trainingSessionDelete";
-            public const string trainingSessionTable = "trainingSessionTable";
-            public const string trainingSessionImport = "trainingSessionImport";
-        }
-
-        public class User
-        {
-            public const string userDelete = "userDelete";
-            public const string userTable = "userTable";
-            public const string userImport = "userImport";
-        }
-    }
-
     public class ScreenName
     {
         public const string DashboardIndex = "DashboardIndex";
@@ -283,7 +98,6 @@ namespace NextERP.ModelBase
 
         public class InvoiceDetail
         {
-            public const string InvoiceDetailIndex = "InvoiceDetailIndex";
             public const string InvoiceDetailList = "InvoiceDetailList";
         }
 
@@ -379,8 +193,6 @@ namespace NextERP.ModelBase
 
         public class SupplierOrderDetail
         {
-            public const string SupplierOrderDetailIndex = "SupplierOrderDetailIndex";
-            public const string SupplierOrderDetailForm = "SupplierOrderDetailForm";
             public const string SupplierOrderDetailList = "SupplierOrderDetailList";
         }
 
