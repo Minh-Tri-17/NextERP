@@ -942,8 +942,8 @@
   <data name="Submitted" xml:space="preserve">
     <value>Submitted</value>
   </data>
-  <data name="zstring151" xml:space="preserve">
-    <value />
+  <data name="ProductCategoryName" xml:space="preserve">
+    <value>Product category name</value>
   </data>
   <data name="SickLeave" xml:space="preserve">
     <value>Sick leave</value>

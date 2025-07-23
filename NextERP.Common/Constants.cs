@@ -27,6 +27,8 @@
         public const string CreateOrEdit = "CreateOrEdit";
         public const string GetList = "GetList";
         public const string Delete = "Delete";
+        public const string Import = "Import";
+        public const string Export = "Export";
         public const string DeletePermanently = "DeletePermanently";
 
         #region Format

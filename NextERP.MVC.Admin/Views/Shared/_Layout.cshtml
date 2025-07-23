@@ -18,10 +18,10 @@
     string actModuleCustomer = $"{ScreenName.Customer.CustomerIndex},{ScreenName.Feedback.FeedbackIndex},{ScreenName.Appointment.AppointmentIndex}";
     //Model Payment
     string ctrModulePayment = $"{TableName.Invoice},{TableName.InvoiceDetail}";
-    string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex},{ScreenName.InvoiceDetail.InvoiceDetailIndex}";
+    string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex}";
     //Model Merchandise
-    string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder},{TableName.SupplierOrderDetail},{TableName.Supplier}";
-    string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex},{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.SupplierOrderDetail.SupplierOrderDetailIndex},{ScreenName.Supplier.SupplierIndex}";
+    string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder},{TableName.Supplier}";
+    string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex},{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
     //Model System
     string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.Notification}";
     string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.Notification.NotificationIndex}";
@@ -171,11 +171,6 @@
                                 <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
-                            <a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail">
-                                <span><i class="fa-solid fa-file-invoice"></i><span localize-content>InvoiceDetail</span></span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
                 <li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
@@ -197,11 +192,6 @@
                         <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
                             <a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder">
                                 <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
-                            </a>
-                        </li>
-                        <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrderDetail, ScreenName.SupplierOrderDetail.SupplierOrderDetailIndex, "active")">
-                            <a asp-action="@ScreenName.SupplierOrderDetail.SupplierOrderDetailIndex" asp-controller="@TableName.SupplierOrderDetail">
-                                <span><i class="fa-solid fa-file-invoice"></i><span localize-content>SupplierOrderDetail</span></span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">
@@ -371,11 +361,6 @@
                                     <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
-                                <a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail">
-                                    <span><i class="fa-solid fa-file-invoice"></i><span localize-content>InvoiceDetail</span></span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
@@ -397,11 +382,6 @@
                             <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
                                 <a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder">
                                     <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
-                                </a>
-                            </li>
-                            <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrderDetail, ScreenName.SupplierOrderDetail.SupplierOrderDetailIndex, "active")">
-                                <a asp-action="@ScreenName.SupplierOrderDetail.SupplierOrderDetailIndex" asp-controller="@TableName.SupplierOrderDetail">
-                                    <span><i class="fa-solid fa-file-invoice"></i><span localize-content>SupplierOrderDetail</span></span>
                                 </a>
                             </li>
                             <li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">

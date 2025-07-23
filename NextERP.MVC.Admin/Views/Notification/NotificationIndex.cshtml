@@ -59,8 +59,8 @@
     <!--& MODAL -->
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.Notification.NotificationForm, Model)
-        @await Component.InvokeAsync("Import", TableName.Notification)
-        @await Component.InvokeAsync("Export", TableName.Notification)
+        @await Component.InvokeAsync(Constants.Import, TableName.Notification)
+        @await Component.InvokeAsync(Constants.Export, TableName.Notification)
     </section>
 </div>
 

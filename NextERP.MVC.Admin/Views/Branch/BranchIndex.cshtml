@@ -59,8 +59,8 @@
     <!--& MODAL -->
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.Branch.BranchForm, Model)
-        @await Component.InvokeAsync("Import", TableName.Branch)
-        @await Component.InvokeAsync("Export", TableName.Branch)
+        @await Component.InvokeAsync(Constants.Import, TableName.Branch)
+        @await Component.InvokeAsync(Constants.Export, TableName.Branch)
     </section>
 </div>
 

@@ -59,8 +59,8 @@
     <!--& MODAL -->
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.LeaveRequest.LeaveRequestForm, Model)
-        @await Component.InvokeAsync("Import", TableName.LeaveRequest)
-        @await Component.InvokeAsync("Export", TableName.LeaveRequest)
+        @await Component.InvokeAsync(Constants.Import, TableName.LeaveRequest)
+        @await Component.InvokeAsync(Constants.Export, TableName.LeaveRequest)
     </section>
 </div>
 
