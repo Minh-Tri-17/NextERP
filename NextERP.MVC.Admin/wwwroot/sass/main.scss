@@ -77,40 +77,47 @@
             }
 
             .table-wrapper {
-                display: flex;
-                flex-direction: column;
                 height: calc($h-100 - 16%);
 
-                .table-container {
-                    flex: 1;
-                    margin-bottom: $mr-2;
-                    overflow: auto;
+                .table-wrapper-body {
+                    height: $h-100;
 
-                    &::-webkit-scrollbar {
-                        width: 5px;
-                        height: 5px;
-                    }
-
-                    &::-webkit-scrollbar-thumb {
-                        border-radius: 5px;
-                        background-color: $primary-color;
-                    }
-
-                    .group-header {
+                    .table-wrapper-main, .table-wrapper-secondary {
                         display: flex;
-                        padding-left: $pd-6;
-                        font-size: $fs-4;
-                        font-weight: $fw-4;
-                        color: $text-primary;
+                        flex-direction: column;
                     }
 
-                    .highlight {
-                        background-color: $primary-light-color;
-                    }
-                }
+                    .table-container {
+                        flex: 1;
+                        margin-bottom: $mr-2;
+                        overflow: auto;
 
-                .pagination-container {
-                    @include flex-between();
+                        &::-webkit-scrollbar {
+                            width: 5px;
+                            height: 5px;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            border-radius: 5px;
+                            background-color: $primary-color;
+                        }
+
+                        .group-header {
+                            display: flex;
+                            padding-left: $pd-6;
+                            font-size: $fs-4;
+                            font-weight: $fw-4;
+                            color: $text-primary;
+                        }
+
+                        .highlight {
+                            background-color: $primary-light-color;
+                        }
+                    }
+
+                    .pagination-container {
+                        @include flex-between();
+                    }
                 }
             }
         }

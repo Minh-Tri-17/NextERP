@@ -817,34 +817,39 @@ thead.sticky-active {
   background-color: #776b5d;
 }
 .main .main-wrapper .main-container .table-wrapper {
-  display: flex;
-  flex-direction: column;
   height: 84%;
 }
-.main .main-wrapper .main-container .table-wrapper .table-container {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body {
+  height: 100%;
+}
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-wrapper-main, .main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-wrapper-secondary {
+  display: flex;
+  flex-direction: column;
+}
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container {
   flex: 1;
   margin-bottom: 0.5rem;
   overflow: auto;
 }
-.main .main-wrapper .main-container .table-wrapper .table-container::-webkit-scrollbar {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
-.main .main-wrapper .main-container .table-wrapper .table-container::-webkit-scrollbar-thumb {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #776b5d;
 }
-.main .main-wrapper .main-container .table-wrapper .table-container .group-header {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container .group-header {
   display: flex;
   padding-left: 2rem;
   font-size: 1.25rem;
   font-weight: 600;
   color: #776b5d;
 }
-.main .main-wrapper .main-container .table-wrapper .table-container .highlight {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container .highlight {
   background-color: #b0a695;
 }
-.main .main-wrapper .main-container .table-wrapper .pagination-container {
+.main .main-wrapper .main-container .table-wrapper .table-wrapper-body .pagination-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
