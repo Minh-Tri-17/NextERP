@@ -193,10 +193,7 @@ namespace NextERP.BLL.Service
         public async Task<APIBaseResult<byte[]>> Export(Filter filter)
         {
             var data = await GetPaging(filter);
-            var items = data?.Result?.Items;
-
-            if (items == null || items.Count == 0)
-                return new APIErrorResult<byte[]>(Messages.NotFoundGetList);
+            var items = data?.Result?.Items ?? new List<AttendanceModel>();
 
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(TableName.Appointment);

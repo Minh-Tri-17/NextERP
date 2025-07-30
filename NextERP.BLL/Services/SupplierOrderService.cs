@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using NextERP.BLL.Interface;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
 using NextERP.ModelBase.APIResult;
 using NextERP.ModelBase.PagingResult;
 using NextERP.Util;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,43 +32,6 @@ namespace NextERP.BLL.Service
         #endregion
 
         #region Default Operations
-
-        public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderModel request)
-        {
-            #region Check null request and create variable
-
-            var id = DataHelper.GetGuid(request.Id);
-
-            #endregion
-
-            if (id == Guid.Empty)
-            {
-                var supplierOrder = new SupplierOrder();
-                DataHelper.MapAudit(request, supplierOrder, _currentUser.UserName);
-
-                await _context.SupplierOrders.AddAsync(supplierOrder);
-
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.CreateSuccess, true);
-
-                return new APIErrorResult<bool>(Messages.CreateFailed);
-            }
-            else
-            {
-                var supplierOrder = await _context.SupplierOrders.FindAsync(id);
-                if (supplierOrder == null)
-                    return new APIErrorResult<bool>(Messages.NotFoundUpdate);
-
-                DataHelper.MapAudit(request, supplierOrder, _currentUser.UserName);
-
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
-
-                return new APIErrorResult<bool>(Messages.UpdateFailed);
-            }
-        }
 
         public async Task<APIBaseResult<bool>> Delete(string ids)
         {
@@ -152,6 +118,66 @@ namespace NextERP.BLL.Service
             };
 
             return new APISuccessResult<PagingResult<SupplierOrderModel>>(Messages.GetListResultSuccess, pageResult);
+        }
+
+        public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
+        {
+            var stream = new MemoryStream();
+            await fileImport.CopyToAsync(stream);
+            stream.Position = 0;
+
+            using var workbook = new XSSFWorkbook(stream);
+            var sheet = workbook.GetSheetAt(0);
+
+            var listSupplierOrderModel = new List<SupplierOrderModel>();
+            var listSupplierOrderDetailModel = new List<SupplierOrderDetailModel>();
+
+            for (int i = 1; i <= sheet.LastRowNum; i++)
+            {
+                // Row data
+                var row = sheet.GetRow(i);
+                if (row == null) continue;
+
+                var model = DataHelper.CopyImport<SupplierOrderModel, SupplierOrderDetailModel>(row);
+                model.Item2.SupplierOrderId = model.Item1.Id;
+
+                listSupplierOrderModel.Add(model.Item1);
+                listSupplierOrderDetailModel.Add(model.Item2);
+            }
+
+            var listSupplierOrder = new List<SupplierOrder>();
+            DataHelper.MapListAudit<SupplierOrderModel, SupplierOrder>(listSupplierOrderModel, listSupplierOrder, _currentUser.UserName);
+            await _context.SupplierOrders.AddRangeAsync(listSupplierOrder);
+
+            var listSupplierOrderDetail = new List<SupplierOrderDetail>();
+            DataHelper.MapListAudit<SupplierOrderDetailModel, SupplierOrderDetail>(listSupplierOrderDetailModel, listSupplierOrderDetail, _currentUser.UserName);
+            await _context.SupplierOrderDetails.AddRangeAsync(listSupplierOrderDetail);
+
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.ImportSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.ImportFailed);
+        }
+
+        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        {
+            var data = await GetPaging(filter);
+            var items = data?.Result?.Items ?? new List<SupplierOrderModel>();
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add(TableName.SupplierOrder);
+
+            var listSupplier = DataHelper.MappingList<SupplierOrderModel, SupplierOrder>(items);
+            DataHelper.CopyExport(worksheet, listSupplier);
+
+            var stream = new MemoryStream();
+            workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
+            var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
+            if (bytes.Length > 0)
+                return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
+
+            return new APIErrorResult<byte[]>(Messages.ExportFailed);
         }
 
         #endregion
