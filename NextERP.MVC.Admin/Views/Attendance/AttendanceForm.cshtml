@@ -71,7 +71,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
                     <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                    <button type="button" class="btn btn-primary" id="save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
                 </div>
             </form>
         </div>
@@ -79,7 +79,7 @@
 </div>
 
 <script>
-    $(".save-button").click(function () {
+    $("#save-button").click(function () {
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];

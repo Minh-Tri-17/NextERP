@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-primary start-import-button" localize-content>StartImport</button>
+                    <button type="button" class="btn btn-primary" id="start-import-button" localize-content>StartImport</button>
                 </div>
             </form>
         </div>
@@ -35,7 +35,7 @@
 </div>
 
 <script>
-    $(".start-import-button").click(function () {
+    $("#start-import-button").click(function () {
         const form = $(this).closest("form");
         const formData = new FormData(form[0]);
 
@@ -73,7 +73,7 @@
         }, 500);
     });
 
-    $(".import-button").click(function () {
+    $("#import-button").click(function () {
         $(".progress").hide();
         $(".progress-bar").css("width", "0%").attr("aria-valuenow", 0);
     });

@@ -19,23 +19,23 @@
     <section class="filter-panel card">
         <form method="post">
             <div class="filter-actions">
-                <button type="button" class="btn btn-success create-edit-button create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-success create-edit-button" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Create
                 </button>
-                <button type="button" class="btn btn-warning create-edit-button edit-button disabled" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-warning create-edit-button disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Edit
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
-                <button type="button" class="btn btn-danger delete-button disabled" localize-content>
+                <button type="button" class="btn btn-danger disabled" id="delete-button" localize-content>
                     Delete
                 </button>
-                <button type="button" class="btn btn-danger delete-permanently-button disabled" localize-content>
+                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button" localize-content>
                     DeletePermanently
                 </button>
-                <button type="button" class="btn btn-secondary import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
+                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
                     Import
                 </button>
-                <button type="button" class="btn btn-secondary export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
+                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target=".filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
@@ -54,7 +54,12 @@
     </section>
 
     <!--& TABLE -->
-    <section class="table-wrapper card" id="@TableName.Supplier-table"></section>
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main" id="@TableName.Supplier-table">
+            </div>
+        </div>
+    </section>
 
     <!--& MODAL -->
     <section class="modal-wrapper">
@@ -85,10 +90,10 @@
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Supplier-checkbox:checked").length;
-        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Supplier-checkbox");
+        checkLengthCheckbox($length, true, true, true, true, "@TableName.Supplier-checkbox");
     });
 
-    $(".create-edit-button").click(function () {
+    $("#create-edit-button").click(function () {
         $(".only-save-button").css("display",  $supplierId ? "none" : "block");
 
         fetch("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, {
@@ -107,7 +112,7 @@
         })
     });
 
-    $(".delete-button").click(function () {
+    $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
             return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
@@ -135,7 +140,7 @@
         })
     });
 
-    $(".delete-permanently-button").click(function () {
+    $("#delete-permanently-button").click(function () {
          // Lấy tất cả các Id của các checkbox đã chọn
          const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
              return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
@@ -163,11 +168,11 @@
          })
     });
 
-    $(".search-button").click(function () {
+    $("#search-button").click(function () {
         loadSuppliers();
     })
 
-    $(".clear-button").click(function () {
+    $("#clear-button").click(function () {
         $("#filter-name").val("");
 
         loadSuppliers();
@@ -190,7 +195,7 @@
             body: filter
         }).then(response => {
             // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Supplier-checkbox");
+            checkLengthCheckbox(0, true, true, true, true, "@TableName.Supplier-checkbox");
 
             // Gọi hàm parseResponse để xử lý response trả về
             return parseResponse(response);

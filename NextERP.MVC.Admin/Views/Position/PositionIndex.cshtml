@@ -54,7 +54,12 @@
     </section>
 
     <!--& TABLE -->
-    <section class="table-wrapper card" id="@TableName.Position-table"></section>
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main" id="@TableName.Position-table">
+            </div>
+        </div>
+    </section>
 
     <!--& MODAL -->
     <section class="modal-wrapper">
@@ -85,10 +90,10 @@
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Position-checkbox:checked").length;
-        checkLengthCheckbox($length, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Position-checkbox");
+        checkLengthCheckbox($length, true, true, true, true, "@TableName.Position-checkbox");
     });
 
-    $(".create-edit-button").click(function () {
+    $("#create-edit-button").click(function () {
         $(".only-save-button").css("display",  $positionId ? "none" : "block");
 
         fetch("@Url.Action(Constants.CreateOrEdit, TableName.Position)/" + $positionId, {
@@ -104,7 +109,7 @@
         })
     });
 
-    $(".delete-button").click(function () {
+    $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Position-checkbox:checked").map(function () {
             return $(this).closest("tr").find('input[name="@AttributeNames.Position.PositionId"]').val();
@@ -132,7 +137,7 @@
         })
     });
 
-    $(".delete-permanently-button").click(function () {
+    $("#delete-permanently-button").click(function () {
          // Lấy tất cả các Id của các checkbox đã chọn
          const $ids = $(".@TableName.Position-checkbox:checked").map(function () {
              return $(this).closest("tr").find('input[name="@AttributeNames.Position.PositionId"]').val();
@@ -160,11 +165,11 @@
          })
     });
 
-    $(".search-button").click(function () {
+    $("#search-button").click(function () {
         loadPositions();
     })
 
-    $(".clear-button").click(function () {
+    $("#clear-button").click(function () {
         $("#filter-name").val("");
 
         loadPositions();
@@ -187,7 +192,7 @@
             body: filter
         }).then(response => {
             // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, "edit-button", "create-button", "delete-button", "delete-permanently-button", "@TableName.Position-checkbox");
+            checkLengthCheckbox(0, true, true, true, true, "@TableName.Position-checkbox");
 
             // Gọi hàm parseResponse để xử lý response trả về
             return parseResponse(response);

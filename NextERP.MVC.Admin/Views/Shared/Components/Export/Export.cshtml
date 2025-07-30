@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-primary start-export-button" localize-content>StartExport</button>
+                    <button type="button" class="btn btn-primary" id="start-export-button" localize-content>StartExport</button>
                 </div>
             </form>
         </div>
@@ -42,7 +42,7 @@
 </div>
 
 <script>
-    $(".start-export-button").click(function () {
+    $("#start-export-button").click(function () {
         const formData = createInitialFilterFormData();
 
         const MIN_LOADING_TIME = 3000;
@@ -141,7 +141,7 @@
         return "export.xlsx";
     }
 
-    $(".export-button").click(function () {
+    $("#export-button").click(function () {
         $(".progress").hide();
         $(".progress-bar").css("width", "0%").attr("aria-valuenow", 0);
     });
