@@ -30,43 +30,6 @@ namespace NextERP.BLL.Service
 
         #region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderDetailModel request)
-        {
-            #region Check null request and create variable
-
-            var id = DataHelper.GetGuid(request.Id);
-
-            #endregion
-
-            if (id == Guid.Empty)
-            {
-                var supplierOrderDetail = new SupplierOrderDetail();
-                DataHelper.MapAudit(request, supplierOrderDetail, _currentUser.UserName);
-
-                await _context.SupplierOrderDetails.AddAsync(supplierOrderDetail);
-
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.CreateSuccess, true);
-
-                return new APIErrorResult<bool>(Messages.CreateFailed);
-            }
-            else
-            {
-                var supplierOrderDetail = await _context.SupplierOrderDetails.FindAsync(id);
-                if (supplierOrderDetail == null)
-                    return new APIErrorResult<bool>(Messages.NotFoundUpdate);
-
-                DataHelper.MapAudit(request, supplierOrderDetail, _currentUser.UserName);
-
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
-
-                return new APIErrorResult<bool>(Messages.UpdateFailed);
-            }
-        }
-
         public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
             List<Guid> listSupplierOrderDetailId = ids.Split(',')
@@ -106,7 +69,8 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter)
         {
-            IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+            IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking() // Không theo dõi thay đổi của thực thể
+                .Where(s => s.SupplierOrderId == filter.IdMain);
 
             var listSupplierOrderDetail = await query
                 .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)

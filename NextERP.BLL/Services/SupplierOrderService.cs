@@ -7,6 +7,9 @@ using NextERP.ModelBase;
 using NextERP.ModelBase.APIResult;
 using NextERP.ModelBase.PagingResult;
 using NextERP.Util;
+using NPOI.HPSF;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
@@ -72,6 +75,15 @@ namespace NextERP.BLL.Service
                 _context.SupplierOrders.Remove(supplierOrder); // Xóa vĩnh viễn
             }
 
+            var listSupplierOrderDetail = await _context.SupplierOrderDetails
+                .Where(s => s.SupplierOrderId.HasValue && listSupplierOrderId.Contains(s.SupplierOrderId.Value))
+                .ToListAsync();
+
+            foreach (var supplierOrderDetail in listSupplierOrderDetail)
+            {
+                _context.SupplierOrderDetails.Remove(supplierOrderDetail); // Xóa vĩnh viễn
+            }
+
             var result = await _context.SaveChangesAsync();
             if (result > 0)
                 return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
@@ -126,32 +138,20 @@ namespace NextERP.BLL.Service
             await fileImport.CopyToAsync(stream);
             stream.Position = 0;
 
-            using var workbook = new XSSFWorkbook(stream);
+            IWorkbook workbook = Path.GetExtension(fileImport.FileName).Equals(".xls", StringComparison.OrdinalIgnoreCase)
+                ? workbook = new HSSFWorkbook(stream) : workbook = new XSSFWorkbook(stream);
+
             var sheet = workbook.GetSheetAt(0);
+            var (main, sub) = DataHelper.CopyImport<SupplierOrderModel, SupplierOrderDetailModel>(sheet);
 
-            var listSupplierOrderModel = new List<SupplierOrderModel>();
-            var listSupplierOrderDetailModel = new List<SupplierOrderDetailModel>();
+            var supplierOrder = new SupplierOrder();
+            DataHelper.MapAudit<SupplierOrderModel, SupplierOrder>(main, supplierOrder, _currentUser.UserName);
+            await _context.SupplierOrders.AddRangeAsync(supplierOrder);
 
-            for (int i = 1; i <= sheet.LastRowNum; i++)
-            {
-                // Row data
-                var row = sheet.GetRow(i);
-                if (row == null) continue;
-
-                var model = DataHelper.CopyImport<SupplierOrderModel, SupplierOrderDetailModel>(row);
-                model.Item2.SupplierOrderId = model.Item1.Id;
-
-                listSupplierOrderModel.Add(model.Item1);
-                listSupplierOrderDetailModel.Add(model.Item2);
-            }
-
-            var listSupplierOrder = new List<SupplierOrder>();
-            DataHelper.MapListAudit<SupplierOrderModel, SupplierOrder>(listSupplierOrderModel, listSupplierOrder, _currentUser.UserName);
-            await _context.SupplierOrders.AddRangeAsync(listSupplierOrder);
-
-            var listSupplierOrderDetail = new List<SupplierOrderDetail>();
-            DataHelper.MapListAudit<SupplierOrderDetailModel, SupplierOrderDetail>(listSupplierOrderDetailModel, listSupplierOrderDetail, _currentUser.UserName);
-            await _context.SupplierOrderDetails.AddRangeAsync(listSupplierOrderDetail);
+            var supplierOrderDetail = new SupplierOrderDetail();
+            DataHelper.MapAudit<SupplierOrderDetailModel, SupplierOrderDetail>(sub, supplierOrderDetail, _currentUser.UserName);
+            supplierOrderDetail.SupplierOrderId = supplierOrder.Id;
+            await _context.SupplierOrderDetails.AddRangeAsync(supplierOrderDetail);
 
             var result = await _context.SaveChangesAsync();
             if (result > 0)
@@ -168,8 +168,8 @@ namespace NextERP.BLL.Service
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(TableName.SupplierOrder);
 
-            var listSupplier = DataHelper.MappingList<SupplierOrderModel, SupplierOrder>(items);
-            DataHelper.CopyExport(worksheet, listSupplier);
+            var listSupplierOrder = DataHelper.MappingList<SupplierOrderModel, SupplierOrder>(items);
+            DataHelper.CopyExport(worksheet, listSupplierOrder);
 
             var stream = new MemoryStream();
             workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream

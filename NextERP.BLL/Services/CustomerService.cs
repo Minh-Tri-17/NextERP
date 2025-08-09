@@ -175,12 +175,11 @@ namespace NextERP.BLL.Service
             {
                 // Row data
                 var row = sheet.GetRow(i);
+                if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
+                    continue; // Bỏ qua hàng trống
 
-                if (row != null)
-                {
-                    CustomerModel customerModel = DataHelper.CopyImport<CustomerModel>(headerRow, row);
-                    listCustomerModel.Add(customerModel);
-                }
+                CustomerModel customerModel = DataHelper.CopyImport<CustomerModel>(headerRow, row);
+                listCustomerModel.Add(customerModel);
             }
 
             var listCustomer = new List<Customer>();

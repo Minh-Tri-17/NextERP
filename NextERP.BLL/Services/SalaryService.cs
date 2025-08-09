@@ -175,12 +175,11 @@ namespace NextERP.BLL.Service
             {
                 // Row data
                 var row = sheet.GetRow(i);
+                if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
+                    continue; // Bỏ qua hàng trống
 
-                if (row != null)
-                {
-                    SalaryModel salaryModel = DataHelper.CopyImport<SalaryModel>(headerRow, row);
-                    listSalaryModel.Add(salaryModel);
-                }
+                SalaryModel salaryModel = DataHelper.CopyImport<SalaryModel>(headerRow, row);
+                listSalaryModel.Add(salaryModel);
             }
 
             var listSalary = new List<Salary>();
