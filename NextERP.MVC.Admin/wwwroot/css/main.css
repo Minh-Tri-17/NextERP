@@ -825,6 +825,7 @@ thead.sticky-active {
 .main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-wrapper-main, .main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-wrapper-secondary {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .main .main-wrapper .main-container .table-wrapper .table-wrapper-body .table-container {
   flex: 1;

@@ -85,6 +85,7 @@
                     .table-wrapper-main, .table-wrapper-secondary {
                         display: flex;
                         flex-direction: column;
+                        height: $h-100;
                     }
 
                     .table-container {
