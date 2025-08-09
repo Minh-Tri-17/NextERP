@@ -34,42 +34,6 @@ namespace NextERP.API.Controllers
 
         #region Default Operations
 
-        [HttpPost(nameof(CreateOrEditSupplierOrder))]
-        public async Task<ActionResult<SupplierOrder>> CreateOrEditSupplierOrder()
-        {
-            var supplierOrder = new SupplierOrderModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    supplierOrder = JsonConvert.DeserializeObject<SupplierOrderModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (supplierOrder != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    supplierOrder.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    supplierOrder = JsonConvert.DeserializeObject<SupplierOrderModel>(body);
-            }
-
-            if (supplierOrder == null)
-                return BadRequest();
-
-            var result = await _supplierOrderService.CreateOrEdit(supplierOrder);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
         [HttpDelete(nameof(DeleteSupplierOrder))]
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplierOrder(string ids)
         {
@@ -105,6 +69,35 @@ namespace NextERP.API.Controllers
         {
             var result = await _supplierOrderService.GetPaging(filter);
             if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(ImportSupplierOrder))]
+        public async Task<ActionResult<Supplier>> ImportSupplierOrder()
+        {
+            IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
+
+            if (excelFile != null)
+            {
+                var result = await _supplierOrderService.Import(excelFile);
+                if (!result.IsSuccess)
+                    return BadRequest(result);
+
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost(nameof(ExportSupplierOrder))]
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplierOrder(Filter filter)
+        {
+            var result = await _supplierOrderService.Export(filter);
+            if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 
             return Ok(result);

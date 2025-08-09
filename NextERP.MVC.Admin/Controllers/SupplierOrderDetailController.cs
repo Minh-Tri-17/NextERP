@@ -27,16 +27,6 @@ namespace NextERP.MVC.Admin.Controllers
             return View(new SupplierOrderDetailModel());
         }
 
-        [HttpGet]
-        public async Task<ActionResult> CreateOrEdit(Guid id)
-        {
-            var result = await _supplierOrderDetailAPIService.GetOne(id);
-            if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
-
-            return Json(result.Result);
-        }
-
         [HttpPost]
         public async Task<ActionResult> GetList(Filter filter)
         {
@@ -45,19 +35,6 @@ namespace NextERP.MVC.Admin.Controllers
                 return Json(Localization(result.Message));
 
             return PartialView(ScreenName.SupplierOrderDetail.SupplierOrderDetailList, result);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> CreateOrEdit(SupplierOrderDetailModel request)
-        {
-            if (!ModelState.IsValid)
-                return GetModelStateErrors();
-
-            var result = await _supplierOrderDetailAPIService.CreateOrEdit(request);
-            if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
-
-            return Json(Localization(result.Message));
         }
 
         [HttpPost]

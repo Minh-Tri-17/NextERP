@@ -28,7 +28,7 @@ public partial class SpaService
     [StringLength(50)]
     public string? OperatingStatus { get; set; }
 
-    public bool? IsPromotional { get; set; }
+    public bool IsPromotional { get; set; }
 
     [StringLength(50)]
     public string? SpaServiceLevel { get; set; }

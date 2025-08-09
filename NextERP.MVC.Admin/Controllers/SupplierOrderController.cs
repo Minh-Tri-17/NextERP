@@ -28,16 +28,6 @@ namespace NextERP.MVC.Admin.Controllers
             return View(new SupplierOrderModel());
         }
 
-        [HttpGet]
-        public async Task<ActionResult> CreateOrEdit(Guid id)
-        {
-            var result = await _supplierOrderAPIService.GetOne(id);
-            if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
-
-            return Json(result.Result);
-        }
-
         [HttpPost]
         public async Task<ActionResult> GetList(Filter filter)
         {
@@ -46,19 +36,6 @@ namespace NextERP.MVC.Admin.Controllers
                 return Json(Localization(result.Message));
 
             return PartialView(ScreenName.SupplierOrder.SupplierOrderList, result);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> CreateOrEdit(SupplierOrderModel request)
-        {
-            if (!ModelState.IsValid)
-                return GetModelStateErrors();
-
-            var result = await _supplierOrderAPIService.CreateOrEdit(request);
-            if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
-
-            return Json(Localization(result.Message));
         }
 
         [HttpPost]
@@ -79,6 +56,30 @@ namespace NextERP.MVC.Admin.Controllers
                 return Json(Localization(result.Message));
 
             return Json(Localization(result.Message));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Import(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return Json(Messages.FileNotFound);
+
+            var result = await _supplierOrderAPIService.Import(file);
+            if (!DataHelper.IsNotNull(result))
+                return Json(Localization(result.Message));
+
+            return Json(Localization(result.Message));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Export(Filter filter)
+        {
+            var result = await _supplierOrderAPIService.Export(filter);
+            if (!DataHelper.IsNotNull(result))
+                return Json(Localization(result.Message));
+
+            var fileName = string.Format(Constants.FileName, TableName.SupplierOrder, DateTime.Now.ToString(Constants.DateTimeString));
+            return File(result.Result!, Constants.ContentType, fileName);
         }
 
         #endregion

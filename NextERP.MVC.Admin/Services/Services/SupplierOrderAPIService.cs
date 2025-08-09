@@ -26,11 +26,6 @@ namespace NextERP.MVC.Admin.Services.Services
 
         #region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderModel request)
-        {
-            return await PostAsync<APIBaseResult<bool>, SupplierOrderModel>(Constants.UrlCreateOrEditSupplierOrder, request);
-        }
-
         public async Task<APIBaseResult<bool>> Delete(string ids)
         {
             return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeleteSupplierOrder}?ids={ids}");
@@ -48,7 +43,17 @@ namespace NextERP.MVC.Admin.Services.Services
 
         public async Task<APIBaseResult<PagingResult<SupplierOrderModel>>> GetPaging(Filter filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<SupplierOrderModel>>, Filter>($"{Constants.UrlGetSupplierOrderDetails}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<SupplierOrderModel>>, Filter>($"{Constants.UrlGetSupplierOrders}/{Constants.Filter}", filter);
+        }
+
+        public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
+        {
+            return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportSupplierOrder, fileImport);
+        }
+
+        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        {
+            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportSupplierOrder, filter);
         }
 
         #endregion

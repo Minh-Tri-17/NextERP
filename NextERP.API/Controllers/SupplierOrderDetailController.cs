@@ -33,42 +33,6 @@ namespace NextERP.API.Controllers
 
         #region Default Operations
 
-        [HttpPost(nameof(CreateOrEditSupplierOrderDetail))]
-        public async Task<ActionResult<SupplierOrderDetail>> CreateOrEditSupplierOrderDetail()
-        {
-            var supplierOrderDetail = new SupplierOrderDetailModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    supplierOrderDetail = JsonConvert.DeserializeObject<SupplierOrderDetailModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (supplierOrderDetail != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    supplierOrderDetail.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    supplierOrderDetail = JsonConvert.DeserializeObject<SupplierOrderDetailModel>(body);
-            }
-
-            if (supplierOrderDetail == null)
-                return BadRequest();
-
-            var result = await _supplierOrderDetailService.CreateOrEdit(supplierOrderDetail);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
         [HttpDelete(nameof(DeleteSupplierOrderDetail))]
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteSupplierOrderDetail(string ids)
         {

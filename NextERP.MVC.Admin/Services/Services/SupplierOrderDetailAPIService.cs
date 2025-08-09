@@ -26,11 +26,6 @@ namespace NextERP.MVC.Admin.Services.Services
 
         #region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(SupplierOrderDetailModel request)
-        {
-            return await PostAsync<APIBaseResult<bool>, SupplierOrderDetailModel>(Constants.UrlCreateOrEditSupplierOrderDetail, request);
-        }
-
         public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
             return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeleteSupplierOrderDetail}?ids={ids}");

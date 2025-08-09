@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.VisualBasic;
 using NextERP.ModelBase;
@@ -14,7 +16,6 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace NextERP.Util
 {
@@ -292,7 +293,7 @@ namespace NextERP.Util
         }
 
         /// <summary>
-        /// Dùng để copy dữ liệu từ Excel sang đối tượng
+        /// Dùng để copy dữ liệu từ Excel sang đối tượng dựa vào tiêu đề cột
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="row"></param>
@@ -324,108 +325,225 @@ namespace NextERP.Util
                 if (prop == null || !prop.CanWrite)
                     continue;
 
-                object? value = null;
-
-                if (prop.PropertyType == typeof(string))
-                {
-                    var str = dataCell.ToString();
-                    value = string.IsNullOrWhiteSpace(str) ? null : str;
-                }
-                else if (prop.PropertyType == typeof(Guid) || prop.PropertyType == typeof(Guid?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? null : Guid.Empty;
-                    }
-                    else
-                    {
-                        value = GetGuid(str);
-                    }
-                }
-                else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(decimal?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? (decimal?)null : 0m;
-                    }
-                    else
-                    {
-                        value = GetDecimal(str);
-                    }
-                }
-                else if (prop.PropertyType == typeof(double) || prop.PropertyType == typeof(double?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? (double?)null : 0d;
-                    }
-                    else
-                    {
-                        value = GetDouble(str);
-                    }
-                }
-                else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(int?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? (int?)null : 0;
-                    }
-                    else
-                    {
-                        value = GetInt(str);
-                    }
-                }
-                else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? (DateTime?)null : DateTime.MinValue;
-                    }
-                    else
-                    {
-                        value = dataCell.CellType == CellType.Numeric ? dataCell.DateCellValue : GetDateTime(str);
-                    }
-                }
-                else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?))
-                {
-                    var str = dataCell.ToString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        value = Nullable.GetUnderlyingType(prop.PropertyType) != null ? (bool?)null : false;
-                    }
-                    else
-                    {
-                        value = GetBool(str);
-                    }
-                }
-
-                if (value != null)
-                    prop.SetValue(obj, value);
+                object? value = ConvertToPropertyType(prop.PropertyType, dataCell.ToString());
+                prop.SetValue(obj, value);
             }
 
             #region Set default values for system-defined attributes
 
+            ResetSystemFields(obj, props);
+
+            #endregion
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Dùng để copy dữ liệu từ Excel sang đối tượng dựa vào key-value pair trong ô dữ liệu (áp dụng cho 1 model duy nhất)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public static T CopyImport<T>(ISheet sheet) where T : new()
+        {
+            var obj = new T();
+            var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            {
+                var dataRow = sheet.GetRow(i);
+                if (dataRow == null)
+                    continue;
+
+                foreach (var cell in dataRow.Cells)
+                {
+                    var cellValue = cell.ToString();
+                    // Bỏ qua nếu ô dữ liệu không tồn tại hoặc không có giá trị
+                    if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("<:>"))
+                        continue;
+
+                    var parts = cell?.ToString()?.Split("<:>", 2);
+                    if (parts?.Length != 2 || string.IsNullOrWhiteSpace(parts[0]) || string.IsNullOrWhiteSpace(parts[1]))
+                        continue;
+
+                    var fieldName = parts[0].Trim();
+                    var fieldValue = parts[1].Trim();
+
+                    // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
+                    var prop = props.FirstOrDefault(p =>
+                        string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+
+                    // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
+                    if (prop == null || !prop.CanWrite)
+                        continue;
+
+                    object? value = ConvertToPropertyType(prop.PropertyType, fieldValue);
+                    prop.SetValue(obj, value);
+                }
+            }
+
+            #region Set default values for system-defined attributes
+
+            ResetSystemFields(obj, props);
+
+            #endregion
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Dùng để copy dữ liệu từ Excel sang đối tượng dựa vào key-value pair trong ô dữ liệu (áp dụng cho 2 model)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public static (TMain, TSub) CopyImport<TMain, TSub>(ISheet sheet) where TMain : new() where TSub : new()
+        {
+            var main = new TMain();
+            var sub = new TSub();
+
+            var mainProps = typeof(TMain).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var subProps = typeof(TSub).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            {
+                var dataRow = sheet.GetRow(i);
+                if (dataRow == null)
+                    continue;
+
+                foreach (var cell in dataRow.Cells)
+                {
+                    var cellValue = cell.ToString();
+                    // Bỏ qua nếu ô dữ liệu không tồn tại hoặc không có giá trị
+                    if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("<:>"))
+                        continue;
+
+                    var parts = cellValue.Split(new[] { "<:>" }, StringSplitOptions.None);
+                    if (parts.Length != 2)
+                        continue;
+
+                    var fieldName = parts[0].Split(' ').LastOrDefault(x => !string.IsNullOrWhiteSpace(x));
+                    var fieldValue = parts[^1].Trim();
+
+                    #region Update data for model main
+
+                    // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
+                    var mainProp = mainProps.FirstOrDefault(p => string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+
+                    // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
+                    if (mainProp == null || !mainProp.CanWrite)
+                        continue;
+
+                    object? valueMain = ConvertToPropertyType(mainProp.PropertyType, fieldValue);
+                    mainProp.SetValue(main, valueMain);
+
+                    #endregion
+
+                    #region Update data for model sub
+
+                    // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
+                    var subProp = subProps.FirstOrDefault(p => string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+
+                    // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
+                    if (subProp == null || !subProp.CanWrite)
+                        continue;
+
+                    object? valueSub = ConvertToPropertyType(subProp.PropertyType, fieldValue);
+                    subProp.SetValue(sub, valueSub);
+
+                    #endregion
+                }
+            }
+
+            #region Set default values for system-defined attributes
+
+            ResetSystemFields(main, mainProps);
+            ResetSystemFields(sub, subProps);
+
+            #endregion
+
+            var obj = (main, sub);
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Gán giá trị mặc định cho các trường hệ thống trong đối tượng
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="props"></param>
+        private static void ResetSystemFields<T>(T obj, PropertyInfo[] props)
+        {
             var idProp = props.FirstOrDefault(p => p.Name == Constants.Id && p.PropertyType == typeof(Guid));
             idProp?.SetValue(obj, Guid.Empty);
 
-            var tableName = typeof(T).Name;
-            var code = tableName + Constants.Code;
+            var codeName = typeof(T).Name + Constants.Code;
 
-            string[] systemFields = { Constants.DateCreate, Constants.DateUpdate, Constants.UserCreate, Constants.UserUpdate, Constants.IsDelete, code };
+            string[] systemFields = {
+                Constants.DateCreate,
+                Constants.DateUpdate,
+                Constants.UserCreate,
+                Constants.UserUpdate,
+                Constants.IsDelete,
+                codeName
+            };
+
             foreach (var field in systemFields)
             {
                 var prop = props.FirstOrDefault(p => p.Name == field);
                 prop?.SetValue(obj, null);
             }
+        }
 
-            #endregion
+        /// <summary>
+        /// Chuyển đổi chuỗi thành kiểu dữ liệu của thuộc tính
+        /// </summary>
+        /// <param name="propType"></param>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static object? ConvertToPropertyType(Type propType, string? str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                if (Nullable.GetUnderlyingType(propType) != null)
+                    return null;
 
-            return obj;
+                if (propType == typeof(Guid)) return Guid.Empty;
+                if (propType == typeof(string)) return null;
+                if (propType == typeof(int)) return 0;
+                if (propType == typeof(decimal)) return 0m;
+                if (propType == typeof(double)) return 0d;
+                if (propType == typeof(DateTime)) return DateTime.MinValue;
+                if (propType == typeof(bool)) return false;
+
+                return null;
+            }
+
+            Type actualType = Nullable.GetUnderlyingType(propType) ?? propType;
+
+            if (actualType == typeof(string))
+                return str;
+
+            if (actualType == typeof(Guid))
+                return GetGuid(str);
+
+            if (actualType == typeof(decimal))
+                return GetDecimal(str);
+
+            if (actualType == typeof(double))
+                return GetDouble(str);
+
+            if (actualType == typeof(int))
+                return GetInt(str);
+
+            if (actualType == typeof(DateTime))
+                return GetDateTime(str);
+
+            if (actualType == typeof(bool))
+                return GetBool(str);
+
+            return str;
         }
 
         /// <summary>

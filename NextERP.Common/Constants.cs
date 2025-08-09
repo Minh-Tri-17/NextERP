@@ -6,6 +6,7 @@
         public const string Token = "Token";
         public const string APIAddress = "APIAddress";
         public const string Id = "Id";
+        public const string IdMain = "IdMain";
         public const string Code = "Code";
         public const string ImageFiles = "ImageFiles";
         public const string PageIndex = "PageIndex";
@@ -315,11 +316,12 @@
 
         #region SupplierOrder
 
-        public const string UrlCreateOrEditSupplierOrder = "/api/SupplierOrder/CreateOrEditSupplierOrder";
         public const string UrlDeleteSupplierOrder = "/api/SupplierOrder/DeleteSupplierOrder";
         public const string UrlDeletePermanentlySupplierOrder = "/api/SupplierOrder/DeletePermanentlySupplierOrder";
         public const string UrlGetSupplierOrder = "/api/SupplierOrder/GetSupplierOrder";
         public const string UrlGetSupplierOrders = "/api/SupplierOrder/GetSupplierOrders";
+        public const string UrlImportSupplierOrder = "/api/SupplierOrder/ImportSupplierOrder";
+        public const string UrlExportSupplierOrder = "/api/SupplierOrder/ExportSupplierOrder";
 
         #endregion
 

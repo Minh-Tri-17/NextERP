@@ -192,6 +192,7 @@ namespace NextERP.ModelBase
         public bool AllowPaging { get; set; } = true;
         public bool IsDelete { get; set; } = false;
         public string? Ids { get; set; }
+        public Guid? IdMain { get; set; }
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
     }
@@ -204,5 +205,11 @@ namespace NextERP.ModelBase
         public DateTime End { get; set; }
         public bool AllDay { get; set; } = false;
         public string Description { get; set; } = string.Empty;
+    }
+
+    public class DataImport
+    {
+        public string Key { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 }
