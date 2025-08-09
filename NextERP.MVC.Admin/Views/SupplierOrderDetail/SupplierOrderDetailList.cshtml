@@ -1,0 +1,86 @@
+﻿@using System.Reflection
+@using NextERP.ModelBase
+@using NextERP.ModelBase.APIResult
+@using NextERP.ModelBase.PagingResult
+@using NextERP.Util
+@model APIBaseResult<PagingResult<SupplierOrderDetailModel>>
+
+<h5 class="text-center" localize-content>@TableName.SupplierOrderDetail</h5>
+
+<div class="table-container">
+    <table class="table table-hover me-2">
+        <thead>
+            <tr>
+                <th>#</th>
+                @{
+                    var excludedFields1 = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
+
+                    var listField1 = typeof(SupplierOrderDetailModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(s => s.Name != null && !excludedFields1.Contains(s.Name, StringComparer.OrdinalIgnoreCase)
+                    && s.PropertyType != typeof(Guid) && s.PropertyType != typeof(Guid?)
+                    && s.GetMethod != null && !s.GetMethod.IsVirtual)
+                    .ToList();
+
+                    foreach (var item in listField1)
+                    {
+                        <th localize-content>@item.Name</th>
+                    }
+                }
+            </tr>
+        </thead>
+
+        <tbody class="sortable-group table-group-divider">
+            @if (DataHelper.ListIsNotNull(Model))
+            {
+                int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
+
+                foreach (var row in Model!.Result!.Items!)
+                {
+                    <tr>
+                        <td>@counter</td>
+                        @foreach (var field in listField1)
+                        {
+                            var value = field.GetValue(row);
+                            <td>@(value ?? "")</td>
+                        }
+                    </tr>
+
+                    counter++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (DataHelper.ListIsNotNull(Model))
+{
+    <nav id="pagination-container" aria-label="Page navigation">
+        @await Component.InvokeAsync(Constants.Pagination, Model.Result)
+    </nav>
+}
+
+<script>
+    $("#pagination-container").on("click", ".page-link", function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển trang
+
+        const $pageIndex = $(this).data("page");
+        if (!$pageIndex) return;
+
+        $("#current-page-index").val($pageIndex);
+
+        // Xử lý active
+        $("#pagination-container .page-item").removeClass("active");
+        $(this).parent().addClass("active");
+
+        loadSupplierOrderDetails($pageIndex);
+    });
+
+    $(".check-all").change(function () {
+        // Gán giá trị cho tất cả checkbox SupplierOrderDetail-checkbox
+        $(".@TableName.SupplierOrderDetail-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+
+        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+        const $length = $(".@TableName.SupplierOrderDetail-checkbox:checked").length;
+        checkLengthCheckbox($length, true, true, true, true, "@TableName.SupplierOrderDetail-checkbox");
+    });
+</script>
