@@ -1,11 +1,11 @@
 //& Cuộn bảng: Sticky thead
 function tableScrollHandler() {
-    const tableContainer = document.querySelector(".table-container");
-    if (tableContainer) {
-        $(tableContainer).off("scroll").on("scroll", function () {
-            $(".table thead").toggleClass("sticky-active", $(this).scrollTop() > 0);
-        });
-    }
+    $(".table-container")
+        .off("scroll")// Gỡ bỏ sự kiện scroll cũ (nếu có) để tránh bị bind nhiều lần
+        .on("scroll", // Gắn lại sự kiện scroll cho mỗi table-container
+            function () {
+        $(this).find(".table thead").toggleClass("sticky-active", $(this).scrollTop() > 0);
+    });
 }
 
 //& Kéo thả nhóm
