@@ -122,7 +122,7 @@ namespace NextERP.BLL.Service
             var listSupplierOrderModel = DataHelper.MappingList<SupplierOrder, SupplierOrderModel>(listSupplierOrder);
             var pageResult = new PagingResult<SupplierOrderModel>()
             {
-                TotalRecord = await query.CountAsync(),
+                TotalRecord = totalCount,
                 PageRecord = listSupplierOrderModel.Count(),
                 PageIndex = filter.PageIndex,
                 PageSize = filter.PageSize,

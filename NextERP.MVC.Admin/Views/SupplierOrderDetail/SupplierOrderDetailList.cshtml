@@ -52,13 +52,6 @@
     </table>
 </div>
 
-@if (DataHelper.ListIsNotNull(Model))
-{
-    <nav id="pagination-container" aria-label="Page navigation">
-        @await Component.InvokeAsync(Constants.Pagination, Model.Result)
-    </nav>
-}
-
 <script>
     $("#pagination-container").on("click", ".page-link", function (e) {
         e.preventDefault(); // Ngăn chặn chuyển trang

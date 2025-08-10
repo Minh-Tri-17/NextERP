@@ -144,7 +144,7 @@ namespace NextERP.BLL.Service
             var listInvoiceModel = DataHelper.MappingList<Invoice, InvoiceModel>(listInvoice);
             var pageResult = new PagingResult<InvoiceModel>()
             {
-                TotalRecord = await query.CountAsync(),
+                TotalRecord = totalCount,
                 PageRecord = listInvoiceModel.Count(),
                 PageIndex = filter.PageIndex,
                 PageSize = filter.PageSize,
