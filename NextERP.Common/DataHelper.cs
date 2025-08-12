@@ -300,7 +300,7 @@ namespace NextERP.Util
         /// <returns></returns>
         public static T CopyImport<T>(IRow headerRow, IRow dataRow) where T : new()
         {
-            var obj = new T();
+            var model = new T();
             var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             for (int i = 0; i < headerRow.LastCellNum; i++)
@@ -326,16 +326,16 @@ namespace NextERP.Util
                     continue;
 
                 object? value = ConvertToPropertyType(prop.PropertyType, dataCell.ToString());
-                prop.SetValue(obj, value);
+                prop.SetValue(model, value);
             }
 
             #region Set default values for system-defined attributes
 
-            ResetSystemFields(obj, props);
+            ResetSystemFields(model, props);
 
             #endregion
 
-            return obj;
+            return model;
         }
 
         /// <summary>
@@ -344,66 +344,10 @@ namespace NextERP.Util
         /// <typeparam name="T"></typeparam>
         /// <param name="row"></param>
         /// <returns></returns>
-        public static T CopyImport<T>(ISheet sheet) where T : new()
+        public static T CopyImportTemplateSingle<T>(ISheet sheet) where T : new()
         {
-            var obj = new T();
+            var model = new T();
             var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
-            {
-                var dataRow = sheet.GetRow(i);
-                if (dataRow == null)
-                    continue;
-
-                foreach (var cell in dataRow.Cells)
-                {
-                    var cellValue = cell.ToString();
-                    // Bỏ qua nếu ô dữ liệu không tồn tại hoặc không có giá trị
-                    if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("<:>"))
-                        continue;
-
-                    var parts = cell?.ToString()?.Split("<:>", 2);
-                    if (parts?.Length != 2 || string.IsNullOrWhiteSpace(parts[0]) || string.IsNullOrWhiteSpace(parts[1]))
-                        continue;
-
-                    var fieldName = parts[0].Trim();
-                    var fieldValue = parts[1].Trim();
-
-                    // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
-                    var prop = props.FirstOrDefault(p =>
-                        string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
-
-                    // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
-                    if (prop == null || !prop.CanWrite)
-                        continue;
-
-                    object? value = ConvertToPropertyType(prop.PropertyType, fieldValue);
-                    prop.SetValue(obj, value);
-                }
-            }
-
-            #region Set default values for system-defined attributes
-
-            ResetSystemFields(obj, props);
-
-            #endregion
-
-            return obj;
-        }
-
-        /// <summary>
-        /// Dùng để copy dữ liệu từ Excel sang đối tượng dựa vào key-value pair trong ô dữ liệu (áp dụng cho 2 model)
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="row"></param>
-        /// <returns></returns>
-        public static (TMain, TSub) CopyImport<TMain, TSub>(ISheet sheet) where TMain : new() where TSub : new()
-        {
-            var main = new TMain();
-            var sub = new TSub();
-
-            var mainProps = typeof(TMain).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var subProps = typeof(TSub).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
             {
@@ -425,46 +369,90 @@ namespace NextERP.Util
                     var fieldName = parts[0].Split(' ').LastOrDefault(x => !string.IsNullOrWhiteSpace(x));
                     var fieldValue = parts[^1].Trim();
 
-                    #region Update data for model main
-
                     // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
-                    var mainProp = mainProps.FirstOrDefault(p => string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+                    var prop = props.FirstOrDefault(p =>
+                        string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
 
                     // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
-                    if (mainProp == null || !mainProp.CanWrite)
+                    if (prop == null || !prop.CanWrite)
                         continue;
 
-                    object? valueMain = ConvertToPropertyType(mainProp.PropertyType, fieldValue);
-                    mainProp.SetValue(main, valueMain);
-
-                    #endregion
-
-                    #region Update data for model sub
-
-                    // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
-                    var subProp = subProps.FirstOrDefault(p => string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
-
-                    // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
-                    if (subProp == null || !subProp.CanWrite)
-                        continue;
-
-                    object? valueSub = ConvertToPropertyType(subProp.PropertyType, fieldValue);
-                    subProp.SetValue(sub, valueSub);
-
-                    #endregion
+                    object? value = ConvertToPropertyType(prop.PropertyType, fieldValue);
+                    prop.SetValue(model, value);
                 }
             }
 
             #region Set default values for system-defined attributes
 
-            ResetSystemFields(main, mainProps);
-            ResetSystemFields(sub, subProps);
+            ResetSystemFields(model, props);
 
             #endregion
 
-            var obj = (main, sub);
+            return model;
+        }
 
-            return obj;
+        /// <summary>
+        /// Dùng để copy dữ liệu từ Excel sang nhiều đối tượng dựa vào key-value pair trong ô dữ liệu
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        public static object[] CopyImportTemplateMulti(ISheet sheet, params object[] models)
+        {
+            // Lấy sẵn property list cho từng model để giảm chi phí reflection
+            var listModelProps = models.Select(m => m.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)).ToArray();
+
+            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            {
+                var dataRow = sheet.GetRow(i);
+                if (dataRow == null)
+                    continue;
+
+                foreach (var cell in dataRow.Cells)
+                {
+                    var cellValue = cell.ToString();
+                    // Bỏ qua nếu ô dữ liệu không tồn tại hoặc không có giá trị
+                    if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("<:>"))
+                        continue;
+
+                    var parts = cellValue.Split(new[] { "<:>" }, StringSplitOptions.None);
+                    if (parts.Length != 2)
+                        continue;
+
+                    var fieldName = parts[0].Split(' ').LastOrDefault(x => !string.IsNullOrWhiteSpace(x));
+                    var fieldValue = parts[^1].Trim();
+
+                    // Lặp qua tất cả model
+                    for (int modelIndex = 0; modelIndex < models.Length; modelIndex++)
+                    {
+                        var props = listModelProps[modelIndex];
+                        var model = models[modelIndex];
+
+                        // Tìm thuộc tính trong class T có tên trùng với tiêu đề cột (không phân biệt chữ hoa/thường).
+                        var prop = props.FirstOrDefault(p =>
+                            string.Equals(p.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+
+                        // Bỏ qua nếu không tìm thấy thuộc tính tương ứng hoặc không thể ghi
+                        if (prop == null || !prop.CanWrite)
+                            continue;
+
+                        object? valueConverted = ConvertToPropertyType(prop.PropertyType, fieldValue);
+                        prop.SetValue(model, valueConverted);
+                    }
+                }
+            }
+
+            #region Set default values for system-defined attributes
+
+            for (int modelIndex = 0; modelIndex < models.Length; modelIndex++)
+            {
+                var props = listModelProps[modelIndex];
+                ResetSystemFields(models[modelIndex], props);
+            }
+
+            #endregion
+
+            return models;
         }
 
         /// <summary>

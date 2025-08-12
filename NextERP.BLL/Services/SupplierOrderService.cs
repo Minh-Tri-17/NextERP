@@ -142,14 +142,23 @@ namespace NextERP.BLL.Service
                 ? workbook = new HSSFWorkbook(stream) : workbook = new XSSFWorkbook(stream);
 
             var sheet = workbook.GetSheetAt(0);
-            var (main, sub) = DataHelper.CopyImport<SupplierOrderModel, SupplierOrderDetailModel>(sheet);
+            var models = new object[] { new SupplierModel(), new SupplierOrderModel(), new SupplierOrderDetailModel(), };
+            var results = DataHelper.CopyImportTemplateMulti(sheet, models);
+
+            var supplier = await _context.Suppliers.FirstOrDefaultAsync(s => s.SupplierName == ((SupplierModel)results[0]).SupplierName
+                && s.PhoneNumber == ((SupplierModel)results[0]).PhoneNumber && s.ContactName == ((SupplierModel)results[0]).ContactName);
+            if (supplier == null)
+                return new APIErrorResult<bool>(Messages.ImportFailed);
 
             var supplierOrder = new SupplierOrder();
-            DataHelper.MapAudit<SupplierOrderModel, SupplierOrder>(main, supplierOrder, _currentUser.UserName);
+            DataHelper.MapAudit<SupplierOrderModel, SupplierOrder>((SupplierOrderModel)results[1], supplierOrder, _currentUser.UserName);
+
+            supplierOrder.SupplierId = supplier.Id;
             await _context.SupplierOrders.AddRangeAsync(supplierOrder);
 
             var supplierOrderDetail = new SupplierOrderDetail();
-            DataHelper.MapAudit<SupplierOrderDetailModel, SupplierOrderDetail>(sub, supplierOrderDetail, _currentUser.UserName);
+            DataHelper.MapAudit<SupplierOrderDetailModel, SupplierOrderDetail>((SupplierOrderDetailModel)results[2], supplierOrderDetail, _currentUser.UserName);
+
             supplierOrderDetail.SupplierOrderId = supplierOrder.Id;
             await _context.SupplierOrderDetails.AddRangeAsync(supplierOrderDetail);
 
