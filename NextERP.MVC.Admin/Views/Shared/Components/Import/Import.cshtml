@@ -67,7 +67,11 @@
                         clearInterval(fakeProgress);
                         $(".progress-bar").css("width", "100%").attr("aria-valuenow", 100).text("100%");
 
-                        showMessage(data);
+                        setTimeout(() => {
+                            showMessage(data);
+
+                            $("#import-modal").modal("hide");
+                        },500)
                     }, remaining);
                 })
         }, 500);

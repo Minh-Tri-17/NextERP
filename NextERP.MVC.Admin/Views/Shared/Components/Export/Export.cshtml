@@ -74,7 +74,7 @@
                     setTimeout(() => {
                         clearInterval(fakeProgress);
                         $(".progress-bar").css("width", "100%").attr("aria-valuenow", 100).text("100%");
-             
+
                         // Lấy tên file từ header nếu có
                         const disposition = exportedResponse.headers.get("Content-Disposition");
                         const fileName = extractFileNameFromDisposition(disposition);
@@ -89,6 +89,8 @@
                         // Thu hồi URL Blob tạm để tránh rò rỉ bộ nhớ
                         URL.revokeObjectURL(url);
                     }, remaining);
+
+                    $("#export-modal").modal("hide");
                 })
         }, 500);
     });
