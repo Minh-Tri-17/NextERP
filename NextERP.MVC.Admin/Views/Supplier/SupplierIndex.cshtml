@@ -38,7 +38,7 @@
                 <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target=".filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
                 </button>
                 <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
@@ -93,8 +93,8 @@
         checkLengthCheckbox($length, true, true, true, true, "@TableName.Supplier-checkbox");
     });
 
-    $("#create-edit-button").click(function () {
-        $(".only-save-button").css("display",  $supplierId ? "none" : "block");
+    $(".create-edit-button").click(function () {
+        $("#only-save-button").css("display",  $supplierId ? "none" : "block");
 
         fetch("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, {
             method: "GET",

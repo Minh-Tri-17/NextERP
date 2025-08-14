@@ -19,26 +19,26 @@
     <section class="filter-panel card">
         <form method="post">
             <div class="filter-actions">
-                <button type="button" class="btn btn-success create-edit-button create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-success create-edit-button" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Create
                 </button>
-                <button type="button" class="btn btn-warning create-edit-button edit-button disabled" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-warning create-edit-button disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Edit
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
-                <button type="button" class="btn btn-danger delete-button disabled" localize-content>
+                <button type="button" class="btn btn-danger disabled" id="delete-button" localize-content>
                     Delete
                 </button>
-                <button type="button" class="btn btn-danger delete-permanently-button disabled" localize-content>
+                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button" localize-content>
                     DeletePermanently
                 </button>
-                <button type="button" class="btn btn-secondary import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
+                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
                     Import
                 </button>
-                <button type="button" class="btn btn-secondary export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
+                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target=".filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
                 </button>
                 <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
@@ -93,8 +93,8 @@
         checkLengthCheckbox($length, true, true, true, true, "@TableName.Product-checkbox");
     });
 
-    $("#create-edit-button").click(function () {
-        $(".only-save-button").css("display",  $productId ? "none" : "block");
+    $(".create-edit-button").click(function () {
+        $("#only-save-button").css("display",  $productId ? "none" : "block");
 
         fetch("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, {
             method: "GET",

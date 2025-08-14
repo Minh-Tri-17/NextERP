@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input  id="@AttributeNames.Customer.CustomerId" type="hidden" asp-for="Id" />
+                    <input id="@AttributeNames.Customer.CustomerId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Customer.CustomerCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.CustomerCode</label>
@@ -69,7 +69,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Customer.LoyaltyPoints" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.LoyaltyPoints</label>
                         <div class="col-md-12">
-                            <input  class="form-control form-control-sm" id="@AttributeNames.Customer.LoyaltyPoints" type="number" asp-for="LoyaltyPoints" disabled />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Customer.LoyaltyPoints" type="number" asp-for="LoyaltyPoints" disabled />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Customer.LoyaltyPoints" localize-content></div>
                         </div>
                     </div>
@@ -114,8 +114,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary" id="save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
                 </div>
             </form>
         </div>
@@ -123,7 +123,7 @@
 </div>
 
 <script>
-    $("#save-button").click(function () {
+    $(".save-button").click(function () {
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];

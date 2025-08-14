@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input  id="@AttributeNames.User.UserId" type="hidden" asp-for="Id" />
+                    <input id="@AttributeNames.User.UserId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
                         <label for="@AttributeNames.User.UserCode" class="col-form-label col-md-6" localize-content>@AttributeNames.User.UserCode</label>
@@ -38,7 +38,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.User.Password" class="col-form-label col-md-6" localize-content>@AttributeNames.User.Password</label>
                         <div class="col-md-12">
-                            <input class="form-control" type="password" id="@AttributeNames.User.Password" asp-for="Password" required/>
+                            <input class="form-control" type="password" id="@AttributeNames.User.Password" asp-for="Password" required />
                             <div class="invalid-feedback" localize-content>InvalidPassword</div>
                         </div>
                     </div>
@@ -102,8 +102,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary" id="save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
                 </div>
             </form>
         </div>
@@ -111,7 +111,7 @@
 </div>
 
 <script>
-    $("#save-button").click(function () {
+    $(".save-button").click(function () {
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
