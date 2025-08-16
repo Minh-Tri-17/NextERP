@@ -966,7 +966,52 @@
   <data name="InReview" xml:space="preserve">
     <value>Đang xem xét</value>
   </data>
-  <data name="zstring152" xml:space="preserve">
+  <data name="Profit" xml:space="preserve">
+    <value>Lợi nhuận</value>
+  </data>
+  <data name="zstring160" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Subtitle" xml:space="preserve">
+    <value>Quản lý hiệu quả, tối ưu vận hành, nâng cao năng suất.</value>
+  </data>
+  <data name="zstring164" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Spending" xml:space="preserve">
+    <value>Chi tiêu</value>
+  </data>
+  <data name="zstring162" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring158" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring166" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Revenue" xml:space="preserve">
+    <value>Doanh thu</value>
+  </data>
+  <data name="zstring161" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CTA" xml:space="preserve">
+    <value>Khám phá ngay</value>
+  </data>
+  <data name="zstring165" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Slogan" xml:space="preserve">
+    <value>Giải pháp tối ưu cho doanh nghiệp 4.0 🎯</value>
+  </data>
+  <data name="zstring163" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring159" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring167" xml:space="preserve">
     <value />
   </data>
 </root>
