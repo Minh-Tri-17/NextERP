@@ -18,7 +18,7 @@ namespace NextERP.Util
         /// <param name="actions"></param>
         /// <param name="cssClass"></param>
         /// <returns></returns>
-        public static string IsActive(this IHtmlHelper html, string controllers = "", string actions = "", string cssClass = "")
+        public static string IsActive(this IHtmlHelper html, string controllers = "", string actions = "", string cssClassTrue = "", string cssClassFalse = "")
         {
             // Lấy giá trị action và controller hiện tại từ RouteData
             var currentAction = html.ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
@@ -34,7 +34,7 @@ namespace NextERP.Util
 
             // Trả về cssClass nếu controller và action hiện tại có trong danh sách hợp lệ
             return acceptedControllers.Contains(currentController) && acceptedActions.Contains(currentAction)
-                ? cssClass : string.Empty;
+                ? cssClassTrue : cssClassFalse;
         }
     }
 }

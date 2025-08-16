@@ -43,6 +43,7 @@ function handleDarkModeToggle() {
     $(".dark-mode input").on("change", function () {
         if ($(this).is(":checked")) {
             $(".header ").css("background-color", "#2f2f2f");
+            $(".sidebar ").css("background-color", "#2f2f2f");
             $(".layout-wrapper").css("background-color", "#2f2f2f");
             $(".sidebar-menu-item a").css("color", "#b0a695");
             $(".breadcrumb-item").css("color", "#b0a695");
@@ -57,6 +58,7 @@ function handleDarkModeToggle() {
 
         } else {
             $(".header").css("background-color", "#f8f5f2");
+            $(".sidebar").css("background-color", "#f8f5f2");
             $(".layout-wrapper").css("background-color", "#f8f5f2");
             $(".sidebar-menu-item a").css("color", "#6a6a6a");
             $(".breadcrumb-item").css("color", "#6a6a6a");

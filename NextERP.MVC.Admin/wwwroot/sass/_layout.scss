@@ -35,7 +35,8 @@
         }
     }
 
-    .sidebar-menu {
+    .sidebar-menu,
+    .sidebar-menu-offcanvas {
         height: calc(100vh - 5rem);
         font-size: $fs-3;
         overflow-y: auto;
