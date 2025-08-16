@@ -11,17 +11,6 @@
     position: relative;
     margin-top: 80px;
 
-    .loader {
-        position: absolute;
-        width: $w-100;
-        height: $h-100;
-        @include flex-center;
-        top: 0;
-        left: 0;
-        z-index: $z-index-1;
-        background-color: #c7c8cc70;
-    }
-
     .main-wrapper {
         height: calc($h-100 - 80px);
         padding: $mr-2;

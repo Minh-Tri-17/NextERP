@@ -215,6 +215,8 @@ p {
   min-width: 250px;
   height: 100%;
   border-right: 2px solid #c7c8cc;
+  z-index: 1040;
+  background-color: #f8f5f2;
 }
 .sidebar .sidebar-header {
   display: flex;
@@ -661,6 +663,18 @@ p {
   width: 0;
   height: 0;
 }
+.layout-content .loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 1020;
+  background-color: rgba(199, 200, 204, 0.4392156863);
+}
 
 @media (min-height: 615px) and (max-height: 715px) {
   .table-wrapper {
@@ -756,18 +770,6 @@ thead.sticky-active {
   height: 100%;
   position: relative;
   margin-top: 80px;
-}
-.main .loader {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  z-index: 1020;
-  background-color: rgba(199, 200, 204, 0.4392156863);
 }
 .main .main-wrapper {
   height: calc(100% - 80px);
