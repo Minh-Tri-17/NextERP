@@ -1,4 +1,237 @@
-﻿@{
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model DashboardModel
+
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="dashboard-container">
+    <div class="card dashboard-banner">
+        <div class="dashboard-banner-container">
+            <div class="banner-content">
+                <h2 localize-content>Slogan</h2>
+                <p localize-content>Subtitle</p>
+                <button class="btn btn-primary" localize-content>CTA</button>
+            </div>
+            <div class="carousel slide" data-bs-ride="carousel" data-bs-touch="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="5000">
+                        <img src="/images/illustration1.gif" class="d-block w-100" alt="illustration1" />
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <img src="/images/illustration2.gif" class="d-block w-100" alt="illustration2" />
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <img src="/images/illustration3.gif" class="d-block w-100" alt="illustration3" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card quick-statistics1">
+        <!--& Dữ liệu thật -->
+        <div class="quick-statistics-container real-data d-none">
+            <div class="quick-statistics-img1">
+                <img src="/images/atm-card.png" alt="" />
+            </div>
+            <h3 class="mt-2" localize-content>Profit</h3>
+            <div class="value" data-value="@Model.StatisticsProfit"></div>
+            <div class="change-up" data-value="72.8">&#9650;</div>
+        </div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="quick-statistics-container loading-data placeholder-glow" aria-hidden="true">
+            <div class="quick-statistics-img1">
+                <img src="/images/atm-card.png" alt="" />
+            </div>
+            <h3 class="placeholder col-10 mt-2"></h3>
+            <div class="placeholder col-9 value"></div>
+            <div class="placeholder col-9 change-up"></div>
+        </div>
+    </div>
+
+    <div class="card quick-statistics2">
+        <!--& Dữ liệu thật -->
+        <div class="quick-statistics-container real-data d-none">
+            <div class="quick-statistics-img2">
+                <img src="/images/analytics.png" alt="" />
+            </div>
+            <h3 class="mt-2" localize-content>Revenue</h3>
+            <div class="value" data-value="@Model.StatisticsRevenue"></div>
+            <div class="change-up" data-value="28.42">&#9650;</div>
+        </div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="quick-statistics-container loading-data placeholder-glow" aria-hidden="true">
+            <div class="quick-statistics-img2">
+                <img src="/images/analytics.png" alt="" />
+            </div>
+            <h3 class="placeholder col-10 mt-2"></h3>
+            <div class="placeholder col-9 value"></div>
+            <div class="placeholder col-9 change-up"></div>
+        </div>
+    </div>
+
+    <div class="card quick-statistics3">
+        <!--& Dữ liệu thật -->
+        <div class="quick-statistics-container real-data d-none">
+            <div class="quick-statistics-img3">
+                <img src="/images/spending.png" alt="" />
+            </div>
+            <h3 class="mt-2" localize-content>Spending</h3>
+            <div class="value" data-value="@Model.StatisticsSpending"></div>
+            <div class="change-down" data-value="14.82">&#9660;</div>
+        </div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="quick-statistics-container loading-data placeholder-glow" aria-hidden="true">
+            <div class="quick-statistics-img3">
+                <img src="/images/spending.png" alt="" />
+            </div>
+            <h3 class="placeholder col-10 mt-2"></h3>
+            <div class="placeholder col-9 value"></div>
+            <div class="placeholder col-9 change-down"></div>
+        </div>
+    </div>
+
+    <div class="card quick-statistics4">
+        <!--& Dữ liệu thật -->
+        <div class="quick-statistics-container real-data d-none">
+            <div class="quick-statistics-img4">
+                <img src="/images/join.png" alt="" />
+            </div>
+            <h3 class="mt-2" localize-content>Customer</h3>
+            <div class="value" data-value="@Model.StatisticsCustomer"></div>
+            <div class="change-down" data-value="14.82">&#9660;</div>
+        </div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="quick-statistics-container loading-data placeholder-glow" aria-hidden="true">
+            <div class="quick-statistics-img4">
+                <img src="/images/join.png" alt="" />
+            </div>
+            <h3 class="placeholder col-10 mt-2"></h3>
+            <div class="placeholder col-9 value"></div>
+            <div class="placeholder col-9 change-down"></div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-column">
+        <!--& Dữ liệu thật -->
+        <div id="chart-column" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-line">
+        <!--& Dữ liệu thật -->
+        <div id="chart-line" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-donut">
+        <!--& Dữ liệu thật -->
+        <div id="chart-donut" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-radar">
+        <!--& Dữ liệu thật -->
+        <div id="chart-radar" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+
+    <div class="card service">
+        <!--& Dữ liệu thật -->
+        <div class="service-container real-data d-none">
+            @foreach (var item in Model.StatisticsService)
+            {
+                <div class="service-item">
+                    <i class="fas fa-spa"></i> @item
+                </div>
+            }
+        </div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="service-container loading-data placeholder-glow" aria-hidden="true">
+            @for (int i = 0; i < 10; i++)
+            {
+                <div class="service-item placeholder col-12"></div>
+            }
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-funnel">
+        <!--& Dữ liệu thật -->
+        <div id="chart-funnel" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-slope">
+        <!--& Dữ liệu thật -->
+        <div id="chart-slope" class="chart real-data d-none"></div>
+
+        <!--& Placeholder khi đang load -->
+        <div class="chart-placeholder loading-data placeholder-glow h-100">
+            <div class="placeholder w-100 h-100" style="border-radius: 6px"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".loader").css("display", "none");
+        randomColors();
+
+        Promise.all([
+            callApi("@Url.Action(Constants.GetChartColumn, Constants.Dashboard)"),
+            callApi("@Url.Action(Constants.GetChartDonut, Constants.Dashboard)"),
+            callApi("@Url.Action(Constants.GetChartRadar, Constants.Dashboard)"),
+            callApi("@Url.Action(Constants.GetChartLine, Constants.Dashboard)"),
+            callApi("@Url.Action(Constants.GetChartFunnel, Constants.Dashboard)"),
+            callApi("@Url.Action(Constants.GetChartSlope, Constants.Dashboard)")
+        ])
+        .then(([column, donut, radar, line, funnel, slope]) => {
+            // 1. Ẩn loading / hiện real-data
+            $(".real-data").removeClass("d-none");
+            $(".loading-data").addClass("d-none");
+
+            // 2. Sau 200ms mới render chart
+            setTimeout(() => {
+                animateNumber();
+
+                renderChartColumn("#chart-column", "Column Chart", column.result);
+                renderChartDonut("#chart-donut", "Donut Chart", donut.result);
+                renderChartRadar("#chart-radar", "Radar Chart", radar.result);
+                renderChartLine("#chart-line", "Line chart", line.result);
+                renderChartFunnel("#chart-funnel", "Funnel chart", funnel.result);
+                renderChartSlope("#chart-slope", "Slope chart", slope.result);
+            }, 200);
+        })
+        .catch(err => {
+      
+        });
+    });
+</script>

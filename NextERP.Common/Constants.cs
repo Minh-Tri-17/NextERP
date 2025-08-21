@@ -31,6 +31,13 @@
         public const string Import = "Import";
         public const string Export = "Export";
         public const string DeletePermanently = "DeletePermanently";
+        public const string Dashboard = "Dashboard";
+        public const string GetChartColumn = "GetChartColumn";
+        public const string GetChartRadar = "GetChartRadar";
+        public const string GetChartDonut = "GetChartDonut";
+        public const string GetChartLine = "GetChartLine";
+        public const string GetChartFunnel = "GetChartFunnel";
+        public const string GetChartSlope = "GetChartSlope";
 
         #region Format
 
@@ -101,6 +108,22 @@
         public const string UrlGetCustomers = "/api/Customer/GetCustomers";
         public const string UrlImportCustomer = "/api/Customer/ImportCustomer";
         public const string UrlExportCustomer = "/api/Customer/ExportCustomer";
+
+        #endregion
+
+        #region Dashboard
+
+        public const string UrlGetChartColumn = "/api/Dashboard/GetChartColumn";
+        public const string UrlGetChartDonut = "/api/Dashboard/GetChartDonut";
+        public const string UrlGetChartRadar = "/api/Dashboard/GetChartRadar";
+        public const string UrlGetChartLine = "/api/Dashboard/GetChartLine";
+        public const string UrlGetChartSlope = "/api/Dashboard/GetChartSlope";
+        public const string UrlGetChartFunnel = "/api/Dashboard/GetChartFunnel";
+        public const string UrlGetStatisticsProfit = "/api/Dashboard/GetStatisticsProfit";
+        public const string UrlGetStatisticsRevenue = "/api/Dashboard/GetStatisticsRevenue";
+        public const string UrlGetStatisticsSpending = "/api/Dashboard/GetStatisticsSpending";
+        public const string UrlGetStatisticsCustomer = "/api/Dashboard/GetStatisticsCustomer";
+        public const string UrlGetStatisticsService = "/api/Dashboard/GetStatisticsService";
 
         #endregion
 

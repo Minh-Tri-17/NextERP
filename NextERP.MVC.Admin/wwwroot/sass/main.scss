@@ -216,14 +216,6 @@
                 }
             }
 
-            .dashboard-chart-donut-container,
-            .dashboard-chart-radar-container {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                height: $h-100;
-            }
-
             .dashboard-chart-column {
                 @include grid-span(8, 4, 1, 3);
             }
@@ -234,26 +226,24 @@
 
             .dashboard-chart-donut {
                 @include grid-span(4, 6, 0, 7);
-                max-height: 450px;
             }
 
             .dashboard-chart-radar {
                 @include grid-span(4, 6, 5, 7);
-                max-height: 450px;
             }
 
-            .new-user {
+            .service {
                 @include grid-span(4, 6, 9, 7);
                 max-height: 450px;
 
-                .new-user-container {
+                .service-container {
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
                     height: $h-100;
                     overflow: auto;
 
-                    .new-user-item {
+                    .service-item {
                         flex: 1;
                         display: flex;
                         align-items: center;
@@ -274,6 +264,14 @@
                         }
                     }
                 }
+            }
+
+            .dashboard-chart-funnel {
+                @include grid-span(6, 12, 1, 13);
+            }
+
+            .dashboard-chart-slope {
+                @include grid-span(6, 12, 7, 13);
             }
         }
 

@@ -1,24 +1,15 @@
-//* Khởi tạo tất cả sự kiện
-function initEvents() {
-    initCloseValidation();
-}
-
-initEvents();
-
 //& Đóng validation form
-function initCloseValidation() {
-    $(document).on("hidden.bs.modal", ".modal", function () {
-        const $modal = $(this);
+$(document).on("hidden.bs.modal", ".modal", function () {
+    const $modal = $(this);
 
-        setTimeout(() => {
-            $modal.find("form.needs-validation")
-                .removeClass("was-validated")
-                .trigger("reset")
-                .find(".is-invalid, .is-valid")
-                .removeClass("is-invalid is-valid");
-        }, 300);
-    });
-}
+    setTimeout(() => {
+        $modal.find("form.needs-validation")
+            .removeClass("was-validated")
+            .trigger("reset")
+            .find(".is-invalid, .is-valid")
+            .removeClass("is-invalid is-valid");
+    }, 300);
+});
 
 //& Kiểm tra độ dài checkbox để bật/tắt nút
 function checkLengthCheckbox(length, useEditBtn = true, useCreateBtn = true, useDeleteBtn = true, useDeletePermanentlyBtn = true, idList) {
@@ -159,4 +150,50 @@ function showInvalid(errors) {
 
     // Show lỗi tổng hợp (nếu bạn muốn hiện toast/thông báo riêng)
     showMessage(allMessages.join("<br/>"));
+}
+
+//& Hàm gọi API với phương thức GET hoặc POST, hỗ trợ FormData
+async function callApi(url, method = "GET", data = null, id) {
+    let options = {
+        method: method,
+        headers: {}
+    };
+
+    if (data) {
+        // Nếu data là FormData thì để nguyên
+        if (data instanceof FormData) {
+            options.body = data;
+        } else {
+            options.body = JSON.stringify(data);
+            options.headers["Content-Type"] = "application/json";
+        }
+    }
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+    }
+
+    // Nếu server trả HTML -> đọc text
+    const contentType = response.headers.get("content-type");
+    let result;
+
+    if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+    } else {
+        result = { type: "html", data: await response.text() };
+    }
+
+    // Xử lý kết quả
+    if (result.type === "html" && id) {
+        $(id).html(result.data);
+        affterCallAPISuccess();
+    }
+    else if (result.type === "json") {
+        affterCallAPISuccess();
+        showMessage(result.data);
+    }
+
+    return result;
 }

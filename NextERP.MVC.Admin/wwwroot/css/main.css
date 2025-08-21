@@ -980,13 +980,6 @@ thead.sticky-active {
   border-radius: 5px;
   background-color: #776b5d;
 }
-.main .main-wrapper .dashboard-container .dashboard-chart-donut-container,
-.main .main-wrapper .dashboard-container .dashboard-chart-radar-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
 .main .main-wrapper .dashboard-container .dashboard-chart-column {
   grid-column: span 8/span 8;
   grid-row: span 4/span 4;
@@ -1004,30 +997,28 @@ thead.sticky-active {
   grid-row: span 6/span 6;
   grid-column-start: 0;
   grid-row-start: 7;
-  max-height: 450px;
 }
 .main .main-wrapper .dashboard-container .dashboard-chart-radar {
   grid-column: span 4/span 4;
   grid-row: span 6/span 6;
   grid-column-start: 5;
   grid-row-start: 7;
-  max-height: 450px;
 }
-.main .main-wrapper .dashboard-container .new-user {
+.main .main-wrapper .dashboard-container .service {
   grid-column: span 4/span 4;
   grid-row: span 6/span 6;
   grid-column-start: 9;
   grid-row-start: 7;
   max-height: 450px;
 }
-.main .main-wrapper .dashboard-container .new-user .new-user-container {
+.main .main-wrapper .dashboard-container .service .service-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
   height: 100%;
   overflow: auto;
 }
-.main .main-wrapper .dashboard-container .new-user .new-user-container .new-user-item {
+.main .main-wrapper .dashboard-container .service .service-container .service-item {
   flex: 1;
   display: flex;
   align-items: center;
@@ -1037,13 +1028,25 @@ thead.sticky-active {
   font-weight: 800;
   transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.main .main-wrapper .dashboard-container .new-user .new-user-container .new-user-item i {
+.main .main-wrapper .dashboard-container .service .service-container .service-item i {
   margin-right: 10px;
   font-size: 20px;
 }
-.main .main-wrapper .dashboard-container .new-user .new-user-container .new-user-item:hover {
+.main .main-wrapper .dashboard-container .service .service-container .service-item:hover {
   padding: 0.75rem;
   box-shadow: 0 2px 6px rgba(119, 107, 93, 0.2);
+}
+.main .main-wrapper .dashboard-container .dashboard-chart-funnel {
+  grid-column: span 6/span 6;
+  grid-row: span 12/span 12;
+  grid-column-start: 1;
+  grid-row-start: 13;
+}
+.main .main-wrapper .dashboard-container .dashboard-chart-slope {
+  grid-column: span 6/span 6;
+  grid-row: span 12/span 12;
+  grid-column-start: 7;
+  grid-row-start: 13;
 }
 .main .main-wrapper .calendar-content {
   margin: 0.5rem;

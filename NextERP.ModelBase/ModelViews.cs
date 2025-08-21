@@ -212,4 +212,49 @@ namespace NextERP.ModelBase
         public string Key { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
     }
+
+    public class DataChartNumeric
+    {
+        public List<NumericSeries>? Values { get; set; }
+        public string[]? Labels { get; set; }
+    }
+
+    public class NumericSeries
+    {
+        public string Name { get; set; } = string.Empty;
+        public int[]? Data { get; set; }
+    }
+
+    public class DataChartSingle
+    {
+        public int[]? Values { get; set; }
+        public string[]? Labels { get; set; }
+    }
+
+    public class DataChartXY
+    {
+        public List<XYSeries>? Values { get; set; }
+        public string[]? Labels { get; set; }   // Có thể null nếu không dùng
+    }
+
+    public class XYSeries
+    {
+        public string Name { get; set; } = string.Empty;
+        public List<XYPoint>? Data { get; set; }
+    }
+
+    public class XYPoint
+    {
+        public string X { get; set; } = string.Empty;
+        public int Y { get; set; }
+    }
+
+    public class DashboardModel
+    {
+        public decimal StatisticsProfit { get; set; } = 0;
+        public decimal StatisticsRevenue { get; set; } = 0;
+        public decimal StatisticsSpending { get; set; } = 0;
+        public int StatisticsCustomer { get; set; } = 0;
+        public List<string> StatisticsService { get; set; } = new List<string>();
+    }
 }
