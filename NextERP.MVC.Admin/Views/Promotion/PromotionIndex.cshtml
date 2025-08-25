@@ -96,21 +96,21 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $promotionId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)/" + $promotionId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.Promotion.PromotionId").val(data.id);
-            $("#@AttributeNames.Promotion.PromotionCode").val(data.promotionCode);
-            $("#@AttributeNames.Promotion.PromotionName").val(data.promotionName);
-            $("#@AttributeNames.Promotion.DiscountPercentage").val(data.discountPercentage);
-            $("#@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
-            $("#@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
-            $("#@AttributeNames.Promotion.OperatingStatus").val(data.operatingStatus);
-            $("#@AttributeNames.Promotion.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)/" + $promotionId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Promotion.PromotionId").val(data.id);
+                $("#@AttributeNames.Promotion.PromotionCode").val(data.promotionCode);
+                $("#@AttributeNames.Promotion.PromotionName").val(data.promotionName);
+                $("#@AttributeNames.Promotion.DiscountPercentage").val(data.discountPercentage);
+                $("#@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
+                $("#@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
+                $("#@AttributeNames.Promotion.OperatingStatus").val(data.operatingStatus);
+                $("#@AttributeNames.Promotion.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -124,49 +124,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.Promotion)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadPromotions();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.Promotion)", "POST", formData)
+            .then(data => {
+                loadPromotions();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $promotionId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $promotionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Promotion-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Promotion.PromotionId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Promotion-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Promotion.PromotionId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.Promotion)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadPromotions();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.Promotion)", "POST", formData)
+            .then(data => {
+                loadPromotions();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $promotionId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $promotionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -191,31 +181,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Promotion)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.Promotion-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.Promotion)", "POST", filter, "#@TableName.Promotion-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.Promotion-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.Promotion-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $promotionId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $promotionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

@@ -111,53 +111,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.SupplierOrder)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadSupplierOrders();
-            loadSupplierOrderDetails();
+        callApi("@Url.Action(Constants.Delete, TableName.SupplierOrder)", "POST", formData)
+            .then(data => {
+                loadSupplierOrders();
 
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $supplierOrderId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierOrderId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.SupplierOrder-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.SupplierOrder-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.SupplierOrder)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadSupplierOrders();
-             loadSupplierOrderDetails();
+         callApi("@Url.Action(Constants.DeletePermanently, TableName.SupplierOrder)", "POST", formData)
+            .then(data => {
+                loadSupplierOrders();
 
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
-
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $supplierOrderId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierOrderId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -174,7 +160,7 @@
         // Khỏi tạo filter và gán giá trị
         const $keyWord = $("#filter-name").val();
         const $isDelete = $("#is-delete").is(":checked");
-        
+
         let filter = new FormData();
         filter.append("@Constants.PageIndex", pageIndex);
         filter.append("@Constants.KeyWord", $keyWord);
@@ -182,32 +168,17 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.SupplierOrder)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, false, false, true, true, "@TableName.SupplierOrder-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.SupplierOrder)", "POST", filter, "#@TableName.SupplierOrder-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.SupplierOrder-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response)
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.SupplierOrder-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $supplierOrderId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierOrderId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 
     function loadSupplierOrderDetails(pageIndex) {
@@ -218,28 +189,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response)
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.SupplierOrderDetail-table").html(result.data);
+        callApi("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", "POST", filter, "#@TableName.SupplierOrderDetail-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.SupplierOrderDetail-checkbox");
 
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $supplierOrderId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierOrderId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

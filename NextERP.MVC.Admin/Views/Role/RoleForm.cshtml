@@ -79,8 +79,12 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
-        // Set Id = Guid.Empty để không bị validation
-        formData.set("@Constants.Id", "@Guid.Empty");
+        let id = formData.get("@Constants.Id");
+
+        // Nếu không có ID (tạo mới), set Guid.Empty
+        if (!id || id === "" || id === "@Guid.Empty") {
+            formData.set("@Constants.Id", "@Guid.Empty");
+        }
         // Xóa dữ liệu cũ nếu có
         formData.delete("@AttributeNames.Role.Permissions");
 
@@ -95,19 +99,16 @@
         // Ghi đè lại giá trị "Permissions" nếu đã có
         formData.set("@AttributeNames.Role.Permissions", permissionsString);
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Role)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadRoles();
-            return response.json();
-        }).then(data => {
-            if (data && Array.isArray(data)) {
-                showInvalid(data);
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", formData)
+            .then(data => {
+                loadRoles();
 
-                // Nếu form không hợp lệ, hiển thị thông báo lỗi
-                formElement.classList.add("was-validated");
-            }
-        });
+                if (data && Array.isArray(data)) {
+                    showInvalid(data, formElement);
+                }
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 </script>

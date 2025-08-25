@@ -107,22 +107,23 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
-        // Set Id = Guid.Empty để không bị validation
-        formData.set("@Constants.Id", "@Guid.Empty");
+        let id = formData.get("@Constants.Id");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Salary)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadSalarys();
-            return response.json();
-        }).then(data => {
-            if (data && Array.isArray(data)) {
-                showInvalid(data);
+        // Nếu không có ID (tạo mới), set Guid.Empty
+        if (!id || id === "" || id === "@Guid.Empty") {
+            formData.set("@Constants.Id", "@Guid.Empty");
+        }
 
-                // Nếu form không hợp lệ, hiển thị thông báo lỗi
-                formElement.classList.add("was-validated");
-            }
-        });
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)", "POST", formData)
+            .then(data => {
+                loadSalarys();
+
+                if (data && Array.isArray(data)) {
+                    showInvalid(data, formElement);
+                }
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 </script>

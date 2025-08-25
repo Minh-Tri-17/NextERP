@@ -96,23 +96,23 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $productId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.Product.ProductId").val(data.id);
-            $("#@AttributeNames.Product.ProductCode").val(data.productCode);
-            $("#@AttributeNames.Product.ProductName").val(data.productName);
-            $("#@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
-            $("#@AttributeNames.Product.Price").val(data.price);
-            $("#@AttributeNames.Product.ExpirationDate").val(formatDateToInput(data.expirationDate));
-            $("#@AttributeNames.Product.Manufacturer").val(data.manufacturer);
-            $("#@AttributeNames.Product.CountryOfOrigin").val(data.countryOfOrigin);
-            $("#@AttributeNames.Product.ReorderLevel").val(data.reorderLevel);
-            $("#@AttributeNames.Product.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Product.ProductId").val(data.id);
+                $("#@AttributeNames.Product.ProductCode").val(data.productCode);
+                $("#@AttributeNames.Product.ProductName").val(data.productName);
+                $("#@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
+                $("#@AttributeNames.Product.Price").val(data.price);
+                $("#@AttributeNames.Product.ExpirationDate").val(formatDateToInput(data.expirationDate));
+                $("#@AttributeNames.Product.Manufacturer").val(data.manufacturer);
+                $("#@AttributeNames.Product.CountryOfOrigin").val(data.countryOfOrigin);
+                $("#@AttributeNames.Product.ReorderLevel").val(data.reorderLevel);
+                $("#@AttributeNames.Product.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -126,49 +126,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.Product)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadProducts();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.Product)", "POST", formData)
+            .then(data => {
+                loadProducts();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $productId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $productId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Product-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Product.ProductId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Product-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Product.ProductId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.Product)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadProducts();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.Product)", "POST", formData)
+            .then(data => {
+                loadProducts();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $productId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $productId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -193,31 +183,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Product)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.Product-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.Product)", "POST", filter, "#@TableName.Product-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.Product-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.Product-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $productId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $productId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

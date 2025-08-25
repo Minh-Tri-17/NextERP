@@ -96,18 +96,18 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $notificationId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Notification)/" + $notificationId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.Notification.NotificationId").val(data.id);
-            $("#@AttributeNames.Notification.NotificationCode").val(data.notificationCode);
-            $("#@AttributeNames.Notification.NotificationName").val(data.notificationName);
-            $("#@AttributeNames.Notification.NotificationContent").val(data.notificationContent);
-            $("#@AttributeNames.Notification.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Notification)/" + $notificationId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Notification.NotificationId").val(data.id);
+                $("#@AttributeNames.Notification.NotificationCode").val(data.notificationCode);
+                $("#@AttributeNames.Notification.NotificationName").val(data.notificationName);
+                $("#@AttributeNames.Notification.NotificationContent").val(data.notificationContent);
+                $("#@AttributeNames.Notification.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -121,49 +121,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.Notification)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadNotifications();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.Notification)", "POST", formData)
+            .then(data => {
+                loadNotifications();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $notificationId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $notificationId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Notification-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Notification.NotificationId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Notification-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Notification.NotificationId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.Notification)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadNotifications();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.Notification)", "POST", formData)
+            .then(data => {
+                loadNotifications();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $notificationId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $notificationId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -188,31 +178,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Notification)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.Notification-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.Notification)", "POST", filter, "#@TableName.Notification-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.Notification-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.Notification-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $notificationId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $notificationId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

@@ -136,7 +136,7 @@ namespace NextERP.MVC.Admin.Controllers
                     // Phân tích loại lỗi từ nội dung thông báo
                     var errorType = GetErrorType(error.ErrorMessage);
 
-                    string message = $"{Localization(field)} {Localization(errorType)}";
+                    string message = $"<b>&#10031; [{Localization(field)}]</b> {Localization(errorType)}";
 
                     return new { Field = field, Message = message };
                 })

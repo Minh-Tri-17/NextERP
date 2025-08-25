@@ -17,14 +17,14 @@ public partial class Branch
     public string? BranchCode { get; set; }
 
     [StringLength(50)]
-    public string? BranchName { get; set; }
+    public string BranchName { get; set; } = null!;
 
     [StringLength(500)]
     public string? Address { get; set; }
 
     [StringLength(10)]
     [Unicode(false)]
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     [StringLength(50)]
     public string? OperatingStatus { get; set; }

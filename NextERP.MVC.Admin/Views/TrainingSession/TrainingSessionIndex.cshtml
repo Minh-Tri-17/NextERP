@@ -96,21 +96,21 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $trainingSessionId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.TrainingSession.TrainingSessionId").val(data.id);
-            $("#@AttributeNames.TrainingSession.TrainingSessionCode").val(data.trainingSessionCode);
-            $("#@AttributeNames.TrainingSession.TrainingSessionName").val(data.trainingSessionName);
-            $("#@AttributeNames.TrainingSession.Trainer").val(data.trainer);
-            $("#@AttributeNames.TrainingSession.Duration").val(data.duration);
-            $("#@AttributeNames.TrainingSession.SessionStatus").val(data.sessionStatus);
-            $("#@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
-            $("#@AttributeNames.TrainingSession.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.TrainingSession.TrainingSessionId").val(data.id);
+                $("#@AttributeNames.TrainingSession.TrainingSessionCode").val(data.trainingSessionCode);
+                $("#@AttributeNames.TrainingSession.TrainingSessionName").val(data.trainingSessionName);
+                $("#@AttributeNames.TrainingSession.Trainer").val(data.trainer);
+                $("#@AttributeNames.TrainingSession.Duration").val(data.duration);
+                $("#@AttributeNames.TrainingSession.SessionStatus").val(data.sessionStatus);
+                $("#@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
+                $("#@AttributeNames.TrainingSession.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -124,49 +124,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.TrainingSession)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadTrainingSessions();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.TrainingSession)", "POST", formData)
+            .then(data => {
+                loadTrainingSessions();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $trainingSessionId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $trainingSessionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.TrainingSession.TrainingSessionId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.TrainingSession.TrainingSessionId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.TrainingSession)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadTrainingSessions();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.TrainingSession)", "POST", formData)
+            .then(data => {
+                loadTrainingSessions();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $trainingSessionId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $trainingSessionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -191,31 +181,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.TrainingSession)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.TrainingSession-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.TrainingSession)", "POST", filter, "#@TableName.TrainingSession-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.TrainingSession-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.TrainingSession-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $trainingSessionId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $trainingSessionId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

@@ -58,6 +58,7 @@ function showMessage(message) {
     // Xác định có phải thông báo thành công hay không
     const isSuccess = message.startsWith("S:");
     const isFailure = message.startsWith("F:");
+    const isWarning = !message.startsWith("S:") && !message.startsWith("F:");
 
     // Loại bỏ tiền tố "S:" hoặc "F:"
     const cleanMessage = message.replace(/^S:\s*|^F:\s*/, '');
@@ -67,12 +68,13 @@ function showMessage(message) {
         .removeClass("d-none")
         .addClass("toast show toast-body")
         .toggleClass("text-bg-success", isSuccess)
+        .toggleClass("text-bg-dark", isWarning)
         .toggleClass("text-bg-danger", isFailure);
 
     setTimeout(() => {
         $("#success-msg")
             .text("")
-            .removeClass("toast show toast-body text-bg-success text-bg-danger")
+            .removeClass("toast show toast-body text-bg-success text-bg-danger text-bg-dark")
             .addClass("d-none");
     }, 10000);
 }
@@ -134,22 +136,25 @@ function formatTimeToInput(dateStr) {
 }
 
 //& Hiển thị lỗi validation cho từng field + lỗi tổng hợp
-function showInvalid(errors) {
+function showInvalid(errors, formElement) {
     let allMessages = [];
 
     errors.forEach(error => {
         // Ghi lỗi cạnh field tương ứng
-        $(`#invalid-${error.field}`).text(error.message);
+        $(`#invalid-${error.field}`).html(error.message);
 
         // Đánh dấu bắt buộc
         $(`[name="${error.field}"]`).prop("required", true);
 
         // Thu thập để show lỗi tổng
-        allMessages.push(`* ${error.message}`);
+        allMessages.push(`${error.message}`);
     });
 
     // Show lỗi tổng hợp (nếu bạn muốn hiện toast/thông báo riêng)
     showMessage(allMessages.join("<br/>"));
+
+    // Nếu form không hợp lệ, hiển thị thông báo lỗi
+    formElement.classList.add("was-validated");
 }
 
 //& Hàm gọi API với phương thức GET hoặc POST, hỗ trợ FormData

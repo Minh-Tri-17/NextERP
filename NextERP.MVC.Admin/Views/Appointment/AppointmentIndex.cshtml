@@ -31,23 +31,17 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Appointment)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Gọi hàm parseResponse để xử lý response trả về
-            return response.json();
-        }).then(result => {
-            //! FullCalendar yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
-            const calendarEl = document.getElementById("calendar");
+        callApi("@Url.Action(Constants.GetList, TableName.Appointment)", "POST", filter)
+            .then(result => {
+                //! FullCalendar yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
+                const calendarEl = document.getElementById("calendar");
 
-            //? Xử lý để hiển thị đúng (cộng thêm 1 ngày tạm thời) vì Fullcalendar vẽ sự kiện không tính ngày kết thúc
-            const events = result.map((event) => {
+                //? Xử lý để hiển thị đúng (cộng thêm 1 ngày tạm thời) vì Fullcalendar vẽ sự kiện không tính ngày kết thúc
+                const events = result.map((event) => {
                     const formatDate = (dateStr) => {
                         const date = moment(dateStr);
                         return date.format("HH:mm:ss") === "00:00:00"
-                            ? date.format("YYYY-MM-DD")
-                            : date.format("YYYY-MM-DDTHH:mm:ss");
+                            ? date.format("YYYY-MM-DD") : date.format("YYYY-MM-DDTHH:mm:ss");
                     };
 
                     const getColorByStatus = (status) => {
@@ -78,14 +72,14 @@
                     };
                 });
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: "dayGridMonth",
-                themeSystem: "bootstrap5",
-                editable: true, //? Kéo thả sự kiện
-                eventResizableFromStart: true, //? Thay đổi độ dài sự kiện
-                dayMaxEvents: true, //? Xem thêm sự kiện
-                selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
-                select: function (info) {
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: "dayGridMonth",
+                    themeSystem: "bootstrap5",
+                    editable: true, //? Kéo thả sự kiện
+                    eventResizableFromStart: true, //? Thay đổi độ dài sự kiện
+                    dayMaxEvents: true, //? Xem thêm sự kiện
+                    selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
+                    select: function (info) {
                         const start = info.start;
                         let end = info.end;
 
@@ -95,35 +89,35 @@
                         const formatDateTime = (date) => {
                         const options = { hour12: false };
                         return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
-                    };
+                        };
 
-                    $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
-                    $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
+                        $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
+                        $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
 
                     //? Mở modal khi chọn ngày trên lịch
-                    const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
-                    exportModal.show();
-                },
-                eventDidMount: function (info) {
-                    const status = info.event.extendedProps.status;
-                    const getBgColorByStatus = (status) => {
-                        switch (status) {
-                            case "@Enums.AppointmentStatus.AppointmentBooked":
-                                return "#c4e3f8"; // xanh dương
-                            case "@Enums.AppointmentStatus.AppointmentInProgress":
-                                return "#e0c3fc"; // Tím
-                            case "@Enums.AppointmentStatus.AppointmentCompleted":
-                                return "#d4f8c4"; // xanh lá
-                            case "@Enums.AppointmentStatus.AppointmentCancelled":
-                                return "#f8d4d4"; // đỏ
-                            case "@Enums.AppointmentStatus.AppointmentMissed":
-                                return "#ffe5a8"; // vàng
-                            case "@Enums.AppointmentStatus.AppointmentRescheduled":
-                                return "#b4b4b8"; // Xám
-                            default:
-                                return "#b0a695"; // Nâu
-                        }
-                    };
+                        const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
+                        exportModal.show();
+                    },
+                    eventDidMount: function (info) {
+                        const status = info.event.extendedProps.status;
+                        const getBgColorByStatus = (status) => {
+                            switch (status) {
+                                case "@Enums.AppointmentStatus.AppointmentBooked":
+                                    return "#c4e3f8"; // xanh dương
+                                case "@Enums.AppointmentStatus.AppointmentInProgress":
+                                    return "#e0c3fc"; // Tím
+                                case "@Enums.AppointmentStatus.AppointmentCompleted":
+                                    return "#d4f8c4"; // xanh lá
+                                case "@Enums.AppointmentStatus.AppointmentCancelled":
+                                    return "#f8d4d4"; // đỏ
+                                case "@Enums.AppointmentStatus.AppointmentMissed":
+                                    return "#ffe5a8"; // vàng
+                                case "@Enums.AppointmentStatus.AppointmentRescheduled":
+                                    return "#b4b4b8"; // Xám
+                                default:
+                                    return "#b0a695"; // Nâu
+                            }
+                        };
 
                     const bgColor = getBgColorByStatus(status);
 
@@ -135,26 +129,29 @@
                     }
 
                     //? Thêm tooltip dùng thư viện Tippy.js
-                    tippy(info.el, {
-                        content: info.event.extendedProps.description,
-                        allowHTML: true,
-                        theme: "light",
-                        animation: "shift-away",
-                        delay: [100, 0],
-                        placement: "top",
-                    });
-                },
-                headerToolbar: {
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay", //? Lịch theo ngày/tuần/tháng
-                },
-                events: events,
+                        tippy(info.el, {
+                            content: info.event.extendedProps.description,
+                            allowHTML: true,
+                            theme: "light",
+                            animation: "shift-away",
+                            delay: [100, 0],
+                            placement: "top",
+                        });
+                    },
+                    headerToolbar: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay", //? Lịch theo ngày/tuần/tháng
+                    },
+                    events: events,
+                });
+
+                calendar.render();
+
+                $(".loader").css("display", "none");
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
             });
-
-            calendar.render();
-
-            $(".loader").css("display", "none");
-        });
     }
 </script>

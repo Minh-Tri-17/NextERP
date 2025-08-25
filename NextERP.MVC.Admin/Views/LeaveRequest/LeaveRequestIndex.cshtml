@@ -96,24 +96,24 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $leaveRequestId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)/" + $leaveRequestId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.LeaveRequest.LeaveRequestId").val(data.id);
-            $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val(data.leaveRequestCode);
-            $("#@AttributeNames.LeaveRequest.RequestDate").val(formatDateToInput(data.requestDate));
-            $("#@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
-            $("#@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
-            $("#@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
-            $("#@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType);
-            $("#@AttributeNames.LeaveRequest.ApprovalStatus").val(data.approvalStatus);
-            $("#@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
-            $("#@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
-            $("#@AttributeNames.LeaveRequest.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)/" + $leaveRequestId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.LeaveRequest.LeaveRequestId").val(data.id);
+                $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val(data.leaveRequestCode);
+                $("#@AttributeNames.LeaveRequest.RequestDate").val(formatDateToInput(data.requestDate));
+                $("#@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
+                $("#@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
+                $("#@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
+                $("#@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType);
+                $("#@AttributeNames.LeaveRequest.ApprovalStatus").val(data.approvalStatus);
+                $("#@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
+                $("#@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
+                $("#@AttributeNames.LeaveRequest.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -127,49 +127,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.LeaveRequest)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadLeaveRequests();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.LeaveRequest)", "POST", formData)
+            .then(data => {
+                loadLeaveRequests();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $leaveRequestId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $leaveRequestId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.LeaveRequest-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.LeaveRequest.LeaveRequestId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.LeaveRequest-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.LeaveRequest.LeaveRequestId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.LeaveRequest)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadLeaveRequests();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.LeaveRequest)", "POST", formData)
+            .then(data => {
+                loadLeaveRequests();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $leaveRequestId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $leaveRequestId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -194,31 +184,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.LeaveRequest)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.LeaveRequest-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.LeaveRequest)", "POST", filter, "#@TableName.LeaveRequest-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.LeaveRequest-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.LeaveRequest-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $leaveRequestId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $leaveRequestId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

@@ -96,20 +96,20 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $supplierId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.Supplier.SupplierId").val(data.id);
-            $("#@AttributeNames.Supplier.SupplierCode").val(data.supplierCode);
-            $("#@AttributeNames.Supplier.SupplierName").val(data.supplierName);
-            $("#@AttributeNames.Supplier.Address").val(data.address);
-            $("#@AttributeNames.Supplier.Email").val(data.email);
-            $("#@AttributeNames.Supplier.ContactName").val(data.contactName);
-            $("#@AttributeNames.Supplier.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Supplier.SupplierId").val(data.id);
+                $("#@AttributeNames.Supplier.SupplierCode").val(data.supplierCode);
+                $("#@AttributeNames.Supplier.SupplierName").val(data.supplierName);
+                $("#@AttributeNames.Supplier.Address").val(data.address);
+                $("#@AttributeNames.Supplier.Email").val(data.email);
+                $("#@AttributeNames.Supplier.ContactName").val(data.contactName);
+                $("#@AttributeNames.Supplier.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -123,49 +123,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.Supplier)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadSuppliers();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.Supplier)", "POST", formData)
+            .then(data => {
+                loadSuppliers();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $supplierId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.Supplier)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadSuppliers();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.Supplier)", "POST", formData)
+            .then(data => {
+                loadSuppliers();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $supplierId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -190,31 +180,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Supplier)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.Supplier-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.Supplier)", "POST", filter, "#@TableName.Supplier-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.Supplier-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.Supplier-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $supplierId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

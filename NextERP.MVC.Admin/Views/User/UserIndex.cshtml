@@ -96,20 +96,20 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $userId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.User.UserId").val(data.id);
-            $("#@AttributeNames.User.UserCode").val(data.userCode);
-            $("#@AttributeNames.User.Username").val(data.username);
-            $("#@AttributeNames.User.PhoneNumber").val(data.phoneNumber);
-            $("#@AttributeNames.User.GroupRole").val(data.groupRole);
-            $("#@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
-            $("#@AttributeNames.User.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.User.UserId").val(data.id);
+                $("#@AttributeNames.User.UserCode").val(data.userCode);
+                $("#@AttributeNames.User.Username").val(data.username);
+                $("#@AttributeNames.User.PhoneNumber").val(data.phoneNumber);
+                $("#@AttributeNames.User.GroupRole").val(data.groupRole);
+                $("#@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
+                $("#@AttributeNames.User.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -123,49 +123,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.User)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadUsers();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.User)", "POST", formData)
+            .then(data => {
+                loadUsers();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $userId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $userId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.User-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.User.UserId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.User-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.User.UserId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.User)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadUsers();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.User)", "POST", formData)
+            .then(data => {
+                loadUsers();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $userId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $userId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -190,31 +180,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.User)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.User-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.User)", "POST", filter, "#@TableName.User-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.User-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.User-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $userId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $userId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>

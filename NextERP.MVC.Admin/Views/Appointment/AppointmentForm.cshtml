@@ -10,8 +10,8 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"> 
-                    <input  id="@AttributeNames.Appointment.AppointmentId" type="hidden" asp-for="Id" />
+                <div class="modal-body">
+                    <input id="@AttributeNames.Appointment.AppointmentId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.AppointmentCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.AppointmentCode</label>
@@ -45,7 +45,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Appointment.TotalCost" class="col-form-label col-md-6" localize-content>@AttributeNames.Appointment.TotalCost</label>
                         <div class="col-md-12">
-                            <input  class="form-control form-control-sm" id="@AttributeNames.Appointment.TotalCost" type="number" asp-for="TotalCost" disabled />
+                            <input class="form-control form-control-sm" id="@AttributeNames.Appointment.TotalCost" type="number" asp-for="TotalCost" disabled />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Appointment.TotalCost" localize-content></div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-primary" id="save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
                 </div>
             </form>
         </div>
@@ -68,26 +68,27 @@
 </div>
 
 <script>
-    $("#save-button").click(function () {
+    $(".save-button").click(function () {
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
-        // Set Id = Guid.Empty để không bị validation
-        formData.set("@Constants.Id", "@Guid.Empty");
+        let id = formData.get("@Constants.Id");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Appointment)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadAppointments();
-            return response.json();
-        }).then(data => {
-            if (data && Array.isArray(data)) {
-                showInvalid(data);
+        // Nếu không có ID (tạo mới), set Guid.Empty
+        if (!id || id === "" || id === "@Guid.Empty") {
+            formData.set("@Constants.Id", "@Guid.Empty");
+        }
 
-                // Nếu form không hợp lệ, hiển thị thông báo lỗi
-                formElement.classList.add("was-validated");
-            }
-        });
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Appointment)", "POST", formData)
+            .then(data => {
+                loadAppointments();
+
+                if (data && Array.isArray(data)) {
+                    showInvalid(data, formElement);
+                }
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 </script>

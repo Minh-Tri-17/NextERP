@@ -96,24 +96,24 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $salaryId ? "none" : "block");
 
-        fetch("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $salaryId, {
-            method: "GET",
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-            $("#@AttributeNames.Salary.SalaryId").val(data.id);
-            $("#@AttributeNames.Salary.SalaryCode").val(data.salaryCode);
-            $("#@AttributeNames.Salary.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
-            $("#@AttributeNames.Salary.GrossSalary").val(data.grossSalary);
-            $("#@AttributeNames.Salary.Bonus").val(data.bonus);
-            $("#@AttributeNames.Salary.TaxAmount").val(data.taxAmount);
-            $("#@AttributeNames.Salary.InsuranceContribution").val(data.insuranceContribution);
-            $("#@AttributeNames.Salary.AdvanceSalary").val(data.advanceSalary);
-            $("#@AttributeNames.Salary.Deductions").val(data.deductions);
-            $("#@AttributeNames.Salary.NetSalary").val(data.netSalary);
-            $("#@AttributeNames.Salary.Note").val(data.note);
-        })
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $branchId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@AttributeNames.Salary.SalaryId").val(data.id);
+                $("#@AttributeNames.Salary.SalaryCode").val(data.salaryCode);
+                $("#@AttributeNames.Salary.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
+                $("#@AttributeNames.Salary.GrossSalary").val(data.grossSalary);
+                $("#@AttributeNames.Salary.Bonus").val(data.bonus);
+                $("#@AttributeNames.Salary.TaxAmount").val(data.taxAmount);
+                $("#@AttributeNames.Salary.InsuranceContribution").val(data.insuranceContribution);
+                $("#@AttributeNames.Salary.AdvanceSalary").val(data.advanceSalary);
+                $("#@AttributeNames.Salary.Deductions").val(data.deductions);
+                $("#@AttributeNames.Salary.NetSalary").val(data.netSalary);
+                $("#@AttributeNames.Salary.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-button").click(function () {
@@ -127,49 +127,39 @@
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
 
-        fetch("@Url.Action(Constants.Delete, TableName.Salary)", {
-            method: "POST",
-            body: formData
-        }).then(response => {
-            loadSalarys();
-            return response.json();
-        }).then(data => {
-            // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-            affterCallAPISuccess();
+        callApi("@Url.Action(Constants.Delete, TableName.Salary)", "POST", formData)
+            .then(data => {
+                loadSalarys();
 
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $salaryId = "";
-
-            showMessage(data);
-        })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $branchId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Salary-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Salary.SalaryId"]').val();
-         }).get().join(",");
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.Salary-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.Salary.SalaryId"]').val();
+        }).get().join(",");
 
-         $("#Ids").val($ids);
+        $("#Ids").val($ids);
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
 
-         fetch("@Url.Action(Constants.DeletePermanently, TableName.Salary)", {
-             method: "POST",
-             body: formData
-         }).then(response => {
-             loadSalarys();
-             return response.json();
-         }).then(data => {
-             // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-             affterCallAPISuccess();
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.Salary)", "POST", formData)
+            .then(data => {
+                loadSalarys();
 
-             // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-             $salaryId = "";
-
-             showMessage(data);
-         })
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $branchId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     });
 
     $("#search-button").click(function () {
@@ -194,31 +184,16 @@
 
         $(".loader").css("display", "flex");
 
-        fetch("@Url.Action(Constants.GetList, TableName.Salary)", {
-            method: "POST",
-            body: filter
-        }).then(response => {
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            checkLengthCheckbox(0, true, true, true, true, "@TableName.Salary-checkbox");
+        callApi("@Url.Action(Constants.GetList, TableName.Salary)", "POST", filter, "#@TableName.Salary-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.Salary-checkbox");
 
-            // Gọi hàm parseResponse để xử lý response trả về
-            return parseResponse(response);
-        }).then(result => {
-            if (result.type === "html") {
-                $("#@TableName.Salary-table").html(result.data);
-
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-            }
-            else if (result.type === "json") {
-                // Gọi hàm affterCallAPISuccess để xứ lý sau khi call API success
-                affterCallAPISuccess();
-
-                showMessage(result.data);
-            }
-
-            // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-            $salaryId = "";
-        });
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $salaryId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+            });
     }
 </script>
