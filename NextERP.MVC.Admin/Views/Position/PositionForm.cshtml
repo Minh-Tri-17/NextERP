@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Position.PositionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.PositionCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Position.PositionCode" type="text" asp-for="PositionCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="PositionCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Position.PositionName" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.PositionName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Position.PositionName" type="text" asp-for="PositionName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="PositionName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Position.PositionName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Position.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Position.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Position.Note" localize-content></div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.ProductCategory.ProductCategoryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.ProductCategory.ProductCategoryCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.ProductCategory.ProductCategoryCode" type="text" asp-for="ProductCategoryCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="ProductCategoryCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.ProductCategory.ProductCategoryName" class="col-form-label col-md-6" localize-content>@AttributeNames.ProductCategory.ProductCategoryName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.ProductCategory.ProductCategoryName" type="text" asp-for="ProductCategoryName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="ProductCategoryName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.ProductCategory.ProductCategoryName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.ProductCategory.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.ProductCategory.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.ProductCategory.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.ProductCategory.Note" localize-content></div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

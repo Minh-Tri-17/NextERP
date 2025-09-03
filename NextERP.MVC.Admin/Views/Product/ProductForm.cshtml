@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ProductCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ProductCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductCode" type="text" asp-for="ProductCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="ProductCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ProductName" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ProductName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ProductName" type="text" asp-for="ProductName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="ProductName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ProductName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.QuantityInStock" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.QuantityInStock</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.QuantityInStock" type="number" asp-for="QuantityInStock" />
+                            <input class="form-control form-control-sm" type="number" asp-for="QuantityInStock" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.QuantityInStock" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Price" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Price</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Price" type="number" asp-for="Price" />
+                            <input class="form-control form-control-sm" type="number" asp-for="Price" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Price" localize-content></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ExpirationDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ExpirationDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ExpirationDate" type="date" asp-for="ExpirationDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="ExpirationDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ExpirationDate" localize-content></div>
                         </div>
                     </div>
@@ -55,14 +55,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ImageFiles" class="col-form-label col-md-6" localize-content>UploadFile</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ImageFiles" type="file" asp-for="ImageFiles" multiple />
+                            <input class="form-control form-control-sm" type="file" asp-for="ImageFiles" multiple />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Manufacturer" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Manufacturer</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.Manufacturer" type="text" asp-for="Manufacturer" />
+                            <input class="form-control form-control-sm" type="text" asp-for="Manufacturer" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Manufacturer" localize-content></div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.CountryOfOrigin" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.CountryOfOrigin</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.CountryOfOrigin" type="text" asp-for="CountryOfOrigin" />
+                            <input class="form-control form-control-sm" type="text" asp-for="CountryOfOrigin" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.CountryOfOrigin" localize-content></div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.ReorderLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ReorderLevel</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Product.ReorderLevel" type="number" asp-for="ReorderLevel" />
+                            <input class="form-control form-control-sm" type="number" asp-for="ReorderLevel" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.ReorderLevel" localize-content></div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Product.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Product.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Product.Note" localize-content></div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

@@ -49,8 +49,47 @@
             </div>
         </form>
 
-        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@
-        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+        <div class="collapse" id="filter-inputs">
+            <form class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@AttributeNames.Employee.EmployeeCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EmployeeCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="EmployeeCode" />
+                    </div>
+
+                    <div class="col-3 d-none">
+                        <label for="@AttributeNames.Employee.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.OperatingStatus</label>
+                        <select class="form-select form-select-sm" asp-for="OperatingStatus">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.Employee.HireDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HireDate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="HireDate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
+                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                </div>
+            </form>
+        </div>
     </section>
 
     <!--& TABLE -->
@@ -113,12 +152,12 @@
                 $("#@AttributeNames.Employee.HealthInsuranceNumber").val(data.healthInsuranceNumber);
                 $("#@AttributeNames.Employee.SocialInsuranceNumber").val(data.socialInsuranceNumber);
                 $("#@AttributeNames.Employee.TaxCode").val(data.taxCode);
-                $("#@AttributeNames.Employee.OperatingStatus").val(data.operatingStatus);
                 $("#@AttributeNames.Employee.HireDate").val(formatDateToInput(data.hireDate));
                 $("#@AttributeNames.Employee.Note").val(data.note);
+                $("#@AttributeNames.Employee.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -136,12 +175,9 @@
         callApi("@Url.Action(Constants.Delete, TableName.Employee)", "POST", formData)
             .then(data => {
                 loadEmployees();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $employeeId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -159,12 +195,9 @@
         callApi("@Url.Action(Constants.DeletePermanently, TableName.Employee)", "POST", formData)
             .then(data => {
                 loadEmployees();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $employeeId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -173,14 +206,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#filter-name").val("");
+        $("#@AttributeNames.Employee.EmployeeCode").val("");
 
         loadEmployees();
     })
 
     function loadEmployees(pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#filter-name").val();
+        const $keyWord = $("#@AttributeNames.Employee.EmployeeCode").val();
         const $isDelete = $("#is-delete").is(":checked");
 
         let filter = new FormData();
@@ -199,7 +232,7 @@
                 $employeeId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     }
 </script>

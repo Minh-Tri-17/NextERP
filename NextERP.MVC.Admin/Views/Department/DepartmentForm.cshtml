@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Department.DepartmentCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.DepartmentCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Department.DepartmentCode" type="text" asp-for="DepartmentCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="DepartmentCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Department.DepartmentName" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.DepartmentName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Department.DepartmentName" type="text" asp-for="DepartmentName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="DepartmentName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Department.DepartmentName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Department.NumberOfEmployees" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.NumberOfEmployees</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Department.NumberOfEmployees" type="number" asp-for="NumberOfEmployees" min="10" max="10" />
+                            <input class="form-control form-control-sm" type="number" asp-for="NumberOfEmployees" min="10" max="10" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Department.NumberOfEmployees" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Department.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.OperatingStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.Department.OperatingStatus" asp-for="OperatingStatus">
+                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
                                 {
@@ -53,7 +53,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Department.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Department.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" KD rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Department.Note" localize-content></div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

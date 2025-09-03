@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Schedule.ScheduleCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Schedule.ScheduleCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Schedule.ScheduleCode" type="text" asp-for="ScheduleCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="ScheduleCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Schedule.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Schedule.WorkDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Schedule.WorkDate" type="date" asp-for="WorkDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="WorkDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Schedule.WorkDate" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Schedule.StartTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Schedule.StartTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Schedule.StartTime" type="time" asp-for="StartTime" />
+                            <input class="form-control form-control-sm" type="time" asp-for="StartTime" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Schedule.StartTime" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Schedule.EndTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Schedule.EndTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Schedule.EndTime" type="time" asp-for="EndTime" />
+                            <input class="form-control form-control-sm" type="time" asp-for="EndTime" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Schedule.EndTime" localize-content></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Schedule.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Schedule.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Schedule.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Schedule.Note" localize-content></div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

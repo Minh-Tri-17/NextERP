@@ -52,7 +52,7 @@
                         @foreach (var field in listField1)
                         {
                             var value = field.GetValue(row);
-                            <td>@(value ?? "")</td>
+                            <td localize-content>@(value ?? "")</td>
                         }
                     </tr>
 

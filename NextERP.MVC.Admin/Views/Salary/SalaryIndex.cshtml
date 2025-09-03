@@ -49,8 +49,36 @@
             </div>
         </form>
 
-        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@
-        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+        <div class="collapse" id="filter-inputs">
+            <form class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@AttributeNames.Salary.SalaryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="SalaryCode" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.Salary.SalaryMonth" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryMonth</label>
+                        <input type="month" class="form-control form-control-sm" asp-for="SalaryMonth" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
+                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                </div>
+            </form>
+        </div>
     </section>
 
     <!--& TABLE -->
@@ -112,7 +140,7 @@
                 $("#@AttributeNames.Salary.Note").val(data.note);
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -130,12 +158,9 @@
         callApi("@Url.Action(Constants.Delete, TableName.Salary)", "POST", formData)
             .then(data => {
                 loadSalarys();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $branchId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -153,12 +178,9 @@
         callApi("@Url.Action(Constants.DeletePermanently, TableName.Salary)", "POST", formData)
             .then(data => {
                 loadSalarys();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $branchId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -167,14 +189,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#filter-name").val("");
+        $("#@AttributeNames.Salary.SalaryCode").val("");
 
         loadSalarys();
     })
 
     function loadSalarys(pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#filter-name").val();
+        const $keyWord = $("#@AttributeNames.Salary.SalaryCode").val();
         const $isDelete = $("#is-delete").is(":checked");
 
         let filter = new FormData();
@@ -193,7 +215,7 @@
                 $salaryId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     }
 </script>

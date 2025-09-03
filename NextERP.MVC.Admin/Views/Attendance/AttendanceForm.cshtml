@@ -11,19 +11,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input  id="@AttributeNames.Attendance.AttendanceId" type="hidden" asp-for="Id" />
+                    <input id="@AttributeNames.Attendance.AttendanceId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.AttendanceCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.AttendanceCode" type="text" asp-for="AttendanceCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="AttendanceCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkDate" type="date" asp-for="WorkDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="WorkDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.WorkDate" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.InTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.InTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.InTime" type="time" asp-for="InTime" />
+                            <input class="form-control form-control-sm" type="time" asp-for="InTime" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.InTime" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.OutTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OutTime</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OutTime" type="time" asp-for="OutTime" />
+                            <input class="form-control form-control-sm" type="time" asp-for="OutTime" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.OutTime" localize-content></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.WorkingHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkingHours</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.WorkingHours" type="number" asp-for="WorkingHours" />
+                            <input class="form-control form-control-sm" type="number" asp-for="WorkingHours" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.WorkingHours" localize-content></div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.OvertimeHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OvertimeHours</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Attendance.OvertimeHours" type="number" asp-for="OvertimeHours" />
+                            <input class="form-control form-control-sm" type="number" asp-for="OvertimeHours" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.OvertimeHours" localize-content></div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Attendance.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Attendance.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.Note" localize-content></div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

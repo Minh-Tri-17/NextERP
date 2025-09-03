@@ -56,9 +56,9 @@ function checkLengthCheckbox(length, useEditBtn = true, useCreateBtn = true, use
 //& Hiển thị thông báo thành công hoặc thất bại
 function showMessage(message) {
     // Xác định có phải thông báo thành công hay không
+    const isWarning = !message.startsWith("S:") && !message.startsWith("F:");
     const isSuccess = message.startsWith("S:");
     const isFailure = message.startsWith("F:");
-    const isWarning = !message.startsWith("S:") && !message.startsWith("F:");
 
     // Loại bỏ tiền tố "S:" hoặc "F:"
     const cleanMessage = message.replace(/^S:\s*|^F:\s*/, '');

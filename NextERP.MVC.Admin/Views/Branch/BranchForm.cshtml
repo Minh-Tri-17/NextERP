@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.BranchCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Branch.BranchCode" type="text" asp-for="BranchCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="BranchCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.BranchName" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Branch.BranchName" type="text" asp-for="BranchName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="BranchName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Branch.BranchName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.Address" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.Address</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Branch.Address" rows="3" asp-for="Address"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Address"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Branch.Address" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.PhoneNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.PhoneNumber</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Branch.PhoneNumber" type="text" asp-for="PhoneNumber" min="10" max="10" />
+                            <input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" min="10" max="10" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Branch.PhoneNumber" localize-content></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.OperatingStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.Branch.OperatingStatus" asp-for="OperatingStatus">
+                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
                                 {
@@ -61,7 +61,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Branch.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Branch.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Branch.Note" localize-content></div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

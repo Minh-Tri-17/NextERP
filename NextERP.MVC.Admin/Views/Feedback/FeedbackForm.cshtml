@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Feedback.FeedbackCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.FeedbackCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Feedback.FeedbackCode" type="text" asp-for="FeedbackCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="FeedbackCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Feedback.DateFeedback" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.DateFeedback</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Feedback.DateFeedback" type="date" asp-for="DateFeedback" />
+                            <input class="form-control form-control-sm" type="date" asp-for="DateFeedback" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Feedback.DateFeedback" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Feedback.Comment" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.Comment</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Feedback.Comment" rows="3" asp-for="Comment"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Comment"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Feedback.Comment" localize-content></div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

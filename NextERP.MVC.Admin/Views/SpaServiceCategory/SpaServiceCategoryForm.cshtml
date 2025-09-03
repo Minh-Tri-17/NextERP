@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode" type="text" asp-for="SpaServiceCategoryCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceCategoryCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaServiceCategory.SpaServiceCategoryName" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaServiceCategory.SpaServiceCategoryName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaServiceCategory.SpaServiceCategoryName" type="text" asp-for="SpaServiceCategoryName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceCategoryName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaServiceCategory.SpaServiceCategoryName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaServiceCategory.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaServiceCategory.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.SpaServiceCategory.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaServiceCategory.Note" localize-content></div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

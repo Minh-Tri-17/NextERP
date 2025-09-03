@@ -49,8 +49,26 @@
             </div>
         </form>
 
-        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@
-        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+        <div class="collapse" id="filter-inputs">
+            <form class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@AttributeNames.Feedback.FeedbackCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.FeedbackCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="FeedbackCode" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.Feedback.DateFeedback" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.DateFeedback</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateFeedback" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
+                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                </div>
+            </form>
+        </div>
     </section>
 
     <!--& TABLE -->
@@ -105,7 +123,7 @@
                 $("#@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -123,12 +141,9 @@
         callApi("@Url.Action(Constants.Delete, TableName.Feedback)", "POST", formData)
             .then(data => {
                 loadFeedbacks();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $feedbackId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -146,12 +161,9 @@
         callApi("@Url.Action(Constants.DeletePermanently, TableName.Feedback)", "POST", formData)
             .then(data => {
                 loadFeedbacks();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $feedbackId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -160,14 +172,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#filter-name").val("");
+        $("#@AttributeNames.Feedback.FeedbackCode").val("");
 
         loadFeedbacks();
     })
 
     function loadFeedbacks(pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#filter-name").val();
+        const $keyWord = $("#@AttributeNames.Feedback.FeedbackCode").val();
         const $isDelete = $("#is-delete").is(":checked");
 
         let filter = new FormData();
@@ -186,7 +198,7 @@
                 $feedbackId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     }
 </script>

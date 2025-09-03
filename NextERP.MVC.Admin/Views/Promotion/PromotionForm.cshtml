@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.PromotionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.PromotionCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.PromotionCode" type="text" asp-for="PromotionCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="PromotionCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.PromotionName" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.PromotionName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.PromotionName" type="text" asp-for="PromotionName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="PromotionName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.PromotionName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.StartDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.StartDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.StartDate" type="date" asp-for="StartDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="StartDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.StartDate" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.EndDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.EndDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.EndDate" type="date" asp-for="EndDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="EndDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.EndDate" localize-content></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.DiscountPercentage" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.DiscountPercentage</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Promotion.DiscountPercentage" type="number" asp-for="DiscountPercentage" />
+                            <input class="form-control form-control-sm" type="number" asp-for="DiscountPercentage" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.DiscountPercentage" localize-content></div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.OperatingStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.Promotion.OperatingStatus" asp-for="OperatingStatus">
+                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
                                 {
@@ -69,7 +69,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Promotion.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Promotion.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Promotion.Note" localize-content></div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

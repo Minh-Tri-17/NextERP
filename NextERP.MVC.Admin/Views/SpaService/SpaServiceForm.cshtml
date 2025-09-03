@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.SpaServiceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaService.SpaServiceCode" type="text" asp-for="SpaServiceCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.SpaServiceName" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaService.SpaServiceName" type="text" asp-for="SpaServiceName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.SpaServiceName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.Price" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Price</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaService.Price" type="number" asp-for="Price" />
+                            <input class="form-control form-control-sm" type="number" asp-for="Price" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Price" localize-content></div>
                         </div>
                     </div>
@@ -39,14 +39,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.Duration" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Duration</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.SpaService.Duration" type="number" asp-for="Duration" />
+                            <input class="form-control form-control-sm" type="number" asp-for="Duration" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Duration" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <div class="col-md-12">
-                            <input class="form-check-input" id="@AttributeNames.SpaService.IsPromotional" type="checkbox" asp-for="IsPromotional">
+                            <input class="form-check-input" type="checkbox" asp-for="IsPromotional">
                             <label class="form-check-label" for="@AttributeNames.SpaService.IsPromotional" localize-content>IsPromotional</label>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.SpaServiceLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceLevel</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.SpaService.SpaServiceLevel" asp-for="SpaServiceLevel">
+                            <select class="form-select form-select-sm" asp-for="SpaServiceLevel">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.SpaServiceLevel)))
                                 {
@@ -68,7 +68,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.OperatingStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.SpaService.OperatingStatus" asp-for="OperatingStatus">
+                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
                                 {
@@ -82,7 +82,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.SpaService.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.SpaService.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Note" localize-content></div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

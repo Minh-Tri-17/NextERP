@@ -16,14 +16,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Notification.NotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Notification.NotificationCode" type="text" asp-for="NotificationCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="NotificationCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.Notification.NotificationName" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.Notification.NotificationName" type="text" asp-for="NotificationName" />
+                            <input class="form-control form-control-sm" type="text" asp-for="NotificationName" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.NotificationName" localize-content></div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Notification.NotificationContent" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationContent</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Notification.NotificationContent" rows="3" asp-for="NotificationContent"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="NotificationContent"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.NotificationContent" localize-content></div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.Notification.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.Notification.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.Note" localize-content></div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

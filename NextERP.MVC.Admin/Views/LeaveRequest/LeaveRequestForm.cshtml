@@ -17,14 +17,14 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveRequestCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.LeaveRequestCode" type="text" asp-for="LeaveRequestCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="LeaveRequestCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.RequestDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.RequestDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.RequestDate" type="date" asp-for="RequestDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="RequestDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.RequestDate" localize-content></div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.LeaveStartDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveStartDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.LeaveStartDate" type="date" asp-for="LeaveStartDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="LeaveStartDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.LeaveStartDate" localize-content></div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.LeaveEndDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveEndDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.LeaveEndDate" type="date" asp-for="LeaveEndDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="LeaveEndDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.LeaveEndDate" localize-content></div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.TotalLeaveDays" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.TotalLeaveDays</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.TotalLeaveDays" type="number" asp-for="TotalLeaveDays" />
+                            <input class="form-control form-control-sm" type="number" asp-for="TotalLeaveDays" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.TotalLeaveDays" localize-content></div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.LeaveDayType" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveDayType</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.LeaveRequest.LeaveDayType" asp-for="LeaveDayType">
+                            <select class="form-select form-select-sm" asp-for="LeaveDayType">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
                                 {
@@ -70,7 +70,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.ApprovalStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalStatus</label>
                         <div class="col-md-12">
-                            <select class="form-select form-select-sm" id="@AttributeNames.LeaveRequest.ApprovalStatus" asp-for="ApprovalStatus">
+                            <select class="form-select form-select-sm" asp-for="ApprovalStatus">
                                 <option value=""></option>
                                 @foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
                                 {
@@ -84,7 +84,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.ApprovalDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalDate</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.ApprovalDate" type="date" asp-for="ApprovalDate" />
+                            <input class="form-control form-control-sm" type="date" asp-for="ApprovalDate" />
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.ApprovalDate" localize-content></div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                     <div class="mb-2">
                         <label for="@AttributeNames.LeaveRequest.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.Note</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" id="@AttributeNames.LeaveRequest.Note" rows="3" asp-for="Note"></textarea>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
                             <div class="invalid-feedback" id="invalid-@AttributeNames.LeaveRequest.Note" localize-content></div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                 }
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 </script>

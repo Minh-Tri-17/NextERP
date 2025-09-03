@@ -299,5 +299,35 @@
             /// </summary>
             CompensatoryLeave
         }
+
+        public enum OrderStatus
+        {
+            /// <summary>
+            /// Đang xử lý
+            /// </summary>
+            Processing,
+
+            /// <summary>
+            ///  Đã giao
+            /// </summary>            
+            Delivered,
+
+            /// <summary>
+            ///  Đã hủy
+            /// </summary>
+            Cancelled
+        }
+
+        public enum PaymentStatus
+        {
+            /// <summary>
+            /// Chưa thanh toán
+            /// </summary>
+            Unpaid,
+            /// <summary>
+            /// Đã thanh toán
+            /// </summary>
+            Paid
+        }
     }
 }

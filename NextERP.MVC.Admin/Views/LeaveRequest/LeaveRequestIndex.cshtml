@@ -49,8 +49,52 @@
             </div>
         </form>
 
-        @* Truyền id nào thì sẽ hiện thị control filter đó nối nhau bởi dấu , và không có khoảng trắng *@
-        @await Component.InvokeAsync(Constants.SearchBox, new { showClass = "#filter-name" })
+        <div class="collapse" id="filter-inputs">
+            <form class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@AttributeNames.LeaveRequest.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveRequestCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="LeaveRequestCode" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.LeaveRequest.ApprovalStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalStatus</label>
+                        <select class="form-select form-select-sm" asp-for="ApprovalStatus">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.LeaveRequest.ApprovalDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalDate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="ApprovalDate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@AttributeNames.LeaveRequest.RequestDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.RequestDate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="RequestDate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
+                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                </div>
+            </form>
+        </div>
     </section>
 
     <!--& TABLE -->
@@ -105,14 +149,14 @@
                 $("#@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
                 $("#@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
                 $("#@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
-                $("#@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType);
-                $("#@AttributeNames.LeaveRequest.ApprovalStatus").val(data.approvalStatus);
                 $("#@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
                 $("#@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
                 $("#@AttributeNames.LeaveRequest.Note").val(data.note);
+                $("#@AttributeNames.LeaveRequest.ApprovalStatus option[value='" + data.approvalStatus +"']").prop("selected", true);
+                $("#@AttributeNames.LeaveRequest.LeaveDayType option[value='" + data.leaveDayType +"']").prop("selected", true);
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -130,12 +174,9 @@
         callApi("@Url.Action(Constants.Delete, TableName.LeaveRequest)", "POST", formData)
             .then(data => {
                 loadLeaveRequests();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $leaveRequestId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -153,12 +194,9 @@
         callApi("@Url.Action(Constants.DeletePermanently, TableName.LeaveRequest)", "POST", formData)
             .then(data => {
                 loadLeaveRequests();
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $leaveRequestId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     });
 
@@ -167,14 +205,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#filter-name").val("");
+        $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
 
         loadLeaveRequests();
     })
 
     function loadLeaveRequests(pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#filter-name").val();
+        const $keyWord = $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val();
         const $isDelete = $("#is-delete").is(":checked");
 
         let filter = new FormData();
@@ -193,7 +231,7 @@
                 $leaveRequestId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "Có lỗi xảy ra!" });
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
             });
     }
 </script>
