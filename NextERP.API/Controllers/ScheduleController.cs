@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSchedules)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules(Filter filter)
+        public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
-            var result = await _scheduleService.GetPaging(filter);
+            var schedule = new ScheduleModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    schedule = JsonConvert.DeserializeObject<ScheduleModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (schedule != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    schedule.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    schedule = JsonConvert.DeserializeObject<ScheduleModel>(body);
+            }
+
+            if (schedule == null)
+                return BadRequest();
+
+            var result = await _scheduleService.GetPaging(schedule);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSchedule))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSchedule(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSchedule()
         {
-            var result = await _scheduleService.Export(filter);
+            var schedule = new ScheduleModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    schedule = JsonConvert.DeserializeObject<ScheduleModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (schedule != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    schedule.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    schedule = JsonConvert.DeserializeObject<ScheduleModel>(body);
+            }
+
+            if (schedule == null)
+                return BadRequest();
+
+            var result = await _scheduleService.Export(schedule);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

@@ -36,9 +36,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<SupplierOrderDetailModel>>($"{Constants.UrlGetSupplierOrderDetail}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(SupplierOrderDetailModel request)
         {
-            return await PostAsync<APIBaseResult<PagingResult<SupplierOrderDetailModel>>, Filter>($"{Constants.UrlGetSupplierOrderDetails}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<SupplierOrderDetailModel>>, SupplierOrderDetailModel>($"{Constants.UrlGetSupplierOrderDetails}/{Constants.Filter}", request);
         }
 
         #endregion

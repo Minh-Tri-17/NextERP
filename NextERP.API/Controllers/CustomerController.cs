@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetCustomers)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(Filter filter)
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            var result = await _customerService.GetPaging(filter);
+            var customer = new CustomerModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    customer = JsonConvert.DeserializeObject<CustomerModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (customer != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    customer.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    customer = JsonConvert.DeserializeObject<CustomerModel>(body);
+            }
+
+            if (customer == null)
+                return BadRequest();
+
+            var result = await _customerService.GetPaging(customer);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportCustomer))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportCustomer(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportCustomer()
         {
-            var result = await _customerService.Export(filter);
+            var customer = new CustomerModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    customer = JsonConvert.DeserializeObject<CustomerModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (customer != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    customer.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    customer = JsonConvert.DeserializeObject<CustomerModel>(body);
+            }
+
+            if (customer == null)
+                return BadRequest();
+
+            var result = await _customerService.Export(customer);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

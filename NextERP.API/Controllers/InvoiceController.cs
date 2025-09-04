@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetInvoices)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices(Filter filter)
+        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices()
         {
-            var result = await _invoiceService.GetPaging(filter);
+            var invoice = new InvoiceModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    invoice = JsonConvert.DeserializeObject<InvoiceModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (invoice != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    invoice.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    invoice = JsonConvert.DeserializeObject<InvoiceModel>(body);
+            }
+
+            if (invoice == null)
+                return BadRequest();
+
+            var result = await _invoiceService.GetPaging(invoice);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

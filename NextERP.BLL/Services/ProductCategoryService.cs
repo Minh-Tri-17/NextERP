@@ -130,9 +130,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<ProductCategoryModel>(Messages.GetResultSuccess, productCategoryModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<ProductCategoryModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<ProductCategoryModel>>> GetPaging(ProductCategoryModel request)
         {
             IQueryable<ProductCategory> query = _context.ProductCategories.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.ProductCategoryCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.ProductCategoryCode!, s => s.IsDelete, s => s.Id);
 
@@ -194,9 +202,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(ProductCategoryModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<ProductCategoryModel>();
 
             using var workbook = new XLWorkbook();

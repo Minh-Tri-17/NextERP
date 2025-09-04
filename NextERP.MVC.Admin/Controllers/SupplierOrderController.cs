@@ -29,9 +29,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(SupplierOrderModel request)
         {
-            var result = await _supplierOrderAPIService.GetPaging(filter);
+            var result = await _supplierOrderAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -72,9 +72,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(SupplierOrderModel request)
         {
-            var result = await _supplierOrderAPIService.Export(filter);
+            var result = await _supplierOrderAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

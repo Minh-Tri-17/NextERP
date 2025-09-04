@@ -35,5 +35,6 @@
         #endregion
 
         public const string FileNotFound = "FileNotFound";
+        public const string NotFoundSupplier = "NotFoundSupplier";
     }
 }

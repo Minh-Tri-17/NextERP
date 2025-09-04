@@ -39,9 +39,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(RoleModel request)
         {
-            var result = await _roleAPIService.GetPaging(filter);
+            var result = await _roleAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -95,9 +95,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(RoleModel request)
         {
-            var result = await _roleAPIService.Export(filter);
+            var result = await _roleAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

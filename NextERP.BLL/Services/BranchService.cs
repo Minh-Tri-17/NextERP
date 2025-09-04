@@ -130,9 +130,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<BranchModel>(Messages.GetResultSuccess, branchModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<BranchModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<BranchModel>>> GetPaging(BranchModel request)
         {
             IQueryable<Branch> query = _context.Branches.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.BranchCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.BranchCode!, s => s.IsDelete, s => s.Id);
 
@@ -194,9 +202,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(BranchModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<BranchModel>();
 
             using var workbook = new XLWorkbook();

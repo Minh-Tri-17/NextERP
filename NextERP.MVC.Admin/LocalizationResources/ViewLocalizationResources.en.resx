@@ -984,9 +984,6 @@
   <data name="zstring162" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring158" xml:space="preserve">
-    <value />
-  </data>
   <data name="zstring166" xml:space="preserve">
     <value />
   </data>
@@ -1013,5 +1010,8 @@
   </data>
   <data name="zstring167" xml:space="preserve">
     <value />
+  </data>
+  <data name="NotFoundSupplier" xml:space="preserve">
+    <value>F:Not found supplier</value>
   </data>
 </root>

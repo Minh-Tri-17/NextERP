@@ -127,9 +127,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<InvoiceModel>(Messages.GetResultSuccess, invoiceModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<InvoiceModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<InvoiceModel>>> GetPaging(InvoiceModel request)
         {
             IQueryable<Invoice> query = _context.Invoices.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.InvoiceCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.InvoiceCode!, s => s.IsDelete, s => s.Id);
 

@@ -81,7 +81,7 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadPositions($pageIndex);
+        loadPositions($("#position-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {

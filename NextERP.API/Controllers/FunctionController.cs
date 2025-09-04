@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetFunctions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions(Filter filter)
+        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions()
         {
-            var result = await _functionService.GetPaging(filter);
+            var function = new FunctionModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    function = JsonConvert.DeserializeObject<FunctionModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (function != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    function.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    function = JsonConvert.DeserializeObject<FunctionModel>(body);
+            }
+
+            if (function == null)
+                return BadRequest();
+
+            var result = await _functionService.GetPaging(function);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

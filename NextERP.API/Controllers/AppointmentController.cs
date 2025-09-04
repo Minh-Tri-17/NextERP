@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetAppointments)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(Filter filter)
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            var result = await _appointmentService.GetPaging(filter);
+            var appointment = new AppointmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (appointment != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    appointment.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(body);
+            }
+
+            if (appointment == null)
+                return BadRequest();
+
+            var result = await _appointmentService.GetPaging(appointment);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAppointment))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAppointment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAppointment()
         {
-            var result = await _appointmentService.Export(filter);
+            var appointment = new AppointmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (appointment != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    appointment.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    appointment = JsonConvert.DeserializeObject<AppointmentModel>(body);
+            }
+
+            if (appointment == null)
+                return BadRequest();
+
+            var result = await _appointmentService.Export(appointment);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

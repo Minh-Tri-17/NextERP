@@ -67,8 +67,16 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<SupplierOrderDetailModel>(Messages.GetResultSuccess, supplierOrderDetailModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(SupplierOrderDetailModel request)
         {
+            Filter filter = new Filter()
+            {
+                KeyWord = request.SupplierOrderDetailCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IdMain = request.SupplierOrderId
+            };
+
             IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking() // Không theo dõi thay đổi của thực thể
                 .Where(s => s.SupplierOrderId == filter.IdMain);
 

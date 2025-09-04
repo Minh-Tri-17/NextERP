@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSalaries)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries(Filter filter)
+        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries()
         {
-            var result = await _salaryService.GetPaging(filter);
+            var salary = new SalaryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (salary != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    salary.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(body);
+            }
+
+            if (salary == null)
+                return BadRequest();
+
+            var result = await _salaryService.GetPaging(salary);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSalary))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSalary(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSalary()
         {
-            var result = await _salaryService.Export(filter);
+            var salary = new SalaryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (salary != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    salary.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    salary = JsonConvert.DeserializeObject<SalaryModel>(body);
+            }
+
+            if (salary == null)
+                return BadRequest();
+
+            var result = await _salaryService.Export(salary);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

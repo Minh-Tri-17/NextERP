@@ -39,9 +39,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(NotificationModel request)
         {
-            var result = await _notificationAPIService.GetPaging(filter);
+            var result = await _notificationAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -95,9 +95,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(NotificationModel request)
         {
-            var result = await _notificationAPIService.Export(filter);
+            var result = await _notificationAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetLeaveRequests)}/Filter")]
-        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests(Filter filter)
+        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests()
         {
-            var result = await _leaveRequestService.GetPaging(filter);
+            var leaveRequest = new LeaveRequestModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    leaveRequest = JsonConvert.DeserializeObject<LeaveRequestModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (leaveRequest != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    leaveRequest.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    leaveRequest = JsonConvert.DeserializeObject<LeaveRequestModel>(body);
+            }
+
+            if (leaveRequest == null)
+                return BadRequest();
+
+            var result = await _leaveRequestService.GetPaging(leaveRequest);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportLeaveRequest))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportLeaveRequest(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportLeaveRequest()
         {
-            var result = await _leaveRequestService.Export(filter);
+            var leaveRequest = new LeaveRequestModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    leaveRequest = JsonConvert.DeserializeObject<LeaveRequestModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (leaveRequest != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    leaveRequest.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    leaveRequest = JsonConvert.DeserializeObject<LeaveRequestModel>(body);
+            }
+
+            if (leaveRequest == null)
+                return BadRequest();
+
+            var result = await _leaveRequestService.Export(leaveRequest);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

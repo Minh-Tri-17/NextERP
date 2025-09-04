@@ -11,8 +11,8 @@ namespace NextERP.BLL.Interface
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<bool>> DeletePermanently(string ids);
         public Task<APIBaseResult<ScheduleModel>> GetOne(Guid id);
-        public Task<APIBaseResult<PagingResult<ScheduleModel>>> GetPaging(Filter filter);
+        public Task<APIBaseResult<PagingResult<ScheduleModel>>> GetPaging(ScheduleModel request);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
-        public Task<APIBaseResult<byte[]>> Export(Filter filter);
+        public Task<APIBaseResult<byte[]>> Export(ScheduleModel request);
     }
 }

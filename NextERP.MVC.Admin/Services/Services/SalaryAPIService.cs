@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<SalaryModel>>($"{Constants.UrlGetSalary}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<SalaryModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SalaryModel>>> GetPaging(SalaryModel request)
         {
-            return await PostAsync<APIBaseResult<PagingResult<SalaryModel>>, Filter>($"{Constants.UrlGetSalaries}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<SalaryModel>>, SalaryModel>($"{Constants.UrlGetSalaries}/{Constants.Filter}", request);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportSalary, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(SalaryModel request)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportSalary, filter);
+            return await ExportAsync<APIBaseResult<byte[]>, SalaryModel>(Constants.UrlExportSalary, request);
         }
 
         #endregion

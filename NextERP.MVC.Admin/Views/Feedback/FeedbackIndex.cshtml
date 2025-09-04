@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form class="m-2">
+            <form id="feedback-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Feedback.FeedbackCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.FeedbackCode</label>
@@ -59,7 +59,7 @@
 
                     <div class="col-3">
                         <label for="@AttributeNames.Feedback.DateFeedback" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.DateFeedback</label>
-                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateFeedback" />
+                        <input type="date" class="form-control form-control-sm" asp-for="DateFeedback" />
                     </div>
                 </div>
 
@@ -177,17 +177,21 @@
         loadFeedbacks();
     })
 
-    function loadFeedbacks(pageIndex) {
+    function loadFeedbacks(el, pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#@AttributeNames.Feedback.FeedbackCode").val();
         const $isDelete = $("#is-delete").is(":checked");
-
-        let filter = new FormData();
-        filter.append("@Constants.PageIndex", pageIndex);
-        filter.append("@Constants.KeyWord", $keyWord);
-        filter.append("@Constants.IsDelete", $isDelete);
-
         $(".loader").css("display", "flex");
+
+        const $form = $(el).closest("form");
+        const formData = new FormData($form[0]);
+
+        // Xóa các key không cần thiết (__Invariant)
+        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+
+        const filter = new FormData();
+        cleanEntries.forEach(([key, value]) => filter.append(key, value));
+        filter.append("@Constants.PageIndex", pageIndex);
+        filter.append("@Constants.IsDelete", $isDelete);
 
         callApi("@Url.Action(Constants.GetList, TableName.Feedback)", "POST", filter, "#@TableName.Feedback-table")
             .then(data => {

@@ -87,12 +87,12 @@
                         end.setDate(end.getDate() - 1);
 
                         const formatDateTime = (date) => {
-                        const options = { hour12: false };
-                        return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
+                            const options = { hour12: false };
+                            return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
                         };
-
-                        $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
-                        $("#@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
+                        
+                        $("#@TableName.Appointment #@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(start));
+                        $("#@TableName.Appointment #@AttributeNames.Appointment.AppointmentDate").val(formatDateTime(end));
 
                     //? Mở modal khi chọn ngày trên lịch
                         const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));

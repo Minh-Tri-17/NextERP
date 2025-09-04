@@ -130,9 +130,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<NotificationModel>(Messages.GetResultSuccess, notificationModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<NotificationModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<NotificationModel>>> GetPaging(NotificationModel request)
         {
             IQueryable<Notification> query = _context.Notifications.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.NotificationCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.NotificationCode!, s => s.IsDelete, s => s.Id);
 
@@ -194,9 +202,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(NotificationModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<NotificationModel>();
 
             using var workbook = new XLWorkbook();

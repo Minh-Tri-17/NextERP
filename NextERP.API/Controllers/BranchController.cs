@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetBranches)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches(Filter filter)
+        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches()
         {
-            var result = await _branchService.GetPaging(filter);
+            var branch = new BranchModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (branch != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    branch.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(body);
+            }
+
+            if (branch == null)
+                return BadRequest();
+
+            var result = await _branchService.GetPaging(branch);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportBranch))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportBranch(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportBranch()
         {
-            var result = await _branchService.Export(filter);
+            var branch = new BranchModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (branch != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    branch.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    branch = JsonConvert.DeserializeObject<BranchModel>(body);
+            }
+
+            if (branch == null)
+                return BadRequest();
+
+            var result = await _branchService.Export(branch);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

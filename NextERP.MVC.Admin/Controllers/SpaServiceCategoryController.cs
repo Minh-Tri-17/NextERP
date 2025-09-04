@@ -39,9 +39,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(SpaServiceCategoryModel request)
         {
-            var result = await _spaServiceCategoryAPIService.GetPaging(filter);
+            var result = await _spaServiceCategoryAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -95,9 +95,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(SpaServiceCategoryModel request)
         {
-            var result = await _spaServiceCategoryAPIService.Export(filter);
+            var result = await _spaServiceCategoryAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

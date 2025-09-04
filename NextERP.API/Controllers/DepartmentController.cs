@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetDepartments)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments(Filter filter)
+        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-            var result = await _departmentService.GetPaging(filter);
+            var department = new DepartmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (department != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    department.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(body);
+            }
+
+            if (department == null)
+                return BadRequest();
+
+            var result = await _departmentService.GetPaging(department);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportDepartment))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportDepartment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportDepartment()
         {
-            var result = await _departmentService.Export(filter);
+            var department = new DepartmentModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (department != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    department.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    department = JsonConvert.DeserializeObject<DepartmentModel>(body);
+            }
+
+            if (department == null)
+                return BadRequest();
+
+            var result = await _departmentService.Export(department);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

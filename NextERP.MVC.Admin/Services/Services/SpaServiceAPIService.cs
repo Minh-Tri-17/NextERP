@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<SpaServiceModel>>($"{Constants.UrlGetSpaService}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<SpaServiceModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SpaServiceModel>>> GetPaging(SpaServiceModel request)
         {
-            return await PostAsync<APIBaseResult<PagingResult<SpaServiceModel>>, Filter>($"{Constants.UrlGetSpaServices}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<SpaServiceModel>>, SpaServiceModel>($"{Constants.UrlGetSpaServices}/{Constants.Filter}", request);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportSpaService, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(SpaServiceModel request)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportSpaService, filter);
+            return await ExportAsync<APIBaseResult<byte[]>, SpaServiceModel>(Constants.UrlExportSpaService, request);
         }
 
         #endregion

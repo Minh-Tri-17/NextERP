@@ -39,10 +39,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(ScheduleModel request)
         {
-            filter.AllowPaging = false;
-            var result = await _scheduleAPIService.GetPaging(filter);
+            var result = await _scheduleAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -111,9 +110,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(ScheduleModel request)
         {
-            var result = await _scheduleAPIService.Export(filter);
+            var result = await _scheduleAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

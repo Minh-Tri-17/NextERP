@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form class="m-2">
+            <form id="role-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Role.RoleCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.RoleCode</label>
@@ -59,12 +59,12 @@
 
                     <div class="col-3">
                         <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
-                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateCreate" />
+                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
                     </div>
 
                     <div class="col-3">
                         <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
-                        <input type="datetime-local" class="form-control form-control-sm" asp-for="DateUpdate" />
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
                     </div>
                 </div>
 
@@ -184,17 +184,21 @@
         loadRoles();
     })
 
-    function loadRoles(pageIndex) {
+    function loadRoles(el, pageIndex) {
         // Khỏi tạo filter và gán giá trị
-        const $keyWord = $("#@AttributeNames.Role.RoleCode").val();
         const $isDelete = $("#is-delete").is(":checked");
-
-        let filter = new FormData();
-        filter.append("@Constants.PageIndex", pageIndex);
-        filter.append("@Constants.KeyWord", $keyWord);
-        filter.append("@Constants.IsDelete", $isDelete);
-
         $(".loader").css("display", "flex");
+
+        const $form = $(el).closest("form");
+        const formData = new FormData($form[0]);
+
+        // Xóa các key không cần thiết (__Invariant)
+        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+
+        const filter = new FormData();
+        cleanEntries.forEach(([key, value]) => filter.append(key, value));
+        filter.append("@Constants.PageIndex", pageIndex);
+        filter.append("@Constants.IsDelete", $isDelete);
 
         callApi("@Url.Action(Constants.GetList, TableName.Role)", "POST", filter, "#@TableName.Role-table")
             .then(data => {

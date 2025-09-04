@@ -62,19 +62,19 @@
                     dayMaxEvents: true, //? Xem thêm sự kiện
                     selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
                     select: function (info) {
-                            const start = info.start;
-                            let end = info.end;
+                        const start = info.start;
+                        let end = info.end;
 
-                            end = new Date(info.end);
-                            end.setDate(end.getDate() - 1);
+                        end = new Date(info.end);
+                        end.setDate(end.getDate() - 1);
 
-                            const formatDateTime = (date) => {
+                        const formatDateTime = (date) => {
                             const options = { hour12: false };
                             return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
                         };
-
-                        $("#@AttributeNames.Schedule.WorkDate").val(formatDateTime(start));
-                        $("#@AttributeNames.Schedule.WorkDate").val(formatDateTime(end));
+                        
+                        $("#@TableName.Schedule #@AttributeNames.Schedule.WorkDate").val(formatDateTime(start));
+                        $("#@TableName.Schedule #@AttributeNames.Schedule.WorkDate").val(formatDateTime(end));
 
                         //? Mở modal khi chọn ngày trên lịch
                         const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));

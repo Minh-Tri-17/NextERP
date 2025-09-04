@@ -125,9 +125,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<AttendanceModel>(Messages.GetResultSuccess, attendanceModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<AttendanceModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<AttendanceModel>>> GetPaging(AttendanceModel request)
         {
             IQueryable<Attendance> query = _context.Attendances.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.AttendanceCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.AttendanceCode!, s => s.IsDelete, s => s.Id);
 
@@ -189,9 +197,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(AttendanceModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<AttendanceModel>();
 
             using var workbook = new XLWorkbook();

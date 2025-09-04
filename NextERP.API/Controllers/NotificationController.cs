@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetNotifications)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Notification>>> GetNotifications(Filter filter)
+        public async Task<ActionResult<IEnumerable<Notification>>> GetNotifications()
         {
-            var result = await _notificationService.GetPaging(filter);
+            var notification = new NotificationModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    notification = JsonConvert.DeserializeObject<NotificationModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (notification != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    notification.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    notification = JsonConvert.DeserializeObject<NotificationModel>(body);
+            }
+
+            if (notification == null)
+                return BadRequest();
+
+            var result = await _notificationService.GetPaging(notification);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportNotification))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportNotification(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportNotification()
         {
-            var result = await _notificationService.Export(filter);
+            var notification = new NotificationModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    notification = JsonConvert.DeserializeObject<NotificationModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (notification != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    notification.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    notification = JsonConvert.DeserializeObject<NotificationModel>(body);
+            }
+
+            if (notification == null)
+                return BadRequest();
+
+            var result = await _notificationService.Export(notification);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

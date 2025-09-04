@@ -9,80 +9,80 @@ namespace NextERP.ModelBase
 
     public partial class AppointmentModel : Appointment
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class AttendanceModel : Attendance
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class BranchModel : Branch
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class CustomerModel : Customer
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class DepartmentModel : Department
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class EmployeeModel : Employee
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class FeedbackModel : Feedback
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class FunctionModel : Function
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class InvoiceModel : Invoice
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class InvoiceDetailModel : InvoiceDetail
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class LeaveRequestModel : LeaveRequest
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class NotificationModel : Notification
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class PositionModel : Position
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class ProductModel : Product
@@ -91,86 +91,86 @@ namespace NextERP.ModelBase
         public List<IFormFile>? ImageFiles { get; set; }
         public List<string> Base64Images { get; set; } = new List<string>();
 
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class ProductImageModel : ProductImage
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class ProductCategoryModel : ProductCategory
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class PromotionModel : Promotion
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class RoleModel : Role
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SalaryModel : Salary
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class ScheduleModel : Schedule
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SpaServiceModel : SpaService
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SpaServiceImageModel : SpaServiceImage
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SpaServiceCategoryModel : SpaServiceCategory
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SupplierModel : Supplier
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SupplierOrderModel : SupplierOrder
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class SupplierOrderDetailModel : SupplierOrderDetail
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class TrainingSessionModel : TrainingSession
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     public partial class UserModel : User
@@ -178,8 +178,8 @@ namespace NextERP.ModelBase
         public bool Remember { get; set; } = false;
         public string Password { get; set; } = string.Empty;
 
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
     }
 
     #endregion

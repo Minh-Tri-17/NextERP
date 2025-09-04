@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetFeedbacks)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks(Filter filter)
+        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks()
         {
-            var result = await _feedbackService.GetPaging(filter);
+            var feedback = new FeedbackModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    feedback = JsonConvert.DeserializeObject<FeedbackModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (feedback != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    feedback.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    feedback = JsonConvert.DeserializeObject<FeedbackModel>(body);
+            }
+
+            if (feedback == null)
+                return BadRequest();
+
+            var result = await _feedbackService.GetPaging(feedback);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportFeedback))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportFeedback(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportFeedback()
         {
-            var result = await _feedbackService.Export(filter);
+            var feedback = new FeedbackModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    feedback = JsonConvert.DeserializeObject<FeedbackModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (feedback != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    feedback.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    feedback = JsonConvert.DeserializeObject<FeedbackModel>(body);
+            }
+
+            if (feedback == null)
+                return BadRequest();
+
+            var result = await _feedbackService.Export(feedback);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

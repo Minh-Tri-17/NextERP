@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetUsers)}/Filter")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers(Filter filter)
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var result = await _userService.GetPaging(filter);
+            var user = new UserModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    user = JsonConvert.DeserializeObject<UserModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (user != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    user.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    user = JsonConvert.DeserializeObject<UserModel>(body);
+            }
+
+            if (user == null)
+                return BadRequest();
+
+            var result = await _userService.GetPaging(user);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportUser))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportUser(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportUser()
         {
-            var result = await _userService.Export(filter);
+            var user = new UserModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    user = JsonConvert.DeserializeObject<UserModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (user != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    user.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    user = JsonConvert.DeserializeObject<UserModel>(body);
+            }
+
+            if (user == null)
+                return BadRequest();
+
+            var result = await _userService.Export(user);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

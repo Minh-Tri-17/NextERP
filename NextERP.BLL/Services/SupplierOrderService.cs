@@ -105,9 +105,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<SupplierOrderModel>(Messages.GetResultSuccess, supplierOrderModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<SupplierOrderModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SupplierOrderModel>>> GetPaging(SupplierOrderModel request)
         {
             IQueryable<SupplierOrder> query = _context.SupplierOrders.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.SupplierOrderCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.SupplierOrderCode!, s => s.IsDelete, s => s.Id);
 
@@ -148,7 +156,7 @@ namespace NextERP.BLL.Service
             var supplier = await _context.Suppliers.FirstOrDefaultAsync(s => s.SupplierName == ((SupplierModel)results[0]).SupplierName
                 && s.PhoneNumber == ((SupplierModel)results[0]).PhoneNumber && s.ContactName == ((SupplierModel)results[0]).ContactName);
             if (supplier == null)
-                return new APIErrorResult<bool>(Messages.ImportFailed);
+                return new APIErrorResult<bool>(Messages.NotFoundSupplier);
 
             var supplierOrder = new SupplierOrder();
             DataHelper.MapAudit<SupplierOrderModel, SupplierOrder>((SupplierOrderModel)results[1], supplierOrder, _currentUser.UserName);
@@ -169,9 +177,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(SupplierOrderModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<SupplierOrderModel>();
 
             using var workbook = new XLWorkbook();

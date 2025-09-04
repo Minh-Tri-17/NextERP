@@ -130,9 +130,17 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<SpaServiceCategoryModel>(Messages.GetResultSuccess, appointmentModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<SpaServiceCategoryModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SpaServiceCategoryModel>>> GetPaging(SpaServiceCategoryModel request)
         {
             IQueryable<SpaServiceCategory> query = _context.SpaServiceCategories.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+
+            Filter filter = new Filter()
+            {
+                KeyWord = request.SpaServiceCategoryCode,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                IsDelete = DataHelper.GetBool(request.IsDelete)
+            };
 
             query = query.ApplyCommonFilters(filter, s => s.SpaServiceCategoryCode!, s => s.IsDelete, s => s.Id);
 
@@ -194,9 +202,9 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(SpaServiceCategoryModel request)
         {
-            var data = await GetPaging(filter);
+            var data = await GetPaging(request);
             var items = data?.Result?.Items ?? new List<SpaServiceCategoryModel>();
 
             using var workbook = new XLWorkbook();

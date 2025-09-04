@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetProductCategories)}/Filter")]
-        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategories(Filter filter)
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategories()
         {
-            var result = await _productCategoryService.GetPaging(filter);
+            var productCategory = new ProductCategoryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    productCategory = JsonConvert.DeserializeObject<ProductCategoryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (productCategory != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    productCategory.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    productCategory = JsonConvert.DeserializeObject<ProductCategoryModel>(body);
+            }
+
+            if (productCategory == null)
+                return BadRequest();
+
+            var result = await _productCategoryService.GetPaging(productCategory);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportProductCategory))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProductCategory(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProductCategory()
         {
-            var result = await _productCategoryService.Export(filter);
+            var productCategory = new ProductCategoryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    productCategory = JsonConvert.DeserializeObject<ProductCategoryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (productCategory != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    productCategory.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    productCategory = JsonConvert.DeserializeObject<ProductCategoryModel>(body);
+            }
+
+            if (productCategory == null)
+                return BadRequest();
+
+            var result = await _productCategoryService.Export(productCategory);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

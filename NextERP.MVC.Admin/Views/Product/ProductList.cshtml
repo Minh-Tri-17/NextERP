@@ -119,7 +119,7 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadProducts($pageIndex);
+        loadProducts($("#product-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {

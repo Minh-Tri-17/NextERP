@@ -39,9 +39,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(InvoiceModel request)
         {
-            var result = await _invoiceAPIService.GetPaging(filter);
+            var result = await _invoiceAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 

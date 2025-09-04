@@ -81,7 +81,7 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadAttendances($pageIndex);
+        loadAttendances($("#attendance-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {

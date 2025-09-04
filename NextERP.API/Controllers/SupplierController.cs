@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSuppliers)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(Filter filter)
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers()
         {
-            var result = await _supplierService.GetPaging(filter);
+            var supplier = new SupplierModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    supplier = JsonConvert.DeserializeObject<SupplierModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (supplier != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    supplier.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    supplier = JsonConvert.DeserializeObject<SupplierModel>(body);
+            }
+
+            if (supplier == null)
+                return BadRequest();
+
+            var result = await _supplierService.GetPaging(supplier);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSupplier))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplier(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplier()
         {
-            var result = await _supplierService.Export(filter);
+            var supplier = new SupplierModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    supplier = JsonConvert.DeserializeObject<SupplierModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (supplier != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    supplier.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    supplier = JsonConvert.DeserializeObject<SupplierModel>(body);
+            }
+
+            if (supplier == null)
+                return BadRequest();
+
+            var result = await _supplierService.Export(supplier);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

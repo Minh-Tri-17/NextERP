@@ -81,7 +81,7 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadSpaServiceCategorys($pageIndex);
+        loadSpaServiceCategorys($("#spaServiceCategory-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {

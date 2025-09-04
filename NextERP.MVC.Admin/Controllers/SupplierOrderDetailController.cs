@@ -28,9 +28,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(SupplierOrderDetailModel request)
         {
-            var result = await _supplierOrderDetailAPIService.GetPaging(filter);
+            var result = await _supplierOrderDetailAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 

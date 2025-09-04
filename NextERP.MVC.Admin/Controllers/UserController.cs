@@ -27,7 +27,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UserIndexAsync()
         {
-            var filterEmployee = new Filter();
+            var filterEmployee = new EmployeeModel();
             var listEmployee = await _employeeAPIService.GetPaging(filterEmployee);
             if (DataHelper.ListIsNotNull(listEmployee))
                 ViewBag.ListEmployee = listEmployee!.Result!.Items;
@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(Filter filter)
+        public async Task<ActionResult> GetList(UserModel request)
         {
-            var result = await _userAPIService.GetPaging(filter);
+            var result = await _userAPIService.GetPaging(request);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -102,9 +102,9 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(Filter filter)
+        public async Task<ActionResult> Export(UserModel request)
         {
-            var result = await _userAPIService.Export(filter);
+            var result = await _userAPIService.Export(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

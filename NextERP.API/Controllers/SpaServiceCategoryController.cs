@@ -101,9 +101,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSpaServiceCategories)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SpaServiceCategory>>> GetSpaServiceCategories(Filter filter)
+        public async Task<ActionResult<IEnumerable<SpaServiceCategory>>> GetSpaServiceCategories()
         {
-            var result = await _spaServiceCategoryService.GetPaging(filter);
+            var spaServiceCategory = new SpaServiceCategoryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    spaServiceCategory = JsonConvert.DeserializeObject<SpaServiceCategoryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (spaServiceCategory != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    spaServiceCategory.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    spaServiceCategory = JsonConvert.DeserializeObject<SpaServiceCategoryModel>(body);
+            }
+
+            if (spaServiceCategory == null)
+                return BadRequest();
+
+            var result = await _spaServiceCategoryService.GetPaging(spaServiceCategory);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -130,9 +156,35 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSpaServiceCategory))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaServiceCategory(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaServiceCategory()
         {
-            var result = await _spaServiceCategoryService.Export(filter);
+            var spaServiceCategory = new SpaServiceCategoryModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    spaServiceCategory = JsonConvert.DeserializeObject<SpaServiceCategoryModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (spaServiceCategory != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    spaServiceCategory.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    spaServiceCategory = JsonConvert.DeserializeObject<SpaServiceCategoryModel>(body);
+            }
+
+            if (spaServiceCategory == null)
+                return BadRequest();
+
+            var result = await _spaServiceCategoryService.Export(spaServiceCategory);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

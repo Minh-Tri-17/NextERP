@@ -107,7 +107,7 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadSalarys($pageIndex);
+        loadSalarys($("#salary-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {
