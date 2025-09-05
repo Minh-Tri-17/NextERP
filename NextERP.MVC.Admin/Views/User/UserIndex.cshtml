@@ -140,7 +140,8 @@
                 $("#@TableName.User #@AttributeNames.User.GroupRole").val(data.groupRole);
                 $("#@TableName.User #@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
                 $("#@TableName.User #@AttributeNames.User.Note").val(data.note);
-                $("#@TableName.User #@AttributeNames.User.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.User #@AttributeNames.User.OperatingStatus option[value='" + data.operatingStatus + "']").prop("selected", true);
+                $("#@TableName.User #@AttributeNames.Employee.EmployeeId option[value='" + data.employeeId +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

@@ -126,8 +126,12 @@
                 $("#@TableName.Role #@AttributeNames.Role.RoleCode").val(data.roleCode);
                 $("#@TableName.Role #@AttributeNames.Role.RoleName").val(data.roleName);
                 $("#@TableName.Role #@AttributeNames.Role.GroupRole").val(data.groupRole);
-                $("#@TableName.Role #@AttributeNames.Role.Permissions").val(data.permissions);
                 $("#@TableName.Role #@AttributeNames.Role.Note").val(data.note);
+ 
+                const permissions = data.permissions ? data.permissions.split(";") : [];
+                permissions.forEach(function (perm) {
+                    $("#@TableName.Role #@AttributeNames.Role.Permissions option[value='" + perm + "']") .prop("selected", true);
+                });
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
