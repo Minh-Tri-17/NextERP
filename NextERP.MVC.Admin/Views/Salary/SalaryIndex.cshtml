@@ -124,7 +124,7 @@
     $(".create-edit-button").click(function () {
         $("#only-save-button").css("display",  $salaryId ? "none" : "block");
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $branchId, "GET")
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $salaryId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
                 $("#@TableName.Salary #@AttributeNames.Salary.SalaryId").val(data.id);

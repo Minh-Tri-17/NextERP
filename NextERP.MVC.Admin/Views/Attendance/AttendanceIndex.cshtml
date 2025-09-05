@@ -127,14 +127,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Attendance)/" + $attendanceId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Attendance.AttendanceId").val(data.id);
-                $("#@AttributeNames.Attendance.AttendanceCode").val(data.attendanceCode);
-                $("#@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
-                $("#@AttributeNames.Attendance.WorkDate").val(formatDateToInput(data.workDate));
-                $("#@AttributeNames.Attendance.InTime").val(formatTimeToInput(data.inTime));
-                $("#@AttributeNames.Attendance.OutTime").val(formatTimeToInput(data.outTime));
-                $("#@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
-                $("#@AttributeNames.Attendance.Note").val(data.note);
+                $("#@TableName.Attendance #@AttributeNames.Attendance.AttendanceId").val(data.id);
+                $("#@TableName.Attendance #@AttributeNames.Attendance.AttendanceCode").val(data.attendanceCode);
+                $("#@TableName.Attendance #@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
+                $("#@TableName.Attendance #@AttributeNames.Attendance.WorkDate").val(formatDateToInput(data.workDate));
+                $("#@TableName.Attendance #@AttributeNames.Attendance.InTime").val(formatTimeToInput(data.inTime));
+                $("#@TableName.Attendance #@AttributeNames.Attendance.OutTime").val(formatTimeToInput(data.outTime));
+                $("#@TableName.Attendance #@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
+                $("#@TableName.Attendance #@AttributeNames.Attendance.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
