@@ -45,6 +45,17 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
+            if (result.Result?.Items != null)
+            {
+                var listPermission = new List<string>();
+
+                foreach (var role in result.Result.Items)
+                {
+                    listPermission = role.Permissions.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
+                    role.Permissions = string.Join("<br/>", listPermission.Select(s => "&#10031; " + Localization(s)));
+                }
+            }
+
             return PartialView(ScreenName.Role.RoleList, result);
         }
 
