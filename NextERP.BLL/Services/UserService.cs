@@ -163,6 +163,14 @@ namespace NextERP.BLL.Service
                 .ToListAsync();
 
             var listUserModel = DataHelper.MappingList<User, UserModel>(listUser);
+
+            foreach (var item in listUserModel)
+            {
+                var employee = await _context.Employees.FindAsync(item.EmployeeId);
+                item.EmployeeName = DataHelper.GetString(employee?.FullName);
+                item.PhoneNumber = DataHelper.GetString(employee?.PhoneNumber);
+            }
+
             var pageResult = new PagingResult<UserModel>()
             {
                 TotalRecord = totalCount,

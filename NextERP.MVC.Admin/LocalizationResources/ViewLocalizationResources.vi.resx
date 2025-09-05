@@ -1005,8 +1005,8 @@
   <data name="zstring163" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring159" xml:space="preserve">
-    <value />
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Tên nhân viên</value>
   </data>
   <data name="zstring167" xml:space="preserve">
     <value />
