@@ -109,6 +109,10 @@
             formData.set("@Constants.Id", "@Guid.Empty");
         }
 
+        $form.find("input[type=checkbox]").each(function () {
+            formData.set(this.name, $(this).is(":checked"));
+        });
+
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaService)", "POST", formData)
             .then(data => {
                 loadSpaServices();

@@ -119,7 +119,7 @@
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
                 $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackId").val(data.id);
                 $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackCode").val(data.feedbackCode);
-                $("#@TableName.Feedback #@AttributeNames.Feedback.Comment").val(data.feedbackName);
+                $("#@TableName.Feedback #@AttributeNames.Feedback.Comment").val(data.comment);
                 $("#@TableName.Feedback #@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
             })
             .catch(err => {
