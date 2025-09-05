@@ -343,8 +343,14 @@ namespace NextERP.BLL.Service
         public Task<byte[]> GetImageBytes(Guid productId, string imagePath)
         {
             var fullImagePath = _storageService.GetFileUrl(imagePath);
-            byte[] imageData = System.IO.File.ReadAllBytes(fullImagePath);
 
+            if (!System.IO.File.Exists(fullImagePath))
+            {
+                // Có thể trả về mảng rỗng, hoặc null, hoặc một ảnh mặc định
+                return Task.FromResult(Array.Empty<byte>());
+            }
+
+            byte[] imageData = System.IO.File.ReadAllBytes(fullImagePath);
             return Task.FromResult(imageData);
         }
 

@@ -56,13 +56,16 @@ namespace NextERP.MVC.Admin.Controllers
                 {
                     var imageBytes = await _productAPIService.GetImageBytes(DataHelper.GetGuid(productImage.ProductId), DataHelper.GetString(productImage.ImagePath));
 
-                    using (var image = Image.Load<Rgba32>(imageBytes, out IImageFormat format))
+                    if (imageBytes.Length > 0)
                     {
-                        using (var ms = new MemoryStream())
+                        using (var image = Image.Load<Rgba32>(imageBytes, out IImageFormat format))
                         {
-                            image.Save(ms, format); // Lưu lại đúng định dạng gốc
-                            string base64Image = $"data:{format.DefaultMimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
-                            base64Images.Add(base64Image);
+                            using (var ms = new MemoryStream())
+                            {
+                                image.Save(ms, format); // Lưu lại đúng định dạng gốc
+                                string base64Image = $"data:{format.DefaultMimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
+                                base64Images.Add(base64Image);
+                            }
                         }
                     }
                 }
