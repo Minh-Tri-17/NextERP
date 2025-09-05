@@ -133,13 +133,13 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Branch)/" + $branchId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Branch.BranchId").val(data.id);
-                $("#@AttributeNames.Branch.BranchCode").val(data.branchCode);
-                $("#@AttributeNames.Branch.BranchName").val(data.branchName);
-                $("#@AttributeNames.Branch.PhoneNumber").val(data.phoneNumber);
-                $("#@AttributeNames.Branch.Address").val(data.address);
-                $("#@AttributeNames.Branch.Note").val(data.note);
-                $("#@AttributeNames.Branch.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Branch #@AttributeNames.Branch.BranchId").val(data.id);
+                $("#@TableName.Branch #@AttributeNames.Branch.BranchCode").val(data.branchCode);
+                $("#@TableName.Branch #@AttributeNames.Branch.BranchName").val(data.branchName);
+                $("#@TableName.Branch #@AttributeNames.Branch.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Branch #@AttributeNames.Branch.Address").val(data.address);
+                $("#@TableName.Branch #@AttributeNames.Branch.Note").val(data.note);
+                $("#@TableName.Branch #@AttributeNames.Branch.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

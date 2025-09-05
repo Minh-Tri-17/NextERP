@@ -143,17 +143,17 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)/" + $leaveRequestId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.LeaveRequest.LeaveRequestId").val(data.id);
-                $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val(data.leaveRequestCode);
-                $("#@AttributeNames.LeaveRequest.RequestDate").val(formatDateToInput(data.requestDate));
-                $("#@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
-                $("#@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
-                $("#@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
-                $("#@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
-                $("#@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
-                $("#@AttributeNames.LeaveRequest.Note").val(data.note);
-                $("#@AttributeNames.LeaveRequest.ApprovalStatus option[value='" + data.approvalStatus +"']").prop("selected", true);
-                $("#@AttributeNames.LeaveRequest.LeaveDayType option[value='" + data.leaveDayType +"']").prop("selected", true);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveRequestId").val(data.id);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveRequestCode").val(data.leaveRequestCode);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.RequestDate").val(formatDateToInput(data.requestDate));
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.Note").val(data.note);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalStatus option[value='" + data.approvalStatus +"']").prop("selected", true);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveDayType option[value='" + data.leaveDayType +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

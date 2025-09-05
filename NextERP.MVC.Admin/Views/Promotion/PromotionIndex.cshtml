@@ -133,14 +133,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)/" + $promotionId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Promotion.PromotionId").val(data.id);
-                $("#@AttributeNames.Promotion.PromotionCode").val(data.promotionCode);
-                $("#@AttributeNames.Promotion.PromotionName").val(data.promotionName);
-                $("#@AttributeNames.Promotion.DiscountPercentage").val(data.discountPercentage);
-                $("#@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
-                $("#@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
-                $("#@AttributeNames.Promotion.Note").val(data.note);
-                $("#@AttributeNames.Promotion.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionId").val(data.id);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionCode").val(data.promotionCode);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionName").val(data.promotionName);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.DiscountPercentage").val(data.discountPercentage);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
+                $("#@TableName.Promotion #@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
+                $("#@TableName.Promotion #@AttributeNames.Promotion.Note").val(data.note);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

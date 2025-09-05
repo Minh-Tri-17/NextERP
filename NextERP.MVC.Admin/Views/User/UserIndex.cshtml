@@ -133,14 +133,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.User.UserId").val(data.id);
-                $("#@AttributeNames.User.UserCode").val(data.userCode);
-                $("#@AttributeNames.User.Username").val(data.username);
-                $("#@AttributeNames.User.PhoneNumber").val(data.phoneNumber);
-                $("#@AttributeNames.User.GroupRole").val(data.groupRole);
-                $("#@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
-                $("#@AttributeNames.User.Note").val(data.note);
-                $("#@AttributeNames.User.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.User #@AttributeNames.User.UserId").val(data.id);
+                $("#@TableName.User #@AttributeNames.User.UserCode").val(data.userCode);
+                $("#@TableName.User #@AttributeNames.User.Username").val(data.username);
+                $("#@TableName.User #@AttributeNames.User.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.User #@AttributeNames.User.GroupRole").val(data.groupRole);
+                $("#@TableName.User #@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
+                $("#@TableName.User #@AttributeNames.User.Note").val(data.note);
+                $("#@TableName.User #@AttributeNames.User.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

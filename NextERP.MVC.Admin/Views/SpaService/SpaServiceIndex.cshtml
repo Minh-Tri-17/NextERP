@@ -133,15 +133,15 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaService)/" + $spaServiceId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.SpaService.SpaServiceId").val(data.id);
-                $("#@AttributeNames.SpaService.SpaServiceCode").val(data.spaServiceCode);
-                $("#@AttributeNames.SpaService.SpaServiceName").val(data.spaServiceName);
-                $("#@AttributeNames.SpaService.Price").val(data.price);
-                $("#@AttributeNames.SpaService.Duration").val(data.duration);
-                $("#@AttributeNames.SpaService.SpaServiceLevel").val(data.spaServiceLevel);
-                $("#@AttributeNames.SpaService.IsPromotional").val(data.isPromotional);
-                $("#@AttributeNames.SpaService.Note").val(data.note);
-                $("#@AttributeNames.SpaService.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceId").val(data.id);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceCode").val(data.spaServiceCode);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceName").val(data.spaServiceName);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.Price").val(data.price);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.Duration").val(data.duration);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceLevel").val(data.spaServiceLevel);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.IsPromotional").val(data.isPromotional);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.Note").val(data.note);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

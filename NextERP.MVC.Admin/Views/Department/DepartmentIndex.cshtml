@@ -133,12 +133,12 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Department)/" + $departmentId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Department.DepartmentId").val(data.id);
-                $("#@AttributeNames.Department.DepartmentCode").val(data.departmentCode);
-                $("#@AttributeNames.Department.DepartmentName").val(data.departmentName);
-                $("#@AttributeNames.Department.NumberOfEmployees").val(data.numberOfEmployees);
-                $("#@AttributeNames.Department.Note").val(data.note);
-                $("#@AttributeNames.Department.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Department #@AttributeNames.Department.DepartmentId").val(data.id);
+                $("#@TableName.Department #@AttributeNames.Department.DepartmentCode").val(data.departmentCode);
+                $("#@TableName.Department #@AttributeNames.Department.DepartmentName").val(data.departmentName);
+                $("#@TableName.Department #@AttributeNames.Department.NumberOfEmployees").val(data.numberOfEmployees);
+                $("#@TableName.Department #@AttributeNames.Department.Note").val(data.note);
+                $("#@TableName.Department #@AttributeNames.Department.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

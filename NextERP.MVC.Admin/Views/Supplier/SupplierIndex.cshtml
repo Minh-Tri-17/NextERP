@@ -122,14 +122,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Supplier.SupplierId").val(data.id);
-                $("#@AttributeNames.Supplier.SupplierCode").val(data.supplierCode);
-                $("#@AttributeNames.Supplier.SupplierName").val(data.supplierName);
-                $("#@AttributeNames.Supplier.PhoneNumber").val(data.phoneNumber);
-                $("#@AttributeNames.Supplier.Address").val(data.address);
-                $("#@AttributeNames.Supplier.Email").val(data.email);
-                $("#@AttributeNames.Supplier.ContactName").val(data.contactName);
-                $("#@AttributeNames.Supplier.Note").val(data.note);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierId").val(data.id);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierCode").val(data.supplierCode);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierName").val(data.supplierName);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.Address").val(data.address);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.Email").val(data.email);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.ContactName").val(data.contactName);
+                $("#@TableName.Supplier #@AttributeNames.Supplier.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

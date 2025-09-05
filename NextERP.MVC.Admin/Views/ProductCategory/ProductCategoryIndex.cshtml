@@ -122,10 +122,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.ProductCategory)/" + $productCategoryId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.ProductCategory.ProductCategoryId").val(data.id);
-                $("#@AttributeNames.ProductCategory.ProductCategoryCode").val(data.productCategoryCode);
-                $("#@AttributeNames.ProductCategory.ProductCategoryName").val(data.productCategoryName);
-                $("#@AttributeNames.ProductCategory.Note").val(data.note);
+                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryId").val(data.id);
+                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryCode").val(data.productCategoryCode);
+                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryName").val(data.productCategoryName);
+                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

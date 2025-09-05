@@ -127,16 +127,16 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Product.ProductId").val(data.id);
-                $("#@AttributeNames.Product.ProductCode").val(data.productCode);
-                $("#@AttributeNames.Product.ProductName").val(data.productName);
-                $("#@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
-                $("#@AttributeNames.Product.Price").val(data.price);
-                $("#@AttributeNames.Product.ExpirationDate").val(formatDateToInput(data.expirationDate));
-                $("#@AttributeNames.Product.Manufacturer").val(data.manufacturer);
-                $("#@AttributeNames.Product.CountryOfOrigin").val(data.countryOfOrigin);
-                $("#@AttributeNames.Product.ReorderLevel").val(data.reorderLevel);
-                $("#@AttributeNames.Product.Note").val(data.note);
+                $("#@TableName.Product #@AttributeNames.Product.ProductId").val(data.id);
+                $("#@TableName.Product #@AttributeNames.Product.ProductCode").val(data.productCode);
+                $("#@TableName.Product #@AttributeNames.Product.ProductName").val(data.productName);
+                $("#@TableName.Product #@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
+                $("#@TableName.Product #@AttributeNames.Product.Price").val(data.price);
+                $("#@TableName.Product #@AttributeNames.Product.ExpirationDate").val(formatDateToInput(data.expirationDate));
+                $("#@TableName.Product #@AttributeNames.Product.Manufacturer").val(data.manufacturer);
+                $("#@TableName.Product #@AttributeNames.Product.CountryOfOrigin").val(data.countryOfOrigin);
+                $("#@TableName.Product #@AttributeNames.Product.ReorderLevel").val(data.reorderLevel);
+                $("#@TableName.Product #@AttributeNames.Product.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

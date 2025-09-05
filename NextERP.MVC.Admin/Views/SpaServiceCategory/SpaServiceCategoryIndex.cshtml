@@ -122,10 +122,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaServiceCategory)/" + $spaServiceCategoryId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.SpaServiceCategory.SpaServiceCategoryId").val(data.id);
-                $("#@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode").val(data.spaServiceCategoryCode);
-                $("#@AttributeNames.SpaServiceCategory.SpaServiceCategoryName").val(data.spaServiceCategoryName);
-                $("#@AttributeNames.SpaServiceCategory.Note").val(data.note);
+                $("#@TableName.SpaServiceCategory #@AttributeNames.SpaServiceCategory.SpaServiceCategoryId").val(data.id);
+                $("#@TableName.SpaServiceCategory #@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode").val(data.spaServiceCategoryCode);
+                $("#@TableName.SpaServiceCategory #@AttributeNames.SpaServiceCategory.SpaServiceCategoryName").val(data.spaServiceCategoryName);
+                $("#@TableName.SpaServiceCategory #@AttributeNames.SpaServiceCategory.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

@@ -122,11 +122,11 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Notification)/" + $notificationId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Notification.NotificationId").val(data.id);
-                $("#@AttributeNames.Notification.NotificationCode").val(data.notificationCode);
-                $("#@AttributeNames.Notification.NotificationName").val(data.notificationName);
-                $("#@AttributeNames.Notification.NotificationContent").val(data.notificationContent);
-                $("#@AttributeNames.Notification.Note").val(data.note);
+                $("#@TableName.Notification #@AttributeNames.Notification.NotificationId").val(data.id);
+                $("#@TableName.Notification #@AttributeNames.Notification.NotificationCode").val(data.notificationCode);
+                $("#@TableName.Notification #@AttributeNames.Notification.NotificationName").val(data.notificationName);
+                $("#@TableName.Notification #@AttributeNames.Notification.NotificationContent").val(data.notificationContent);
+                $("#@TableName.Notification #@AttributeNames.Notification.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

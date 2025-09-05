@@ -133,18 +133,18 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Customer)/" + $customerId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Customer.CustomerId").val(data.id);
-                $("#@AttributeNames.Customer.CustomerCode").val(data.customerCode);
-                $("#@AttributeNames.Customer.FullName").val(data.fullName);
-                $("#@AttributeNames.Customer.PhoneNumber").val(data.phoneNumber);
-                $("#@AttributeNames.Customer.Gender").val(data.gender);
-                $("#@AttributeNames.Customer.LoyaltyPoints").val(data.loyaltyPoints);
-                $("#@AttributeNames.Customer.TotalSpent").val(data.totalSpent);
-                $("#@AttributeNames.Customer.Dob").val(formatDateToInput(data.dob));
-                $("#@AttributeNames.Customer.JoinDate").val(formatDateToInput(data.joinDate));
-                $("#@AttributeNames.Customer.Email").val(data.email);
-                $("#@AttributeNames.Customer.Note").val(data.note);
-                $("#@AttributeNames.Customer.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Customer #@AttributeNames.Customer.CustomerId").val(data.id);
+                $("#@TableName.Customer #@AttributeNames.Customer.CustomerCode").val(data.customerCode);
+                $("#@TableName.Customer #@AttributeNames.Customer.FullName").val(data.fullName);
+                $("#@TableName.Customer #@AttributeNames.Customer.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Customer #@AttributeNames.Customer.Gender").val(data.gender);
+                $("#@TableName.Customer #@AttributeNames.Customer.LoyaltyPoints").val(data.loyaltyPoints);
+                $("#@TableName.Customer #@AttributeNames.Customer.TotalSpent").val(data.totalSpent);
+                $("#@TableName.Customer #@AttributeNames.Customer.Dob").val(formatDateToInput(data.dob));
+                $("#@TableName.Customer #@AttributeNames.Customer.JoinDate").val(formatDateToInput(data.joinDate));
+                $("#@TableName.Customer #@AttributeNames.Customer.Email").val(data.email);
+                $("#@TableName.Customer #@AttributeNames.Customer.Note").val(data.note);
+                $("#@TableName.Customer #@AttributeNames.Customer.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

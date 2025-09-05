@@ -138,14 +138,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.TrainingSession.TrainingSessionId").val(data.id);
-                $("#@AttributeNames.TrainingSession.TrainingSessionCode").val(data.trainingSessionCode);
-                $("#@AttributeNames.TrainingSession.TrainingSessionName").val(data.trainingSessionName);
-                $("#@AttributeNames.TrainingSession.Trainer").val(data.trainer);
-                $("#@AttributeNames.TrainingSession.Duration").val(data.duration);
-                $("#@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
-                $("#@AttributeNames.TrainingSession.Note").val(data.note);
-                $("#@AttributeNames.TrainingSession.SessionStatus option[value='" + data.sessionStatus +"']").prop("selected", true);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionId").val(data.id);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionCode").val(data.trainingSessionCode);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionName").val(data.trainingSessionName);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Trainer").val(data.trainer);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Duration").val(data.duration);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Note").val(data.note);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.SessionStatus option[value='" + data.sessionStatus +"']").prop("selected", true);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

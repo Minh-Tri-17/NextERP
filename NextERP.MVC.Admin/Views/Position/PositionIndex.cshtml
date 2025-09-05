@@ -122,10 +122,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Position)/" + $positionId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Position.PositionId").val(data.id);
-                $("#@AttributeNames.Position.PositionCode").val(data.positionCode);
-                $("#@AttributeNames.Position.PositionName").val(data.positionName);
-                $("#@AttributeNames.Position.Note").val(data.note);
+                $("#@TableName.Position #@AttributeNames.Position.PositionId").val(data.id);
+                $("#@TableName.Position #@AttributeNames.Position.PositionCode").val(data.positionCode);
+                $("#@TableName.Position #@AttributeNames.Position.PositionName").val(data.positionName);
+                $("#@TableName.Position #@AttributeNames.Position.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

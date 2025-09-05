@@ -122,12 +122,12 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)/" + $roleId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Role.RoleId").val(data.id);
-                $("#@AttributeNames.Role.RoleCode").val(data.roleCode);
-                $("#@AttributeNames.Role.RoleName").val(data.roleName);
-                $("#@AttributeNames.Role.GroupRole").val(data.groupRole);
-                $("#@AttributeNames.Role.Permissions").val(data.permissions);
-                $("#@AttributeNames.Role.Note").val(data.note);
+                $("#@TableName.Role #@AttributeNames.Role.RoleId").val(data.id);
+                $("#@TableName.Role #@AttributeNames.Role.RoleCode").val(data.roleCode);
+                $("#@TableName.Role #@AttributeNames.Role.RoleName").val(data.roleName);
+                $("#@TableName.Role #@AttributeNames.Role.GroupRole").val(data.groupRole);
+                $("#@TableName.Role #@AttributeNames.Role.Permissions").val(data.permissions);
+                $("#@TableName.Role #@AttributeNames.Role.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

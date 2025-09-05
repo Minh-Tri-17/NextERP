@@ -117,10 +117,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Feedback)/" + $feedbackId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Feedback.FeedbackId").val(data.id);
-                $("#@AttributeNames.Feedback.FeedbackCode").val(data.feedbackCode);
-                $("#@AttributeNames.Feedback.Comment").val(data.feedbackName);
-                $("#@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
+                $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackId").val(data.id);
+                $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackCode").val(data.feedbackCode);
+                $("#@TableName.Feedback #@AttributeNames.Feedback.Comment").val(data.feedbackName);
+                $("#@TableName.Feedback #@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });

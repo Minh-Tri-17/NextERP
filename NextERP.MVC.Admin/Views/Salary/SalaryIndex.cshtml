@@ -127,17 +127,17 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $branchId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@AttributeNames.Salary.SalaryId").val(data.id);
-                $("#@AttributeNames.Salary.SalaryCode").val(data.salaryCode);
-                $("#@AttributeNames.Salary.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
-                $("#@AttributeNames.Salary.GrossSalary").val(data.grossSalary);
-                $("#@AttributeNames.Salary.Bonus").val(data.bonus);
-                $("#@AttributeNames.Salary.TaxAmount").val(data.taxAmount);
-                $("#@AttributeNames.Salary.InsuranceContribution").val(data.insuranceContribution);
-                $("#@AttributeNames.Salary.AdvanceSalary").val(data.advanceSalary);
-                $("#@AttributeNames.Salary.Deductions").val(data.deductions);
-                $("#@AttributeNames.Salary.NetSalary").val(data.netSalary);
-                $("#@AttributeNames.Salary.Note").val(data.note);
+                $("#@TableName.Salary #@AttributeNames.Salary.SalaryId").val(data.id);
+                $("#@TableName.Salary #@AttributeNames.Salary.SalaryCode").val(data.salaryCode);
+                $("#@TableName.Salary #@AttributeNames.Salary.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
+                $("#@TableName.Salary #@AttributeNames.Salary.GrossSalary").val(data.grossSalary);
+                $("#@TableName.Salary #@AttributeNames.Salary.Bonus").val(data.bonus);
+                $("#@TableName.Salary #@AttributeNames.Salary.TaxAmount").val(data.taxAmount);
+                $("#@TableName.Salary #@AttributeNames.Salary.InsuranceContribution").val(data.insuranceContribution);
+                $("#@TableName.Salary #@AttributeNames.Salary.AdvanceSalary").val(data.advanceSalary);
+                $("#@TableName.Salary #@AttributeNames.Salary.Deductions").val(data.deductions);
+                $("#@TableName.Salary #@AttributeNames.Salary.NetSalary").val(data.netSalary);
+                $("#@TableName.Salary #@AttributeNames.Salary.Note").val(data.note);
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
