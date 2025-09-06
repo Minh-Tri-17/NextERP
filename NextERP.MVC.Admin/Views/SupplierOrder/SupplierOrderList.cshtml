@@ -3,6 +3,7 @@
 @using NextERP.ModelBase.APIResult
 @using NextERP.ModelBase.PagingResult
 @using NextERP.Util
+@using UtilHtmlHelper = NextERP.Util.HtmlHelper
 @model APIBaseResult<PagingResult<SupplierOrderModel>>
 
 <h5 class="text-center" localize-content>@TableName.SupplierOrder</h5>
@@ -18,15 +19,11 @@
                 </th>
                 <th>#</th>
                 @{
-                    var excludedFields1 = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
+                    var excludedFields = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
 
-                    var listField1 = typeof(SupplierOrderModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(s => s.Name != null && !excludedFields1.Contains(s.Name, StringComparer.OrdinalIgnoreCase)
-                    && s.PropertyType != typeof(Guid) && s.PropertyType != typeof(Guid?)
-                    && s.GetMethod != null && !s.GetMethod.IsVirtual)
-                    .ToList();
+                    var listField = UtilHtmlHelper.GetOrderedProperties<SupplierOrderModel>(excludedFields);
 
-                    foreach (var item in listField1)
+                    foreach (var item in listField)
                     {
                         <th localize-content>@item.Name</th>
                     }
@@ -49,7 +46,7 @@
                             </div>
                         </td>
                         <td>@counter</td>
-                        @foreach (var field in listField1)
+                        @foreach (var field in listField)
                         {
                             var value = field.GetValue(row);
                             <td localize-content>@(value ?? "")</td>

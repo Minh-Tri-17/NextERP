@@ -3,6 +3,7 @@
 @using NextERP.ModelBase.APIResult
 @using NextERP.ModelBase.PagingResult
 @using NextERP.Util
+@using UtilHtmlHelper = NextERP.Util.HtmlHelper
 @model APIBaseResult<PagingResult<DepartmentModel>>
 
 <div class="table-container">
@@ -18,11 +19,7 @@
                 @{
                     var excludedFields = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
 
-                    var listField = typeof(DepartmentModel).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(s => s.Name != null && !excludedFields.Contains(s.Name, StringComparer.OrdinalIgnoreCase)
-                    && s.PropertyType != typeof(Guid) && s.PropertyType != typeof(Guid?)
-                    && s.GetMethod != null && !s.GetMethod.IsVirtual)
-                    .ToList();
+                    var listField = UtilHtmlHelper.GetOrderedProperties<DepartmentModel>(excludedFields);
 
                     foreach (var item in listField)
                     {

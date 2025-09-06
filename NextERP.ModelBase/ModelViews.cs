@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace NextERP.ModelBase
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ViewFieldAttribute : Attribute { }
+
     #region Model Database
 
     public partial class AppointmentModel : Appointment
@@ -177,7 +180,9 @@ namespace NextERP.ModelBase
     {
         public bool Remember { get; set; } = false;
         public string Password { get; set; } = string.Empty;
+        [ViewField]
         public string EmployeeName { get; set; } = string.Empty;
+
 
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
