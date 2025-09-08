@@ -19,10 +19,10 @@
     <section class="filter-panel card">
         <form method="post">
             <div class="filter-actions">
-                <button type="button" class="btn btn-success create-edit-button" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Create
                 </button>
-                <button type="button" class="btn btn-warning create-edit-button disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
                     Edit
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
@@ -56,7 +56,7 @@
                         <label for="@AttributeNames.Branch.BranchCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="BranchCode" />
                     </div>
-             
+
                     <div class="col-3">
                         <label for="@AttributeNames.Branch.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
@@ -127,8 +127,12 @@
         checkLengthCheckbox($length, true, true, true, true, "@TableName.Branch-checkbox");
     });
 
-    $(".create-edit-button").click(function () {
-        $("#only-save-button").css("display",  $branchId ? "none" : "block");
+    $("#create-button").click(function () {
+        $("#only-save-button").css("display", "block");
+    });
+
+    $("#edit-button").click(function () {
+        $("#only-save-button").css("display", "none");
 
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Branch)/" + $branchId, "GET")
             .then(data => {
