@@ -188,7 +188,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Product.ProductCode").val("");
+        $("#product-search-form #@AttributeNames.Product.ProductCode").val("");
+        $("#product-search-form #@AttributeNames.Product.ExpirationDate").val("");
+        $("#product-search-form #@Constants.DateCreate").val("");
+        $("#product-search-form #@Constants.DateUpdate").val("");
 
         loadProducts();
     })

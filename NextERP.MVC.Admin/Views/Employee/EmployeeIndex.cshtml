@@ -154,7 +154,7 @@
                 $("#@TableName.Employee #@AttributeNames.Employee.TaxCode").val(data.taxCode);
                 $("#@TableName.Employee #@AttributeNames.Employee.HireDate").val(formatDateToInput(data.hireDate));
                 $("#@TableName.Employee #@AttributeNames.Employee.Note").val(data.note);
-                $("#@TableName.Employee #@AttributeNames.Employee.OperatingStatus option[value='" + data.operatingStatus + "']").prop("selected", true);
+                $("#@TableName.Employee #@AttributeNames.Employee.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -206,7 +206,11 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Employee.EmployeeCode").val("");
+        $("#employee-search-form #@AttributeNames.Employee.EmployeeCode").val("");
+        $("#employee-search-form #@AttributeNames.Employee.HireDate").val("");
+        $("#employee-search-form #@Constants.DateCreate").val("");
+        $("#employee-search-form #@Constants.DateUpdate").val("");
+        $("#employee-search-form #@AttributeNames.Employee.OperatingStatus").val("").trigger("change");
 
         loadEmployees();
     })

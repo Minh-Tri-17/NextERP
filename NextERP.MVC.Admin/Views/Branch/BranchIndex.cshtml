@@ -56,7 +56,7 @@
                         <label for="@AttributeNames.Branch.BranchCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="BranchCode" />
                     </div>
-                    @*Đổi thành dùng form post xuống ko tạo từng filed nữa*@
+             
                     <div class="col-3">
                         <label for="@AttributeNames.Branch.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
@@ -139,7 +139,7 @@
                 $("#@TableName.Branch #@AttributeNames.Branch.PhoneNumber").val(data.phoneNumber);
                 $("#@TableName.Branch #@AttributeNames.Branch.Address").val(data.address);
                 $("#@TableName.Branch #@AttributeNames.Branch.Note").val(data.note);
-                $("#@TableName.Branch #@AttributeNames.Branch.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Branch #@AttributeNames.Branch.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -191,7 +191,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Branch.BranchCode").val("");
+        $("#branch-search-form #@AttributeNames.Branch.BranchCode").val("");
+        $("#branch-search-form #@Constants.DateCreate").val("");
+        $("#branch-search-form #@Constants.DateUpdate").val("");
+        $("#branch-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
 
         loadBranchs(this);
     })

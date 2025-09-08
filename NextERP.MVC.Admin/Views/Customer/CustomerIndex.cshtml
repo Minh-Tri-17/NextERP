@@ -144,7 +144,7 @@
                 $("#@TableName.Customer #@AttributeNames.Customer.JoinDate").val(formatDateToInput(data.joinDate));
                 $("#@TableName.Customer #@AttributeNames.Customer.Email").val(data.email);
                 $("#@TableName.Customer #@AttributeNames.Customer.Note").val(data.note);
-                $("#@TableName.Customer #@AttributeNames.Customer.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Customer #@AttributeNames.Customer.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -196,7 +196,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Customer.CustomerCode").val("");
+        $("#customer-search-form #@AttributeNames.Customer.CustomerCode").val("");
+        $("#customer-search-form #@Constants.DateCreate").val("");
+        $("#customer-search-form #@Constants.DateUpdate").val("");
+        $("#customer-search-form #@AttributeNames.Customer.OperatingStatus").val("").trigger("change");
 
         loadCustomers();
     })

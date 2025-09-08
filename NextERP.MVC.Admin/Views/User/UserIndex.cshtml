@@ -140,8 +140,8 @@
                 $("#@TableName.User #@AttributeNames.User.GroupRole").val(data.groupRole);
                 $("#@TableName.User #@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
                 $("#@TableName.User #@AttributeNames.User.Note").val(data.note);
-                $("#@TableName.User #@AttributeNames.User.OperatingStatus option[value='" + data.operatingStatus + "']").prop("selected", true);
-                $("#@TableName.User #@AttributeNames.Employee.EmployeeId option[value='" + data.employeeId +"']").prop("selected", true);
+                $("#@TableName.User #@AttributeNames.Branch.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.User #@AttributeNames.Employee.EmployeeId").val(data.employeeId).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -193,7 +193,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.User.UserCode").val("");
+        $("#user-search-form #@AttributeNames.User.UserCode").val("");
+        $("#user-search-form #@Constants.DateCreate").val("");
+        $("#user-search-form #@Constants.DateUpdate").val("");
+        $("#user-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
 
         loadUsers();
     })

@@ -189,7 +189,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Salary.SalaryCode").val("");
+        $("#salary-search-form #@AttributeNames.Salary.SalaryCode").val("");
+        $("#salary-search-form #@AttributeNames.Salary.SalaryMonth").val("");
+        $("#salary-search-form #@Constants.DateCreate").val("");
+        $("#salary-search-form #@Constants.DateUpdate").val("");
 
         loadSalarys();
     })

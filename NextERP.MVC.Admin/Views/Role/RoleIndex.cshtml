@@ -127,10 +127,10 @@
                 $("#@TableName.Role #@AttributeNames.Role.RoleName").val(data.roleName);
                 $("#@TableName.Role #@AttributeNames.Role.GroupRole").val(data.groupRole);
                 $("#@TableName.Role #@AttributeNames.Role.Note").val(data.note);
- 
+
                 const permissions = data.permissions ? data.permissions.split(";") : [];
                 permissions.forEach(function (perm) {
-                    $("#@TableName.Role #@AttributeNames.Role.Permissions option[value='" + perm + "']") .prop("selected", true);
+                    $("#@TableName.Role #@AttributeNames.Role.Permissions").val(perm).trigger("change");
                 });
             })
             .catch(err => {
@@ -183,7 +183,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Role.RoleCode").val("");
+        $("#role-search-form #@AttributeNames.Role.RoleCode").val("");
+        $("#role-search-form #@Constants.DateCreate").val("");
+        $("#role-search-form #@Constants.DateUpdate").val("");
 
         loadRoles();
     })

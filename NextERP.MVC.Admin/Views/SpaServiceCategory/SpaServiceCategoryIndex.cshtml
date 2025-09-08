@@ -177,7 +177,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode").val("");
+        $("#spaServiceCategory-search-form #@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode").val("");
+        $("#spaServiceCategory-search-form #@Constants.DateCreate").val("");
+        $("#spaServiceCategory-search-form #@Constants.DateUpdate").val("");
 
         loadSpaServiceCategorys();
     })

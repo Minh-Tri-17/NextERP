@@ -53,8 +53,8 @@
             <form id="spaService-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.SpaService.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.OperatingStatus</label>
-                        <input type="text" class="form-control form-control-sm" asp-for="OperatingStatus" />
+                        <label for="@AttributeNames.SpaService.SpaServiceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="SpaServiceCode" />
                     </div>
 
                     <div class="col-3">
@@ -141,7 +141,7 @@
                 $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceLevel").val(data.spaServiceLevel);
                 $("#@TableName.SpaService #@AttributeNames.SpaService.IsPromotional").val(data.isPromotional);
                 $("#@TableName.SpaService #@AttributeNames.SpaService.Note").val(data.note);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.SpaService #@AttributeNames.SpaService.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -193,7 +193,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.SpaService.OperatingStatus").val("");
+        $("#spaService-search-form #@AttributeNames.SpaService.SpaServiceCode").val("");
+        $("#spaService-search-form #@Constants.DateCreate").val("");
+        $("#spaService-search-form #@Constants.DateUpdate").val("");
+        $("#spaService-search-form #@AttributeNames.SpaService.OperatingStatus").val("").trigger("change");
 
         loadSpaServices();
     })

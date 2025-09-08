@@ -172,7 +172,8 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Feedback.FeedbackCode").val("");
+        $("#feedback-search-form #@AttributeNames.Feedback.FeedbackCode").val("");
+        $("#feedback-search-form #@AttributeNames.Feedback.DateFeedback").val("");
 
         loadFeedbacks();
     })

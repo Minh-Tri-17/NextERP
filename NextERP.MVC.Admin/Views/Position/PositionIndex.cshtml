@@ -177,7 +177,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Position.PositionCode").val("");
+        $("#position-search-form #@AttributeNames.Position.PositionCode").val("");
+        $("#position-search-form #@Constants.DateCreate").val("");
+        $("#position-search-form #@Constants.DateUpdate").val("");
 
         loadPositions();
     })

@@ -145,7 +145,7 @@
                 $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Duration").val(data.duration);
                 $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
                 $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Note").val(data.note);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.SessionStatus option[value='" + data.sessionStatus +"']").prop("selected", true);
+                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.SessionStatus").val(data.sessionStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -197,7 +197,11 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.TrainingSession.TrainingSessionCode").val("");
+        $("#trainingSession-search-form #@AttributeNames.TrainingSession.TrainingSessionCode").val("");
+        $("#trainingSession-search-form #@AttributeNames.TrainingSession.TrainingDate").val("");
+        $("#trainingSession-search-form #@Constants.DateCreate").val("");
+        $("#trainingSession-search-form #@Constants.DateUpdate").val("");
+        $("#trainingSession-search-form #@AttributeNames.TrainingSession.SessionStatus").val("").trigger("change");
 
         loadTrainingSessions();
     })

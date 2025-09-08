@@ -138,7 +138,7 @@
                 $("#@TableName.Department #@AttributeNames.Department.DepartmentName").val(data.departmentName);
                 $("#@TableName.Department #@AttributeNames.Department.NumberOfEmployees").val(data.numberOfEmployees);
                 $("#@TableName.Department #@AttributeNames.Department.Note").val(data.note);
-                $("#@TableName.Department #@AttributeNames.Department.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Department #@AttributeNames.Department.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -190,7 +190,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Department.DepartmentCode").val("");
+        $("department-search-form #@AttributeNames.Department.DepartmentCode").val("");
+        $("department-search-form #@Constants.DateCreate").val("");
+        $("department-search-form #@Constants.DateUpdate").val("");
+        $("#department-search-form #@AttributeNames.Department.OperatingStatus").val("").trigger("change");
 
         loadDepartments();
     })

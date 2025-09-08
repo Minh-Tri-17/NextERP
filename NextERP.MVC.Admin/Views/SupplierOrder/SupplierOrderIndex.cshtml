@@ -205,7 +205,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.SupplierOrder.SupplierOrderCode").val("");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.SupplierOrderCode").val("");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.ExpectedDeliveryDate").val("");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.OrderDate").val("");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.ActualDeliveryDate").val("");
+        $("#supplierOrder-search-form #@Constants.DateCreate").val("");
+        $("#supplierOrder-search-form #@Constants.DateUpdate").val("");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.OrderStatus").val("").trigger("change");
+        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.PaymentStatus").val("").trigger("change");
 
         loadSupplierOrders();
     })

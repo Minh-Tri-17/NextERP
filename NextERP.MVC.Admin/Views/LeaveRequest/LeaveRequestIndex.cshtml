@@ -69,6 +69,17 @@
                     </div>
 
                     <div class="col-3">
+                        <label for="@AttributeNames.LeaveRequest.LeaveDayType" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveDayType</label>
+                        <select class="form-select form-select-sm" asp-for="LeaveDayType">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-3">
                         <label for="@AttributeNames.LeaveRequest.ApprovalDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="ApprovalDate" />
                     </div>
@@ -152,8 +163,8 @@
                 $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
                 $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
                 $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.Note").val(data.note);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalStatus option[value='" + data.approvalStatus +"']").prop("selected", true);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveDayType option[value='" + data.leaveDayType +"']").prop("selected", true);
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalStatus").val(data.approvalStatus).trigger("change");
+                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -205,7 +216,13 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
+        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
+        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalDate").val("");
+        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.RequestDate").val("");
+        $("#leaveRequest-search-form #@Constants.DateCreate").val("");
+        $("#leaveRequest-search-form #@Constants.DateUpdate").val("");
+        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalStatus").val("").trigger("change");
+        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveDayType").val("").trigger("change");
 
         loadLeaveRequests();
     })

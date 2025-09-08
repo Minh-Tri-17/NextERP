@@ -178,7 +178,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Notification.NotificationCode").val("");
+        $("#notification-search-form #@AttributeNames.Notification.NotificationCode").val("");
+        $("#notification-search-form #@Constants.DateCreate").val("");
+        $("#notification-search-form #@Constants.DateUpdate").val("");
 
         loadNotifications();
     })

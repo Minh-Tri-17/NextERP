@@ -140,7 +140,7 @@
                 $("#@TableName.Promotion #@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
                 $("#@TableName.Promotion #@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
                 $("#@TableName.Promotion #@AttributeNames.Promotion.Note").val(data.note);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.OperatingStatus option[value='" + data.operatingStatus +"']").prop("selected", true);
+                $("#@TableName.Promotion #@AttributeNames.Promotion.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
@@ -192,7 +192,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@AttributeNames.Promotion.PromotionCode").val("");
+        $("#promotion-search-form #@AttributeNames.Promotion.PromotionCode").val("");
+        $("#promotion-search-form #@Constants.DateCreate").val("");
+        $("#promotion-search-form #@Constants.DateUpdate").val("");
+        $("#promotion-search-form #@AttributeNames.Promotion.OperatingStatus").val("").trigger("change");
 
         loadPromotions();
     })
