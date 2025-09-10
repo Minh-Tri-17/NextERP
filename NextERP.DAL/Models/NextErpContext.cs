@@ -37,6 +37,8 @@ public partial class NextErpContext : DbContext
 
     public virtual DbSet<LeaveRequest> LeaveRequests { get; set; }
 
+    public virtual DbSet<Mail> Mails { get; set; }
+
     public virtual DbSet<Notification> Notifications { get; set; }
 
     public virtual DbSet<Position> Positions { get; set; }
@@ -66,6 +68,10 @@ public partial class NextErpContext : DbContext
     public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
 
     public virtual DbSet<SupplierOrderDetail> SupplierOrderDetails { get; set; }
+
+    public virtual DbSet<TemplateMail> TemplateMails { get; set; }
+
+    public virtual DbSet<TemplateNotification> TemplateNotifications { get; set; }
 
     public virtual DbSet<TrainingSession> TrainingSessions { get; set; }
 
@@ -168,9 +174,22 @@ public partial class NextErpContext : DbContext
             entity.HasOne(d => d.Employee).WithMany(p => p.LeaveRequests).HasConstraintName("FK_LeaveRequests_Employees");
         });
 
+        modelBuilder.Entity<Mail>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.Mail).HasConstraintName("FK_Mails_Employees");
+
+            entity.HasOne(d => d.TemplateMail).WithMany(p => p.Mail).HasConstraintName("FK_Mails_TemplateMails");
+        });
+
         modelBuilder.Entity<Notification>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_Employees");
+
+            entity.HasOne(d => d.TemplateNotification).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_TemplateNotifications");
         });
 
         modelBuilder.Entity<Position>(entity =>
@@ -269,6 +288,20 @@ public partial class NextErpContext : DbContext
             entity.HasOne(d => d.SupplierOrder).WithMany(p => p.SupplierOrderDetails).HasConstraintName("FK_SupplierOrderDetails_SupplierOrders");
         });
 
+        modelBuilder.Entity<TemplateMail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_TemplateMail");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<TemplateNotification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_TemplateNotification");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<TrainingSession>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
@@ -277,6 +310,10 @@ public partial class NextErpContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.Users).HasConstraintName("FK_Users_Customers");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.Users).HasConstraintName("FK_Users_Employees");
         });
 
         OnModelCreatingPartial(modelBuilder);

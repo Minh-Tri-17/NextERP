@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NextERP.DAL.Models;
 
-public partial class Notification
+public partial class Mail
 {
     [Key]
     [Column("ID")]
@@ -14,19 +14,19 @@ public partial class Notification
 
     [StringLength(30)]
     [Unicode(false)]
-    public string? NotificationCode { get; set; }
+    public string? MailCode { get; set; }
 
     [StringLength(150)]
-    public string? NotificationName { get; set; }
+    public string? MailName { get; set; }
 
     [StringLength(500)]
-    public string? NotificationContent { get; set; }
+    public string? MailContent { get; set; }
 
     [Column("EmployeeID")]
     public Guid? EmployeeId { get; set; }
 
-    [Column("TemplateNotificationID")]
-    public Guid? TemplateNotificationId { get; set; }
+    [Column("TemplateMailID")]
+    public Guid? TemplateMailId { get; set; }
 
     public bool? IsDelete { get; set; }
 
@@ -48,10 +48,10 @@ public partial class Notification
     public string? UserUpdate { get; set; }
 
     [ForeignKey("EmployeeId")]
-    [InverseProperty("Notifications")]
+    [InverseProperty("Mail")]
     public virtual Employee? Employee { get; set; }
 
-    [ForeignKey("TemplateNotificationId")]
-    [InverseProperty("Notifications")]
-    public virtual TemplateNotification? TemplateNotification { get; set; }
+    [ForeignKey("TemplateMailId")]
+    [InverseProperty("Mail")]
+    public virtual TemplateMail? TemplateMail { get; set; }
 }

@@ -117,6 +117,12 @@ public partial class Employee
     [InverseProperty("Employee")]
     public virtual ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
 
+    [InverseProperty("Employee")]
+    public virtual ICollection<Mail> Mail { get; set; } = new List<Mail>();
+
+    [InverseProperty("Employee")]
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
     [ForeignKey("PositionId")]
     [InverseProperty("Employees")]
     public virtual Position? Position { get; set; }
@@ -126,4 +132,7 @@ public partial class Employee
 
     [InverseProperty("Employee")]
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+    [InverseProperty("Employee")]
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }
