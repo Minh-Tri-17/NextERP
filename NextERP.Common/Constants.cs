@@ -9,6 +9,7 @@
         public const string Ids = "Ids";
         public const string IdMain = "IdMain";
         public const string Code = "Code";
+        public const string AllowPaging = "AllowPaging";
         public const string ImageFiles = "ImageFiles";
         public const string PageIndex = "PageIndex";
         public const string PageSize = "PageSize";

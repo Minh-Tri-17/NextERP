@@ -88,9 +88,11 @@
                         a.click();
                         // Thu hồi URL Blob tạm để tránh rò rỉ bộ nhớ
                         URL.revokeObjectURL(url);
-                    }, remaining);
 
-                    $("#export-modal").modal("hide");
+                        setTimeout(() => {
+                            $("#export-modal").modal("hide");
+                        }, 500)
+                    }, remaining);
                 })
         }, 500);
     });

@@ -14,7 +14,7 @@
             <tr>
                 <th>#</th>
                 @{
-                    var excludedFields = new[] { Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.IsDelete };
+                    var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete };
 
                     var listField = UtilHtmlHelper.GetOrderedProperties<SupplierOrderDetailModel>(excludedFields);
 
