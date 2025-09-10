@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="salary-search-form" class="m-2">
+            <form id="@TableName.Salary-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Salary.SalaryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryCode</label>
@@ -193,10 +193,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#salary-search-form #@AttributeNames.Salary.SalaryCode").val("");
-        $("#salary-search-form #@AttributeNames.Salary.SalaryMonth").val("");
-        $("#salary-search-form #@Constants.DateCreate").val("");
-        $("#salary-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Salary-search-form #@AttributeNames.Salary.SalaryCode").val("");
+        $("#@TableName.Salary-search-form #@AttributeNames.Salary.SalaryMonth").val("");
+        $("#@TableName.Salary-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Salary-search-form #@Constants.DateUpdate").val("");
 
         loadSalarys();
     })

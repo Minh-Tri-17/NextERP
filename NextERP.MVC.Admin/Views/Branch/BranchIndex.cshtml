@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="branch-search-form" class="m-2">
+            <form id="@TableName.Branch-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Branch.BranchCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchCode</label>
@@ -75,7 +75,7 @@
 
                     <div class="col-3">
                         <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
-                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
                     </div>
                 </div>
 
@@ -195,10 +195,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#branch-search-form #@AttributeNames.Branch.BranchCode").val("");
-        $("#branch-search-form #@Constants.DateCreate").val("");
-        $("#branch-search-form #@Constants.DateUpdate").val("");
-        $("#branch-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Branch-search-form #@AttributeNames.Branch.BranchCode").val("");
+        $("#@TableName.Branch-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Branch-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Branch-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
 
         loadBranchs(this);
     })

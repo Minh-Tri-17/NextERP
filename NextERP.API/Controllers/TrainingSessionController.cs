@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetTrainingSessions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<TrainingSession>>> GetTrainingSessions()
+        public async Task<ActionResult<IEnumerable<TrainingSession>>> GetTrainingSessions(Filter filter)
         {
-            var trainingSession = new TrainingSessionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    trainingSession = JsonConvert.DeserializeObject<TrainingSessionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (trainingSession != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    trainingSession.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    trainingSession = JsonConvert.DeserializeObject<TrainingSessionModel>(body);
-            }
-
-            if (trainingSession == null)
-                return BadRequest();
-
-            var result = await _trainingSessionService.GetPaging(trainingSession);
+            var result = await _trainingSessionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportTrainingSession))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTrainingSession()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTrainingSession(Filter filter)
         {
-            var trainingSession = new TrainingSessionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    trainingSession = JsonConvert.DeserializeObject<TrainingSessionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (trainingSession != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    trainingSession.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    trainingSession = JsonConvert.DeserializeObject<TrainingSessionModel>(body);
-            }
-
-            if (trainingSession == null)
-                return BadRequest();
-
-            var result = await _trainingSessionService.Export(trainingSession);
+            var result = await _trainingSessionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

@@ -16,216 +16,208 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
-    public class EmployeeService : IEmployeeService
-    {
-        #region Infrastructure
+	public class EmployeeService : IEmployeeService
+	{
+		#region Infrastructure
 
-        private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
-        private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
+		private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
+		private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
-        public EmployeeService(NextErpContext context, ICurrentUserService currentUser)
-        {
-            _context = context;
-            _currentUser = currentUser;
-        }
+		public EmployeeService(NextErpContext context, ICurrentUserService currentUser)
+		{
+			_context = context;
+			_currentUser = currentUser;
+		}
 
-        #endregion
+		#endregion
 
-        #region Default Operations
+		#region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(EmployeeModel request)
-        {
-            #region Check null request and create variable
+		public async Task<APIBaseResult<bool>> CreateOrEdit(EmployeeModel request)
+		{
+			#region Check null request and create variable
 
-            var id = DataHelper.GetGuid(request.Id);
+			var id = DataHelper.GetGuid(request.Id);
 
-            #endregion
+			#endregion
 
-            if (id == Guid.Empty)
-            {
-                var employee = new Employee();
-                DataHelper.MapAudit(request, employee, _currentUser.UserName);
+			if (id == Guid.Empty)
+			{
+				var employee = new Employee();
+				DataHelper.MapAudit(request, employee, _currentUser.UserName);
 
-                await _context.Employees.AddAsync(employee);
+				await _context.Employees.AddAsync(employee);
 
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.CreateSuccess, true);
+				var result = await _context.SaveChangesAsync();
+				if (result > 0)
+					return new APISuccessResult<bool>(Messages.CreateSuccess, true);
 
-                return new APIErrorResult<bool>(Messages.CreateFailed);
-            }
-            else
-            {
-                var employee = await _context.Employees.FindAsync(id);
-                if (employee == null)
-                    return new APIErrorResult<bool>(Messages.NotFoundUpdate);
+				return new APIErrorResult<bool>(Messages.CreateFailed);
+			}
+			else
+			{
+				var employee = await _context.Employees.FindAsync(id);
+				if (employee == null)
+					return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
-                DataHelper.MapAudit(request, employee, _currentUser.UserName);
+				DataHelper.MapAudit(request, employee, _currentUser.UserName);
 
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
+				var result = await _context.SaveChangesAsync();
+				if (result > 0)
+					return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
 
-                return new APIErrorResult<bool>(Messages.UpdateFailed);
-            }
-        }
+				return new APIErrorResult<bool>(Messages.UpdateFailed);
+			}
+		}
 
-        public async Task<APIBaseResult<bool>> Delete(string ids)
-        {
-            List<Guid> listEmployeeId = ids.Split(',')
-                .Select(id => DataHelper.GetGuid(id.Trim()))
-                .Where(guid => guid != Guid.Empty)
-                .ToList();
+		public async Task<APIBaseResult<bool>> Delete(string ids)
+		{
+			List<Guid> listEmployeeId = ids.Split(',')
+				.Select(id => DataHelper.GetGuid(id.Trim()))
+				.Where(guid => guid != Guid.Empty)
+				.ToList();
 
-            var listEmployee = await _context.Employees
-                .Where(s => listEmployeeId.Contains(s.Id))
-                .ToListAsync();
+			var listEmployee = await _context.Employees
+				.Where(s => listEmployeeId.Contains(s.Id))
+				.ToListAsync();
 
-            foreach (var employee in listEmployee)
-            {
-                employee.IsDelete = true; // Đánh dấu là đã xóa
-            }
+			foreach (var employee in listEmployee)
+			{
+				employee.IsDelete = true; // Đánh dấu là đã xóa
+			}
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-            return new APIErrorResult<bool>(Messages.DeleteFailed);
-        }
+			return new APIErrorResult<bool>(Messages.DeleteFailed);
+		}
 
-        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
-        {
-            List<Guid> listEmployeeId = ids.Split(',')
-                .Select(id => DataHelper.GetGuid(id.Trim()))
-                .Where(guid => guid != Guid.Empty)
-                .ToList();
+		public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+		{
+			List<Guid> listEmployeeId = ids.Split(',')
+				.Select(id => DataHelper.GetGuid(id.Trim()))
+				.Where(guid => guid != Guid.Empty)
+				.ToList();
 
-            var listEmployee = await _context.Employees
-                .Where(s => listEmployeeId.Contains(s.Id))
-                .ToListAsync();
+			var listEmployee = await _context.Employees
+				.Where(s => listEmployeeId.Contains(s.Id))
+				.ToListAsync();
 
-            foreach (var employee in listEmployee)
-            {
-                _context.Employees.Remove(employee); // Xóa vĩnh viễn
-            }
+			foreach (var employee in listEmployee)
+			{
+				_context.Employees.Remove(employee); // Xóa vĩnh viễn
+			}
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-            return new APIErrorResult<bool>(Messages.DeleteFailed);
-        }
+			return new APIErrorResult<bool>(Messages.DeleteFailed);
+		}
 
-        public async Task<APIBaseResult<EmployeeModel>> GetOne(Guid id)
-        {
-            var employee = await _context.Employees
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(s => s.Id == id);
+		public async Task<APIBaseResult<EmployeeModel>> GetOne(Guid id)
+		{
+			var employee = await _context.Employees
+				.AsNoTracking() // Không theo dõi thay đổi của thực thể
+				.FirstOrDefaultAsync(s => s.Id == id);
 
-            if (employee == null)
-                return new APIErrorResult<EmployeeModel>(Messages.NotFoundGet);
+			if (employee == null)
+				return new APIErrorResult<EmployeeModel>(Messages.NotFoundGet);
 
-            var employeeModel = DataHelper.Mapping<Employee, EmployeeModel>(employee);
+			var employeeModel = DataHelper.Mapping<Employee, EmployeeModel>(employee);
 
-            return new APISuccessResult<EmployeeModel>(Messages.GetResultSuccess, employeeModel);
-        }
+			return new APISuccessResult<EmployeeModel>(Messages.GetResultSuccess, employeeModel);
+		}
 
-        public async Task<APIBaseResult<PagingResult<EmployeeModel>>> GetPaging(EmployeeModel request)
-        {
-            IQueryable<Employee> query = _context.Employees.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+		public async Task<APIBaseResult<PagingResult<EmployeeModel>>> GetPaging(Filter filter)
+		{
+			IQueryable<Employee> query = _context.Employees.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            Filter filter = new Filter()
-            {
-                KeyWord = request.EmployeeCode,
-                PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
-                IsDelete = DataHelper.GetBool(request.IsDelete)
-            };
+			query = query.ApplyCommonFilters(filter);
 
-            query = query.ApplyCommonFilters(filter, s => s.EmployeeCode!, s => s.IsDelete, s => s.Id);
+			var totalCount = await query.CountAsync();
 
-            var totalCount = await query.CountAsync();
+			query = query.ApplyPaging(filter);
 
-            query = query.ApplyPaging(filter);
+			var listEmployee = await query
+				.OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
+				.ToListAsync();
 
-            var listEmployee = await query
-                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
-                .ToListAsync();
+			var listEmployeeModel = DataHelper.MappingList<Employee, EmployeeModel>(listEmployee);
+			var pageResult = new PagingResult<EmployeeModel>()
+			{
+				TotalRecord = totalCount,
+				PageRecord = listEmployeeModel.Count(),
+				PageIndex = filter.PageIndex,
+				PageSize = filter.PageSize,
+				Items = listEmployeeModel
+			};
 
-            var listEmployeeModel = DataHelper.MappingList<Employee, EmployeeModel>(listEmployee);
-            var pageResult = new PagingResult<EmployeeModel>()
-            {
-                TotalRecord = totalCount,
-                PageRecord = listEmployeeModel.Count(),
-                PageIndex = filter.PageIndex,
-                PageSize = filter.PageSize,
-                Items = listEmployeeModel
-            };
+			return new APISuccessResult<PagingResult<EmployeeModel>>(Messages.GetListResultSuccess, pageResult);
+		}
 
-            return new APISuccessResult<PagingResult<EmployeeModel>>(Messages.GetListResultSuccess, pageResult);
-        }
+		public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
+		{
+			var stream = new MemoryStream();
+			await fileImport.CopyToAsync(stream);
+			stream.Position = 0;
 
-        public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
-        {
-            var stream = new MemoryStream();
-            await fileImport.CopyToAsync(stream);
-            stream.Position = 0;
+			using var workbook = new XSSFWorkbook(stream);
+			var sheet = workbook.GetSheetAt(0);
 
-            using var workbook = new XSSFWorkbook(stream);
-            var sheet = workbook.GetSheetAt(0);
+			// Header data
+			var headerRow = sheet.GetRow(0);
 
-            // Header data
-            var headerRow = sheet.GetRow(0);
+			var listEmployeeModel = new List<EmployeeModel>();
 
-            var listEmployeeModel = new List<EmployeeModel>();
+			for (int i = 1; i <= sheet.LastRowNum; i++)
+			{
+				// Row data
+				var row = sheet.GetRow(i);
+				if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
+					continue; // Bỏ qua hàng trống
 
-            for (int i = 1; i <= sheet.LastRowNum; i++)
-            {
-                // Row data
-                var row = sheet.GetRow(i);
-                if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
-                    continue; // Bỏ qua hàng trống
+				EmployeeModel employeeModel = DataHelper.CopyImport<EmployeeModel>(headerRow, row);
+				listEmployeeModel.Add(employeeModel);
+			}
 
-                EmployeeModel employeeModel = DataHelper.CopyImport<EmployeeModel>(headerRow, row);
-                listEmployeeModel.Add(employeeModel);
-            }
+			var listEmployee = new List<Employee>();
+			DataHelper.MapListAudit<EmployeeModel, Employee>(listEmployeeModel, listEmployee, _currentUser.UserName);
 
-            var listEmployee = new List<Employee>();
-            DataHelper.MapListAudit<EmployeeModel, Employee>(listEmployeeModel, listEmployee, _currentUser.UserName);
+			await _context.Employees.AddRangeAsync(listEmployee);
 
-            await _context.Employees.AddRangeAsync(listEmployee);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.ImportSuccess, true);
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.ImportSuccess, true);
+			return new APIErrorResult<bool>(Messages.ImportFailed);
+		}
 
-            return new APIErrorResult<bool>(Messages.ImportFailed);
-        }
+		public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+		{
+			var data = await GetPaging(filter);
+			var items = data?.Result?.Items ?? new List<EmployeeModel>();
 
-        public async Task<APIBaseResult<byte[]>> Export(EmployeeModel request)
-        {
-            var data = await GetPaging(request);
-            var items = data?.Result?.Items ?? new List<EmployeeModel>();
+			using var workbook = new XLWorkbook();
+			var worksheet = workbook.Worksheets.Add(TableName.Employee);
 
-            using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(TableName.Employee);
+			var listEmployee = DataHelper.MappingList<EmployeeModel, Employee>(items);
+			DataHelper.CopyExport(worksheet, listEmployee);
 
-            var listEmployee = DataHelper.MappingList<EmployeeModel, Employee>(items);
-            DataHelper.CopyExport(worksheet, listEmployee);
+			var stream = new MemoryStream();
+			workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
+			var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
+			if (bytes.Length > 0)
+				return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
 
-            var stream = new MemoryStream();
-            workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
-            var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
-            if (bytes.Length > 0)
-                return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
+			return new APIErrorResult<byte[]>(Messages.ExportFailed);
+		}
 
-            return new APIErrorResult<byte[]>(Messages.ExportFailed);
-        }
+		#endregion
 
-        #endregion
+		#region Custom Operations
 
-        #region Custom Operations
-
-        #endregion
-    }
+		#endregion
+	}
 }

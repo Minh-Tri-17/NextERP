@@ -1,53 +1,86 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NextERP.ModelBase;
 using System.Linq.Expressions;
+using static NextERP.Util.Enums;
 
 namespace NextERP.Util
 {
     public static class QueryableFilterExtensions
     {
-        public static IQueryable<T> ApplyCommonFilters<T>(
-            this IQueryable<T> query,
-            Filter filter,
-            Expression<Func<T, string>> codeSelector,
-            Expression<Func<T, bool?>> isDeleteSelector,
-            Expression<Func<T, Guid>> idSelector)
+        public static IQueryable<T> ApplyCommonFilters<T>(this IQueryable<T> query, Filter filter)
         {
-            if (filter.IsDelete)
+            foreach (var item in filter.Filters)
             {
-                // Truy xuất tên property từ biểu thức isDeleteSelector
-                var isDeletePropName = ((MemberExpression)isDeleteSelector.Body).Member.Name;
-                query = query.Where(s => EF.Property<bool?>(s, isDeletePropName) == true);
-            }
-            else
-            {
-                // Truy xuất tên property từ biểu thức isDeleteSelector
-                var isDeletePropName = ((MemberExpression)isDeleteSelector.Body).Member.Name;
-                query = query.Where(s => EF.Property<bool?>(s, isDeletePropName) != true);
-            }
+                var propName = item.FilterName;
+                var propType = item.FilterType;
+                var propOperator = item.FilterOperator;
+                var filterValue = item.FilterValue;
 
-            if (!string.IsNullOrEmpty(filter.KeyWord))
-            {
-                var keyword = filter.KeyWord.Trim().ToLower();
-                // Truy xuất tên property từ biểu thức codeSelector
-                var codePropName = ((MemberExpression)codeSelector.Body).Member.Name;
-                query = query.Where(s =>
-                    EF.Functions.Like(
-                        EF.Property<string>(s, codePropName).ToLower(),
-                        $"%{keyword}%"
-                    ));
-            }
+                if (string.IsNullOrEmpty(propName))
+                    continue;
 
-            if (!string.IsNullOrEmpty(filter.Ids))
-            {
-                var listIds = filter.Ids.Split(',')
-                    .Select(id => DataHelper.GetGuid(id.Trim()))
-                    .Where(guid => guid != Guid.Empty)
-                    .ToList();
+                switch (propType, propOperator)
+                {
+                    case (nameof(FilterType.String), nameof(FilterOperator.Like)):
+                        {
+                            var propValue = DataHelper.GetString(filterValue);
+                            if (!string.IsNullOrWhiteSpace(propValue))
+                                query = query.Where(s => EF.Functions.Like(EF.Property<string>(s, propName).ToLower(),
+                                    $"%{propValue.Trim().ToLower()}%"));
 
-                // Truy xuất tên property từ biểu thức idSelector
-                var idPropName = ((MemberExpression)idSelector.Body).Member.Name;
-                query = query.Where(s => listIds.Contains(EF.Property<Guid>(s, idPropName)));
+                            break;
+                        }
+                    case (nameof(FilterType.String), nameof(FilterOperator.Contains)):
+                        {
+                            var propValue = DataHelper.GetString(filterValue);
+                            if (!string.IsNullOrWhiteSpace(propValue))
+                                query = query.Where(s => EF.Property<string>(s, propName).Contains(propValue));
+
+                            break;
+                        }
+                    case (nameof(FilterType.Guid), nameof(FilterOperator.Contains)):
+                        {
+                            var listGuids = DataHelper.GetString(filterValue)
+                                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                .Select(id => DataHelper.GetGuid(id.Trim()))
+                                .Where(guid => guid != Guid.Empty)
+                                .ToList();
+
+                            if (listGuids.Any())
+                                query = query.Where(s => listGuids.Contains(EF.Property<Guid>(s, Constants.Id)));
+
+                            break;
+                        }
+                    case (nameof(FilterType.Date), nameof(FilterOperator.Equal)):
+                        {
+                            var propValue = DataHelper.GetDateTime(filterValue);
+                            if (propValue != DateTime.MinValue)
+                                query = query.Where(s => EF.Functions.DateDiffDay(EF.Property<DateTime?>(s, propName).Value,
+                                    propValue) == 0);
+
+                            break;
+                        }
+                    case (nameof(FilterType.Number), nameof(FilterOperator.Equal)):
+                        {
+                            var propValue = DataHelper.GetInt(filterValue);
+                            if (propValue != 0)
+                                query = query.Where(s => EF.Property<int?>(s, propName) == propValue);
+
+                            break;
+                        }
+                    case (nameof(FilterType.Boolean), nameof(FilterOperator.Equal)):
+                        {
+                            query = query.Where(s => EF.Property<bool?>(s, propName) == true);
+
+                            break;
+                        }
+                    case (nameof(FilterType.Boolean), nameof(FilterOperator.NotEqual)):
+                        {
+                            query = query.Where(s => EF.Property<bool?>(s, propName) != true);
+
+                            break;
+                        }
+                }
             }
 
             return query;

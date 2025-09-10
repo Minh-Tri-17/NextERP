@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="feedback-search-form" class="m-2">
+            <form id="@TableName.Feedback-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Feedback.FeedbackCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.FeedbackCode</label>
@@ -176,8 +176,8 @@
     })
 
     $("#clear-button").click(function () {
-        $("#feedback-search-form #@AttributeNames.Feedback.FeedbackCode").val("");
-        $("#feedback-search-form #@AttributeNames.Feedback.DateFeedback").val("");
+        $("#@TableName.Feedback-search-form #@AttributeNames.Feedback.FeedbackCode").val("");
+        $("#@TableName.Feedback-search-form #@AttributeNames.Feedback.DateFeedback").val("");
 
         loadFeedbacks();
     })

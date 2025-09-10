@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="customer-search-form" class="m-2">
+            <form id="@TableName.Customer-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Customer.CustomerCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.CustomerCode</label>
@@ -200,10 +200,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#customer-search-form #@AttributeNames.Customer.CustomerCode").val("");
-        $("#customer-search-form #@Constants.DateCreate").val("");
-        $("#customer-search-form #@Constants.DateUpdate").val("");
-        $("#customer-search-form #@AttributeNames.Customer.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Customer-search-form #@AttributeNames.Customer.CustomerCode").val("");
+        $("#@TableName.Customer-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Customer-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Customer-search-form #@AttributeNames.Customer.OperatingStatus").val("").trigger("change");
 
         loadCustomers();
     })

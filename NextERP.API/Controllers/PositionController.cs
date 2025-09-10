@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetPositions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Position>>> GetPositions()
+        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(Filter filter)
         {
-            var position = new PositionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    position = JsonConvert.DeserializeObject<PositionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (position != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    position.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    position = JsonConvert.DeserializeObject<PositionModel>(body);
-            }
-
-            if (position == null)
-                return BadRequest();
-
-            var result = await _positionService.GetPaging(position);
+            var result = await _positionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPosition))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPosition()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPosition(Filter filter)
         {
-            var position = new PositionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    position = JsonConvert.DeserializeObject<PositionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (position != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    position.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    position = JsonConvert.DeserializeObject<PositionModel>(body);
-            }
-
-            if (position == null)
-                return BadRequest();
-
-            var result = await _positionService.Export(position);
+            var result = await _positionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

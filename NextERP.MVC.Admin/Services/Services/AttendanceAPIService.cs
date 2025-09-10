@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<AttendanceModel>>($"{Constants.UrlGetAttendance}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<AttendanceModel>>> GetPaging(AttendanceModel request)
+        public async Task<APIBaseResult<PagingResult<AttendanceModel>>> GetPaging(Filter filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<AttendanceModel>>, AttendanceModel>($"{Constants.UrlGetAttendances}/{Constants.Filter}", request);
+            return await PostAsync<APIBaseResult<PagingResult<AttendanceModel>>, Filter>($"{Constants.UrlGetAttendances}/{Constants.Filter}", filter);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportAttendance, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(AttendanceModel request)
+        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, AttendanceModel>(Constants.UrlExportAttendance, request);
+            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportAttendance, filter);
         }
 
         #endregion

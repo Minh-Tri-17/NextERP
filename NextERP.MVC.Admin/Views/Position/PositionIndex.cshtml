@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="position-search-form" class="m-2">
+            <form id="@TableName.Position-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Position.PositionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.PositionCode</label>
@@ -181,9 +181,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#position-search-form #@AttributeNames.Position.PositionCode").val("");
-        $("#position-search-form #@Constants.DateCreate").val("");
-        $("#position-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Position-search-form #@AttributeNames.Position.PositionCode").val("");
+        $("#@TableName.Position-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Position-search-form #@Constants.DateUpdate").val("");
 
         loadPositions();
     })

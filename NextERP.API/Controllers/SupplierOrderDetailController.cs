@@ -54,35 +54,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSupplierOrderDetails)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails()
+        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails(Filter filter)
         {
-            var supplierOrderDetail = new SupplierOrderDetailModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    supplierOrderDetail = JsonConvert.DeserializeObject<SupplierOrderDetailModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (supplier != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    supplier.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    supplierOrderDetail = JsonConvert.DeserializeObject<SupplierOrderDetailModel>(body);
-            }
-
-            if (supplierOrderDetail == null)
-                return BadRequest();
-
-            var result = await _supplierOrderDetailService.GetPaging(supplierOrderDetail);
+            var result = await _supplierOrderDetailService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

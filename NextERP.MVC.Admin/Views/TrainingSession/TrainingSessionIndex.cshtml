@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="trainingSession-search-form" class="m-2">
+            <form id="@TableName.TrainingSession-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.TrainingSession.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingSessionCode</label>
@@ -201,11 +201,11 @@
     })
 
     $("#clear-button").click(function () {
-        $("#trainingSession-search-form #@AttributeNames.TrainingSession.TrainingSessionCode").val("");
-        $("#trainingSession-search-form #@AttributeNames.TrainingSession.TrainingDate").val("");
-        $("#trainingSession-search-form #@Constants.DateCreate").val("");
-        $("#trainingSession-search-form #@Constants.DateUpdate").val("");
-        $("#trainingSession-search-form #@AttributeNames.TrainingSession.SessionStatus").val("").trigger("change");
+        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.TrainingSessionCode").val("");
+        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.TrainingDate").val("");
+        $("#@TableName.TrainingSession-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.TrainingSession-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.SessionStatus").val("").trigger("change");
 
         loadTrainingSessions();
     })

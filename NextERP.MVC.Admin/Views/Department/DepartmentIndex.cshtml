@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="department-search-form" class="m-2">
+            <form id="@TableName.Department-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Department.DepartmentCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.DepartmentCode</label>
@@ -194,10 +194,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("department-search-form #@AttributeNames.Department.DepartmentCode").val("");
-        $("department-search-form #@Constants.DateCreate").val("");
-        $("department-search-form #@Constants.DateUpdate").val("");
-        $("#department-search-form #@AttributeNames.Department.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Department-search-form #@AttributeNames.Department.DepartmentCode").val("");
+        $("#@TableName.Department-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Department-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Department-search-form #@AttributeNames.Department.OperatingStatus").val("").trigger("change");
 
         loadDepartments();
     })

@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="leaveRequest-search-form" class="m-2">
+            <form id="@TableName.LeaveRequest-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.LeaveRequest.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveRequestCode</label>
@@ -220,13 +220,13 @@
     })
 
     $("#clear-button").click(function () {
-        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
-        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalDate").val("");
-        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.RequestDate").val("");
-        $("#leaveRequest-search-form #@Constants.DateCreate").val("");
-        $("#leaveRequest-search-form #@Constants.DateUpdate").val("");
-        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalStatus").val("").trigger("change");
-        $("#leaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveDayType").val("").trigger("change");
+        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
+        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalDate").val("");
+        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.RequestDate").val("");
+        $("#@TableName.LeaveRequest-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.LeaveRequest-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalStatus").val("").trigger("change");
+        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveDayType").val("").trigger("change");
 
         loadLeaveRequests();
     })

@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="productCategory-search-form" class="m-2">
+            <form id="@TableName.ProductCategory-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.ProductCategory.ProductCategoryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.ProductCategory.ProductCategoryCode</label>
@@ -181,9 +181,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#productCategory-search-form #@AttributeNames.ProductCategory.ProductCategoryCode").val("");
-        $("#productCategory-search-form #@Constants.DateCreate").val("");
-        $("#productCategory-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.ProductCategory-search-form #@AttributeNames.ProductCategory.ProductCategoryCode").val("");
+        $("#@TableName.ProductCategory-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.ProductCategory-search-form #@Constants.DateUpdate").val("");
 
         loadProductCategorys();
     })

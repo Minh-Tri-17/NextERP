@@ -40,7 +40,37 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(InvoiceDetailModel request)
         {
-            var result = await _invoiceDetailAPIService.GetPaging(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.InvoiceDetail.InvoiceDetailCode,
+                        FilterValue = DataHelper.GetString(request.InvoiceDetailCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _invoiceDetailAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 

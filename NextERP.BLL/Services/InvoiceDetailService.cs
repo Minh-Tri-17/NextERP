@@ -104,7 +104,7 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<InvoiceDetailModel>(Messages.GetResultSuccess, invoiceDetailModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<InvoiceDetailModel>>> GetPaging(InvoiceDetailModel request)
+        public async Task<APIBaseResult<PagingResult<InvoiceDetailModel>>> GetPaging(Filter filter)
         {
             IQueryable<InvoiceDetail> query = _context.InvoiceDetails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
@@ -117,8 +117,8 @@ namespace NextERP.BLL.Service
             {
                 TotalRecord = await query.CountAsync(),
                 PageRecord = listInvoiceDetailModel.Count(),
-                PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
                 Items = listInvoiceDetailModel
             };
 

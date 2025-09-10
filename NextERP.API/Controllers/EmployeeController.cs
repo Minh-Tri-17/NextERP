@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetEmployees)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(Filter filter)
         {
-            var employee = new EmployeeModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    employee = JsonConvert.DeserializeObject<EmployeeModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (employee != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    employee.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    employee = JsonConvert.DeserializeObject<EmployeeModel>(body);
-            }
-
-            if (employee == null)
-                return BadRequest();
-
-            var result = await _employeeService.GetPaging(employee);
+            var result = await _employeeService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportEmployee))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportEmployee()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportEmployee(Filter filter)
         {
-            var employee = new EmployeeModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    employee = JsonConvert.DeserializeObject<EmployeeModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (employee != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    employee.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    employee = JsonConvert.DeserializeObject<EmployeeModel>(body);
-            }
-
-            if (employee == null)
-                return BadRequest();
-
-            var result = await _employeeService.Export(employee);
+            var result = await _employeeService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

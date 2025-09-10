@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="attendance-search-form" class="m-2">
+            <form id="@TableName.Attendance-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Attendance.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.AttendanceCode</label>
@@ -190,10 +190,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#attendance-search-form #@AttributeNames.Attendance.AttendanceCode").val("");
-        $("#attendance-search-form #@AttributeNames.Attendance.WorkDate").val("");
-        $("#attendance-search-form #@Constants.DateCreate").val("");
-        $("#attendance-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Attendance-search-form #@AttributeNames.Attendance.AttendanceCode").val("");
+        $("#@TableName.Attendance-search-form #@AttributeNames.Attendance.WorkDate").val("");
+        $("#@TableName.Attendance-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Attendance-search-form #@Constants.DateUpdate").val("");
 
         loadAttendances();
     })

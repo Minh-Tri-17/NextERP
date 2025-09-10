@@ -97,15 +97,20 @@
 
     function createInitialFilterFormData() {
         const pageIndex = $("#current-page-index").val();
-        const keyword = $('#filter-name').val();
         const selectedValue = $('input[name="export-options"]:checked').val();
         const ids = $(".@Model-checkbox:checked").map(function () {
             return $(this).closest("tr").find('input[name="@($"{Model}Id")"]').val();
         }).get().join(",");
 
-        const formData = new FormData();
-        formData.append("PageIndex", pageIndex);
-        formData.append("KeyWord", keyword);
+        const $form = $("#@Model-search-form").closest("form");
+        const formData = new FormData($form[0]);
+
+        // Xóa các key không cần thiết (__Invariant)
+        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+
+        const filter = new FormData();
+        cleanEntries.forEach(([key, value]) => filter.append(key, value));
+        filter.append("@Constants.PageIndex", pageIndex);
 
         switch (selectedValue) {
             case "all":

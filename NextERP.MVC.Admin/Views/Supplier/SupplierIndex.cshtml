@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="supplier-search-form" class="m-2">
+            <form id="@TableName.Supplier-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Supplier.SupplierCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.SupplierCode</label>
@@ -185,9 +185,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#supplier-search-form #@AttributeNames.Supplier.SupplierCode").val("");
-        $("#supplier-search-form #@Constants.DateCreate").val("");
-        $("#supplier-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Supplier-search-form #@AttributeNames.Supplier.SupplierCode").val("");
+        $("#@TableName.Supplier-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Supplier-search-form #@Constants.DateUpdate").val("");
 
         loadSuppliers();
     })

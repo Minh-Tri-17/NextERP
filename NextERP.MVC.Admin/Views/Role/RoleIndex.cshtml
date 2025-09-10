@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="role-search-form" class="m-2">
+            <form id="@TableName.Role-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Role.RoleCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.RoleCode</label>
@@ -187,9 +187,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#role-search-form #@AttributeNames.Role.RoleCode").val("");
-        $("#role-search-form #@Constants.DateCreate").val("");
-        $("#role-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Role-search-form #@AttributeNames.Role.RoleCode").val("");
+        $("#@TableName.Role-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Role-search-form #@Constants.DateUpdate").val("");
 
         loadRoles();
     })

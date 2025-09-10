@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<RoleModel>>($"{Constants.UrlGetRole}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<RoleModel>>> GetPaging(RoleModel request)
+        public async Task<APIBaseResult<PagingResult<RoleModel>>> GetPaging(Filter filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<RoleModel>>, RoleModel>($"{Constants.UrlGetRoles}/{Constants.Filter}", request);
+            return await PostAsync<APIBaseResult<PagingResult<RoleModel>>, Filter>($"{Constants.UrlGetRoles}/{Constants.Filter}", filter);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportRole, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(RoleModel request)
+        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, RoleModel>(Constants.UrlExportRole, request);
+            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportRole, filter);
         }
 
         #endregion

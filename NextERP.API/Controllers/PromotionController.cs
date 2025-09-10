@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetPromotions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions()
+        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions(Filter filter)
         {
-            var promotion = new PromotionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    promotion = JsonConvert.DeserializeObject<PromotionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (promotion != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    promotion.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    promotion = JsonConvert.DeserializeObject<PromotionModel>(body);
-            }
-
-            if (promotion == null)
-                return BadRequest();
-
-            var result = await _promotionService.GetPaging(promotion);
+            var result = await _promotionService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPromotion))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPromotion()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPromotion(Filter filter)
         {
-            var promotion = new PromotionModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    promotion = JsonConvert.DeserializeObject<PromotionModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (promotion != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    promotion.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    promotion = JsonConvert.DeserializeObject<PromotionModel>(body);
-            }
-
-            if (promotion == null)
-                return BadRequest();
-
-            var result = await _promotionService.Export(promotion);
+            var result = await _promotionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

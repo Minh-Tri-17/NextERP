@@ -44,7 +44,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="supplierOrder-search-form" class="m-2">
+            <form id="@TableName.SupplierOrder-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.SupplierOrder.SupplierOrderCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.SupplierOrderCode</label>
@@ -205,14 +205,14 @@
     })
 
     $("#clear-button").click(function () {
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.SupplierOrderCode").val("");
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.ExpectedDeliveryDate").val("");
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.OrderDate").val("");
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.ActualDeliveryDate").val("");
-        $("#supplierOrder-search-form #@Constants.DateCreate").val("");
-        $("#supplierOrder-search-form #@Constants.DateUpdate").val("");
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.OrderStatus").val("").trigger("change");
-        $("#supplierOrder-search-form #@AttributeNames.SupplierOrder.PaymentStatus").val("").trigger("change");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.SupplierOrderCode").val("");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.ExpectedDeliveryDate").val("");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.OrderDate").val("");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.ActualDeliveryDate").val("");
+        $("#@TableName.SupplierOrder-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.SupplierOrder-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.OrderStatus").val("").trigger("change");
+        $("#@TableName.SupplierOrder-search-form #@AttributeNames.SupplierOrder.PaymentStatus").val("").trigger("change");
 
         loadSupplierOrders();
     })

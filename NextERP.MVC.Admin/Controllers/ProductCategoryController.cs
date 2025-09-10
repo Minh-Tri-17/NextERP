@@ -41,7 +41,45 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(ProductCategoryModel request)
         {
-            var result = await _productCategoryAPIService.GetPaging(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = Constants.IsDelete,
+                        FilterType = Util.Enums.FilterType.Boolean.ToString(),
+                        FilterOperator = DataHelper.GetBool(request.IsDelete)
+                            ? Util.Enums.FilterOperator.Equal.ToString()
+                            : Util.Enums.FilterOperator.NotEqual.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.ProductCategory.ProductCategoryCode,
+                        FilterValue = DataHelper.GetString(request.ProductCategoryCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _productCategoryAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -97,7 +135,53 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Export(ProductCategoryModel request)
         {
-            var result = await _productCategoryAPIService.Export(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = Constants.IsDelete,
+                        FilterType = Util.Enums.FilterType.Boolean.ToString(),
+                        FilterOperator = DataHelper.GetBool(request.IsDelete)
+                            ? Util.Enums.FilterOperator.Equal.ToString()
+                            : Util.Enums.FilterOperator.NotEqual.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.Ids,
+                        FilterValue = DataHelper.GetString(request.Ids),
+                        FilterType = Util.Enums.FilterType.Guid.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.ProductCategory.ProductCategoryCode,
+                        FilterValue = DataHelper.GetString(request.ProductCategoryCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                AllowPaging = request.AllowPaging,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _productCategoryAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 

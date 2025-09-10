@@ -11,8 +11,8 @@ namespace NextERP.BLL.Interface
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<bool>> DeletePermanently(string ids);
         public Task<APIBaseResult<SupplierModel>> GetOne(Guid id);
-        public Task<APIBaseResult<PagingResult<SupplierModel>>> GetPaging(SupplierModel request);
+        public Task<APIBaseResult<PagingResult<SupplierModel>>> GetPaging(Filter filter);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
-        public Task<APIBaseResult<byte[]>> Export(SupplierModel request);
+        public Task<APIBaseResult<byte[]>> Export(Filter filter);
     }
 }

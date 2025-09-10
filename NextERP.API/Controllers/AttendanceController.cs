@@ -100,35 +100,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetAttendances)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances()
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Filter filter)
         {
-            var attendance = new AttendanceModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (attendance != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    attendance.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(body);
-            }
-
-            if (attendance == null)
-                return BadRequest();
-
-            var result = await _attendanceService.GetPaging(attendance);
+            var result = await _attendanceService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -155,35 +129,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAttendance))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAttendance()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAttendance(Filter filter)
         {
-            var attendance = new AttendanceModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (attendance != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    attendance.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    attendance = JsonConvert.DeserializeObject<AttendanceModel>(body);
-            }
-
-            if (attendance == null)
-                return BadRequest();
-
-            var result = await _attendanceService.Export(attendance);
+            var result = await _attendanceService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

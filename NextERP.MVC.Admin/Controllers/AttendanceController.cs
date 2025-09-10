@@ -21,10 +21,6 @@ namespace NextERP.MVC.Admin.Controllers
 
         #region Default Operations
 
-        #endregion
-
-        #region Custom Operations
-
         [HttpGet]
         public IActionResult AttendanceIndex()
         {
@@ -44,7 +40,52 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(AttendanceModel request)
         {
-            var result = await _attendanceAPIService.GetPaging(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = Constants.IsDelete,
+                        FilterType = Util.Enums.FilterType.Boolean.ToString(),
+                        FilterOperator = DataHelper.GetBool(request.IsDelete)
+                            ? Util.Enums.FilterOperator.Equal.ToString()
+                            : Util.Enums.FilterOperator.NotEqual.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.Attendance.AttendanceCode,
+                        FilterValue = DataHelper.GetString(request.AttendanceCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.Attendance.WorkDate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _attendanceAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -100,13 +141,70 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Export(AttendanceModel request)
         {
-            var result = await _attendanceAPIService.Export(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = Constants.IsDelete,
+                        FilterType = Util.Enums.FilterType.Boolean.ToString(),
+                        FilterOperator = DataHelper.GetBool(request.IsDelete)
+                            ? Util.Enums.FilterOperator.Equal.ToString()
+                            : Util.Enums.FilterOperator.NotEqual.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.Ids,
+                        FilterValue = DataHelper.GetString(request.Ids),
+                        FilterType = Util.Enums.FilterType.Guid.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.Attendance.AttendanceCode,
+                        FilterValue = DataHelper.GetString(request.AttendanceCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.Attendance.WorkDate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                AllowPaging = request.AllowPaging,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _attendanceAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
-            var fileName = string.Format(Constants.FileName, TableName.Appointment, DateTime.Now.ToString(Constants.DateTimeString));
+            var fileName = string.Format(Constants.FileName, TableName.Attendance, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
+
+        #endregion
+
+        #region Custom Operations
 
         #endregion
     }

@@ -100,34 +100,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetProducts)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(Filter filter)
         {
-            var product = new ProductModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    product = JsonConvert.DeserializeObject<ProductModel>(json!);
-
-                if (product != null)
-                {
-                    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                    product.ImageFiles = files;
-                }
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    product = JsonConvert.DeserializeObject<ProductModel>(body);
-            }
-
-            if (product == null)
-                return BadRequest();
-
-            var result = await _productService.GetPaging(product);
+            var result = await _productService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -154,34 +129,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportProduct))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProduct()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProduct(Filter filter)
         {
-            var product = new ProductModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    product = JsonConvert.DeserializeObject<ProductModel>(json!);
-
-                if (product != null)
-                {
-                    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                    product.ImageFiles = files;
-                }
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    product = JsonConvert.DeserializeObject<ProductModel>(body);
-            }
-
-            if (product == null)
-                return BadRequest();
-
-            var result = await _productService.Export(product);
+            var result = await _productService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

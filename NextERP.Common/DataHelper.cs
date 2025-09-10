@@ -85,14 +85,23 @@ namespace NextERP.Util
 
         public static DateTime GetDateTime(object? value)
         {
+            if (value == null)
+                return DateTime.MinValue;
+
             if (value is DateTime dt)
                 return dt;
 
             // Nếu giá trị là string và có thể chuyển đổi thành DateTime, thì thực hiện chuyển đổi
             var stringDateTime = GetString(value);
 
-            string[] formats = { Constants.DateFirstFormatDash, Constants.DateLastFormatDash, Constants.DateFirstFormatSlash,
-                Constants.DateLastFormatSlash, Constants.DateTimeFormatDash, Constants.DateTimeFormatSlash };
+            string[] formats = {
+                Constants.DateFirstFormatDash,   // "dd-MM-yyyy"
+                Constants.DateLastFormatDash,    // "yyyy-MM-dd"
+                Constants.DateFirstFormatSlash,  // "dd/MM/yyyy"
+                Constants.DateLastFormatSlash,   // "yyyy/MM/dd"
+                Constants.DateTimeFormatDash,    // "dd-MM-yyyy HH:mm:ss"
+                Constants.DateTimeFormatSlash    // "dd/MM/yyyy HH:mm:ss"
+            };
 
             if (DateTime.TryParseExact(stringDateTime, formats, null, System.Globalization.DateTimeStyles.None, out var parsed))
                 return parsed;

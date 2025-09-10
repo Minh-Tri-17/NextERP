@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="notification-search-form" class="m-2">
+            <form id="@TableName.Notification-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Notification.NotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationCode</label>
@@ -182,9 +182,9 @@
     })
 
     $("#clear-button").click(function () {
-        $("#notification-search-form #@AttributeNames.Notification.NotificationCode").val("");
-        $("#notification-search-form #@Constants.DateCreate").val("");
-        $("#notification-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Notification-search-form #@AttributeNames.Notification.NotificationCode").val("");
+        $("#@TableName.Notification-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Notification-search-form #@Constants.DateUpdate").val("");
 
         loadNotifications();
     })

@@ -41,7 +41,45 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> GetList(InvoiceModel request)
         {
-            var result = await _invoiceAPIService.GetPaging(request);
+            Filter filter = new Filter()
+            {
+                Filters = new List<FilterItem>()
+                {
+                    new FilterItem()
+                    {
+                        FilterName = Constants.IsDelete,
+                        FilterType = Util.Enums.FilterType.Boolean.ToString(),
+                        FilterOperator = DataHelper.GetBool(request.IsDelete)
+                            ? Util.Enums.FilterOperator.Equal.ToString()
+                            : Util.Enums.FilterOperator.NotEqual.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = AttributeNames.Invoice.InvoiceCode,
+                        FilterValue = DataHelper.GetString(request.InvoiceCode),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateCreate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                    new FilterItem()
+                    {
+                        FilterName = Constants.DateUpdate,
+                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
+                        FilterType = Util.Enums.FilterType.Date.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                    },
+                },
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _invoiceAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 

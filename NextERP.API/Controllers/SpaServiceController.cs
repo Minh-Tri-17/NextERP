@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSpaServices)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SpaService>>> GetSpaServices()
+        public async Task<ActionResult<IEnumerable<SpaService>>> GetSpaServices(Filter filter)
         {
-            var spaService = new SpaServiceModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    spaService = JsonConvert.DeserializeObject<SpaServiceModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (spaService != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    spaService.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    spaService = JsonConvert.DeserializeObject<SpaServiceModel>(body);
-            }
-
-            if (spaService == null)
-                return BadRequest();
-
-            var result = await _spaServiceService.GetPaging(spaService);
+            var result = await _spaServiceService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSpaService))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaService()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaService(Filter filter)
         {
-            var spaService = new SpaServiceModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    spaService = JsonConvert.DeserializeObject<SpaServiceModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (spaService != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    spaService.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    spaService = JsonConvert.DeserializeObject<SpaServiceModel>(body);
-            }
-
-            if (spaService == null)
-                return BadRequest();
-
-            var result = await _spaServiceService.Export(spaService);
+            var result = await _spaServiceService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

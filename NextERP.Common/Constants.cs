@@ -6,6 +6,7 @@
         public const string Token = "Token";
         public const string APIAddress = "APIAddress";
         public const string Id = "Id";
+        public const string Ids = "Ids";
         public const string IdMain = "IdMain";
         public const string Code = "Code";
         public const string ImageFiles = "ImageFiles";
@@ -48,8 +49,8 @@
         public const string DateLastFormatDash = "yyyy-MM-dd";
         public const string DateFirstFormatSlash = "dd/MM/yyyy";
         public const string DateLastFormatSlash = "yyyy/MM/dd";
-        public const string DateTimeFormatDash = "dd-MM-yyyy HH:mm";
-        public const string DateTimeFormatSlash = "dd/MM/yyyy HH:mm";
+        public const string DateTimeFormatDash = "dd-MM-yyyy HH:mm:ss";
+        public const string DateTimeFormatSlash = "dd/MM/yyyy HH:mm:ss";
         public const string ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         #endregion

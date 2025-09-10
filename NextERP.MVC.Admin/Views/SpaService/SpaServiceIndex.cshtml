@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="spaService-search-form" class="m-2">
+            <form id="@TableName.SpaService-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.SpaService.SpaServiceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceCode</label>
@@ -197,10 +197,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#spaService-search-form #@AttributeNames.SpaService.SpaServiceCode").val("");
-        $("#spaService-search-form #@Constants.DateCreate").val("");
-        $("#spaService-search-form #@Constants.DateUpdate").val("");
-        $("#spaService-search-form #@AttributeNames.SpaService.OperatingStatus").val("").trigger("change");
+        $("#@TableName.SpaService-search-form #@AttributeNames.SpaService.SpaServiceCode").val("");
+        $("#@TableName.SpaService-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.SpaService-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.SpaService-search-form #@AttributeNames.SpaService.OperatingStatus").val("").trigger("change");
 
         loadSpaServices();
     })

@@ -10,6 +10,6 @@ namespace NextERP.MVC.Admin.Services.Interfaces
         public Task<APIBaseResult<bool>> Delete(string ids);
         public Task<APIBaseResult<bool>> DeletePermanently(string ids);
         public Task<APIBaseResult<FunctionModel>> GetOne(Guid id);
-        public Task<APIBaseResult<PagingResult<FunctionModel>>> GetPaging(FunctionModel request);
+        public Task<APIBaseResult<PagingResult<FunctionModel>>> GetPaging(Filter filter);
     }
 }

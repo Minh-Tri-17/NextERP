@@ -16,216 +16,208 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
-    public class FeedbackService : IFeedbackService
-    {
-        #region Infrastructure
+	public class FeedbackService : IFeedbackService
+	{
+		#region Infrastructure
 
-        private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
-        private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
+		private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
+		private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
-        public FeedbackService(NextErpContext context, ICurrentUserService currentUser)
-        {
-            _context = context;
-            _currentUser = currentUser;
-        }
+		public FeedbackService(NextErpContext context, ICurrentUserService currentUser)
+		{
+			_context = context;
+			_currentUser = currentUser;
+		}
 
-        #endregion
+		#endregion
 
-        #region Default Operations
+		#region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(FeedbackModel request)
-        {
-            #region Check null request and create variable
+		public async Task<APIBaseResult<bool>> CreateOrEdit(FeedbackModel request)
+		{
+			#region Check null request and create variable
 
-            var id = DataHelper.GetGuid(request.Id);
+			var id = DataHelper.GetGuid(request.Id);
 
-            #endregion
+			#endregion
 
-            if (id == Guid.Empty)
-            {
-                var feedback = new Feedback();
-                DataHelper.MapAudit(request, feedback, _currentUser.UserName);
+			if (id == Guid.Empty)
+			{
+				var feedback = new Feedback();
+				DataHelper.MapAudit(request, feedback, _currentUser.UserName);
 
-                await _context.Feedbacks.AddAsync(feedback);
+				await _context.Feedbacks.AddAsync(feedback);
 
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.CreateSuccess, true);
+				var result = await _context.SaveChangesAsync();
+				if (result > 0)
+					return new APISuccessResult<bool>(Messages.CreateSuccess, true);
 
-                return new APIErrorResult<bool>(Messages.CreateFailed);
-            }
-            else
-            {
-                var feedback = await _context.Feedbacks.FindAsync(id);
-                if (feedback == null)
-                    return new APIErrorResult<bool>(Messages.NotFoundUpdate);
+				return new APIErrorResult<bool>(Messages.CreateFailed);
+			}
+			else
+			{
+				var feedback = await _context.Feedbacks.FindAsync(id);
+				if (feedback == null)
+					return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
-                DataHelper.MapAudit(request, feedback, _currentUser.UserName);
+				DataHelper.MapAudit(request, feedback, _currentUser.UserName);
 
-                var result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
+				var result = await _context.SaveChangesAsync();
+				if (result > 0)
+					return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
 
-                return new APIErrorResult<bool>(Messages.UpdateFailed);
-            }
-        }
+				return new APIErrorResult<bool>(Messages.UpdateFailed);
+			}
+		}
 
-        public async Task<APIBaseResult<bool>> Delete(string ids)
-        {
-            List<Guid> listFeedbackId = ids.Split(',')
-                .Select(id => DataHelper.GetGuid(id.Trim()))
-                .Where(guid => guid != Guid.Empty)
-                .ToList();
+		public async Task<APIBaseResult<bool>> Delete(string ids)
+		{
+			List<Guid> listFeedbackId = ids.Split(',')
+				.Select(id => DataHelper.GetGuid(id.Trim()))
+				.Where(guid => guid != Guid.Empty)
+				.ToList();
 
-            var listFeedback = await _context.Feedbacks
-                .Where(s => listFeedbackId.Contains(s.Id))
-                .ToListAsync();
+			var listFeedback = await _context.Feedbacks
+				.Where(s => listFeedbackId.Contains(s.Id))
+				.ToListAsync();
 
-            foreach (var feedback in listFeedback)
-            {
-                feedback.IsDelete = true; // Đánh dấu là đã xóa
-            }
+			foreach (var feedback in listFeedback)
+			{
+				feedback.IsDelete = true; // Đánh dấu là đã xóa
+			}
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-            return new APIErrorResult<bool>(Messages.DeleteFailed);
-        }
+			return new APIErrorResult<bool>(Messages.DeleteFailed);
+		}
 
-        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
-        {
-            List<Guid> listFeedbackId = ids.Split(',')
-                .Select(id => DataHelper.GetGuid(id.Trim()))
-                .Where(guid => guid != Guid.Empty)
-                .ToList();
+		public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+		{
+			List<Guid> listFeedbackId = ids.Split(',')
+				.Select(id => DataHelper.GetGuid(id.Trim()))
+				.Where(guid => guid != Guid.Empty)
+				.ToList();
 
-            var listFeedback = await _context.Feedbacks
-                .Where(s => listFeedbackId.Contains(s.Id))
-                .ToListAsync();
+			var listFeedback = await _context.Feedbacks
+				.Where(s => listFeedbackId.Contains(s.Id))
+				.ToListAsync();
 
-            foreach (var feedback in listFeedback)
-            {
-                _context.Feedbacks.Remove(feedback); // Xóa vĩnh viễn
-            }
+			foreach (var feedback in listFeedback)
+			{
+				_context.Feedbacks.Remove(feedback); // Xóa vĩnh viễn
+			}
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-            return new APIErrorResult<bool>(Messages.DeleteFailed);
-        }
+			return new APIErrorResult<bool>(Messages.DeleteFailed);
+		}
 
-        public async Task<APIBaseResult<FeedbackModel>> GetOne(Guid id)
-        {
-            var feedback = await _context.Feedbacks
-                .AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .FirstOrDefaultAsync(s => s.Id == id);
+		public async Task<APIBaseResult<FeedbackModel>> GetOne(Guid id)
+		{
+			var feedback = await _context.Feedbacks
+				.AsNoTracking() // Không theo dõi thay đổi của thực thể
+				.FirstOrDefaultAsync(s => s.Id == id);
 
-            if (feedback == null)
-                return new APIErrorResult<FeedbackModel>(Messages.NotFoundGet);
+			if (feedback == null)
+				return new APIErrorResult<FeedbackModel>(Messages.NotFoundGet);
 
-            var feedbackModel = DataHelper.Mapping<Feedback, FeedbackModel>(feedback);
+			var feedbackModel = DataHelper.Mapping<Feedback, FeedbackModel>(feedback);
 
-            return new APISuccessResult<FeedbackModel>(Messages.GetResultSuccess, feedbackModel);
-        }
+			return new APISuccessResult<FeedbackModel>(Messages.GetResultSuccess, feedbackModel);
+		}
 
-        public async Task<APIBaseResult<PagingResult<FeedbackModel>>> GetPaging(FeedbackModel request)
-        {
-            IQueryable<Feedback> query = _context.Feedbacks.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+		public async Task<APIBaseResult<PagingResult<FeedbackModel>>> GetPaging(Filter filter)
+		{
+			IQueryable<Feedback> query = _context.Feedbacks.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-            Filter filter = new Filter()
-            {
-                KeyWord = request.FeedbackCode,
-                PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
-                IsDelete = DataHelper.GetBool(request.IsDelete)
-            };
+			query = query.ApplyCommonFilters(filter);
 
-            query = query.ApplyCommonFilters(filter, s => s.FeedbackCode!, s => s.IsDelete, s => s.Id);
+			var totalCount = await query.CountAsync();
 
-            var totalCount = await query.CountAsync();
+			query = query.ApplyPaging(filter);
 
-            query = query.ApplyPaging(filter);
+			var listFeedback = await query
+				.OrderByDescending(s => s.DateFeedback)
+				.ToListAsync();
 
-            var listFeedback = await query
-                .OrderByDescending(s => s.DateFeedback)
-                .ToListAsync();
+			var listFeedbackModel = DataHelper.MappingList<Feedback, FeedbackModel>(listFeedback);
+			var pageResult = new PagingResult<FeedbackModel>()
+			{
+				TotalRecord = totalCount,
+				PageRecord = listFeedbackModel.Count(),
+				PageIndex = filter.PageIndex,
+				PageSize = filter.PageSize,
+				Items = listFeedbackModel
+			};
 
-            var listFeedbackModel = DataHelper.MappingList<Feedback, FeedbackModel>(listFeedback);
-            var pageResult = new PagingResult<FeedbackModel>()
-            {
-                TotalRecord = totalCount,
-                PageRecord = listFeedbackModel.Count(),
-                PageIndex = filter.PageIndex,
-                PageSize = filter.PageSize,
-                Items = listFeedbackModel
-            };
+			return new APISuccessResult<PagingResult<FeedbackModel>>(Messages.GetListResultSuccess, pageResult);
+		}
 
-            return new APISuccessResult<PagingResult<FeedbackModel>>(Messages.GetListResultSuccess, pageResult);
-        }
+		public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
+		{
+			var stream = new MemoryStream();
+			await fileImport.CopyToAsync(stream);
+			stream.Position = 0;
 
-        public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
-        {
-            var stream = new MemoryStream();
-            await fileImport.CopyToAsync(stream);
-            stream.Position = 0;
+			using var workbook = new XSSFWorkbook(stream);
+			var sheet = workbook.GetSheetAt(0);
 
-            using var workbook = new XSSFWorkbook(stream);
-            var sheet = workbook.GetSheetAt(0);
+			// Header data
+			var headerRow = sheet.GetRow(0);
 
-            // Header data
-            var headerRow = sheet.GetRow(0);
+			var listFeedbackModel = new List<FeedbackModel>();
 
-            var listFeedbackModel = new List<FeedbackModel>();
+			for (int i = 1; i <= sheet.LastRowNum; i++)
+			{
+				// Row data
+				var row = sheet.GetRow(i);
+				if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
+					continue; // Bỏ qua hàng trống
 
-            for (int i = 1; i <= sheet.LastRowNum; i++)
-            {
-                // Row data
-                var row = sheet.GetRow(i);
-                if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
-                    continue; // Bỏ qua hàng trống
+				FeedbackModel feedbackModel = DataHelper.CopyImport<FeedbackModel>(headerRow, row);
+				listFeedbackModel.Add(feedbackModel);
+			}
 
-                FeedbackModel feedbackModel = DataHelper.CopyImport<FeedbackModel>(headerRow, row);
-                listFeedbackModel.Add(feedbackModel);
-            }
+			var listFeedback = new List<Feedback>();
+			DataHelper.MapListAudit<FeedbackModel, Feedback>(listFeedbackModel, listFeedback, _currentUser.UserName);
 
-            var listFeedback = new List<Feedback>();
-            DataHelper.MapListAudit<FeedbackModel, Feedback>(listFeedbackModel, listFeedback, _currentUser.UserName);
+			await _context.Feedbacks.AddRangeAsync(listFeedback);
 
-            await _context.Feedbacks.AddRangeAsync(listFeedback);
+			var result = await _context.SaveChangesAsync();
+			if (result > 0)
+				return new APISuccessResult<bool>(Messages.ImportSuccess, true);
 
-            var result = await _context.SaveChangesAsync();
-            if (result > 0)
-                return new APISuccessResult<bool>(Messages.ImportSuccess, true);
+			return new APIErrorResult<bool>(Messages.ImportFailed);
+		}
 
-            return new APIErrorResult<bool>(Messages.ImportFailed);
-        }
+		public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+		{
+			var data = await GetPaging(filter);
+			var items = data?.Result?.Items ?? new List<FeedbackModel>();
 
-        public async Task<APIBaseResult<byte[]>> Export(FeedbackModel request)
-        {
-            var data = await GetPaging(request);
-            var items = data?.Result?.Items ?? new List<FeedbackModel>();
+			using var workbook = new XLWorkbook();
+			var worksheet = workbook.Worksheets.Add(TableName.Feedback);
 
-            using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(TableName.Feedback);
+			var listFeedback = DataHelper.MappingList<FeedbackModel, Feedback>(items);
+			DataHelper.CopyExport(worksheet, listFeedback);
 
-            var listFeedback = DataHelper.MappingList<FeedbackModel, Feedback>(items);
-            DataHelper.CopyExport(worksheet, listFeedback);
+			var stream = new MemoryStream();
+			workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
+			var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
+			if (bytes.Length > 0)
+				return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
 
-            var stream = new MemoryStream();
-            workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
-            var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
-            if (bytes.Length > 0)
-                return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
+			return new APIErrorResult<byte[]>(Messages.ExportFailed);
+		}
 
-            return new APIErrorResult<byte[]>(Messages.ExportFailed);
-        }
+		#endregion
 
-        #endregion
+		#region Custom Operations
 
-        #region Custom Operations
-
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -14,78 +14,104 @@ namespace NextERP.ModelBase
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class AttendanceModel : Attendance
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class BranchModel : Branch
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class CustomerModel : Customer
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class DepartmentModel : Department
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class EmployeeModel : Employee
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class FeedbackModel : Feedback
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class FunctionModel : Function
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class InvoiceModel : Invoice
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class InvoiceDetailModel : InvoiceDetail
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class LeaveRequestModel : LeaveRequest
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class NotificationModel : Notification
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class PositionModel : Position
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class ProductModel : Product
@@ -96,84 +122,112 @@ namespace NextERP.ModelBase
 
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class ProductImageModel : ProductImage
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class ProductCategoryModel : ProductCategory
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class PromotionModel : Promotion
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class RoleModel : Role
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SalaryModel : Salary
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class ScheduleModel : Schedule
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SpaServiceModel : SpaService
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SpaServiceImageModel : SpaServiceImage
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SpaServiceCategoryModel : SpaServiceCategory
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SupplierModel : Supplier
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SupplierOrderModel : SupplierOrder
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class SupplierOrderDetailModel : SupplierOrderDetail
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class TrainingSessionModel : TrainingSession
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     public partial class UserModel : User
@@ -186,21 +240,27 @@ namespace NextERP.ModelBase
 
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
     }
 
     #endregion
 
     public class Filter
     {
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
-        public string? KeyWord { get; set; }
         public bool AllowPaging { get; set; } = true;
-        public bool IsDelete { get; set; } = false;
-        public string? Ids { get; set; }
         public Guid? IdMain { get; set; }
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public List<FilterItem> Filters { get; set; } = new List<FilterItem>();
+    }
+
+    public class FilterItem
+    {
+        public string FilterName { get; set; } = string.Empty;
+        public string FilterValue { get; set; } = string.Empty;
+        public string FilterType { get; set; } = string.Empty;
+        public string FilterOperator { get; set; } = string.Empty;
     }
 
     public class Calendar

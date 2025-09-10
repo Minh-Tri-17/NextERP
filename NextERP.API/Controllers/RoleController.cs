@@ -101,35 +101,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetRoles)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles(Filter filter)
         {
-            var role = new RoleModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    role = JsonConvert.DeserializeObject<RoleModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (role != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    role.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    role = JsonConvert.DeserializeObject<RoleModel>(body);
-            }
-
-            if (role == null)
-                return BadRequest();
-
-            var result = await _roleService.GetPaging(role);
+            var result = await _roleService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
@@ -156,35 +130,9 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportRole))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportRole()
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportRole(Filter filter)
         {
-            var role = new RoleModel();
-
-            if (Request.HasFormContentType)
-            {
-                var json = Request.Form["Json"];
-                if (!string.IsNullOrEmpty(json))
-                    role = JsonConvert.DeserializeObject<RoleModel>(json!);
-
-                //// Khi nào model có field file thì mở ra
-                //if (role != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    role.ImageFiles = files;
-                //}
-            }
-            else
-            {
-                using var reader = new StreamReader(Request.Body);
-                var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body))
-                    role = JsonConvert.DeserializeObject<RoleModel>(body);
-            }
-
-            if (role == null)
-                return BadRequest();
-
-            var result = await _roleService.Export(role);
+            var result = await _roleService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

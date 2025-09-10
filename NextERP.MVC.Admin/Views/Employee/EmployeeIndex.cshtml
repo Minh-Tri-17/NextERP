@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="employee-search-form" class="m-2">
+            <form id="@TableName.Employee-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.Employee.EmployeeCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EmployeeCode</label>
@@ -210,11 +210,11 @@
     })
 
     $("#clear-button").click(function () {
-        $("#employee-search-form #@AttributeNames.Employee.EmployeeCode").val("");
-        $("#employee-search-form #@AttributeNames.Employee.HireDate").val("");
-        $("#employee-search-form #@Constants.DateCreate").val("");
-        $("#employee-search-form #@Constants.DateUpdate").val("");
-        $("#employee-search-form #@AttributeNames.Employee.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Employee-search-form #@AttributeNames.Employee.EmployeeCode").val("");
+        $("#@TableName.Employee-search-form #@AttributeNames.Employee.HireDate").val("");
+        $("#@TableName.Employee-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.Employee-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Employee-search-form #@AttributeNames.Employee.OperatingStatus").val("").trigger("change");
 
         loadEmployees();
     })

@@ -50,7 +50,7 @@
         </form>
 
         <div class="collapse" id="filter-inputs">
-            <form id="user-search-form" class="m-2">
+            <form id="@TableName.User-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
                         <label for="@AttributeNames.User.UserCode" class="col-form-label col-md-6" localize-content>@AttributeNames.User.UserCode</label>
@@ -144,7 +144,7 @@
                 $("#@TableName.User #@AttributeNames.User.GroupRole").val(data.groupRole);
                 $("#@TableName.User #@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
                 $("#@TableName.User #@AttributeNames.User.Note").val(data.note);
-                $("#@TableName.User #@AttributeNames.Branch.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.User #@AttributeNames.User.OperatingStatus").val(data.operatingStatus).trigger("change");
                 $("#@TableName.User #@AttributeNames.Employee.EmployeeId").val(data.employeeId).trigger("change");
             })
             .catch(err => {
@@ -197,10 +197,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#user-search-form #@AttributeNames.User.UserCode").val("");
-        $("#user-search-form #@Constants.DateCreate").val("");
-        $("#user-search-form #@Constants.DateUpdate").val("");
-        $("#user-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
+        $("#@TableName.User-search-form #@AttributeNames.User.UserCode").val("");
+        $("#@TableName.User-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.User-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.User-search-form #@AttributeNames.User.OperatingStatus").val("").trigger("change");
 
         loadUsers();
     })
