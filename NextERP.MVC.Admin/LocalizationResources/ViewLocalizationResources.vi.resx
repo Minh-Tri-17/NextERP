@@ -969,46 +969,70 @@
   <data name="Profit" xml:space="preserve">
     <value>Lợi nhuận</value>
   </data>
-  <data name="zstring160" xml:space="preserve">
-    <value />
+  <data name="MailCode" xml:space="preserve">
+    <value>Mã mail</value>
   </data>
   <data name="Subtitle" xml:space="preserve">
     <value>Quản lý hiệu quả, tối ưu vận hành, nâng cao năng suất.</value>
   </data>
-  <data name="zstring164" xml:space="preserve">
-    <value />
+  <data name="TemplateMailName" xml:space="preserve">
+    <value>Tên mẫu mail</value>
   </data>
   <data name="Spending" xml:space="preserve">
     <value>Chi tiêu</value>
   </data>
-  <data name="zstring162" xml:space="preserve">
+  <data name="MailContent" xml:space="preserve">
+    <value>Nội dung mail</value>
+  </data>
+  <data name="TemplateNotificationCode" xml:space="preserve">
+    <value>Mã mẫu thông báo</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="zstring172" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring166" xml:space="preserve">
+  <data name="TemplateNotification" xml:space="preserve">
+    <value>Mẫu thông báo</value>
+  </data>
+  <data name="zstring174" xml:space="preserve">
     <value />
   </data>
   <data name="Revenue" xml:space="preserve">
     <value>Doanh thu</value>
   </data>
-  <data name="zstring161" xml:space="preserve">
-    <value />
+  <data name="MailName" xml:space="preserve">
+    <value>Tên mail</value>
   </data>
   <data name="CTA" xml:space="preserve">
     <value>Khám phá ngay</value>
   </data>
-  <data name="zstring165" xml:space="preserve">
-    <value />
+  <data name="TemplateContent" xml:space="preserve">
+    <value>Nội dung mẫu</value>
   </data>
   <data name="Slogan" xml:space="preserve">
     <value>Giải pháp tối ưu cho doanh nghiệp 4.0 🎯</value>
   </data>
-  <data name="zstring163" xml:space="preserve">
-    <value />
+  <data name="TemplateMailCode" xml:space="preserve">
+    <value>Mã mẫu mail</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>Tên nhân viên</value>
   </data>
-  <data name="zstring167" xml:space="preserve">
+  <data name="TemplateNotificationName" xml:space="preserve">
+    <value>Tên mẫu thông báo</value>
+  </data>
+  <data name="TemplateMail" xml:space="preserve">
+    <value>Mẫu mail</value>
+  </data>
+  <data name="zstring173" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring171" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring175" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

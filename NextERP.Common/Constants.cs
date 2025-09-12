@@ -218,6 +218,42 @@
 
         #endregion
 
+        #region TemplateNotification
+
+        public const string UrlCreateOrEditTemplateNotification = "/api/TemplateNotification/CreateOrEditTemplateNotification";
+        public const string UrlDeleteTemplateNotification = "/api/TemplateNotification/DeleteTemplateNotification";
+        public const string UrlDeletePermanentlyTemplateNotification = "/api/TemplateNotification/DeletePermanentlyTemplateNotification";
+        public const string UrlGetTemplateNotification = "/api/TemplateNotification/GetTemplateNotification";
+        public const string UrlGetTemplateNotifications = "/api/TemplateNotification/GetTemplateNotifications";
+        public const string UrlImportTemplateNotification = "/api/TemplateNotification/ImportTemplateNotification";
+        public const string UrlExportTemplateNotification = "/api/TemplateNotification/ExportTemplateNotification";
+
+        #endregion
+
+        #region Mail
+
+        public const string UrlCreateOrEditMail = "/api/Mail/CreateOrEditMail";
+        public const string UrlDeleteMail = "/api/Mail/DeleteMail";
+        public const string UrlDeletePermanentlyMail = "/api/Mail/DeletePermanentlyMail";
+        public const string UrlGetMail = "/api/Mail/GetMail";
+        public const string UrlGetMails = "/api/Mail/GetMails";
+        public const string UrlImportMail = "/api/Mail/ImportMail";
+        public const string UrlExportMail = "/api/Mail/ExportMail";
+
+        #endregion
+
+        #region TemplateMail
+
+        public const string UrlCreateOrEditTemplateMail = "/api/TemplateMail/CreateOrEditTemplateMail";
+        public const string UrlDeleteTemplateMail = "/api/TemplateMail/DeleteTemplateMail";
+        public const string UrlDeletePermanentlyTemplateMail = "/api/TemplateMail/DeletePermanentlyTemplateMail";
+        public const string UrlGetTemplateMail = "/api/TemplateMail/GetTemplateMail";
+        public const string UrlGetTemplateMails = "/api/TemplateMail/GetTemplateMails";
+        public const string UrlImportTemplateMail = "/api/TemplateMail/ImportTemplateMail";
+        public const string UrlExportTemplateMail = "/api/TemplateMail/ExportTemplateMail";
+
+        #endregion
+
         #region Position
 
         public const string UrlCreateOrEditPosition = "/api/Position/CreateOrEditPosition";

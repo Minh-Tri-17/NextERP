@@ -969,46 +969,70 @@
   <data name="Profit" xml:space="preserve">
     <value>Profit</value>
   </data>
-  <data name="zstring160" xml:space="preserve">
-    <value />
+  <data name="MailCode" xml:space="preserve">
+    <value>Mail code</value>
   </data>
   <data name="Subtitle" xml:space="preserve">
     <value>Effective management, optimized operations, improved productivity.</value>
   </data>
-  <data name="zstring164" xml:space="preserve">
-    <value />
+  <data name="TemplateMailName" xml:space="preserve">
+    <value>Template mail name</value>
   </data>
   <data name="Spending" xml:space="preserve">
     <value>Spending</value>
   </data>
-  <data name="zstring162" xml:space="preserve">
+  <data name="MailContent" xml:space="preserve">
+    <value>Mail content</value>
+  </data>
+  <data name="TemplateNotificationCode" xml:space="preserve">
+    <value>Template notification code</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="zstring172" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring166" xml:space="preserve">
+  <data name="TemplateNotification" xml:space="preserve">
+    <value>Template notification</value>
+  </data>
+  <data name="zstring174" xml:space="preserve">
     <value />
   </data>
   <data name="Revenue" xml:space="preserve">
     <value>Revenue</value>
   </data>
-  <data name="zstring161" xml:space="preserve">
-    <value />
+  <data name="MailName" xml:space="preserve">
+    <value>Mail name</value>
   </data>
   <data name="CTA" xml:space="preserve">
     <value>Explore now</value>
   </data>
-  <data name="zstring165" xml:space="preserve">
-    <value />
+  <data name="TemplateContent" xml:space="preserve">
+    <value>Template content</value>
   </data>
   <data name="Slogan" xml:space="preserve">
     <value>Optimal solution for business 4.0</value>
   </data>
-  <data name="zstring163" xml:space="preserve">
-    <value />
+  <data name="TemplateMailCode" xml:space="preserve">
+    <value>Template mail code</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>Employee name</value>
   </data>
-  <data name="zstring167" xml:space="preserve">
+  <data name="TemplateNotificationName" xml:space="preserve">
+    <value>Template notification name</value>
+  </data>
+  <data name="TemplateMail" xml:space="preserve">
+    <value>Template mail</value>
+  </data>
+  <data name="zstring173" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring171" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring175" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

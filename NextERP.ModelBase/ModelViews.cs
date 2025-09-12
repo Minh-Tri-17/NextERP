@@ -98,7 +98,31 @@ namespace NextERP.ModelBase
         public bool AllowPaging { get; set; } = true;
     }
 
+    public partial class MailModel : Mail
+    {
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
+    }
+
     public partial class NotificationModel : Notification
+    {
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
+    }
+
+    public partial class TemplateMailModel : TemplateMail
+    {
+        public int PageSize { get; set; } = 20;
+        public int PageIndex { get; set; } = 1;
+        public string Ids { get; set; } = string.Empty;
+        public bool AllowPaging { get; set; } = true;
+    }
+
+    public partial class TemplateNotificationModel : TemplateNotification
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;

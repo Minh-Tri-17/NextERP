@@ -1,0 +1,220 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.TemplateNotificationModel
+
+@{
+    ViewData["Title"] = TableName.TemplateNotification;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+{
+        (TableName.TemplateNotification + "List", "", true),
+    };
+}
+
+<div class="main-container">
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
+
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Create
+                </button>
+                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
+                    Edit
+                </button>
+                <input type="text" name="Ids" id="Ids" hidden />
+                <button type="button" class="btn btn-danger disabled" id="delete-button" localize-content>
+                    Delete
+                </button>
+                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button" localize-content>
+                    DeletePermanently
+                </button>
+                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
+                    Import
+                </button>
+                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
+                    Export
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+                <div class="d-flex align-items-center ms-2 pb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
+                    <label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
+                </div>
+            </div>
+        </form>
+
+        <div class="collapse" id="filter-inputs">
+            <form id="@TableName.TemplateNotification-search-form" class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@AttributeNames.TemplateNotification.TemplateNotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.TemplateNotificationCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="TemplateNotificationCode" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
+
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
+                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!--& TABLE -->
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main" id="@TableName.TemplateNotification-table">
+            </div>
+        </div>
+    </section>
+
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ScreenName.TemplateNotification.TemplateNotificationForm, Model)
+        @await Component.InvokeAsync(Constants.Import, TableName.TemplateNotification)
+        @await Component.InvokeAsync(Constants.Export, new { tableName = TableName.TemplateNotification, model = Model })
+    </section>
+</div>
+
+<script>
+    let $templateNotificationId;
+
+    $(function () {
+        loadTemplateNotifications();
+    });
+
+    $("#refresh-list").click(function(){
+        loadTemplateNotifications();
+    });
+
+    $("#is-delete").change(function () {
+        loadTemplateNotifications();
+    })
+
+    $(document).on("change", ".@TableName.TemplateNotification-checkbox", function () {
+        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+        $templateNotificationId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val() : "";
+
+        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+        const $length = $(".@TableName.TemplateNotification-checkbox:checked").length;
+        checkLengthCheckbox($length, true, true, true, true, "@TableName.TemplateNotification-checkbox");
+    });
+
+    $("#create-button").click(function () {
+        $("#only-save-button").css("display", "block");
+    });
+
+    $("#edit-button").click(function () {
+        $("#only-save-button").css("display", "none");
+
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.TemplateNotification)/" + $templateNotificationId, "GET")
+            .then(data => {
+                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationId").val(data.id);
+                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationCode").val(data.templateNotificationCode);
+                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationName").val(data.templateNotificationName);
+                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateContent").val(data.templateContent);
+                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.Note").val(data.note);
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+            });
+    });
+
+    $("#delete-button").click(function () {
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.TemplateNotification-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val();
+        }).get().join(",");
+
+        $("#Ids").val($ids);
+
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+
+        callApi("@Url.Action(Constants.Delete, TableName.TemplateNotification)", "POST", formData)
+            .then(data => {
+                loadTemplateNotifications();
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+            });
+    });
+
+    $("#delete-permanently-button").click(function () {
+        // Lấy tất cả các Id của các checkbox đã chọn
+        const $ids = $(".@TableName.TemplateNotification-checkbox:checked").map(function () {
+            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val();
+        }).get().join(",");
+
+        $("#Ids").val($ids);
+
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+
+        callApi("@Url.Action(Constants.DeletePermanently, TableName.TemplateNotification)", "POST", formData)
+            .then(data => {
+                loadTemplateNotifications();
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+            });
+    });
+
+    $("#search-button").click(function () {
+        loadTemplateNotifications(this);
+    })
+
+    $("#clear-button").click(function () {
+        $("#@TableName.TemplateNotification-search-form #@AttributeNames.TemplateNotification.TemplateNotificationCode").val("");
+        $("#@TableName.TemplateNotification-search-form #@Constants.DateCreate").val("");
+        $("#@TableName.TemplateNotification-search-form #@Constants.DateUpdate").val("");
+
+        loadTemplateNotifications(this);
+    })
+
+    function loadTemplateNotifications(el, pageIndex) {
+        // Khỏi tạo filter và gán giá trị
+        const $isDelete = $("#is-delete").is(":checked");
+        $(".loader").css("display", "flex");
+
+        const $form = $(el).closest("form");
+        const formData = new FormData($form[0]);
+
+        // Xóa các key không cần thiết (__Invariant)
+        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+
+        const filter = new FormData();
+        cleanEntries.forEach(([key, value]) => filter.append(key, value));
+        filter.append("@Constants.PageIndex", pageIndex);
+        filter.append("@Constants.IsDelete", $isDelete);
+
+        callApi("@Url.Action(Constants.GetList, TableName.TemplateNotification)", "POST", filter, "#@TableName.TemplateNotification-table")
+            .then(data => {
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                checkLengthCheckbox(0, true, true, true, true, "@TableName.TemplateNotification-checkbox");
+
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $templateNotificationId = "";
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+            });
+    }
+</script>

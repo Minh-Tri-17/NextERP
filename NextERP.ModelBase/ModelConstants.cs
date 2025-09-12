@@ -19,7 +19,6 @@ namespace NextERP.ModelBase
         public const string Invoice = "Invoice";
         public const string InvoiceDetail = "InvoiceDetail";
         public const string LeaveRequest = "LeaveRequest";
-        public const string Notification = "Notification";
         public const string Position = "Position";
         public const string Product = "Product";
         public const string ProductCategory = "ProductCategory";
@@ -34,6 +33,10 @@ namespace NextERP.ModelBase
         public const string SupplierOrderDetail = "SupplierOrderDetail";
         public const string TrainingSession = "TrainingSession";
         public const string User = "User";
+        public const string Notification = "Notification";
+        public const string TemplateNotification = "TemplateNotification";
+        public const string Mail = "Mail";
+        public const string TemplateMail = "TemplateMail";
     }
 
     public class ScreenName
@@ -113,6 +116,27 @@ namespace NextERP.ModelBase
             public const string NotificationIndex = "NotificationIndex";
             public const string NotificationForm = "NotificationForm";
             public const string NotificationList = "NotificationList";
+        }
+
+        public class TemplateNotification
+        {
+            public const string TemplateNotificationIndex = "TemplateNotificationIndex";
+            public const string TemplateNotificationForm = "TemplateNotificationForm";
+            public const string TemplateNotificationList = "TemplateNotificationList";
+        }
+
+        public class Mail
+        {
+            public const string MailIndex = "MailIndex";
+            public const string MailForm = "MailForm";
+            public const string MailList = "MailList";
+        }
+
+        public class TemplateMail
+        {
+            public const string TemplateMailIndex = "TemplateMailIndex";
+            public const string TemplateMailForm = "TemplateMailForm";
+            public const string TemplateMailList = "TemplateMailList";
         }
 
         public class Position
@@ -354,6 +378,33 @@ namespace NextERP.ModelBase
             public const string NotificationCode = "NotificationCode";
             public const string NotificationName = "NotificationName";
             public const string NotificationContent = "NotificationContent";
+            public const string Note = "Note";
+        }
+
+        public class TemplateNotification
+        {
+            public const string TemplateNotificationId = "TemplateNotificationId";
+            public const string TemplateNotificationCode = "TemplateNotificationCode";
+            public const string TemplateNotificationName = "TemplateNotificationName";
+            public const string TemplateContent = "TemplateContent";
+            public const string Note = "Note";
+        }
+
+        public class Mail
+        {
+            public const string MailId = "MailId";
+            public const string MailCode = "MailCode";
+            public const string MailName = "MailName";
+            public const string MailContent = "MailContent";
+            public const string Note = "Note";
+        }
+
+        public class TemplateMail
+        {
+            public const string TemplateMailId = "TemplateMailId";
+            public const string TemplateMailCode = "TemplateMailCode";
+            public const string TemplateMailName = "TemplateMailName";
+            public const string TemplateContent = "TemplateContent";
             public const string Note = "Note";
         }
 

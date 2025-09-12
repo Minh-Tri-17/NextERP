@@ -49,32 +49,34 @@ function checkLengthCheckbox(length, useEditBtn = true, useCreateBtn = true, use
         }
 
         // Không cần thao tác với delete permanently khi đang khác trạng thái "is-delete"
-        $deletePermanentlyBtn.addClass('disabled');
+        $deletePermanentlyBtn?.addClass('disabled');
     }
 }
 
 //& Hiển thị thông báo thành công hoặc thất bại
 function showMessage(message) {
     // Xác định có phải thông báo thành công hay không
-    const isWarning = !message.startsWith("S:") && !message.startsWith("F:");
+    const isInfo = !message.startsWith("S:") && !message.startsWith("F:");
     const isSuccess = message.startsWith("S:");
     const isFailure = message.startsWith("F:");
+    const isWarning = message.startsWith("W:");
 
     // Loại bỏ tiền tố "S:" hoặc "F:"
-    const cleanMessage = message.replace(/^S:\s*|^F:\s*/, '');
+    const cleanMessage = message.replace(/^S:\s*|^F:\s*|^W:\s*/, '');
 
     $("#success-msg")
         .html(cleanMessage)
         .removeClass("d-none")
         .addClass("toast show toast-body")
         .toggleClass("text-bg-success", isSuccess)
-        .toggleClass("text-bg-dark", isWarning)
+        .toggleClass("text-bg-dark", isInfo)
+        .toggleClass("text-bg-warning", isWarning)
         .toggleClass("text-bg-danger", isFailure);
 
     setTimeout(() => {
         $("#success-msg")
             .text("")
-            .removeClass("toast show toast-body text-bg-success text-bg-danger text-bg-dark")
+            .removeClass("toast show toast-body text-bg-success text-bg-danger text-bg-dark text-bg-warning")
             .addClass("d-none");
     }, 10000);
 }
@@ -186,19 +188,16 @@ async function callApi(url, method = "GET", data = null, id) {
 
     if (contentType && contentType.includes("application/json")) {
         result = await response.json();
+ 
+        if (typeof result === "string") {
+            showMessage(result);
+        }
     } else {
-        result = { type: "html", data: await response.text() };
+        result = await response.text();
+        $(id).html(result);
     }
 
-    // Xử lý kết quả
-    if (result.type === "html" && id) {
-        $(id).html(result.data);
-        affterCallAPISuccess();
-    }
-    else if (result.type === "json") {
-        affterCallAPISuccess();
-        showMessage(result.data);
-    }
+    affterCallAPISuccess();
 
     return result;
 }

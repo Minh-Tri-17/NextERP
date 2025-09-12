@@ -16,8 +16,7 @@ public partial class TemplateMail
     [Unicode(false)]
     public string? TemplateMailCode { get; set; }
 
-    [StringLength(50)]
-    [Unicode(false)]
+    [StringLength(150)]
     public string? TemplateMailName { get; set; }
 
     [StringLength(2000)]

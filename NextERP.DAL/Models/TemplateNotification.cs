@@ -16,8 +16,7 @@ public partial class TemplateNotification
     [Unicode(false)]
     public string? TemplateNotificationCode { get; set; }
 
-    [StringLength(50)]
-    [Unicode(false)]
+    [StringLength(150)]
     public string? TemplateNotificationName { get; set; }
 
     [StringLength(2000)]

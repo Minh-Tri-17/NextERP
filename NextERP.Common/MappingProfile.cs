@@ -104,7 +104,7 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
-            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            // Khi cập nhật (map từ model → entity nhưng bỏ 2 field)
             CreateMap<Feedback, FeedbackModel>().ReverseMap()
                 .ForMember(dest => dest.FeedbackCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -143,7 +143,7 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
-            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            // Khi cập nhật (map từ model → entity nhưng bỏ 3 field)
             CreateMap<InvoiceDetail, InvoiceDetailModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -186,6 +186,51 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            CreateMap<TemplateNotification, TemplateNotificationModel>().ReverseMap()
+                .ForMember(dest => dest.UserCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.DateCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.TemplateNotificationCode, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.IsDelete, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
+
+            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            CreateMap<Mail, MailModel>().ReverseMap()
+                .ForMember(dest => dest.UserCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.DateCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.MailCode, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.IsDelete, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
+
+            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            CreateMap<TemplateMail, TemplateMailModel>().ReverseMap()
+                .ForMember(dest => dest.UserCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.DateCreate, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.TemplateMailCode, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
+                .ForMember(dest => dest.IsDelete, opt =>
+                    opt.Condition((src, dest, srcMember, destMember, context) =>
+                    !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
+
+            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
             CreateMap<Position, PositionModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -215,7 +260,7 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
-            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            // Khi cập nhật (map từ model → entity nhưng bỏ 3 field)
             CreateMap<ProductImage, ProductImageModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -317,7 +362,7 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
-            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            // Khi cập nhật (map từ model → entity nhưng bỏ 3 field)
             CreateMap<SpaServiceImage, SpaServiceImageModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
@@ -374,7 +419,7 @@ namespace NextERP.Util
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
-            // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
+            // Khi cập nhật (map từ model → entity nhưng bỏ 3 field)
             CreateMap<SupplierOrderDetail, SupplierOrderDetailModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>

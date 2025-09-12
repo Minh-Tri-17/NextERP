@@ -5,8 +5,10 @@
     var culture = CultureInfo.CurrentCulture.Name;
 
     //Model Employee
-    string ctrModuleEmployee = $"{TableName.Employee},{TableName.Salary},{TableName.Attendance},{TableName.LeaveRequest},{TableName.Schedule},{TableName.Position},{TableName.TrainingSession}";
-    string actModuleEmployee = $"{ScreenName.Employee.EmployeeIndex},{ScreenName.Salary.SalaryIndex},{ScreenName.Attendance.AttendanceIndex},{ScreenName.LeaveRequest.LeaveRequestIndex},{ScreenName.Schedule.ScheduleIndex},{ScreenName.Position.PositionIndex},{ScreenName.TrainingSession.TrainingSessionIndex}";
+    string ctrModuleEmployee = $"{TableName.Employee},{TableName.Salary},{TableName.Attendance}," +
+        $"{TableName.LeaveRequest},{TableName.Schedule},{TableName.Position},{TableName.TrainingSession}";
+    string actModuleEmployee = $"{ScreenName.Employee.EmployeeIndex},{ScreenName.Salary.SalaryIndex}," +
+        $"{ScreenName.Attendance.AttendanceIndex},{ScreenName.LeaveRequest.LeaveRequestIndex},{ScreenName.Schedule.ScheduleIndex},{ScreenName.Position.PositionIndex},{ScreenName.TrainingSession.TrainingSessionIndex}";
     //Model Organization
     string ctrModuleOrganization = $"{TableName.Branch},{TableName.Department}";
     string actModuleOrganization = $"{ScreenName.Branch.BranchIndex},{ScreenName.Department.DepartmentIndex}";
@@ -15,16 +17,21 @@
     string actModuleService = $"{ScreenName.SpaService.SpaServiceIndex},{ScreenName.SpaServiceCategory.SpaServiceCategoryIndex}";
     //Model Customer
     string ctrModuleCustomer = $"{TableName.Customer},{TableName.Feedback},{TableName.Appointment}";
-    string actModuleCustomer = $"{ScreenName.Customer.CustomerIndex},{ScreenName.Feedback.FeedbackIndex},{ScreenName.Appointment.AppointmentIndex}";
+    string actModuleCustomer = $"{ScreenName.Customer.CustomerIndex},{ScreenName.Feedback.FeedbackIndex}," +
+        $"{ScreenName.Appointment.AppointmentIndex}";
     //Model Payment
     string ctrModulePayment = $"{TableName.Invoice},{TableName.InvoiceDetail}";
     string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex}";
     //Model Merchandise
-    string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder},{TableName.Supplier}";
-    string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex},{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
+    string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder}," +
+        $"{TableName.Supplier}";
+    string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex}," +
+        $"{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
     //Model System
-    string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.Notification}";
-    string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.Notification.NotificationIndex}";
+    string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.Notification},{TableName.Mail}," +
+        $"{TableName.TemplateMail},{TableName.TemplateNotification}";
+    string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.Notification.NotificationIndex}," +
+        $"{ScreenName.Mail.MailIndex},{ScreenName.TemplateMail.TemplateMailIndex},{ScreenName.TemplateNotification.TemplateNotificationIndex}";
 }
 
 <!DOCTYPE html>
@@ -232,7 +239,22 @@
                         </li>
                         <li class="sidebar-menu-item @Html.IsActive(TableName.Notification, ScreenName.Notification.NotificationIndex, " active")">
                             <a asp-action="@ScreenName.Notification.NotificationIndex" asp-controller="@TableName.Notification">
-                                <span><i class="fa-solid fa-envelope"></i><span localize-content>Notification</span></span>
+                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>Notification</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
+                            <a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification">
+                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Mail, ScreenName.Mail.MailIndex, " active")">
+                            <a asp-action="@ScreenName.Mail.MailIndex" asp-controller="@TableName.Mail">
+                                <span><i class="fa-solid fa-envelope"></i><span localize-content>Mail</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
+                            <a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail">
+                                <span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
                             </a>
                         </li>
                     </ul>
@@ -429,7 +451,22 @@
                             </li>
                             <li class="sidebar-menu-item @Html.IsActive(TableName.Notification, ScreenName.Notification.NotificationIndex, " active")">
                                 <a asp-action="@ScreenName.Notification.NotificationIndex" asp-controller="@TableName.Notification">
-                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>Notification</span></span>
+                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>Notification</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
+                                <a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification">
+                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Mail, ScreenName.Mail.MailIndex, " active")">
+                                <a asp-action="@ScreenName.Mail.MailIndex" asp-controller="@TableName.Mail">
+                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>Mail</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
+                                <a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail">
+                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
                                 </a>
                             </li>
                         </ul>

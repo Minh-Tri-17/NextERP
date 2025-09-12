@@ -54,12 +54,8 @@
                 }
             }, 200);
 
-            fetch('@Url.Action("Import", Model)', {
-                method: "POST",
-                body: formData
-            }).then(response => {
-                    return response.json();
-                }).then(data => {
+            callApi("@Url.Action("Import", Model)", "POST", formData)
+                .then(data => {
                     const elapsed = Date.now() - startTime;
                     const remaining = Math.max(MIN_LOADING_TIME - elapsed, 0);
 
@@ -68,12 +64,13 @@
                         $(".progress-bar").css("width", "100%").attr("aria-valuenow", 100).text("100%");
 
                         setTimeout(() => {
-                            showMessage(data);
-
                             $("#import-modal").modal("hide");
-                        },500)
+                        }, 500)
                     }, remaining);
                 })
+                .catch(err => {
+                    showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                });
         }, 500);
     });
 

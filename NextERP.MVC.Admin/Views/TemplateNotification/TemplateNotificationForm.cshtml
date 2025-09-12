@@ -1,0 +1,81 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.TemplateNotificationModel
+
+<div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form class="needs-validation" id="@TableName.TemplateNotification" novalidate>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="@AttributeNames.TemplateNotification.TemplateNotificationId" type="hidden" asp-for="Id" />
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.TemplateNotification.TemplateNotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.TemplateNotificationCode</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" type="text" asp-for="TemplateNotificationCode" disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.TemplateNotification.TemplateNotificationName" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.TemplateNotificationName</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" type="text" asp-for="TemplateNotificationName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.TemplateNotification.TemplateNotificationName" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.TemplateNotification.TemplateContent" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.TemplateContent</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="TemplateContent"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.TemplateNotification.TemplateContent" localize-content></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="@AttributeNames.TemplateNotification.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.Note</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.TemplateNotification.Note" localize-content></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
+                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".save-button").click(function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        let id = formData.get("@Constants.Id");
+
+        // Nếu không có ID (tạo mới), set Guid.Empty
+        if (!id || id === "" || id === "@Guid.Empty") {
+            formData.set("@Constants.Id", "@Guid.Empty");
+        }
+
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.TemplateNotification)", "POST", formData)
+            .then(data => {
+                loadTemplateNotifications();
+
+                if (data && Array.isArray(data)) {
+                    showInvalid(data, formElement);
+                }
+            })
+            .catch(err => {
+                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+            });
+    });
+</script>
