@@ -143,6 +143,16 @@ namespace NextERP.API.Controllers
 
         #region Custom Operations
 
+        [HttpPost(nameof(SendMail))]
+        public async Task<ActionResult<APIBaseResult<bool>>> SendMail()
+        {
+            var result = await _templateMailService.SendMail();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         #endregion
     }
 }

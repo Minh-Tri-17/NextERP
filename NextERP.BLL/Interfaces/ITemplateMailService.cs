@@ -14,5 +14,7 @@ namespace NextERP.BLL.Interface
         public Task<APIBaseResult<PagingResult<TemplateMailModel>>> GetPaging(Filter filter);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
         public Task<APIBaseResult<byte[]>> Export(Filter filter);
+        public Task<APIBaseResult<bool>> SendMail();
+
     }
 }

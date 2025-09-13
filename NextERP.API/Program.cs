@@ -28,8 +28,8 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IHistoryNotificationService, HistoryNotificationService>();
+builder.Services.AddScoped<IHistoryMailService, HistoryMailService>();
 builder.Services.AddScoped<ITemplateMailService, TemplateMailService>();
 builder.Services.AddScoped<ITemplateNotificationService, TemplateNotificationService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
@@ -49,6 +49,7 @@ builder.Services.AddScoped<ITrainingSessionService, TrainingSessionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<MailHelper>(new MailHelper(builder.Configuration));
 builder.Services.AddDbContext<NextErpContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(Constants.Context)));
 
