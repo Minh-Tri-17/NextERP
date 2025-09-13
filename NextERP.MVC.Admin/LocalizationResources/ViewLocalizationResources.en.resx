@@ -243,17 +243,14 @@
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
-  <data name="Notification" xml:space="preserve">
-    <value>Notification</value>
-  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
   <data name="CreateOrEdit" xml:space="preserve">
     <value>Create or edit</value>
   </data>
-  <data name="NotificationList" xml:space="preserve">
-    <value>List notification</value>
+  <data name="HistoryNotificationList" xml:space="preserve">
+    <value>List history notification</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
@@ -582,8 +579,8 @@
   <data name="SpaServiceCategoryName" xml:space="preserve">
     <value>Service category name</value>
   </data>
-  <data name="NotificationContent" xml:space="preserve">
-    <value>Notification content</value>
+  <data name="HistoryNotificationContent" xml:space="preserve">
+    <value>History notification content</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
@@ -630,8 +627,8 @@
   <data name="SpaServiceLevel" xml:space="preserve">
     <value>Service level</value>
   </data>
-  <data name="NotificationCode" xml:space="preserve">
-    <value>Notification code</value>
+  <data name="HistoryNotificationCode" xml:space="preserve">
+    <value>History notification code</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
@@ -822,8 +819,8 @@
   <data name="SpaServiceCategoryCode" xml:space="preserve">
     <value>Service category code</value>
   </data>
-  <data name="NotificationName" xml:space="preserve">
-    <value>Notification name</value>
+  <data name="HistoryNotificationName" xml:space="preserve">
+    <value>History notification name</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>Female</value>
@@ -969,8 +966,8 @@
   <data name="Profit" xml:space="preserve">
     <value>Profit</value>
   </data>
-  <data name="MailCode" xml:space="preserve">
-    <value>Mail code</value>
+  <data name="HistoryMailCode" xml:space="preserve">
+    <value>History mail code</value>
   </data>
   <data name="Subtitle" xml:space="preserve">
     <value>Effective management, optimized operations, improved productivity.</value>
@@ -981,14 +978,11 @@
   <data name="Spending" xml:space="preserve">
     <value>Spending</value>
   </data>
-  <data name="MailContent" xml:space="preserve">
-    <value>Mail content</value>
+  <data name="HistoryMailContent" xml:space="preserve">
+    <value>History mail content</value>
   </data>
   <data name="TemplateNotificationCode" xml:space="preserve">
     <value>Template notification code</value>
-  </data>
-  <data name="Mail" xml:space="preserve">
-    <value>Mail</value>
   </data>
   <data name="zstring172" xml:space="preserve">
     <value />
@@ -1002,8 +996,8 @@
   <data name="Revenue" xml:space="preserve">
     <value>Revenue</value>
   </data>
-  <data name="MailName" xml:space="preserve">
-    <value>Mail name</value>
+  <data name="HistoryMailName" xml:space="preserve">
+    <value>History mail name</value>
   </data>
   <data name="CTA" xml:space="preserve">
     <value>Explore now</value>
@@ -1037,5 +1031,11 @@
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">
     <value>F:Not found supplier</value>
+  </data>
+  <data name="HistoryNotification" xml:space="preserve">
+    <value>History notification</value>
+  </data>
+  <data name="HistoryMail" xml:space="preserve">
+    <value>History mail</value>
   </data>
 </root>

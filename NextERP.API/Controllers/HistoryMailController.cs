@@ -19,37 +19,37 @@ namespace NextERP.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
-    public class MailController : ControllerBase
+    public class HistoryMailController : ControllerBase
     {
         #region Infrastructure
 
-        private readonly IMailService _mailService;
+        private readonly IHistoryMailService _historyMailService;
 
-        public MailController(IMailService mailService)
+        public HistoryMailController(IHistoryMailService historyMailService)
         {
-            _mailService = mailService;
+            _historyMailService = historyMailService;
         }
 
         #endregion
 
         #region Default Operations
 
-        [HttpPost(nameof(CreateOrEditMail))]
-        public async Task<ActionResult<Mail>> CreateOrEditMail()
+        [HttpPost(nameof(CreateOrEditHistoryMail))]
+        public async Task<ActionResult<HistoryMail>> CreateOrEditHistoryMail()
         {
-            var mail = new MailModel();
+            var historyMail = new HistoryMailModel();
 
             if (Request.HasFormContentType)
             {
                 var json = Request.Form["Json"];
                 if (!string.IsNullOrEmpty(json))
-                    mail = JsonConvert.DeserializeObject<MailModel>(json!);
+                    historyMail = JsonConvert.DeserializeObject<HistoryMailModel>(json!);
 
                 //// Khi nào model có field file thì mở ra
-                //if (mail != null)
+                //if (historyMail != null)
                 //{
                 //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    mail.ImageFiles = files;
+                //    historyMail.ImageFiles = files;
                 //}
             }
             else
@@ -57,67 +57,67 @@ namespace NextERP.API.Controllers
                 using var reader = new StreamReader(Request.Body);
                 var body = await reader.ReadToEndAsync();
                 if (!string.IsNullOrEmpty(body))
-                    mail = JsonConvert.DeserializeObject<MailModel>(body);
+                    historyMail = JsonConvert.DeserializeObject<HistoryMailModel>(body);
             }
 
-            if (mail == null)
+            if (historyMail == null)
                 return BadRequest();
 
-            var result = await _mailService.CreateOrEdit(mail);
+            var result = await _historyMailService.CreateOrEdit(historyMail);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpDelete(nameof(DeleteMail))]
-        public async Task<ActionResult<APIBaseResult<bool>>> DeleteMail(string ids)
+        [HttpDelete(nameof(DeleteHistoryMail))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteHistoryMail(string ids)
         {
-            var result = await _mailService.Delete(ids);
+            var result = await _historyMailService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpDelete(nameof(DeletePermanentlyMail))]
-        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyMail(string ids)
+        [HttpDelete(nameof(DeletePermanentlyHistoryMail))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyHistoryMail(string ids)
         {
-            var result = await _mailService.DeletePermanently(ids);
+            var result = await _historyMailService.DeletePermanently(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpGet($"{nameof(GetMail)}/{{id}}")]
-        public async Task<ActionResult<Mail>> GetMail(Guid id)
+        [HttpGet($"{nameof(GetHistoryMail)}/{{id}}")]
+        public async Task<ActionResult<HistoryMail>> GetHistoryMail(Guid id)
         {
-            var result = await _mailService.GetOne(id);
+            var result = await _historyMailService.GetOne(id);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpPost($"{nameof(GetMails)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Mail>>> GetMails(Filter filter)
+        [HttpPost($"{nameof(GetHistoryMails)}/Filter")]
+        public async Task<ActionResult<IEnumerable<HistoryMail>>> GetHistoryMails(Filter filter)
         {
-            var result = await _mailService.GetPaging(filter);
+            var result = await _historyMailService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpPost(nameof(ImportMail))]
-        public async Task<ActionResult<Mail>> ImportMail()
+        [HttpPost(nameof(ImportHistoryMail))]
+        public async Task<ActionResult<HistoryMail>> ImportHistoryMail()
         {
             IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
-                var result = await _mailService.Import(excelFile);
+                var result = await _historyMailService.Import(excelFile);
                 if (!result.IsSuccess)
                     return BadRequest(result);
 
@@ -129,10 +129,10 @@ namespace NextERP.API.Controllers
             }
         }
 
-        [HttpPost(nameof(ExportMail))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportMail(Filter filter)
+        [HttpPost(nameof(ExportHistoryMail))]
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryMail(Filter filter)
         {
-            var result = await _mailService.Export(filter);
+            var result = await _historyMailService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

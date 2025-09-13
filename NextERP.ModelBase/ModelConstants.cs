@@ -33,9 +33,9 @@ namespace NextERP.ModelBase
         public const string SupplierOrderDetail = "SupplierOrderDetail";
         public const string TrainingSession = "TrainingSession";
         public const string User = "User";
-        public const string Notification = "Notification";
+        public const string HistoryNotification = "HistoryNotification";
         public const string TemplateNotification = "TemplateNotification";
-        public const string Mail = "Mail";
+        public const string HistoryMail = "HistoryMail";
         public const string TemplateMail = "TemplateMail";
     }
 
@@ -111,11 +111,11 @@ namespace NextERP.ModelBase
             public const string LeaveRequestList = "LeaveRequestList";
         }
 
-        public class Notification
+        public class HistoryNotification
         {
-            public const string NotificationIndex = "NotificationIndex";
-            public const string NotificationForm = "NotificationForm";
-            public const string NotificationList = "NotificationList";
+            public const string HistoryNotificationIndex = "HistoryNotificationIndex";
+            public const string HistoryNotificationForm = "HistoryNotificationForm";
+            public const string HistoryNotificationList = "HistoryNotificationList";
         }
 
         public class TemplateNotification
@@ -125,11 +125,11 @@ namespace NextERP.ModelBase
             public const string TemplateNotificationList = "TemplateNotificationList";
         }
 
-        public class Mail
+        public class HistoryMail
         {
-            public const string MailIndex = "MailIndex";
-            public const string MailForm = "MailForm";
-            public const string MailList = "MailList";
+            public const string HistoryMailIndex = "HistoryMailIndex";
+            public const string HistoryMailForm = "HistoryMailForm";
+            public const string HistoryMailList = "HistoryMailList";
         }
 
         public class TemplateMail
@@ -372,12 +372,12 @@ namespace NextERP.ModelBase
             public const string Note = "Note";
         }
 
-        public class Notification
+        public class HistoryNotification
         {
-            public const string NotificationId = "NotificationId";
-            public const string NotificationCode = "NotificationCode";
-            public const string NotificationName = "NotificationName";
-            public const string NotificationContent = "NotificationContent";
+            public const string HistoryNotificationId = "HistoryNotificationId";
+            public const string HistoryNotificationCode = "HistoryNotificationCode";
+            public const string HistoryNotificationName = "HistoryNotificationName";
+            public const string HistoryNotificationContent = "HistoryNotificationContent";
             public const string Note = "Note";
         }
 
@@ -390,12 +390,12 @@ namespace NextERP.ModelBase
             public const string Note = "Note";
         }
 
-        public class Mail
+        public class HistoryMail
         {
-            public const string MailId = "MailId";
-            public const string MailCode = "MailCode";
-            public const string MailName = "MailName";
-            public const string MailContent = "MailContent";
+            public const string HistoryMailId = "HistoryMailId";
+            public const string HistoryMailCode = "HistoryMailCode";
+            public const string HistoryMailName = "HistoryMailName";
+            public const string HistoryMailContent = "HistoryMailContent";
             public const string Note = "Note";
         }
 

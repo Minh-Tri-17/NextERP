@@ -31,15 +31,15 @@ public partial class NextErpContext : DbContext
 
     public virtual DbSet<Function> Functions { get; set; }
 
+    public virtual DbSet<HistoryMail> HistoryMails { get; set; }
+
+    public virtual DbSet<HistoryNotification> HistoryNotifications { get; set; }
+
     public virtual DbSet<Invoice> Invoices { get; set; }
 
     public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
 
     public virtual DbSet<LeaveRequest> LeaveRequests { get; set; }
-
-    public virtual DbSet<Mail> Mails { get; set; }
-
-    public virtual DbSet<Notification> Notifications { get; set; }
 
     public virtual DbSet<Position> Positions { get; set; }
 
@@ -145,6 +145,28 @@ public partial class NextErpContext : DbContext
             entity.HasOne(d => d.ParentFunction).WithMany(p => p.InverseParentFunction).HasConstraintName("FK_Functions_Functions");
         });
 
+        modelBuilder.Entity<HistoryMail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Mails");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.HistoryMails).HasConstraintName("FK_Mails_Employees");
+
+            entity.HasOne(d => d.TemplateMail).WithMany(p => p.HistoryMails).HasConstraintName("FK_Mails_TemplateMails");
+        });
+
+        modelBuilder.Entity<HistoryNotification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Notifications");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.HistoryNotifications).HasConstraintName("FK_Notifications_Employees");
+
+            entity.HasOne(d => d.TemplateNotification).WithMany(p => p.HistoryNotifications).HasConstraintName("FK_Notifications_TemplateNotifications");
+        });
+
         modelBuilder.Entity<Invoice>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
@@ -172,24 +194,6 @@ public partial class NextErpContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Employee).WithMany(p => p.LeaveRequests).HasConstraintName("FK_LeaveRequests_Employees");
-        });
-
-        modelBuilder.Entity<Mail>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Mail).HasConstraintName("FK_Mails_Employees");
-
-            entity.HasOne(d => d.TemplateMail).WithMany(p => p.Mail).HasConstraintName("FK_Mails_TemplateMails");
-        });
-
-        modelBuilder.Entity<Notification>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_Employees");
-
-            entity.HasOne(d => d.TemplateNotification).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_TemplateNotifications");
         });
 
         modelBuilder.Entity<Position>(entity =>

@@ -171,14 +171,14 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
-            CreateMap<Notification, NotificationModel>().ReverseMap()
+            CreateMap<HistoryNotification, HistoryNotificationModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.DateCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.NotificationCode, opt =>
+                .ForMember(dest => dest.HistoryNotificationCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.IsDelete, opt =>
@@ -201,14 +201,14 @@ namespace NextERP.Util
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true));
 
             // Khi cập nhật (map từ model → entity nhưng bỏ 4 field)
-            CreateMap<Mail, MailModel>().ReverseMap()
+            CreateMap<HistoryMail, HistoryMailModel>().ReverseMap()
                 .ForMember(dest => dest.UserCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.DateCreate, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
-                .ForMember(dest => dest.MailCode, opt =>
+                .ForMember(dest => dest.HistoryMailCode, opt =>
                     opt.Condition((src, dest, srcMember, destMember, context) =>
                     !context.Items.TryGetValue("IgnoreAuditFields", out var ignore) || ignore is not true))
                 .ForMember(dest => dest.IsDelete, opt =>

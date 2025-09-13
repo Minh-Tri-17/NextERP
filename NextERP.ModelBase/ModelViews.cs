@@ -98,7 +98,7 @@ namespace NextERP.ModelBase
         public bool AllowPaging { get; set; } = true;
     }
 
-    public partial class MailModel : Mail
+    public partial class HistoryMailModel : HistoryMail
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
@@ -106,7 +106,7 @@ namespace NextERP.ModelBase
         public bool AllowPaging { get; set; } = true;
     }
 
-    public partial class NotificationModel : Notification
+    public partial class HistoryNotificationModel : HistoryNotification
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;

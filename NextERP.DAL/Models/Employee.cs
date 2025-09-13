@@ -112,16 +112,16 @@ public partial class Employee
     public virtual Department? Department { get; set; }
 
     [InverseProperty("Employee")]
+    public virtual ICollection<HistoryMail> HistoryMails { get; set; } = new List<HistoryMail>();
+
+    [InverseProperty("Employee")]
+    public virtual ICollection<HistoryNotification> HistoryNotifications { get; set; } = new List<HistoryNotification>();
+
+    [InverseProperty("Employee")]
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     [InverseProperty("Employee")]
     public virtual ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
-
-    [InverseProperty("Employee")]
-    public virtual ICollection<Mail> Mail { get; set; } = new List<Mail>();
-
-    [InverseProperty("Employee")]
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
     [ForeignKey("PositionId")]
     [InverseProperty("Employees")]

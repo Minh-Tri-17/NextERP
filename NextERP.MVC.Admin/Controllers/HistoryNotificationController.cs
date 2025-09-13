@@ -7,15 +7,15 @@ using NextERP.Util;
 
 namespace NextERP.MVC.Admin.Controllers
 {
-    public class NotificationController : BaseController
+    public class HistoryNotificationController : BaseController
     {
         #region Infrastructure
 
-        private readonly INotificationAPIService _notificationAPIService;
+        private readonly IHistoryNotificationAPIService _historyNotificationAPIService;
 
-        public NotificationController(INotificationAPIService notificationAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
+        public HistoryNotificationController(IHistoryNotificationAPIService historyNotificationAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
-            _notificationAPIService = notificationAPIService;
+            _historyNotificationAPIService = historyNotificationAPIService;
         }
 
         #endregion
@@ -23,15 +23,15 @@ namespace NextERP.MVC.Admin.Controllers
         #region Default Operations
 
         [HttpGet]
-        public IActionResult NotificationIndex()
+        public IActionResult HistoryNotificationIndex()
         {
-            return View(new NotificationModel());
+            return View(new HistoryNotificationModel());
         }
 
         [HttpGet]
         public async Task<ActionResult> CreateOrEdit(Guid id)
         {
-            var result = await _notificationAPIService.GetOne(id);
+            var result = await _historyNotificationAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -39,7 +39,7 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(NotificationModel request)
+        public async Task<ActionResult> GetList(HistoryNotificationModel request)
         {
             Filter filter = new Filter()
             {
@@ -55,8 +55,8 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItem()
                     {
-                        FilterName = AttributeNames.Notification.NotificationCode,
-                        FilterValue = DataHelper.GetString(request.NotificationCode),
+                        FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
+                        FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
@@ -79,20 +79,20 @@ namespace NextERP.MVC.Admin.Controllers
                 PageSize = request.PageSize,
             };
 
-            var result = await _notificationAPIService.GetPaging(filter);
+            var result = await _historyNotificationAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return PartialView(ScreenName.Notification.NotificationList, result);
+            return PartialView(ScreenName.HistoryNotification.HistoryNotificationList, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrEdit(NotificationModel request)
+        public async Task<ActionResult> CreateOrEdit(HistoryNotificationModel request)
         {
             if (!ModelState.IsValid)
                 return GetModelStateErrors();
 
-            var result = await _notificationAPIService.CreateOrEdit(request);
+            var result = await _historyNotificationAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -102,7 +102,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(string ids)
         {
-            var result = await _notificationAPIService.Delete(ids);
+            var result = await _historyNotificationAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -112,7 +112,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> DeletePermanently(string ids)
         {
-            var result = await _notificationAPIService.DeletePermanently(ids);
+            var result = await _historyNotificationAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -125,7 +125,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (file == null || file.Length == 0)
                 return Json(Messages.FileNotFound);
 
-            var result = await _notificationAPIService.Import(file);
+            var result = await _historyNotificationAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -133,7 +133,7 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(NotificationModel request)
+        public async Task<ActionResult> Export(HistoryNotificationModel request)
         {
             Filter filter = new Filter()
             {
@@ -156,8 +156,8 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItem()
                     {
-                        FilterName = AttributeNames.Notification.NotificationCode,
-                        FilterValue = DataHelper.GetString(request.NotificationCode),
+                        FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
+                        FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
@@ -181,11 +181,11 @@ namespace NextERP.MVC.Admin.Controllers
                 PageSize = request.PageSize,
             };
 
-            var result = await _notificationAPIService.Export(filter);
+            var result = await _historyNotificationAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
-            var fileName = string.Format(Constants.FileName, TableName.Notification, DateTime.Now.ToString(Constants.DateTimeString));
+            var fileName = string.Format(Constants.FileName, TableName.HistoryNotification, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
 

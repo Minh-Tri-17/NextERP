@@ -1,46 +1,46 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
-@model NextERP.ModelBase.NotificationModel
+@model NextERP.ModelBase.HistoryMailModel
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
-            <form class="needs-validation" id="@TableName.Notification" novalidate>
+            <form class="needs-validation" id="@TableName.HistoryMail" novalidate>
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Notification.NotificationId" type="hidden" asp-for="Id" />
+                    <input id="@AttributeNames.HistoryMail.HistoryMailId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Notification.NotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationCode</label>
+                        <label for="@AttributeNames.HistoryMail.HistoryMailCode" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailCode</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="NotificationCode" disabled />
+                            <input class="form-control form-control-sm" type="text" asp-for="HistoryMailCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Notification.NotificationName" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationName</label>
+                        <label for="@AttributeNames.HistoryMail.HistoryMailName" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailName</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="NotificationName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.NotificationName" localize-content></div>
+                            <input class="form-control form-control-sm" type="text" asp-for="HistoryMailName" />
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.HistoryMailName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Notification.NotificationContent" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.NotificationContent</label>
+                        <label for="@AttributeNames.HistoryMail.HistoryMailContent" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailContent</label>
                         <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" asp-for="NotificationContent"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.NotificationContent" localize-content></div>
+                            <textarea class="form-control form-control-sm" rows="3" asp-for="HistoryMailContent"></textarea>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.HistoryMailContent" localize-content></div>
                         </div>
                     </div>
-
+                
                     <div class="mb-2">
-                        <label for="@AttributeNames.Notification.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Notification.Note</label>
+                        <label for="@AttributeNames.HistoryMail.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Notification.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.Note" localize-content></div>
                         </div>
                     </div>
                 </div>
@@ -66,9 +66,9 @@
             formData.set("@Constants.Id", "@Guid.Empty");
         }
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Notification)", "POST", formData)
+        callApi("@Url.Action(Constants.CreateOrEdit, TableName.HistoryMail)", "POST", formData)
             .then(data => {
-                loadNotifications();
+                loadHistoryMails();
 
                 if (data && Array.isArray(data)) {
                     showInvalid(data, formElement);

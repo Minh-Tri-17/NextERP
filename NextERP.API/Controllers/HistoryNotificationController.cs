@@ -19,37 +19,37 @@ namespace NextERP.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize] // Đặt ở đây để toàn bộ API đều cần xác thực
-    public class NotificationController : ControllerBase
+    public class HistoryNotificationController : ControllerBase
     {
         #region Infrastructure
 
-        private readonly INotificationService _notificationService;
+        private readonly IHistoryNotificationService _historyNotificationService;
 
-        public NotificationController(INotificationService notificationService)
+        public HistoryNotificationController(IHistoryNotificationService historyNotificationService)
         {
-            _notificationService = notificationService;
+            _historyNotificationService = historyNotificationService;
         }
 
         #endregion
 
         #region Default Operations
 
-        [HttpPost(nameof(CreateOrEditNotification))]
-        public async Task<ActionResult<Notification>> CreateOrEditNotification()
+        [HttpPost(nameof(CreateOrEditHistoryNotification))]
+        public async Task<ActionResult<HistoryNotification>> CreateOrEditHistoryNotification()
         {
-            var notification = new NotificationModel();
+            var historyNotification = new HistoryNotificationModel();
 
             if (Request.HasFormContentType)
             {
                 var json = Request.Form["Json"];
                 if (!string.IsNullOrEmpty(json))
-                    notification = JsonConvert.DeserializeObject<NotificationModel>(json!);
+                    historyNotification = JsonConvert.DeserializeObject<HistoryNotificationModel>(json!);
 
                 //// Khi nào model có field file thì mở ra
-                //if (notification != null)
+                //if (historyNotification != null)
                 //{
                 //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    notification.ImageFiles = files;
+                //    historyNotification.ImageFiles = files;
                 //}
             }
             else
@@ -57,67 +57,67 @@ namespace NextERP.API.Controllers
                 using var reader = new StreamReader(Request.Body);
                 var body = await reader.ReadToEndAsync();
                 if (!string.IsNullOrEmpty(body))
-                    notification = JsonConvert.DeserializeObject<NotificationModel>(body);
+                    historyNotification = JsonConvert.DeserializeObject<HistoryNotificationModel>(body);
             }
 
-            if (notification == null)
+            if (historyNotification == null)
                 return BadRequest();
 
-            var result = await _notificationService.CreateOrEdit(notification);
+            var result = await _historyNotificationService.CreateOrEdit(historyNotification);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpDelete(nameof(DeleteNotification))]
-        public async Task<ActionResult<APIBaseResult<bool>>> DeleteNotification(string ids)
+        [HttpDelete(nameof(DeleteHistoryNotification))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeleteHistoryNotification(string ids)
         {
-            var result = await _notificationService.Delete(ids);
+            var result = await _historyNotificationService.Delete(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpDelete(nameof(DeletePermanentlyNotification))]
-        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyNotification(string ids)
+        [HttpDelete(nameof(DeletePermanentlyHistoryNotification))]
+        public async Task<ActionResult<APIBaseResult<bool>>> DeletePermanentlyHistoryNotification(string ids)
         {
-            var result = await _notificationService.DeletePermanently(ids);
+            var result = await _historyNotificationService.DeletePermanently(ids);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpGet($"{nameof(GetNotification)}/{{id}}")]
-        public async Task<ActionResult<Notification>> GetNotification(Guid id)
+        [HttpGet($"{nameof(GetHistoryNotification)}/{{id}}")]
+        public async Task<ActionResult<HistoryNotification>> GetHistoryNotification(Guid id)
         {
-            var result = await _notificationService.GetOne(id);
+            var result = await _historyNotificationService.GetOne(id);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpPost($"{nameof(GetNotifications)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Notification>>> GetNotifications(Filter filter)
+        [HttpPost($"{nameof(GetHistoryNotifications)}/Filter")]
+        public async Task<ActionResult<IEnumerable<HistoryNotification>>> GetHistoryNotifications(Filter filter)
         {
-            var result = await _notificationService.GetPaging(filter);
+            var result = await _historyNotificationService.GetPaging(filter);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpPost(nameof(ImportNotification))]
-        public async Task<ActionResult<Notification>> ImportNotification()
+        [HttpPost(nameof(ImportHistoryNotification))]
+        public async Task<ActionResult<HistoryNotification>> ImportHistoryNotification()
         {
             IFormFile excelFile = Request.Form.Files[Constants.ExcelFiles]!;
 
             if (excelFile != null)
             {
-                var result = await _notificationService.Import(excelFile);
+                var result = await _historyNotificationService.Import(excelFile);
                 if (!result.IsSuccess)
                     return BadRequest(result);
 
@@ -129,10 +129,10 @@ namespace NextERP.API.Controllers
             }
         }
 
-        [HttpPost(nameof(ExportNotification))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportNotification(Filter filter)
+        [HttpPost(nameof(ExportHistoryNotification))]
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryNotification(Filter filter)
         {
-            var result = await _notificationService.Export(filter);
+            var result = await _historyNotificationService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)
                 return BadRequest(result);
 

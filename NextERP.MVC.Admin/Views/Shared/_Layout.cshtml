@@ -28,10 +28,10 @@
     string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex}," +
         $"{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
     //Model System
-    string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.Notification},{TableName.Mail}," +
+    string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.HistoryNotification},{TableName.HistoryMail}," +
         $"{TableName.TemplateMail},{TableName.TemplateNotification}";
-    string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.Notification.NotificationIndex}," +
-        $"{ScreenName.Mail.MailIndex},{ScreenName.TemplateMail.TemplateMailIndex},{ScreenName.TemplateNotification.TemplateNotificationIndex}";
+    string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.HistoryNotification.HistoryNotificationIndex}," +
+        $"{ScreenName.HistoryMail.HistoryMailIndex},{ScreenName.TemplateMail.TemplateMailIndex},{ScreenName.TemplateNotification.TemplateNotificationIndex}";
 }
 
 <!DOCTYPE html>
@@ -237,9 +237,9 @@
                                 <span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item @Html.IsActive(TableName.Notification, ScreenName.Notification.NotificationIndex, " active")">
-                            <a asp-action="@ScreenName.Notification.NotificationIndex" asp-controller="@TableName.Notification">
-                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>Notification</span></span>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
+                            <a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification">
+                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
@@ -247,9 +247,9 @@
                                 <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item @Html.IsActive(TableName.Mail, ScreenName.Mail.MailIndex, " active")">
-                            <a asp-action="@ScreenName.Mail.MailIndex" asp-controller="@TableName.Mail">
-                                <span><i class="fa-solid fa-envelope"></i><span localize-content>Mail</span></span>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
+                            <a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail">
+                                <span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
@@ -449,9 +449,9 @@
                                     <span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item @Html.IsActive(TableName.Notification, ScreenName.Notification.NotificationIndex, " active")">
-                                <a asp-action="@ScreenName.Notification.NotificationIndex" asp-controller="@TableName.Notification">
-                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>Notification</span></span>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
+                                <a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification">
+                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
                                 </a>
                             </li>
                             <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
@@ -459,9 +459,9 @@
                                     <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item @Html.IsActive(TableName.Mail, ScreenName.Mail.MailIndex, " active")">
-                                <a asp-action="@ScreenName.Mail.MailIndex" asp-controller="@TableName.Mail">
-                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>Mail</span></span>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
+                                <a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail">
+                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
                                 </a>
                             </li>
                             <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">

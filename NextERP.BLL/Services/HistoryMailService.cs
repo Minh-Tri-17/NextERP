@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
-    public class MailService : IMailService
+    public class HistoryMailService : IHistoryMailService
     {
         #region Infrastructure
 
         private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
         private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
-        public MailService(NextErpContext context, ICurrentUserService currentUser)
+        public HistoryMailService(NextErpContext context, ICurrentUserService currentUser)
         {
             _context = context;
             _currentUser = currentUser;
@@ -34,7 +34,7 @@ namespace NextERP.BLL.Service
 
         #region Default Operations
 
-        public async Task<APIBaseResult<bool>> CreateOrEdit(MailModel request)
+        public async Task<APIBaseResult<bool>> CreateOrEdit(HistoryMailModel request)
         {
             #region Check null request and create variable
 
@@ -44,10 +44,10 @@ namespace NextERP.BLL.Service
 
             if (id == Guid.Empty)
             {
-                var mail = new Mail();
-                DataHelper.MapAudit(request, mail, _currentUser.UserName);
+                var historyMail = new HistoryMail();
+                DataHelper.MapAudit(request, historyMail, _currentUser.UserName);
 
-                await _context.Mails.AddAsync(mail);
+                await _context.HistoryMails.AddAsync(historyMail);
 
                 var result = await _context.SaveChangesAsync();
                 if (result > 0)
@@ -57,11 +57,11 @@ namespace NextERP.BLL.Service
             }
             else
             {
-                var mail = await _context.Mails.FindAsync(id);
-                if (mail == null)
+                var historyMail = await _context.HistoryMails.FindAsync(id);
+                if (historyMail == null)
                     return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
-                DataHelper.MapAudit(request, mail, _currentUser.UserName);
+                DataHelper.MapAudit(request, historyMail, _currentUser.UserName);
 
                 var result = await _context.SaveChangesAsync();
                 if (result > 0)
@@ -73,18 +73,18 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> Delete(string ids)
         {
-            List<Guid> listMailId = ids.Split(',')
+            List<Guid> listHistoryMailId = ids.Split(',')
                 .Select(id => DataHelper.GetGuid(id.Trim()))
                 .Where(guid => guid != Guid.Empty)
                 .ToList();
 
-            var listMail = await _context.Mails
-                .Where(s => listMailId.Contains(s.Id))
+            var listHistoryMail = await _context.HistoryMails
+                .Where(s => listHistoryMailId.Contains(s.Id))
                 .ToListAsync();
 
-            foreach (var mail in listMail)
+            foreach (var historyMail in listHistoryMail)
             {
-                mail.IsDelete = true; // Đánh dấu là đã xóa
+                historyMail.IsDelete = true; // Đánh dấu là đã xóa
             }
 
             var result = await _context.SaveChangesAsync();
@@ -96,18 +96,18 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
         {
-            List<Guid> listMailId = ids.Split(',')
+            List<Guid> listHistoryMailId = ids.Split(',')
                  .Select(id => DataHelper.GetGuid(id.Trim()))
                  .Where(guid => guid != Guid.Empty)
                  .ToList();
 
-            var listMail = await _context.Mails
-                .Where(s => listMailId.Contains(s.Id))
+            var listHistoryMail = await _context.HistoryMails
+                .Where(s => listHistoryMailId.Contains(s.Id))
                 .ToListAsync();
 
-            foreach (var mail in listMail)
+            foreach (var historyMail in listHistoryMail)
             {
-                _context.Mails.Remove(mail); // Xóa vĩnh viễn
+                _context.HistoryMails.Remove(historyMail); // Xóa vĩnh viễn
             }
 
             var result = await _context.SaveChangesAsync();
@@ -117,23 +117,23 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.DeleteFailed);
         }
 
-        public async Task<APIBaseResult<MailModel>> GetOne(Guid id)
+        public async Task<APIBaseResult<HistoryMailModel>> GetOne(Guid id)
         {
-            var mail = await _context.Mails
+            var historyMail = await _context.HistoryMails
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể
                 .FirstOrDefaultAsync(s => s.Id == id);
 
-            if (mail == null)
-                return new APIErrorResult<MailModel>(Messages.NotFoundGet);
+            if (historyMail == null)
+                return new APIErrorResult<HistoryMailModel>(Messages.NotFoundGet);
 
-            var mailModel = DataHelper.Mapping<Mail, MailModel>(mail);
+            var historyMailModel = DataHelper.Mapping<HistoryMail, HistoryMailModel>(historyMail);
 
-            return new APISuccessResult<MailModel>(Messages.GetResultSuccess, mailModel);
+            return new APISuccessResult<HistoryMailModel>(Messages.GetResultSuccess, historyMailModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<MailModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<HistoryMailModel>>> GetPaging(Filter filter)
         {
-            IQueryable<Mail> query = _context.Mails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+            IQueryable<HistoryMail> query = _context.HistoryMails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
             query = query.ApplyCommonFilters(filter);
 
@@ -141,21 +141,21 @@ namespace NextERP.BLL.Service
 
             query = query.ApplyPaging(filter);
 
-            var listMail = await query
+            var listHistoryMail = await query
                 .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
                 .ToListAsync();
 
-            var listMailModel = DataHelper.MappingList<Mail, MailModel>(listMail);
-            var pageResult = new PagingResult<MailModel>()
+            var listHistoryMailModel = DataHelper.MappingList<HistoryMail, HistoryMailModel>(listHistoryMail);
+            var pageResult = new PagingResult<HistoryMailModel>()
             {
                 TotalRecord = totalCount,
-                PageRecord = listMailModel.Count(),
+                PageRecord = listHistoryMailModel.Count(),
                 PageIndex = filter.PageIndex,
                 PageSize = filter.PageSize,
-                Items = listMailModel
+                Items = listHistoryMailModel
             };
 
-            return new APISuccessResult<PagingResult<MailModel>>(Messages.GetListResultSuccess, pageResult);
+            return new APISuccessResult<PagingResult<HistoryMailModel>>(Messages.GetListResultSuccess, pageResult);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -170,7 +170,7 @@ namespace NextERP.BLL.Service
             // Header data
             var headerRow = sheet.GetRow(0);
 
-            var listMailModel = new List<MailModel>();
+            var listHistoryMailModel = new List<HistoryMailModel>();
 
             for (int i = 1; i <= sheet.LastRowNum; i++)
             {
@@ -179,14 +179,14 @@ namespace NextERP.BLL.Service
                 if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
                     continue; // Bỏ qua hàng trống
 
-                MailModel mailModel = DataHelper.CopyImport<MailModel>(headerRow, row);
-                listMailModel.Add(mailModel);
+                HistoryMailModel historyMailModel = DataHelper.CopyImport<HistoryMailModel>(headerRow, row);
+                listHistoryMailModel.Add(historyMailModel);
             }
 
-            var listMail = new List<Mail>();
-            DataHelper.MapListAudit<MailModel, Mail>(listMailModel, listMail, _currentUser.UserName);
+            var listHistoryMail = new List<HistoryMail>();
+            DataHelper.MapListAudit<HistoryMailModel, HistoryMail>(listHistoryMailModel, listHistoryMail, _currentUser.UserName);
 
-            await _context.Mails.AddRangeAsync(listMail);
+            await _context.HistoryMails.AddRangeAsync(listHistoryMail);
 
             var result = await _context.SaveChangesAsync();
             if (result > 0)
@@ -198,13 +198,13 @@ namespace NextERP.BLL.Service
         public async Task<APIBaseResult<byte[]>> Export(Filter filter)
         {
             var data = await GetPaging(filter);
-            var items = data?.Result?.Items ?? new List<MailModel>();
+            var items = data?.Result?.Items ?? new List<HistoryMailModel>();
 
             using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(TableName.Mail);
+            var worksheet = workbook.Worksheets.Add(TableName.HistoryMail);
 
-            var listMail = DataHelper.MappingList<MailModel, Mail>(items);
-            DataHelper.CopyExport(worksheet, listMail);
+            var listHistoryMail = DataHelper.MappingList<HistoryMailModel, HistoryMail>(items);
+            DataHelper.CopyExport(worksheet, listHistoryMail);
 
             var stream = new MemoryStream();
             workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream

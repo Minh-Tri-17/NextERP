@@ -206,15 +206,15 @@
 
         #endregion
 
-        #region Notification
+        #region HistoryNotification
 
-        public const string UrlCreateOrEditNotification = "/api/Notification/CreateOrEditNotification";
-        public const string UrlDeleteNotification = "/api/Notification/DeleteNotification";
-        public const string UrlDeletePermanentlyNotification = "/api/Notification/DeletePermanentlyNotification";
-        public const string UrlGetNotification = "/api/Notification/GetNotification";
-        public const string UrlGetNotifications = "/api/Notification/GetNotifications";
-        public const string UrlImportNotification = "/api/Notification/ImportNotification";
-        public const string UrlExportNotification = "/api/Notification/ExportNotification";
+        public const string UrlCreateOrEditHistoryNotification = "/api/HistoryNotification/CreateOrEditHistoryNotification";
+        public const string UrlDeleteHistoryNotification = "/api/HistoryNotification/DeleteHistoryNotification";
+        public const string UrlDeletePermanentlyHistoryNotification = "/api/HistoryNotification/DeletePermanentlyHistoryNotification";
+        public const string UrlGetHistoryNotification = "/api/HistoryNotification/GetHistoryNotification";
+        public const string UrlGetHistoryNotifications = "/api/HistoryNotification/GetHistoryNotifications";
+        public const string UrlImportHistoryNotification = "/api/HistoryNotification/ImportHistoryNotification";
+        public const string UrlExportHistoryNotification = "/api/HistoryNotification/ExportHistoryNotification";
 
         #endregion
 
@@ -230,15 +230,15 @@
 
         #endregion
 
-        #region Mail
+        #region HistoryMail
 
-        public const string UrlCreateOrEditMail = "/api/Mail/CreateOrEditMail";
-        public const string UrlDeleteMail = "/api/Mail/DeleteMail";
-        public const string UrlDeletePermanentlyMail = "/api/Mail/DeletePermanentlyMail";
-        public const string UrlGetMail = "/api/Mail/GetMail";
-        public const string UrlGetMails = "/api/Mail/GetMails";
-        public const string UrlImportMail = "/api/Mail/ImportMail";
-        public const string UrlExportMail = "/api/Mail/ExportMail";
+        public const string UrlCreateOrEditHistoryMail = "/api/HistoryMail/CreateOrEditHistoryMail";
+        public const string UrlDeleteHistoryMail = "/api/HistoryMail/DeleteHistoryMail";
+        public const string UrlDeletePermanentlyHistoryMail = "/api/HistoryMail/DeletePermanentlyHistoryMail";
+        public const string UrlGetHistoryMail = "/api/HistoryMail/GetHistoryMail";
+        public const string UrlGetHistoryMails = "/api/HistoryMail/GetHistoryMails";
+        public const string UrlImportHistoryMail = "/api/HistoryMail/ImportHistoryMail";
+        public const string UrlExportHistoryMail = "/api/HistoryMail/ExportHistoryMail";
 
         #endregion
 

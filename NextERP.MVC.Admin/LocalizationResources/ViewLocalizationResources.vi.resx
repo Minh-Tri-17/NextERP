@@ -243,17 +243,14 @@
   <data name="User" xml:space="preserve">
     <value>Người dùng</value>
   </data>
-  <data name="Notification" xml:space="preserve">
-    <value>Thông báo</value>
-  </data>
   <data name="Admin" xml:space="preserve">
     <value>Quản trị viên</value>
   </data>
   <data name="CreateOrEdit" xml:space="preserve">
     <value>Thêm hoặc sửa</value>
   </data>
-  <data name="NotificationList" xml:space="preserve">
-    <value>Danh sách thông báo</value>
+  <data name="HistoryNotificationList" xml:space="preserve">
+    <value>Danh sách lịch sử thông báo</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Đóng</value>
@@ -582,8 +579,8 @@
   <data name="SpaServiceCategoryName" xml:space="preserve">
     <value>Tên danh mục dịch vụ</value>
   </data>
-  <data name="NotificationContent" xml:space="preserve">
-    <value>Nội dung thông báo</value>
+  <data name="HistoryNotificationContent" xml:space="preserve">
+    <value>Nội dung lịch sử thông báo</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>Khác</value>
@@ -630,8 +627,8 @@
   <data name="SpaServiceLevel" xml:space="preserve">
     <value>Cấp độ dịch vụ</value>
   </data>
-  <data name="NotificationCode" xml:space="preserve">
-    <value>Mã thông báo</value>
+  <data name="HistoryNotificationCode" xml:space="preserve">
+    <value>Mã lịch sử thông báo</value>
   </data>
   <data name="Male" xml:space="preserve">
     <value>Nam</value>
@@ -822,8 +819,8 @@
   <data name="SpaServiceCategoryCode" xml:space="preserve">
     <value>Mã danh mục dịch vụ</value>
   </data>
-  <data name="NotificationName" xml:space="preserve">
-    <value>Tên thông báo</value>
+  <data name="HistoryNotificationName" xml:space="preserve">
+    <value>Tên lịch sử thông báo</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>Nữ</value>
@@ -969,8 +966,8 @@
   <data name="Profit" xml:space="preserve">
     <value>Lợi nhuận</value>
   </data>
-  <data name="MailCode" xml:space="preserve">
-    <value>Mã mail</value>
+  <data name="HistoryMailCode" xml:space="preserve">
+    <value>Mã lịch sử mail</value>
   </data>
   <data name="Subtitle" xml:space="preserve">
     <value>Quản lý hiệu quả, tối ưu vận hành, nâng cao năng suất.</value>
@@ -981,14 +978,11 @@
   <data name="Spending" xml:space="preserve">
     <value>Chi tiêu</value>
   </data>
-  <data name="MailContent" xml:space="preserve">
-    <value>Nội dung mail</value>
+  <data name="HistoryMailContent" xml:space="preserve">
+    <value>Nội dung lịch sử mail</value>
   </data>
   <data name="TemplateNotificationCode" xml:space="preserve">
     <value>Mã mẫu thông báo</value>
-  </data>
-  <data name="Mail" xml:space="preserve">
-    <value>Mail</value>
   </data>
   <data name="zstring172" xml:space="preserve">
     <value />
@@ -1002,8 +996,8 @@
   <data name="Revenue" xml:space="preserve">
     <value>Doanh thu</value>
   </data>
-  <data name="MailName" xml:space="preserve">
-    <value>Tên mail</value>
+  <data name="HistoryMailName" xml:space="preserve">
+    <value>Tên lịch sử mail</value>
   </data>
   <data name="CTA" xml:space="preserve">
     <value>Khám phá ngay</value>
@@ -1037,5 +1031,11 @@
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">
     <value>F:Không tìm thấy nhà cung cấp</value>
+  </data>
+  <data name="HistoryNotification" xml:space="preserve">
+    <value>Lịch sử thông báo</value>
+  </data>
+  <data name="HistoryMail" xml:space="preserve">
+    <value>Lịch sử mail</value>
   </data>
 </root>

@@ -4,7 +4,7 @@
 @using NextERP.ModelBase.PagingResult
 @using NextERP.Util
 @using UtilHtmlHelper = NextERP.Util.HtmlHelper
-@model APIBaseResult<PagingResult<MailModel>>
+@model APIBaseResult<PagingResult<HistoryNotificationModel>>
 
 <div class="table-container">
     <table class="table table-hover me-2">
@@ -19,7 +19,7 @@
                 @{
                     var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete };
 
-                    var listField = UtilHtmlHelper.GetOrderedProperties<MailModel>(excludedFields);
+                    var listField = UtilHtmlHelper.GetOrderedProperties<HistoryNotificationModel>(excludedFields);
 
                     foreach (var item in listField)
                     {
@@ -38,9 +38,9 @@
                 {
                     <tr>
                         <td>
-                            <input type="hidden" name="@AttributeNames.Mail.MailId" value="@row.Id" />
+                            <input type="hidden" name="@AttributeNames.HistoryNotification.HistoryNotificationId" value="@row.Id" />
                             <div class="form-check">
-                                <input class="form-check-input @TableName.Mail-checkbox" type="checkbox" />
+                                <input class="form-check-input @TableName.HistoryNotification-checkbox" type="checkbox" />
                             </div>
                         </td>
                         <td>@counter</td>
@@ -78,15 +78,15 @@
         $("#pagination-container .page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        loadMails($("#@TableName.Mail-search-form")[0], $pageIndex);
+        loadHistoryNotifications($("#@TableName.HistoryNotification-search-form")[0], $pageIndex);
     });
 
     $(".check-all").change(function () {
-        // Gán giá trị cho tất cả checkbox Mail-checkbox
-        $(".@TableName.Mail-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+        // Gán giá trị cho tất cả checkbox HistoryNotification-checkbox
+        $(".@TableName.HistoryNotification-checkbox").prop("checked", $(this).is(":checked") ? true : false);
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.Mail-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.Mail-checkbox");
+        const $length = $(".@TableName.HistoryNotification-checkbox:checked").length;
+        checkLengthCheckbox($length, true, true, true, true, "@TableName.HistoryNotification-checkbox");
     });
 </script>

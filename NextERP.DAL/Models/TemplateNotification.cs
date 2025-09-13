@@ -42,5 +42,5 @@ public partial class TemplateNotification
     public string? UserUpdate { get; set; }
 
     [InverseProperty("TemplateNotification")]
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+    public virtual ICollection<HistoryNotification> HistoryNotifications { get; set; } = new List<HistoryNotification>();
 }

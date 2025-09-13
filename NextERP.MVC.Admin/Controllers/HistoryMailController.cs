@@ -7,15 +7,15 @@ using NextERP.Util;
 
 namespace NextERP.MVC.Admin.Controllers
 {
-    public class MailController : BaseController
+    public class HistoryMailController : BaseController
     {
         #region Infrastructure
 
-        private readonly IMailAPIService _mailAPIService;
+        private readonly IHistoryMailAPIService _historyMailAPIService;
 
-        public MailController(IMailAPIService mailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
+        public HistoryMailController(IHistoryMailAPIService historyMailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
-            _mailAPIService = mailAPIService;
+            _historyMailAPIService = historyMailAPIService;
         }
 
         #endregion
@@ -23,15 +23,15 @@ namespace NextERP.MVC.Admin.Controllers
         #region Default Operations
 
         [HttpGet]
-        public IActionResult MailIndex()
+        public IActionResult HistoryMailIndex()
         {
-            return View(new MailModel());
+            return View(new HistoryMailModel());
         }
 
         [HttpGet]
         public async Task<ActionResult> CreateOrEdit(Guid id)
         {
-            var result = await _mailAPIService.GetOne(id);
+            var result = await _historyMailAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -39,7 +39,7 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetList(MailModel request)
+        public async Task<ActionResult> GetList(HistoryMailModel request)
         {
             Filter filter = new Filter()
             {
@@ -55,8 +55,8 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItem()
                     {
-                        FilterName = AttributeNames.Mail.MailCode,
-                        FilterValue = DataHelper.GetString(request.MailCode),
+                        FilterName = AttributeNames.HistoryMail.HistoryMailCode,
+                        FilterValue = DataHelper.GetString(request.HistoryMailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
@@ -79,20 +79,20 @@ namespace NextERP.MVC.Admin.Controllers
                 PageSize = request.PageSize,
             };
 
-            var result = await _mailAPIService.GetPaging(filter);
+            var result = await _historyMailAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(Localization(result.Message));
 
-            return PartialView(ScreenName.Mail.MailList, result);
+            return PartialView(ScreenName.HistoryMail.HistoryMailList, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrEdit(MailModel request)
+        public async Task<ActionResult> CreateOrEdit(HistoryMailModel request)
         {
             if (!ModelState.IsValid)
                 return GetModelStateErrors();
 
-            var result = await _mailAPIService.CreateOrEdit(request);
+            var result = await _historyMailAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -102,7 +102,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(string ids)
         {
-            var result = await _mailAPIService.Delete(ids);
+            var result = await _historyMailAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -112,7 +112,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> DeletePermanently(string ids)
         {
-            var result = await _mailAPIService.DeletePermanently(ids);
+            var result = await _historyMailAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -125,7 +125,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (file == null || file.Length == 0)
                 return Json(Messages.FileNotFound);
 
-            var result = await _mailAPIService.Import(file);
+            var result = await _historyMailAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
@@ -133,7 +133,7 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Export(MailModel request)
+        public async Task<ActionResult> Export(HistoryMailModel request)
         {
             Filter filter = new Filter()
             {
@@ -156,8 +156,8 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItem()
                     {
-                        FilterName = AttributeNames.Mail.MailCode,
-                        FilterValue = DataHelper.GetString(request.MailCode),
+                        FilterName = AttributeNames.HistoryMail.HistoryMailCode,
+                        FilterValue = DataHelper.GetString(request.HistoryMailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
@@ -181,11 +181,11 @@ namespace NextERP.MVC.Admin.Controllers
                 PageSize = request.PageSize,
             };
 
-            var result = await _mailAPIService.Export(filter);
+            var result = await _historyMailAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
                 return Json(Localization(result.Message));
 
-            var fileName = string.Format(Constants.FileName, TableName.Mail, DateTime.Now.ToString(Constants.DateTimeString));
+            var fileName = string.Format(Constants.FileName, TableName.HistoryMail, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
         }
 
