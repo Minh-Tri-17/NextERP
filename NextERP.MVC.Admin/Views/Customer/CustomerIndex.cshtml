@@ -200,10 +200,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Customer-search-form #@AttributeNames.Customer.CustomerCode").val("");
-        $("#@TableName.Customer-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Customer-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.Customer-search-form #@AttributeNames.Customer.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Customer-search-form")[0].reset();
 
         loadCustomers();
     })

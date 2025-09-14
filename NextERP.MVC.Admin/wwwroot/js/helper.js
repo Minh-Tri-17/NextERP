@@ -8,6 +8,9 @@ $(document).on("hidden.bs.modal", ".modal", function () {
             .trigger("reset")
             .find(".is-invalid, .is-valid")
             .removeClass("is-invalid is-valid");
+
+        // Clear tất cả hidden inputs trong form
+        $modal.find("input[type=hidden]").val("");
     }, 300);
 });
 

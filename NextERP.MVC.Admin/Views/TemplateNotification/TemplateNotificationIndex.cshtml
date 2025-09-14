@@ -182,9 +182,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.TemplateNotification-search-form #@AttributeNames.TemplateNotification.TemplateNotificationCode").val("");
-        $("#@TableName.TemplateNotification-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.TemplateNotification-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.TemplateNotification-search-form")[0].reset();
 
         loadTemplateNotifications(this);
     })

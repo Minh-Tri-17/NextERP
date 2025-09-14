@@ -196,10 +196,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Promotion-search-form #@AttributeNames.Promotion.PromotionCode").val("");
-        $("#@TableName.Promotion-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Promotion-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.Promotion-search-form #@AttributeNames.Promotion.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Promotion-search-form")[0].reset();
 
         loadPromotions();
     })

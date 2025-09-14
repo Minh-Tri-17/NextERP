@@ -210,11 +210,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Employee-search-form #@AttributeNames.Employee.EmployeeCode").val("");
-        $("#@TableName.Employee-search-form #@AttributeNames.Employee.HireDate").val("");
-        $("#@TableName.Employee-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Employee-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.Employee-search-form #@AttributeNames.Employee.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Employee-search-form")[0].reset();
 
         loadEmployees();
     })

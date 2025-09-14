@@ -220,13 +220,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveRequestCode").val("");
-        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalDate").val("");
-        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.RequestDate").val("");
-        $("#@TableName.LeaveRequest-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.LeaveRequest-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.ApprovalStatus").val("").trigger("change");
-        $("#@TableName.LeaveRequest-search-form #@AttributeNames.LeaveRequest.LeaveDayType").val("").trigger("change");
+        $("#@TableName.LeaveRequest-search-form")[0].reset();
 
         loadLeaveRequests();
     })

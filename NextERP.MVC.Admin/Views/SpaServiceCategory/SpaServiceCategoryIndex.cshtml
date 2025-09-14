@@ -181,9 +181,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.SpaServiceCategory-search-form #@AttributeNames.SpaServiceCategory.SpaServiceCategoryCode").val("");
-        $("#@TableName.SpaServiceCategory-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.SpaServiceCategory-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.SpaServiceCategory-search-form")[0].reset();
 
         loadSpaServiceCategorys();
     })

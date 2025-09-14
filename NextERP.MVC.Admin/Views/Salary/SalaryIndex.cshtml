@@ -193,10 +193,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Salary-search-form #@AttributeNames.Salary.SalaryCode").val("");
-        $("#@TableName.Salary-search-form #@AttributeNames.Salary.SalaryMonth").val("");
-        $("#@TableName.Salary-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Salary-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Salary-search-form")[0].reset();
 
         loadSalarys();
     })

@@ -181,9 +181,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Position-search-form #@AttributeNames.Position.PositionCode").val("");
-        $("#@TableName.Position-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Position-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Position-search-form")[0].reset();
 
         loadPositions();
     })

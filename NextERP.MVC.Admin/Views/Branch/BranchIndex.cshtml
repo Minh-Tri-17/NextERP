@@ -195,10 +195,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Branch-search-form #@AttributeNames.Branch.BranchCode").val("");
-        $("#@TableName.Branch-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Branch-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.Branch-search-form #@AttributeNames.Branch.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Branch-search-form")[0].reset();
 
         loadBranchs(this);
     })

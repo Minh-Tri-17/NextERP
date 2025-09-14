@@ -185,9 +185,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Supplier-search-form #@AttributeNames.Supplier.SupplierCode").val("");
-        $("#@TableName.Supplier-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Supplier-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Supplier-search-form")[0].reset();
 
         loadSuppliers();
     })

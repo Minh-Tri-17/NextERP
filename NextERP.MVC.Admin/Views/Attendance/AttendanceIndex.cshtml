@@ -6,7 +6,7 @@
     ViewData["Title"] = TableName.Attendance;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
-{
+    {
         (TableName.Attendance + "List", "", true),
     };
 }
@@ -190,10 +190,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Attendance-search-form #@AttributeNames.Attendance.AttendanceCode").val("");
-        $("#@TableName.Attendance-search-form #@AttributeNames.Attendance.WorkDate").val("");
-        $("#@TableName.Attendance-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Attendance-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Attendance-search-form")[0].reset();
 
         loadAttendances();
     })

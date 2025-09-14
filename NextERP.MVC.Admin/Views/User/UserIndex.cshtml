@@ -197,10 +197,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.User-search-form #@AttributeNames.User.UserCode").val("");
-        $("#@TableName.User-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.User-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.User-search-form #@AttributeNames.User.OperatingStatus").val("").trigger("change");
+        $("#@TableName.User-search-form")[0].reset();
 
         loadUsers();
     })

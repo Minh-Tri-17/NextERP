@@ -182,9 +182,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.HistoryNotification-search-form #@AttributeNames.HistoryNotification.HistoryNotificationCode").val("");
-        $("#@TableName.HistoryNotification-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.HistoryNotification-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.HistoryNotification-search-form")[0].reset();
 
         loadHistoryNotifications(this);
     })

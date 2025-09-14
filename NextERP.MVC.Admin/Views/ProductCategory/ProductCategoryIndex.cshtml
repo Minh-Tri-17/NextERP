@@ -181,9 +181,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.ProductCategory-search-form #@AttributeNames.ProductCategory.ProductCategoryCode").val("");
-        $("#@TableName.ProductCategory-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.ProductCategory-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.ProductCategory-search-form")[0].reset();
 
         loadProductCategorys();
     })

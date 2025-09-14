@@ -182,9 +182,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.HistoryMail-search-form #@AttributeNames.HistoryMail.HistoryMailCode").val("");
-        $("#@TableName.HistoryMail-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.HistoryMail-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.HistoryMail-search-form")[0].reset();
 
         loadHistoryMails(this);
     })

@@ -192,10 +192,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Product-search-form #@AttributeNames.Product.ProductCode").val("");
-        $("#@TableName.Product-search-form #@AttributeNames.Product.ExpirationDate").val("");
-        $("#@TableName.Product-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Product-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Product-search-form")[0].reset();
 
         loadProducts();
     })

@@ -197,10 +197,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.SpaService-search-form #@AttributeNames.SpaService.SpaServiceCode").val("");
-        $("#@TableName.SpaService-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.SpaService-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.SpaService-search-form #@AttributeNames.SpaService.OperatingStatus").val("").trigger("change");
+        $("#@TableName.SpaService-search-form")[0].reset();
 
         loadSpaServices();
     })

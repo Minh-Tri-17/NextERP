@@ -108,7 +108,7 @@
         let id = formData.get("@Constants.Id");
 
         // Nếu không có ID (tạo mới), set Guid.Empty
-        if (!id || id === "" || id === "@Guid.Empty") {
+        if (!id || id === "") {
             formData.set("@Constants.Id", "@Guid.Empty");
         }
 

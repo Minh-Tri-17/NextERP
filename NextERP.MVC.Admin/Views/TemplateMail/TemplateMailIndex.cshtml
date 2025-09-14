@@ -182,9 +182,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.TemplateMail-search-form #@AttributeNames.TemplateMail.TemplateMailCode").val("");
-        $("#@TableName.TemplateMail-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.TemplateMail-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.TemplateMail-search-form")[0].reset();
 
         loadTemplateMails(this);
     })

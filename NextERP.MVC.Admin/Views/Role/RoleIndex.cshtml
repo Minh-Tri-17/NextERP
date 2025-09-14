@@ -187,9 +187,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Role-search-form #@AttributeNames.Role.RoleCode").val("");
-        $("#@TableName.Role-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.Role-search-form #@Constants.DateUpdate").val("");
+        $("#@TableName.Role-search-form")[0].reset();
 
         loadRoles();
     })

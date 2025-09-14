@@ -201,11 +201,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.TrainingSessionCode").val("");
-        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.TrainingDate").val("");
-        $("#@TableName.TrainingSession-search-form #@Constants.DateCreate").val("");
-        $("#@TableName.TrainingSession-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.TrainingSession-search-form #@AttributeNames.TrainingSession.SessionStatus").val("").trigger("change");
+        $("#@TableName.TrainingSession-search-form")[0].reset();
 
         loadTrainingSessions();
     })

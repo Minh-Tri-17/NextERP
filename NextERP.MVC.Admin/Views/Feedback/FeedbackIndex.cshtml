@@ -176,8 +176,7 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Feedback-search-form #@AttributeNames.Feedback.FeedbackCode").val("");
-        $("#@TableName.Feedback-search-form #@AttributeNames.Feedback.DateFeedback").val("");
+        $("#@TableName.Feedback-search-form")[0].reset();
 
         loadFeedbacks();
     })
