@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetRoles)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles(Filter filter)
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles(FilterModel filter)
         {
             var result = await _roleService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportRole))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportRole(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportRole(FilterModel filter)
         {
             var result = await _roleService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

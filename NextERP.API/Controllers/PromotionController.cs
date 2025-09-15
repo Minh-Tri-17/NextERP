@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetPromotions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions(Filter filter)
+        public async Task<ActionResult<IEnumerable<Promotion>>> GetPromotions(FilterModel filter)
         {
             var result = await _promotionService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPromotion))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPromotion(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPromotion(FilterModel filter)
         {
             var result = await _promotionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<HistoryNotificationModel>>($"{Constants.UrlGetHistoryNotification}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<HistoryNotificationModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<HistoryNotificationModel>>> GetPaging(FilterModel filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<HistoryNotificationModel>>, Filter>($"{Constants.UrlGetHistoryNotifications}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<HistoryNotificationModel>>, FilterModel>($"{Constants.UrlGetHistoryNotifications}/{Constants.Filter}", filter);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportHistoryNotification, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportHistoryNotification, filter);
+            return await ExportAsync<APIBaseResult<byte[]>, FilterModel>(Constants.UrlExportHistoryNotification, filter);
         }
 
         #endregion

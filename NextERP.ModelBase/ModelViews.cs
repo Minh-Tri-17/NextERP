@@ -270,16 +270,16 @@ namespace NextERP.ModelBase
 
     #endregion
 
-    public class Filter
+    public class FilterModel
     {
         public bool AllowPaging { get; set; } = true;
         public Guid? IdMain { get; set; }
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
-        public List<FilterItem> Filters { get; set; } = new List<FilterItem>();
+        public List<FilterItemModel> Filters { get; set; } = new List<FilterItemModel>();
     }
 
-    public class FilterItem
+    public class FilterItemModel
     {
         public string FilterName { get; set; } = string.Empty;
         public string FilterValue { get; set; } = string.Empty;
@@ -287,7 +287,7 @@ namespace NextERP.ModelBase
         public string FilterOperator { get; set; } = string.Empty;
     }
 
-    public class Calendar
+    public class CalendarModel
     {
         public string Title { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
@@ -297,43 +297,37 @@ namespace NextERP.ModelBase
         public string Description { get; set; } = string.Empty;
     }
 
-    public class DataImport
+    public class DataChartNumericModel
     {
-        public string Key { get; set; } = string.Empty;
-        public string Value { get; set; } = string.Empty;
-    }
-
-    public class DataChartNumeric
-    {
-        public List<NumericSeries>? Values { get; set; }
+        public List<NumericSeriesModel>? Values { get; set; }
         public string[]? Labels { get; set; }
     }
 
-    public class NumericSeries
+    public class NumericSeriesModel
     {
         public string Name { get; set; } = string.Empty;
         public int[]? Data { get; set; }
     }
 
-    public class DataChartSingle
+    public class DataChartSingleModel
     {
         public int[]? Values { get; set; }
         public string[]? Labels { get; set; }
     }
 
-    public class DataChartXY
+    public class DataChartXYModel
     {
-        public List<XYSeries>? Values { get; set; }
+        public List<XYSeriesModel>? Values { get; set; }
         public string[]? Labels { get; set; }   // Có thể null nếu không dùng
     }
 
-    public class XYSeries
+    public class XYSeriesModel
     {
         public string Name { get; set; } = string.Empty;
-        public List<XYPoint>? Data { get; set; }
+        public List<XYPointModel>? Data { get; set; }
     }
 
-    public class XYPoint
+    public class XYPointModel
     {
         public string X { get; set; } = string.Empty;
         public int Y { get; set; }

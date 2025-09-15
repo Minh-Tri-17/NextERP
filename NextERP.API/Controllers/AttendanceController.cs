@@ -100,7 +100,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetAttendances)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Filter filter)
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(FilterModel filter)
         {
             var result = await _attendanceService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -129,7 +129,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAttendance))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAttendance(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAttendance(FilterModel filter)
         {
             var result = await _attendanceService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetFunctions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions(Filter filter)
+        public async Task<ActionResult<IEnumerable<Function>>> GetFunctions(FilterModel filter)
         {
             var result = await _functionService.GetPaging(filter);
             if (!result.IsSuccess)

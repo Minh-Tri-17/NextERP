@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<DepartmentModel>>($"{Constants.UrlGetDepartment}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<DepartmentModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<DepartmentModel>>> GetPaging(FilterModel filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<DepartmentModel>>, Filter>($"{Constants.UrlGetDepartments}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<DepartmentModel>>, FilterModel>($"{Constants.UrlGetDepartments}/{Constants.Filter}", filter);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportDepartment, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportDepartment, filter);
+            return await ExportAsync<APIBaseResult<byte[]>, FilterModel>(Constants.UrlExportDepartment, filter);
         }
 
         #endregion

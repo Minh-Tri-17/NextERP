@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetFeedbacks)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks(Filter filter)
+        public async Task<ActionResult<IEnumerable<Feedback>>> GetFeedbacks(FilterModel filter)
         {
             var result = await _feedbackService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportFeedback))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportFeedback(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportFeedback(FilterModel filter)
         {
             var result = await _feedbackService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

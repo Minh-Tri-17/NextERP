@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetHistoryMails)}/Filter")]
-        public async Task<ActionResult<IEnumerable<HistoryMail>>> GetHistoryMails(Filter filter)
+        public async Task<ActionResult<IEnumerable<HistoryMail>>> GetHistoryMails(FilterModel filter)
         {
             var result = await _historyMailService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportHistoryMail))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryMail(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryMail(FilterModel filter)
         {
             var result = await _historyMailService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

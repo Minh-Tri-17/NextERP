@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetHistoryNotifications)}/Filter")]
-        public async Task<ActionResult<IEnumerable<HistoryNotification>>> GetHistoryNotifications(Filter filter)
+        public async Task<ActionResult<IEnumerable<HistoryNotification>>> GetHistoryNotifications(FilterModel filter)
         {
             var result = await _historyNotificationService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportHistoryNotification))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryNotification(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportHistoryNotification(FilterModel filter)
         {
             var result = await _historyNotificationService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

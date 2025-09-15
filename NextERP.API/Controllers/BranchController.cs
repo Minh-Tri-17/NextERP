@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetBranches)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches(Filter filter)
+        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches(FilterModel filter)
         {
             var result = await _branchService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportBranch))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportBranch(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportBranch(FilterModel filter)
         {
             var result = await _branchService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

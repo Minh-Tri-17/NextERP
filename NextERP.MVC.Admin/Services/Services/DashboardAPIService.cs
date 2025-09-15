@@ -30,34 +30,34 @@ namespace NextERP.MVC.Admin.Services.Services
 
         #region Custom Operations
 
-        public async Task<APIBaseResult<DataChartNumeric>> GetChartColumn()
+        public async Task<APIBaseResult<DataChartNumericModel>> GetChartColumn()
         {
-            return await GetAsync<APIBaseResult<DataChartNumeric>>(Constants.UrlGetChartColumn);
+            return await GetAsync<APIBaseResult<DataChartNumericModel>>(Constants.UrlGetChartColumn);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartDonut()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartDonut()
         {
-            return await GetAsync<APIBaseResult<DataChartSingle>>(Constants.UrlGetChartDonut);
+            return await GetAsync<APIBaseResult<DataChartSingleModel>>(Constants.UrlGetChartDonut);
         }
 
-        public async Task<APIBaseResult<DataChartNumeric>> GetChartRadar()
+        public async Task<APIBaseResult<DataChartNumericModel>> GetChartRadar()
         {
-            return await GetAsync<APIBaseResult<DataChartNumeric>>(Constants.UrlGetChartRadar);
+            return await GetAsync<APIBaseResult<DataChartNumericModel>>(Constants.UrlGetChartRadar);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartLine()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartLine()
         {
-            return await GetAsync<APIBaseResult<DataChartSingle>>(Constants.UrlGetChartLine);
+            return await GetAsync<APIBaseResult<DataChartSingleModel>>(Constants.UrlGetChartLine);
         }
 
-        public async Task<APIBaseResult<DataChartXY>> GetChartSlope()
+        public async Task<APIBaseResult<DataChartXYModel>> GetChartSlope()
         {
-            return await GetAsync<APIBaseResult<DataChartXY>>(Constants.UrlGetChartSlope);
+            return await GetAsync<APIBaseResult<DataChartXYModel>>(Constants.UrlGetChartSlope);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartFunnel()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartFunnel()
         {
-            return await GetAsync<APIBaseResult<DataChartSingle>>(Constants.UrlGetChartFunnel);
+            return await GetAsync<APIBaseResult<DataChartSingleModel>>(Constants.UrlGetChartFunnel);
         }
 
         public async Task<APIBaseResult<decimal>> GetStatisticsProfit()

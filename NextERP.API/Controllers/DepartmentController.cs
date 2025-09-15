@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetDepartments)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments(Filter filter)
+        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments(FilterModel filter)
         {
             var result = await _departmentService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportDepartment))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportDepartment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportDepartment(FilterModel filter)
         {
             var result = await _departmentService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

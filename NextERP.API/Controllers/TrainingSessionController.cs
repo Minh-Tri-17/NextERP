@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetTrainingSessions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<TrainingSession>>> GetTrainingSessions(Filter filter)
+        public async Task<ActionResult<IEnumerable<TrainingSession>>> GetTrainingSessions(FilterModel filter)
         {
             var result = await _trainingSessionService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportTrainingSession))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTrainingSession(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTrainingSession(FilterModel filter)
         {
             var result = await _trainingSessionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

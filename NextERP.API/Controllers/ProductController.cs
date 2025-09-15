@@ -100,7 +100,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetProducts)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(Filter filter)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(FilterModel filter)
         {
             var result = await _productService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -129,7 +129,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportProduct))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProduct(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportProduct(FilterModel filter)
         {
             var result = await _productService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

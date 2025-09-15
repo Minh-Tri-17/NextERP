@@ -40,11 +40,11 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(AttendanceModel request)
         {
-            Filter filter = new Filter()
+            FilterModel filter = new FilterModel()
             {
-                Filters = new List<FilterItem>()
+                Filters = new List<FilterItemModel>()
                 {
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.IsDelete,
                         FilterType = Util.Enums.FilterType.Boolean.ToString(),
@@ -52,28 +52,28 @@ namespace NextERP.MVC.Admin.Controllers
                             ? Util.Enums.FilterOperator.Equal.ToString()
                             : Util.Enums.FilterOperator.NotEqual.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.Attendance.AttendanceCode,
                         FilterValue = DataHelper.GetString(request.AttendanceCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.Attendance.WorkDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateCreate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateUpdate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
@@ -141,11 +141,11 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Export(AttendanceModel request)
         {
-            Filter filter = new Filter()
+            FilterModel filter = new FilterModel()
             {
-                Filters = new List<FilterItem>()
+                Filters = new List<FilterItemModel>()
                 {
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.IsDelete,
                         FilterType = Util.Enums.FilterType.Boolean.ToString(),
@@ -153,35 +153,35 @@ namespace NextERP.MVC.Admin.Controllers
                             ? Util.Enums.FilterOperator.Equal.ToString()
                             : Util.Enums.FilterOperator.NotEqual.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.Ids,
                         FilterValue = DataHelper.GetString(request.Ids),
                         FilterType = Util.Enums.FilterType.Guid.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.Attendance.AttendanceCode,
                         FilterValue = DataHelper.GetString(request.AttendanceCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.Attendance.WorkDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateCreate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateUpdate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),

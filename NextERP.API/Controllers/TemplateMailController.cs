@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetTemplateMails)}/Filter")]
-        public async Task<ActionResult<IEnumerable<TemplateMail>>> GetTemplateMails(Filter filter)
+        public async Task<ActionResult<IEnumerable<TemplateMail>>> GetTemplateMails(FilterModel filter)
         {
             var result = await _templateMailService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportTemplateMail))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTemplateMail(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTemplateMail(FilterModel filter)
         {
             var result = await _templateMailService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

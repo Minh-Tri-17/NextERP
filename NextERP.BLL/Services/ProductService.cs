@@ -239,7 +239,7 @@ namespace NextERP.BLL.Service
 			return new APISuccessResult<ProductModel>(Messages.GetResultSuccess, productModel);
 		}
 
-		public async Task<APIBaseResult<PagingResult<ProductModel>>> GetPaging(Filter filter)
+		public async Task<APIBaseResult<PagingResult<ProductModel>>> GetPaging(FilterModel filter)
 		{
 			IQueryable<Product> query = _context.Products.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
@@ -308,7 +308,7 @@ namespace NextERP.BLL.Service
 			return new APIErrorResult<bool>(Messages.ImportFailed);
 		}
 
-		public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+		public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
 		{
 			var data = await GetPaging(filter);
 			var items = data?.Result?.Items ?? new List<ProductModel>();

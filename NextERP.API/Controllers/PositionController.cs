@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetPositions)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(Filter filter)
+        public async Task<ActionResult<IEnumerable<Position>>> GetPositions(FilterModel filter)
         {
             var result = await _positionService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportPosition))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPosition(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportPosition(FilterModel filter)
         {
             var result = await _positionService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

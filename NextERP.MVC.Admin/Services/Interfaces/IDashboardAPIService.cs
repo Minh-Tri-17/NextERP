@@ -10,12 +10,12 @@ namespace NextERP.MVC.Admin.Services.Interfaces
 {
     public interface IDashboardAPIService
     {
-        public Task<APIBaseResult<DataChartNumeric>> GetChartColumn();
-        public Task<APIBaseResult<DataChartSingle>> GetChartDonut();
-        public Task<APIBaseResult<DataChartNumeric>> GetChartRadar();
-        public Task<APIBaseResult<DataChartSingle>> GetChartLine();
-        public Task<APIBaseResult<DataChartXY>> GetChartSlope();
-        public Task<APIBaseResult<DataChartSingle>> GetChartFunnel();
+        public Task<APIBaseResult<DataChartNumericModel>> GetChartColumn();
+        public Task<APIBaseResult<DataChartSingleModel>> GetChartDonut();
+        public Task<APIBaseResult<DataChartNumericModel>> GetChartRadar();
+        public Task<APIBaseResult<DataChartSingleModel>> GetChartLine();
+        public Task<APIBaseResult<DataChartXYModel>> GetChartSlope();
+        public Task<APIBaseResult<DataChartSingleModel>> GetChartFunnel();
         public Task<APIBaseResult<decimal>> GetStatisticsProfit();
         public Task<APIBaseResult<decimal>> GetStatisticsRevenue();
         public Task<APIBaseResult<decimal>> GetStatisticsSpending();

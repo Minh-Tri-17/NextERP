@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSpaServiceCategories)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SpaServiceCategory>>> GetSpaServiceCategories(Filter filter)
+        public async Task<ActionResult<IEnumerable<SpaServiceCategory>>> GetSpaServiceCategories(FilterModel filter)
         {
             var result = await _spaServiceCategoryService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSpaServiceCategory))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaServiceCategory(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSpaServiceCategory(FilterModel filter)
         {
             var result = await _spaServiceCategoryService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -41,11 +41,11 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> GetList(HistoryNotificationModel request)
         {
-            Filter filter = new Filter()
+            FilterModel filter = new FilterModel()
             {
-                Filters = new List<FilterItem>()
+                Filters = new List<FilterItemModel>()
                 {
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.IsDelete,
                         FilterType = Util.Enums.FilterType.Boolean.ToString(),
@@ -53,21 +53,21 @@ namespace NextERP.MVC.Admin.Controllers
                             ? Util.Enums.FilterOperator.Equal.ToString()
                             : Util.Enums.FilterOperator.NotEqual.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
                         FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateCreate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateUpdate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
@@ -135,11 +135,11 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Export(HistoryNotificationModel request)
         {
-            Filter filter = new Filter()
+            FilterModel filter = new FilterModel()
             {
-                Filters = new List<FilterItem>()
+                Filters = new List<FilterItemModel>()
                 {
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.IsDelete,
                         FilterType = Util.Enums.FilterType.Boolean.ToString(),
@@ -147,28 +147,28 @@ namespace NextERP.MVC.Admin.Controllers
                             ? Util.Enums.FilterOperator.Equal.ToString()
                             : Util.Enums.FilterOperator.NotEqual.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.Ids,
                         FilterValue = DataHelper.GetString(request.Ids),
                         FilterType = Util.Enums.FilterType.Guid.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
                         FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateCreate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
-                    new FilterItem()
+                    new FilterItemModel()
                     {
                         FilterName = Constants.DateUpdate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),

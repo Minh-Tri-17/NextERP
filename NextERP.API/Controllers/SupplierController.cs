@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSuppliers)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(Filter filter)
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(FilterModel filter)
         {
             var result = await _supplierService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSupplier))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplier(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplier(FilterModel filter)
         {
             var result = await _supplierService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

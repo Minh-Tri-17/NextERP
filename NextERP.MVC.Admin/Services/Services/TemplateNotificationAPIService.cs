@@ -46,9 +46,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<TemplateNotificationModel>>($"{Constants.UrlGetTemplateNotification}/{id}");
         }
 
-        public async Task<APIBaseResult<PagingResult<TemplateNotificationModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<TemplateNotificationModel>>> GetPaging(FilterModel filter)
         {
-            return await PostAsync<APIBaseResult<PagingResult<TemplateNotificationModel>>, Filter>($"{Constants.UrlGetTemplateNotifications}/{Constants.Filter}", filter);
+            return await PostAsync<APIBaseResult<PagingResult<TemplateNotificationModel>>, FilterModel>($"{Constants.UrlGetTemplateNotifications}/{Constants.Filter}", filter);
         }
 
         public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
@@ -56,9 +56,9 @@ namespace NextERP.MVC.Admin.Services.Services
             return await ImportAsync<APIBaseResult<bool>>(Constants.UrlImportTemplateNotification, fileImport);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
         {
-            return await ExportAsync<APIBaseResult<byte[]>, Filter>(Constants.UrlExportTemplateNotification, filter);
+            return await ExportAsync<APIBaseResult<byte[]>, FilterModel>(Constants.UrlExportTemplateNotification, filter);
         }
 
         #endregion

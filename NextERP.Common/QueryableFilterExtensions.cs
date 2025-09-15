@@ -7,7 +7,7 @@ namespace NextERP.Util
 {
     public static class QueryableFilterExtensions
     {
-        public static IQueryable<T> ApplyCommonFilters<T>(this IQueryable<T> query, Filter filter)
+        public static IQueryable<T> ApplyCommonFilters<T>(this IQueryable<T> query, FilterModel filter)
         {
             foreach (var item in filter.Filters)
             {
@@ -86,7 +86,7 @@ namespace NextERP.Util
             return query;
         }
 
-        public static IQueryable<T> ApplyPaging<T>(this IQueryable<T> query, Filter filter)
+        public static IQueryable<T> ApplyPaging<T>(this IQueryable<T> query, FilterModel filter)
         {
             if (filter.AllowPaging)
             {

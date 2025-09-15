@@ -128,7 +128,7 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<FunctionModel>(Messages.GetResultSuccess, functionModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<FunctionModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<FunctionModel>>> GetPaging(FilterModel filter)
         {
             IQueryable<Function> query = _context.Functions
                 .AsNoTracking() // Không theo dõi thay đổi của thực thể

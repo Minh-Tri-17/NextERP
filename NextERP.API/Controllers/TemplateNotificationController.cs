@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetTemplateNotifications)}/Filter")]
-        public async Task<ActionResult<IEnumerable<TemplateNotification>>> GetTemplateNotifications(Filter filter)
+        public async Task<ActionResult<IEnumerable<TemplateNotification>>> GetTemplateNotifications(FilterModel filter)
         {
             var result = await _templateNotificationService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportTemplateNotification))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTemplateNotification(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportTemplateNotification(FilterModel filter)
         {
             var result = await _templateNotificationService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

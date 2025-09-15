@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSalaries)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries(Filter filter)
+        public async Task<ActionResult<IEnumerable<Salary>>> GetSalaries(FilterModel filter)
         {
             var result = await _salaryService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSalary))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSalary(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSalary(FilterModel filter)
         {
             var result = await _salaryService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetLeaveRequests)}/Filter")]
-        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests(Filter filter)
+        public async Task<ActionResult<IEnumerable<LeaveRequest>>> GetLeaveRequests(FilterModel filter)
         {
             var result = await _leaveRequestService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportLeaveRequest))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportLeaveRequest(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportLeaveRequest(FilterModel filter)
         {
             var result = await _leaveRequestService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -78,21 +78,21 @@ namespace NextERP.BLL.Service
 
         #region Chart
 
-        public async Task<APIBaseResult<DataChartNumeric>> GetChartColumn()
+        public async Task<APIBaseResult<DataChartNumericModel>> GetChartColumn()
         {
-            var dataChart = new DataChartNumeric
+            var dataChart = new DataChartNumericModel
             {
-                Values = new List<NumericSeries>
+                Values = new List<NumericSeriesModel>
                 {
-                    new NumericSeries {
+                    new NumericSeriesModel {
                         Name  = "Net Profit",
                         Data  = new int [] { 44, 55, 57, 56, 61, 58, 63, 60, 66 }
                     },
-                    new NumericSeries {
+                    new NumericSeriesModel {
                         Name = "Revenue",
                         Data = new int [] { 76, 85, 101, 98, 87, 105, 91, 114, 94 }
                     },
-                    new NumericSeries {
+                    new NumericSeriesModel {
                         Name = "Free Cash Flow",
                         Data = new int[] { 35, 41, 36, 26, 45, 48, 52, 53, 41 }
                     },
@@ -100,59 +100,59 @@ namespace NextERP.BLL.Service
                 Labels = new string[] { "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct" }
             };
 
-            return new APISuccessResult<DataChartNumeric>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartNumericModel>(Messages.GetListResultSuccess, dataChart);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartDonut()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartDonut()
         {
-            var dataChart = new DataChartSingle
+            var dataChart = new DataChartSingleModel
             {
                 Values = new int[] { 44, 55, 41, 17, 15 },
                 Labels = new string[] { "series-1", "series-2", "series-3", "series-4", "series-5" }
             };
 
-            return new APISuccessResult<DataChartSingle>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartSingleModel>(Messages.GetListResultSuccess, dataChart);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartFunnel()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartFunnel()
         {
-            var dataChart = new DataChartSingle
+            var dataChart = new DataChartSingleModel
             {
                 Values = new int[] { 200, 330, 548, 740, 880, 990, 1100, 1380 },
                 Labels = new string[] { "Sweets", "Processed Foods", "Healthy Fats", "Meat", "Beans & Legumes", "Dairy", "Fruits & Vegetables", "Grains" }
             };
 
-            return new APISuccessResult<DataChartSingle>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartSingleModel>(Messages.GetListResultSuccess, dataChart);
         }
 
-        public async Task<APIBaseResult<DataChartSingle>> GetChartLine()
+        public async Task<APIBaseResult<DataChartSingleModel>> GetChartLine()
         {
-            var dataChart = new DataChartSingle
+            var dataChart = new DataChartSingleModel
             {
                 Values = new int[] { 10, 41, 35, 51, 49, 62, 69, 91, 148 },
                 Labels = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" }
             };
 
-            return new APISuccessResult<DataChartSingle>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartSingleModel>(Messages.GetListResultSuccess, dataChart);
         }
 
-        public async Task<APIBaseResult<DataChartNumeric>> GetChartRadar()
+        public async Task<APIBaseResult<DataChartNumericModel>> GetChartRadar()
         {
-            var dataChart = new DataChartNumeric
+            var dataChart = new DataChartNumericModel
             {
-                Values = new List<NumericSeries>
+                Values = new List<NumericSeriesModel>
                 {
-                    new NumericSeries
+                    new NumericSeriesModel
                     {
                         Name  = "Series-1",
                         Data  = new int [] { 80, 50, 30, 40, 100, 20 }
                     },
-                    new NumericSeries
+                    new NumericSeriesModel
                     {
                         Name  = "Series-2",
                         Data  = new int [] { 20, 30, 40, 80, 20, 80 }
                     },
-                    new NumericSeries
+                    new NumericSeriesModel
                     {
                         Name  = "Series-3",
                         Data  = new int[] { 44, 76, 78, 13, 43, 10 }
@@ -161,60 +161,60 @@ namespace NextERP.BLL.Service
                 Labels = new string[] { "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct" }
             };
 
-            return new APISuccessResult<DataChartNumeric>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartNumericModel>(Messages.GetListResultSuccess, dataChart);
         }
 
-        public async Task<APIBaseResult<DataChartXY>> GetChartSlope()
+        public async Task<APIBaseResult<DataChartXYModel>> GetChartSlope()
         {
-            var dataChart = new DataChartXY
+            var dataChart = new DataChartXYModel
             {
-                Values = new List<XYSeries>
+                Values = new List<XYSeriesModel>
                 {
-                    new XYSeries{
+                    new XYSeriesModel{
                         Name  = "Blue",
-                        Data = new List<XYPoint>
+                        Data = new List<XYPointModel>
                         {
-                            new XYPoint {X = "Category 1", Y = 503},
-                            new XYPoint {X = "Category 2", Y = 580},
-                            new XYPoint {X = "Category 3", Y = 135},
-                            new XYPoint {X = "Category 4", Y = 363},
+                            new XYPointModel {X = "Category 1", Y = 503},
+                            new XYPointModel {X = "Category 2", Y = 580},
+                            new XYPointModel {X = "Category 3", Y = 135},
+                            new XYPointModel {X = "Category 4", Y = 363},
                         }
                     },
-                    new XYSeries{
+                    new XYSeriesModel{
                         Name  = "Green",
-                        Data = new List<XYPoint>
+                        Data = new List<XYPointModel>
                         {
-                            new XYPoint {X = "Category 1", Y = 733},
-                            new XYPoint {X = "Category 2", Y = 385},
-                            new XYPoint {X = "Category 3", Y = 715},
-                            new XYPoint {X = "Category 4", Y = 952},
+                            new XYPointModel {X = "Category 1", Y = 733},
+                            new XYPointModel {X = "Category 2", Y = 385},
+                            new XYPointModel {X = "Category 3", Y = 715},
+                            new XYPointModel {X = "Category 4", Y = 952},
                         }
                     },
-                    new XYSeries{
+                    new XYSeriesModel{
                         Name  = "Orange",
-                        Data = new List<XYPoint>
+                        Data = new List<XYPointModel>
                         {
-                            new XYPoint {X = "Category 1", Y = 255},
-                            new XYPoint {X = "Category 2", Y = 211},
-                            new XYPoint {X = "Category 3", Y = 441},
-                            new XYPoint {X = "Category 4", Y = 642},
+                            new XYPointModel {X = "Category 1", Y = 255},
+                            new XYPointModel {X = "Category 2", Y = 211},
+                            new XYPointModel {X = "Category 3", Y = 441},
+                            new XYPointModel {X = "Category 4", Y = 642},
                         }
                     },
-                    new XYSeries{
+                    new XYSeriesModel{
                         Name  = "Red",
-                        Data = new List<XYPoint>
+                        Data = new List<XYPointModel>
                         {
-                            new XYPoint {X = "Category 1", Y = 428},
-                            new XYPoint {X = "Category 2", Y = 749},
-                            new XYPoint {X = "Category 3", Y = 559},
-                            new XYPoint {X = "Category 4", Y = 748},
+                            new XYPointModel {X = "Category 1", Y = 428},
+                            new XYPointModel {X = "Category 2", Y = 749},
+                            new XYPointModel {X = "Category 3", Y = 559},
+                            new XYPointModel {X = "Category 4", Y = 748},
                         }
                     },
                 },
                 Labels = new string[] { }
             };
 
-            return new APISuccessResult<DataChartXY>(Messages.GetListResultSuccess, dataChart);
+            return new APISuccessResult<DataChartXYModel>(Messages.GetListResultSuccess, dataChart);
         }
 
         #endregion

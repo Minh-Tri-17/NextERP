@@ -54,7 +54,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSupplierOrderDetails)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails(Filter filter)
+        public async Task<ActionResult<IEnumerable<SupplierOrderDetail>>> GetSupplierOrderDetails(FilterModel filter)
         {
             var result = await _supplierOrderDetailService.GetPaging(filter);
             if (!result.IsSuccess)

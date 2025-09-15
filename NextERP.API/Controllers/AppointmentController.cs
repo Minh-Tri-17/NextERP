@@ -101,7 +101,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetAppointments)}/Filter")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(Filter filter)
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments(FilterModel filter)
         {
             var result = await _appointmentService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -130,7 +130,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportAppointment))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAppointment(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportAppointment(FilterModel filter)
         {
             var result = await _appointmentService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

@@ -65,7 +65,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost($"{nameof(GetSupplierOrders)}/Filter")]
-        public async Task<ActionResult<IEnumerable<SupplierOrder>>> GetSupplierOrders(Filter filter)
+        public async Task<ActionResult<IEnumerable<SupplierOrder>>> GetSupplierOrders(FilterModel filter)
         {
             var result = await _supplierOrderService.GetPaging(filter);
             if (!result.IsSuccess)
@@ -94,7 +94,7 @@ namespace NextERP.API.Controllers
         }
 
         [HttpPost(nameof(ExportSupplierOrder))]
-        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplierOrder(Filter filter)
+        public async Task<ActionResult<APIBaseResult<byte[]>>> ExportSupplierOrder(FilterModel filter)
         {
             var result = await _supplierOrderService.Export(filter);
             if (!result.IsSuccess || result == null || result.Result == null)

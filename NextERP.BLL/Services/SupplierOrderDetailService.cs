@@ -67,7 +67,7 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<SupplierOrderDetailModel>(Messages.GetResultSuccess, supplierOrderDetailModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(FilterModel filter)
         {
             IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking() // Không theo dõi thay đổi của thực thể
                 .Where(s => s.SupplierOrderId == filter.IdMain);

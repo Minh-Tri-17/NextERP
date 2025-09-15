@@ -131,7 +131,7 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<HistoryMailModel>(Messages.GetResultSuccess, historyMailModel);
         }
 
-        public async Task<APIBaseResult<PagingResult<HistoryMailModel>>> GetPaging(Filter filter)
+        public async Task<APIBaseResult<PagingResult<HistoryMailModel>>> GetPaging(FilterModel filter)
         {
             IQueryable<HistoryMail> query = _context.HistoryMails.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
@@ -195,7 +195,7 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ImportFailed);
         }
 
-        public async Task<APIBaseResult<byte[]>> Export(Filter filter)
+        public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
         {
             var data = await GetPaging(filter);
             var items = data?.Result?.Items ?? new List<HistoryMailModel>();
