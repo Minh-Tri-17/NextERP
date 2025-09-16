@@ -88,7 +88,7 @@
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.TemplateNotification.TemplateNotificationForm, Model)
         @await Component.InvokeAsync(Constants.Import, TableName.TemplateNotification)
-        @await Component.InvokeAsync(Constants.Export, new { tableName = TableName.TemplateNotification, model = Model })
+        @await Component.InvokeAsync(Constants.Export, TableName.TemplateNotification)
     </section>
 </div>
 

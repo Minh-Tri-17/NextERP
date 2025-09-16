@@ -99,7 +99,7 @@
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.Branch.BranchForm, Model)
         @await Component.InvokeAsync(Constants.Import, TableName.Branch)
-        @await Component.InvokeAsync(Constants.Export, new { tableName = TableName.Branch, model = Model })
+        @await Component.InvokeAsync(Constants.Export, TableName.Branch)
     </section>
 </div>
 
