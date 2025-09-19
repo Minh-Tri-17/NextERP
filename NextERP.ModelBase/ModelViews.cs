@@ -270,6 +270,19 @@ namespace NextERP.ModelBase
 
     #endregion
 
+    public class MailModel
+    {
+        [Required]
+        public string To { get; set; } = string.Empty;
+        [Required]
+        public string Subject { get; set; } = string.Empty;
+        [Required]
+        public string Body { get; set; } = string.Empty;
+        public List<string> CC { get; set; } = new List<string>();
+        public List<string> BCC { get; set; } = new List<string>();
+        public List<IFormFile>? Attachments { get; set; }
+    }
+
     public class FilterModel
     {
         public bool AllowPaging { get; set; } = true;

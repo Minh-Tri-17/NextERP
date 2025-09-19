@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using NextERP.DAL.Models;
+using NextERP.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace NextERP.Util
             _config = config;
         }
 
-        public static bool SendMail(string toEmail, string subject, string content)
+        public static async Task<bool> SendMail(MailModel mail)
         {
             try
             {
@@ -40,13 +40,44 @@ namespace NextERP.Util
                     using (var mailMessage = new MailMessage())
                     {
                         mailMessage.From = new MailAddress(fromEmail, fromName);
-                        mailMessage.To.Add(new MailAddress(toEmail));
-                        mailMessage.Subject = subject;
-                        mailMessage.Body = content;
+                        mailMessage.To.Add(new MailAddress(DataHelper.GetString(mail.To)));
+                        mailMessage.Subject = DataHelper.GetString(mail.Subject);
+                        mailMessage.Body = DataHelper.GetString(mail.Body);
                         mailMessage.IsBodyHtml = true;
                         mailMessage.BodyEncoding = Encoding.UTF8;
 
-                        smtpClient.Send(mailMessage);
+                        if (mail.CC != null)
+                        {
+                            foreach (var cc in mail.CC)
+                            {
+                                if (!string.IsNullOrWhiteSpace(cc))
+                                    mailMessage.CC.Add(new MailAddress(cc));
+                            }
+                        }
+
+                        if (mail.BCC != null)
+                        {
+                            foreach (var bcc in mail.BCC)
+                            {
+                                if (!string.IsNullOrWhiteSpace(bcc))
+                                    mailMessage.Bcc.Add(new MailAddress(bcc));
+                            }
+                        }
+
+                        if (mail.Attachments != null)
+                        {
+                            foreach (var formFile in mail.Attachments)
+                            {
+                                if (formFile.Length > 0)
+                                {
+                                    using var stream = formFile.OpenReadStream();
+                                    var attachment = new Attachment(stream, formFile.FileName);
+                                    mailMessage.Attachments.Add(attachment);
+                                }
+                            }
+                        }
+
+                        await smtpClient.SendMailAsync(mailMessage);
                     }
                 }
 

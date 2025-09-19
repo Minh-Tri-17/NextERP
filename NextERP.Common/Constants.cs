@@ -32,6 +32,7 @@
         public const string Delete = "Delete";
         public const string Import = "Import";
         public const string Export = "Export";
+        public const string SendMail = "SendMail";
         public const string DeletePermanently = "DeletePermanently";
         public const string Dashboard = "Dashboard";
         public const string GetChartColumn = "GetChartColumn";
@@ -251,6 +252,7 @@
         public const string UrlGetTemplateMails = "/api/TemplateMail/GetTemplateMails";
         public const string UrlImportTemplateMail = "/api/TemplateMail/ImportTemplateMail";
         public const string UrlExportTemplateMail = "/api/TemplateMail/ExportTemplateMail";
+        public const string UrlSendMailTemplateMail = "/api/TemplateMail/SendMailTemplateMail";
 
         #endregion
 

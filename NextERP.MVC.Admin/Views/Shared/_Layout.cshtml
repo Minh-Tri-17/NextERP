@@ -46,7 +46,8 @@
     <link rel="stylesheet" href="~/lib/fontawesome-free-6.7.2-web/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/css/tippy/light.css" />
     <link rel="stylesheet" href="~/css/main.css" />
-    <script src="~/lib/js/jquery/jquery.min.js"></script> <!--& Khai bảo jQuery trước để sử dụng trong các script khác -->
+    <script src="~/lib/js/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/js/jquery/jquery.min.js"></script>
     <script src="~/js/helper.js"></script>
 </head>
 <body>
@@ -503,14 +504,15 @@
                                     if (isActive)
                                     {
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px" title="@title" localize-content>@title</span>
+                                            @*Dịch title không hoạt động*@
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px" localize-att-="title" title="@title" localize-content>@title</span>
                                         </li>
                                     }
                                     else
                                     {
                                         <li class="breadcrumb-item">
                                             <a href="@url">
-                                                <span class="d-inline-block text-truncate" style="max-width: 150px" title="@title" localize-content>@title</span>
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px" localize-att-="title" title="@title" localize-content>@title</span>
                                             </a>
                                         </li>
                                     }
@@ -538,7 +540,7 @@
                 </div>
 
                 <div class="header-right">
-                    <img src="~/images/merry-christmas.gif"  alt="Hình động chúc mừng năm mới" />
+                    <img src="~/images/merry-christmas.gif" alt="Hình động chúc mừng năm mới" />
 
                     <div class="dark-mode">
                         <label>

@@ -984,14 +984,17 @@
   <data name="TemplateNotificationCode" xml:space="preserve">
     <value>Template notification code</value>
   </data>
-  <data name="zstring172" xml:space="preserve">
-    <value />
+  <data name="OpenSendMail" xml:space="preserve">
+    <value>Open send mail</value>
   </data>
   <data name="TemplateNotification" xml:space="preserve">
     <value>Template notification</value>
   </data>
-  <data name="zstring174" xml:space="preserve">
-    <value />
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Body</value>
   </data>
   <data name="Revenue" xml:space="preserve">
     <value>Revenue</value>
@@ -1020,13 +1023,64 @@
   <data name="TemplateMail" xml:space="preserve">
     <value>Template mail</value>
   </data>
-  <data name="zstring173" xml:space="preserve">
+  <data name="Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="SendMail" xml:space="preserve">
+    <value>Send mail</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="CC" xml:space="preserve">
+    <value>CC</value>
+  </data>
+  <data name="TemplateMailList" xml:space="preserve">
+    <value>List template mail </value>
+  </data>
+  <data name="SendMailSuccess" xml:space="preserve">
+    <value>Send mail success</value>
+  </data>
+  <data name="TemplateNotificationList" xml:space="preserve">
+    <value>List template notification</value>
+  </data>
+  <data name="zstring189" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring171" xml:space="preserve">
+  <data name="zstring186" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring175" xml:space="preserve">
+  <data name="zstring192" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BCC" xml:space="preserve">
+    <value>BCC</value>
+  </data>
+  <data name="HistoryMailList" xml:space="preserve">
+    <value>List history mail</value>
+  </data>
+  <data name="zstring188" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring185" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring191" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SendMailFailed" xml:space="preserve">
+    <value>Send mail failed</value>
+  </data>
+  <data name="zstring184" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring190" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring187" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring193" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

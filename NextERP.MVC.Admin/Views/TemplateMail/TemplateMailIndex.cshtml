@@ -38,6 +38,9 @@
                 <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
+                <button type="button" class="btn btn-secondary" id="send-mail-button" data-bs-toggle="modal" data-bs-target="#send-mail-modal" localize-content>
+                    OpenSendMail
+                </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
                 </button>
@@ -88,7 +91,8 @@
     <section class="modal-wrapper">
         @await Html.PartialAsync(ScreenName.TemplateMail.TemplateMailForm, Model)
         @await Component.InvokeAsync(Constants.Import, TableName.TemplateMail)
-        @await Component.InvokeAsync(Constants.Export, new { tableName = TableName.TemplateMail, model = Model })
+        @await Component.InvokeAsync(Constants.SendMail, TableName.TemplateMail)
+        @await Component.InvokeAsync(Constants.Export, TableName.TemplateMail)
     </section>
 </div>
 

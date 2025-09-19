@@ -875,6 +875,12 @@ thead.sticky-active {
   justify-content: space-between;
   align-items: center;
 }
+.main .main-wrapper .main-container .ck-editor {
+  display: block;
+}
+.main .main-wrapper .main-container .ck-editor .ck-editor__editable {
+  min-height: 500px;
+}
 .main .main-wrapper .dashboard-container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

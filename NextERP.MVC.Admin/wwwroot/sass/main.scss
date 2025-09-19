@@ -1,4 +1,4 @@
-@use "base";
+﻿@use "base";
 @use "general";
 @use "layout";
 @use "responsive";
@@ -108,6 +108,14 @@
                     .pagination-container {
                         @include flex-between();
                     }
+                }
+            }
+
+            .ck-editor {
+                display: block;
+
+                .ck-editor__editable {
+                    min-height: 500px;
                 }
             }
         }

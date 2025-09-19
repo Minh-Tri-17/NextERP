@@ -65,6 +65,11 @@ namespace NextERP.MVC.Admin.Services.Services
 
         #region Custom Operations
 
+        public async Task<APIBaseResult<bool>> SendMail(MailModel mail)
+        {
+            return await PostAsync<APIBaseResult<bool>, MailModel>(Constants.UrlSendMailTemplateMail, mail);
+        }
+
         #endregion
     }
 }

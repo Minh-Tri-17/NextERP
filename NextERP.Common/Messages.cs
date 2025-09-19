@@ -12,11 +12,13 @@
         public const string DeleteSuccess = "DeleteSuccess";
         public const string ImportSuccess = "ImportSuccess";
         public const string ExportSuccess = "ExportSuccess";
+        public const string SendMailSuccess = "SendMailSuccess";
         public const string CreateFailed = "CreateFailed";
         public const string UpdateFailed = "UpdateFailed";
         public const string DeleteFailed = "DeleteFailed";
         public const string ImportFailed = "ImportFailed";
         public const string ExportFailed = "ExportFailed";
+        public const string SendMailFailed = "SendMailFailed";
         public const string GetListResultSuccess = "GetListResultSuccess";
         public const string GetResultSuccess = "GetResultSuccess";
 

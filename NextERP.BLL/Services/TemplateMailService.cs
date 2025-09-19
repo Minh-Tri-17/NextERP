@@ -219,17 +219,13 @@ namespace NextERP.BLL.Service
 
         #region Custom Operations
 
-        public async Task<APIBaseResult<bool>> SendMail()
+        public async Task<APIBaseResult<bool>> SendMail(MailModel mail)
         {
-            var toEhistoryMail = "tri.nguyen@emsc.vn";
-            var subject = "Test EhistoryMail";
-            var content = "Test EhistoryMail";
-
-            var result = MailHelper.SendMail(toEhistoryMail, subject, content);
+            var result = await MailHelper.SendMail(mail);
             if (result)
-                return new APISuccessResult<bool>(Messages.ImportSuccess, true);
+                return new APISuccessResult<bool>(Messages.SendMailSuccess, true);
 
-            return new APIErrorResult<bool>(Messages.ImportFailed);
+            return new APIErrorResult<bool>(Messages.SendMailFailed);
         }
 
         #endregion

@@ -984,14 +984,17 @@
   <data name="TemplateNotificationCode" xml:space="preserve">
     <value>Mã mẫu thông báo</value>
   </data>
-  <data name="zstring172" xml:space="preserve">
-    <value />
+  <data name="OpenSendMail" xml:space="preserve">
+    <value>Mở gửi mail</value>
   </data>
   <data name="TemplateNotification" xml:space="preserve">
     <value>Mẫu thông báo</value>
   </data>
-  <data name="zstring174" xml:space="preserve">
-    <value />
+  <data name="To" xml:space="preserve">
+    <value>Người nhận</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Nội dung</value>
   </data>
   <data name="Revenue" xml:space="preserve">
     <value>Doanh thu</value>
@@ -1020,13 +1023,64 @@
   <data name="TemplateMail" xml:space="preserve">
     <value>Mẫu mail</value>
   </data>
-  <data name="zstring173" xml:space="preserve">
+  <data name="Attachments" xml:space="preserve">
+    <value>File đính kèm</value>
+  </data>
+  <data name="SendMail" xml:space="preserve">
+    <value>Gửi mail</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Tiêu đề</value>
+  </data>
+  <data name="CC" xml:space="preserve">
+    <value>Đồng gửi</value>
+  </data>
+  <data name="TemplateMailList" xml:space="preserve">
+    <value>Danh sách mẫu mail</value>
+  </data>
+  <data name="SendMailSuccess" xml:space="preserve">
+    <value>F:Gửi mail thất bại</value>
+  </data>
+  <data name="TemplateNotificationList" xml:space="preserve">
+    <value>Danh sách mẫu thông báo</value>
+  </data>
+  <data name="zstring189" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring171" xml:space="preserve">
+  <data name="zstring186" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring175" xml:space="preserve">
+  <data name="zstring192" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BCC" xml:space="preserve">
+    <value>Ẩn đồng gửi</value>
+  </data>
+  <data name="HistoryMailList" xml:space="preserve">
+    <value>Danh sách lịch sử mail</value>
+  </data>
+  <data name="zstring188" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring185" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring191" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SendMailFailed" xml:space="preserve">
+    <value>S:Gửi mail thành công</value>
+  </data>
+  <data name="zstring184" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring190" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring187" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring193" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

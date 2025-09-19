@@ -193,6 +193,21 @@ namespace NextERP.MVC.Admin.Controllers
 
         #region Custom Operations
 
+        [HttpPost]
+        public async Task<ActionResult> SendMail(MailModel mail)
+        {
+            if (!ModelState.IsValid)
+                return GetModelStateErrors();
+
+            mail.CC = DataHelper.GetString(mail.CC.FirstOrDefault()).Split(",").ToList();
+
+            var result = await _templateMailAPIService.SendMail(mail);
+            if (!DataHelper.IsNotNull(result))
+                return Json(Localization(result.Message));
+
+            return Json(Localization(result.Message));
+        }
+
         #endregion
     }
 }

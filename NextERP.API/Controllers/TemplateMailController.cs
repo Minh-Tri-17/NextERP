@@ -143,10 +143,36 @@ namespace NextERP.API.Controllers
 
         #region Custom Operations
 
-        [HttpPost(nameof(SendMail))]
-        public async Task<ActionResult<APIBaseResult<bool>>> SendMail()
+        [HttpPost(nameof(SendMailTemplateMail))]
+        public async Task<ActionResult<APIBaseResult<bool>>> SendMailTemplateMail()
         {
-            var result = await _templateMailService.SendMail();
+            var mail = new MailModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    mail = JsonConvert.DeserializeObject<MailModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (mail != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    mail.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    mail = JsonConvert.DeserializeObject<MailModel>(body);
+            }
+
+            if (mail == null)
+                return BadRequest();
+
+            var result = await _templateMailService.SendMail(mail);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
