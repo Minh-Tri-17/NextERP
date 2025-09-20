@@ -1,5 +1,6 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     var culture = CultureInfo.CurrentCulture.Name;
@@ -39,7 +40,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NextERP | @ViewBag.Title</title>
+    <title>NextERP | @Localizer[ViewBag.Title]</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
     <link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
@@ -504,15 +505,14 @@
                                     if (isActive)
                                     {
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            @*Dịch title không hoạt động*@
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px" localize-att-="title" title="@title" localize-content>@title</span>
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
                                         </li>
                                     }
                                     else
                                     {
                                         <li class="breadcrumb-item">
                                             <a href="@url">
-                                                <span class="d-inline-block text-truncate" style="max-width: 150px" localize-att-="title" title="@title" localize-content>@title</span>
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
                                             </a>
                                         </li>
                                     }
@@ -524,7 +524,7 @@
 
                 <div class="header-center">
                     <form class="search-form">
-                        <input class="form-control form-control-sm" list="datalistOptions" localize-content placeholder="Search" />
+                        <input class="form-control form-control-sm" list="datalistOptions" localize-content placeholder="@Localizer["Search"]" />
                         <datalist id="datalistOptions">
                             <option value="San Francisco"></option>
                             <option value="New York"></option>

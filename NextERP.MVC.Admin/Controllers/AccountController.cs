@@ -40,6 +40,8 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpGet]
         public IActionResult AccountIndex()
         {
+            ViewBag.Title = Constants.Login;
+
             // Kiểm tra xem user đã login chưa, nếu đã đăng nhập thì chuyển thẳng tới trang Home
             if (User.Identity != null && User.Identity.IsAuthenticated)
                 return RedirectToAction(ScreenName.DashboardIndex, "Dashboard");

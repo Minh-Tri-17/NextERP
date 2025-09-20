@@ -41,6 +41,7 @@
         public const string GetChartLine = "GetChartLine";
         public const string GetChartFunnel = "GetChartFunnel";
         public const string GetChartSlope = "GetChartSlope";
+        public const string Login = "Login";
 
         #region Format
 

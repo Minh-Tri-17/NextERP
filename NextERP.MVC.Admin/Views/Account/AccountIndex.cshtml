@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using static NextERP.Util.Enums
 @model NextERP.ModelBase.UserModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     Layout = null;
@@ -11,7 +12,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Next ERP | Đăng nhập</title>
+    <title>Next ERP | @Localizer[ViewBag.Title]</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
     <link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
