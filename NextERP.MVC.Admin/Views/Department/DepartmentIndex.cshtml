@@ -145,7 +145,7 @@
                 $("#@TableName.Department #@AttributeNames.Department.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -165,7 +165,7 @@
                 loadDepartments();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -185,7 +185,7 @@
                 loadDepartments();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -227,7 +227,7 @@
                 $departmentId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>

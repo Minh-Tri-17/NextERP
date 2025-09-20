@@ -151,7 +151,7 @@
                 $("#@TableName.Customer #@AttributeNames.Customer.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -171,7 +171,7 @@
                 loadCustomers();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -191,7 +191,7 @@
                 loadCustomers();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -230,7 +230,7 @@
                 $customerId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>

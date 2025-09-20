@@ -127,7 +127,7 @@
                 $("#@TableName.Feedback #@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -147,7 +147,7 @@
                 loadFeedbacks();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -167,7 +167,7 @@
                 loadFeedbacks();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -206,7 +206,7 @@
                 $feedbackId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>

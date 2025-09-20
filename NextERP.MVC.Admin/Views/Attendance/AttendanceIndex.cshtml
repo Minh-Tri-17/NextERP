@@ -141,7 +141,7 @@
                 $("#@TableName.Attendance #@AttributeNames.Attendance.Note").val(data.note);
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -161,7 +161,7 @@
                 loadAttendances();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -181,7 +181,7 @@
                 loadAttendances();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -220,7 +220,7 @@
                 $attendanceId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>

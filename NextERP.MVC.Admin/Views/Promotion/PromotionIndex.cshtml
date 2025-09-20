@@ -147,7 +147,7 @@
                 $("#@TableName.Promotion #@AttributeNames.Promotion.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -167,7 +167,7 @@
                 loadPromotions();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -187,7 +187,7 @@
                 loadPromotions();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -226,7 +226,7 @@
                 $promotionId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>

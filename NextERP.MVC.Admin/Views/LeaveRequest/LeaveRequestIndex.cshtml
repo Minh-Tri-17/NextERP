@@ -171,7 +171,7 @@
                 $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType).trigger("change");
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -191,7 +191,7 @@
                 loadLeaveRequests();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -211,7 +211,7 @@
                 loadLeaveRequests();
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     });
 
@@ -250,7 +250,7 @@
                 $leaveRequestId = "";
             })
             .catch(err => {
-                showMessage({ success: false, message: "F:Có lỗi xảy ra!" });
+                showMessage("F:Có lỗi js xảy ra!");
             });
     }
 </script>
