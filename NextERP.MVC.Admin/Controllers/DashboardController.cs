@@ -22,16 +22,35 @@ namespace NextERP.MVC.Admin.Controllers
         #region Default Operations
 
         [HttpGet]
-        public IActionResult DashboardIndex()
+        public async Task<IActionResult> DashboardIndexAsync()
         {
             ViewBag.UserId = GetInfor()[0];
 
+            var profitTask = _dashboardAPIService.GetStatisticsProfit();
+            var revenueTask = _dashboardAPIService.GetStatisticsRevenue();
+            var spendingTask = _dashboardAPIService.GetStatisticsSpending();
+            var customerTask = _dashboardAPIService.GetStatisticsCustomer();
+            var serviceTask = _dashboardAPIService.GetStatisticsService();
+
+            // Await all
+            await Task.WhenAll(profitTask, revenueTask, spendingTask, customerTask, serviceTask);
+
             var dashboardModel = new DashboardModel();
-            dashboardModel.StatisticsService = _dashboardAPIService.GetStatisticsService().Result.Result ?? new List<string>();
-            dashboardModel.StatisticsProfit = _dashboardAPIService.GetStatisticsProfit().Result.Result;
-            dashboardModel.StatisticsRevenue = _dashboardAPIService.GetStatisticsRevenue().Result.Result;
-            dashboardModel.StatisticsSpending = _dashboardAPIService.GetStatisticsSpending().Result.Result;
-            dashboardModel.StatisticsCustomer = _dashboardAPIService.GetStatisticsCustomer().Result.Result;
+
+            var profitResp = await profitTask;
+            dashboardModel.StatisticsProfit = profitResp?.Result ?? 0m;
+
+            var revenueResp = await revenueTask;
+            dashboardModel.StatisticsRevenue = revenueResp?.Result ?? 0m;
+
+            var spendingResp = await spendingTask;
+            dashboardModel.StatisticsSpending = spendingResp?.Result ?? 0m;
+
+            var customerResp = await customerTask;
+            dashboardModel.StatisticsCustomer = customerResp?.Result ?? 0;
+
+            var serviceResp = await serviceTask;
+            dashboardModel.StatisticsService = serviceResp?.Result ?? new List<string>();
 
             return View(dashboardModel);
         }
