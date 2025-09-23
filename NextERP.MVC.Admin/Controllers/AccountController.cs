@@ -153,7 +153,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             // 4. Tạo nội dung email
             mail.Subject = _localizer.GetLocalizedString(Constants.SendOTP);
-            mail.Body = _localizer.GetLocalizedString(Messages.YourOTP, otpString);
+            mail.Body = _localizer.GetLocalizedString(Messages.YourOTP, new object[] { otpString });
 
             var result = await _accountAPIService.SendOTP(mail);
             if (!DataHelper.IsNotNull(result))
