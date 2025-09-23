@@ -15,10 +15,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IProductAPIService _productAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public ProductController(IProductAPIService productAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _productAPIService = productAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -36,7 +38,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _productAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -91,7 +93,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _productAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             foreach (var product in result!.Result!.Items!)
             {
@@ -129,9 +131,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _productAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -139,9 +141,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _productAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -149,9 +151,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _productAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -162,9 +164,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _productAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -225,7 +227,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _productAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.Product, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IInvoiceAPIService _invoiceAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public InvoiceController(IInvoiceAPIService invoiceAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _invoiceAPIService = invoiceAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _invoiceAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -81,7 +83,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _invoiceAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.Invoice.InvoiceList, result);
         }
@@ -94,9 +96,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _invoiceAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -104,9 +106,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _invoiceAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -114,9 +116,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _invoiceAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         #endregion

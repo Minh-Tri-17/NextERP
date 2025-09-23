@@ -11,10 +11,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IInvoiceDetailAPIService _invoiceDetailAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public InvoiceDetailController(IInvoiceDetailAPIService invoiceDetailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _invoiceDetailAPIService = invoiceDetailAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -32,7 +34,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _invoiceDetailAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -72,7 +74,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _invoiceDetailAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.InvoiceDetail.InvoiceDetailList, result);
         }
@@ -85,9 +87,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _invoiceDetailAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -95,9 +97,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _invoiceDetailAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         #endregion

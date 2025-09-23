@@ -11,10 +11,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IFunctionAPIService _functionAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public FunctionController(IFunctionAPIService functionAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _functionAPIService = functionAPIService;
+            _localizer = localizer;
         }
 
         #endregion

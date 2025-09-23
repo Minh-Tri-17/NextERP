@@ -11,10 +11,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly ISupplierOrderDetailAPIService _supplierOrderDetailAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public SupplierOrderDetailController(ISupplierOrderDetailAPIService supplierOrderDetailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _supplierOrderDetailAPIService = supplierOrderDetailAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -63,7 +65,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _supplierOrderDetailAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.SupplierOrderDetail.SupplierOrderDetailList, result);
         }
@@ -73,9 +75,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _supplierOrderDetailAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         #endregion

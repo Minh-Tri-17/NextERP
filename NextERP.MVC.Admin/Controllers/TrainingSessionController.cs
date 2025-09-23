@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly ITrainingSessionAPIService _trainingSessionAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public TrainingSessionController(ITrainingSessionAPIService trainingSessionAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _trainingSessionAPIService = trainingSessionAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _trainingSessionAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -88,7 +90,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _trainingSessionAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.TrainingSession.TrainingSessionList, result);
         }
@@ -101,9 +103,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _trainingSessionAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -111,9 +113,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _trainingSessionAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -121,9 +123,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _trainingSessionAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -134,9 +136,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _trainingSessionAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -197,7 +199,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _trainingSessionAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.TrainingSession, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

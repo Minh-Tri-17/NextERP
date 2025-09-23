@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IRoleAPIService _roleAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public RoleController(IRoleAPIService roleAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _roleAPIService = roleAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _roleAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -81,7 +83,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _roleAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             if (result.Result?.Items != null)
             {
@@ -90,7 +92,7 @@ namespace NextERP.MVC.Admin.Controllers
                 foreach (var role in result.Result.Items)
                 {
                     listPermission = role.Permissions.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
-                    role.Permissions = string.Join("<br/>", listPermission.Select(s => "&#10031; " + Localization(s)));
+                    role.Permissions = string.Join("<br/>", listPermission.Select(s => "&#10031; " + _localizer.GetLocalizedString(s)));
                 }
             }
 
@@ -105,9 +107,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _roleAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -115,9 +117,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _roleAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -125,9 +127,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _roleAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -138,9 +140,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _roleAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -194,7 +196,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _roleAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.Role, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

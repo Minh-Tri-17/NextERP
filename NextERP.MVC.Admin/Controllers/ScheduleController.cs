@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IScheduleAPIService _scheduleAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public ScheduleController(IScheduleAPIService scheduleAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _scheduleAPIService = scheduleAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _scheduleAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -81,7 +83,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _scheduleAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var listCalendar = new List<CalendarModel>();
 
@@ -109,9 +111,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _scheduleAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -119,9 +121,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _scheduleAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -129,9 +131,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _scheduleAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -142,9 +144,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _scheduleAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -198,7 +200,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _scheduleAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.Schedule, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

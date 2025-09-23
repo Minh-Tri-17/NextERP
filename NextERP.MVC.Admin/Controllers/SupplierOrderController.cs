@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly ISupplierOrderAPIService _supplierOrderAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public SupplierOrderController(ISupplierOrderAPIService supplierOrderAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _supplierOrderAPIService = supplierOrderAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -106,7 +108,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _supplierOrderAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.SupplierOrder.SupplierOrderList, result);
         }
@@ -116,9 +118,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _supplierOrderAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -126,9 +128,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _supplierOrderAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -139,9 +141,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _supplierOrderAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -230,7 +232,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _supplierOrderAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.SupplierOrder, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

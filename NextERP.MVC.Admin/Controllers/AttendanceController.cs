@@ -11,10 +11,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IAttendanceAPIService _attendanceAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public AttendanceController(IAttendanceAPIService attendanceAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _attendanceAPIService = attendanceAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -32,7 +34,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _attendanceAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -87,7 +89,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _attendanceAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.Attendance.AttendanceList, result);
         }
@@ -100,9 +102,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _attendanceAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -110,9 +112,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _attendanceAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -120,9 +122,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _attendanceAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -133,9 +135,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _attendanceAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -196,7 +198,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _attendanceAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.Attendance, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

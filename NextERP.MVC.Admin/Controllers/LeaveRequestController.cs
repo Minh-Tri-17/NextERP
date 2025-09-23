@@ -12,10 +12,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly ILeaveRequestAPIService _leaveRequestAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public LeaveRequestController(ILeaveRequestAPIService leaveRequestAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _leaveRequestAPIService = leaveRequestAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _leaveRequestAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -95,7 +97,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _leaveRequestAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.LeaveRequest.LeaveRequestList, result);
         }
@@ -108,9 +110,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _leaveRequestAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -118,9 +120,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _leaveRequestAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return RedirectToAction(ScreenName.LeaveRequest.LeaveRequestIndex, Localization(result.Message));
+            return RedirectToAction(ScreenName.LeaveRequest.LeaveRequestIndex, _localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -128,9 +130,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _leaveRequestAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -141,9 +143,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _leaveRequestAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -211,7 +213,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _leaveRequestAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.LeaveRequest, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);

@@ -11,10 +11,12 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IDashboardAPIService _dashboardAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public DashboardController(IDashboardAPIService dashboardAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _dashboardAPIService = dashboardAPIService;
+            _localizer = localizer;
         }
 
         #endregion

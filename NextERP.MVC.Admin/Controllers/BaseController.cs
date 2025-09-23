@@ -121,11 +121,6 @@ namespace NextERP.MVC.Admin.Controllers
 
         #region ModelState Error Handling and Localization
 
-        protected string Localization(string key)
-        {
-            return _localizer.GetLocalizedString(key);
-        }
-
         protected JsonResult GetModelStateErrors()
         {
             var errors = ModelState
@@ -136,7 +131,7 @@ namespace NextERP.MVC.Admin.Controllers
                     // Phân tích loại lỗi từ nội dung thông báo
                     var errorType = GetErrorType(error.ErrorMessage);
 
-                    string message = $"<b>&#10031; [{Localization(field)}]</b> {Localization(errorType)}";
+                    string message = $"<b>&#10031; [{_localizer.GetLocalizedString(field)}]</b> {_localizer.GetLocalizedString(errorType)}";
 
                     return new { Field = field, Message = message };
                 })

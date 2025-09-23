@@ -13,11 +13,13 @@ namespace NextERP.MVC.Admin.Controllers
 
         private readonly IUserAPIService _userAPIService;
         private readonly IEmployeeAPIService _employeeAPIService;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public UserController(IUserAPIService userAPIService, IEmployeeAPIService employeeAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _userAPIService = userAPIService;
             _employeeAPIService = employeeAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -40,7 +42,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _userAPIService.GetOne(id);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return Json(result.Result);
         }
@@ -95,7 +97,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _userAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.User.UserList, result);
         }
@@ -108,9 +110,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _userAPIService.CreateOrEdit(request);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -118,9 +120,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _userAPIService.Delete(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -128,9 +130,9 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _userAPIService.DeletePermanently(ids);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -141,9 +143,9 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _userAPIService.Import(file);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
-            return Json(Localization(result.Message));
+            return Json(_localizer.GetLocalizedString(result.Message));
         }
 
         [HttpPost]
@@ -204,7 +206,7 @@ namespace NextERP.MVC.Admin.Controllers
 
             var result = await _userAPIService.Export(filter);
             if (!DataHelper.IsNotNull(result))
-                return Json(Localization(result.Message));
+                return Json(_localizer.GetLocalizedString(result.Message));
 
             var fileName = string.Format(Constants.FileName, TableName.User, DateTime.Now.ToString(Constants.DateTimeString));
             return File(result.Result!, Constants.ContentType, fileName);
