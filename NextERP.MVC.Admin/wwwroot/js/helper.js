@@ -191,7 +191,7 @@ async function callApi(url, method = "GET", data = null, id) {
 
     if (contentType && contentType.includes("application/json")) {
         result = await response.json();
- 
+
         if (typeof result === "string") {
             showMessage(result);
         }
@@ -200,7 +200,10 @@ async function callApi(url, method = "GET", data = null, id) {
         $(id).html(result);
     }
 
-    affterCallAPISuccess();
+    // Sau khi gọi API thành công, ẩn loader trừ khi là trang Account (vì trang Account có loader riêng)
+    if (!url.includes("Account")) {
+        afterCallAPISuccess();
+    }
 
     return result;
 }
