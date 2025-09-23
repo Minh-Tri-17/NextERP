@@ -18,7 +18,7 @@ public partial class User
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? Username { get; set; }
+    public string Username { get; set; } = null!;
 
     [StringLength(500)]
     [Unicode(false)]

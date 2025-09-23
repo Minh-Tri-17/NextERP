@@ -138,9 +138,6 @@
   <data name="PhoneNumberRegistered" xml:space="preserve">
     <value>Phone number registered</value>
   </data>
-  <data name="SentOTP" xml:space="preserve">
-    <value>Sent OTP</value>
-  </data>
   <data name="BackLogin" xml:space="preserve">
     <value>Back login</value>
   </data>
@@ -1044,11 +1041,8 @@
   <data name="TemplateNotificationList" xml:space="preserve">
     <value>List template notification</value>
   </data>
-  <data name="zstring189" xml:space="preserve">
-    <value />
-  </data>
-  <data name="zstring186" xml:space="preserve">
-    <value />
+  <data name="InvalidPhoneNumberRegistered" xml:space="preserve">
+    <value>Phone number registered is required.</value>
   </data>
   <data name="zstring192" xml:space="preserve">
     <value />
@@ -1059,11 +1053,11 @@
   <data name="HistoryMailList" xml:space="preserve">
     <value>List history mail</value>
   </data>
-  <data name="zstring188" xml:space="preserve">
-    <value />
+  <data name="OTP" xml:space="preserve">
+    <value>OTP</value>
   </data>
-  <data name="zstring185" xml:space="preserve">
-    <value />
+  <data name="InvalidNewPassword" xml:space="preserve">
+    <value>New password is required.</value>
   </data>
   <data name="zstring191" xml:space="preserve">
     <value />
@@ -1071,14 +1065,14 @@
   <data name="SendMailFailed" xml:space="preserve">
     <value>Send mail failed</value>
   </data>
-  <data name="zstring184" xml:space="preserve">
-    <value />
+  <data name="InvalidUsername" xml:space="preserve">
+    <value>Username is required.</value>
   </data>
-  <data name="zstring190" xml:space="preserve">
-    <value />
+  <data name="YourOTP" xml:space="preserve">
+    <value>Your OTP: {0}</value>
   </data>
-  <data name="zstring187" xml:space="preserve">
-    <value />
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="zstring193" xml:space="preserve">
     <value />
@@ -1091,5 +1085,8 @@
   </data>
   <data name="HistoryMail" xml:space="preserve">
     <value>History mail</value>
+  </data>
+  <data name="SendOTP" xml:space="preserve">
+    <value>Send OTP</value>
   </data>
 </root>

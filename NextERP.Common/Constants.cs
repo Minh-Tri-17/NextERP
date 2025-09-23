@@ -33,6 +33,7 @@
         public const string Import = "Import";
         public const string Export = "Export";
         public const string SendMail = "SendMail";
+        public const string SendOTP = "SendOTP";
         public const string DeletePermanently = "DeletePermanently";
         public const string Dashboard = "Dashboard";
         public const string GetChartColumn = "GetChartColumn";
@@ -42,6 +43,7 @@
         public const string GetChartFunnel = "GetChartFunnel";
         public const string GetChartSlope = "GetChartSlope";
         public const string Login = "Login";
+        public const string Account = "Account";
 
         #region Format
 
@@ -64,6 +66,7 @@
 
         public const string UrlAuthentication = "/api/Account/Authentication";
         public const string UrlRegister = "/api/Account/Register";
+        public const string UrlSendOTP = "/api/Account/SendOTP";
 
         #endregion
 

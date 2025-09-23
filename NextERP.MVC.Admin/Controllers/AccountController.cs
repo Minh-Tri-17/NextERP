@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
@@ -6,8 +7,10 @@ using Microsoft.IdentityModel.Tokens;
 using NextERP.ModelBase;
 using NextERP.MVC.Admin.Services.Interfaces;
 using NextERP.Util;
+using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using static NextERP.Util.Enums;
 
@@ -20,13 +23,15 @@ namespace NextERP.MVC.Admin.Controllers
         private readonly IAccountAPIService _accountAPIService;
         private readonly IRoleAPIService _roleAPIService;
         private readonly IConfiguration _configuration;
+        private readonly ISharedCultureLocalizer _localizer;
 
         public AccountController(IAccountAPIService accountAPIService, IConfiguration configuration,
-            IRoleAPIService roleAPIService)
+            IRoleAPIService roleAPIService, ISharedCultureLocalizer localizer)
         {
             _accountAPIService = accountAPIService;
             _configuration = configuration;
             _roleAPIService = roleAPIService;
+            _localizer = localizer;
         }
 
         #endregion
@@ -54,7 +59,7 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var result = await _accountAPIService.Auth(request);
 
-            if (DataHelper.IsNotNull(result))
+            if (DataHelper.IsNotNull(result) && result.Result != null)
             {
                 var userPrincipal = ValidateToken(DataHelper.GetString(result.Result));
 
@@ -94,23 +99,70 @@ namespace NextERP.MVC.Admin.Controllers
                     if (isAdmin)
                         return RedirectToAction(ScreenName.DashboardIndex, "Dashboard");
                     else if (isEmployee)
-                        return View();// RedirectToAction(Constants.Index, "Employee");
+                        return RedirectToAction(ScreenName.AccountIndex, Constants.Account);// RedirectToAction(Constants.Index, "Employee");
                     else if (isCustomer)
-                        return View(); // RedirectToAction(Constants.Index, "Customer");
+                        return RedirectToAction(ScreenName.AccountIndex, Constants.Account); // RedirectToAction(Constants.Index, "Customer");
                     else
-                        return View();
+                        return RedirectToAction(ScreenName.AccountIndex, Constants.Account);
                 }
                 else
                 {
-                    return View();
+                    return RedirectToAction(ScreenName.AccountIndex, Constants.Account);
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = Messages.AuthFailed;
-                return View();
+                return RedirectToAction(ScreenName.AccountIndex, Constants.Account);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Response.Cookies.Delete(Constants.Token);
+            return RedirectToAction(ScreenName.AccountIndex, Constants.Account);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SendOTP(MailModel mail)
+        {
+            if (mail.To == null)
+                return GetModelStateErrors();
+
+            // 1. Sinh OTP 6 chữ số an toàn
+            byte[] rngBytes = new byte[4];
+            RandomNumberGenerator.Fill(rngBytes);
+            var otp = BitConverter.ToUInt32(rngBytes, 0) % 1_000_000;
+            var otpString = otp.ToString("D6");
+
+            // 2. Tạo salt + hash OTP
+            var salt = Guid.NewGuid().ToString();
+            using var sha = SHA256.Create();
+            var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(otpString + salt));
+            var hashed = Convert.ToBase64String(hashBytes);
+
+            // 3. Lưu vào store tạm
+            otpStore[mail.To] = new
+            {
+                Hashed = hashed,
+                Salt = salt,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                AttemptsLeft = 3
+            };
+
+            // 4. Tạo nội dung email
+            mail.Subject = _localizer.GetLocalizedString(Constants.SendOTP);
+            mail.Body = _localizer.GetLocalizedString(Messages.YourOTP, otpString);
+
+            var result = await _accountAPIService.SendOTP(mail);
+            if (!DataHelper.IsNotNull(result))
+                return Json(_localizer.GetLocalizedString(result.Message));
+
+            return Json(_localizer.GetLocalizedString(result.Message));
+        }
+
+        #region Private Methods
 
         private ClaimsPrincipal ValidateToken(string jwtToken)
         {
@@ -127,13 +179,41 @@ namespace NextERP.MVC.Admin.Controllers
             return new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out _);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Logout()
+        private static readonly ConcurrentDictionary<string, object> otpStore
+            = new ConcurrentDictionary<string, object>();
+
+        private JsonResult GetModelStateErrors()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Response.Cookies.Delete(Constants.Token);
-            return RedirectToAction(ScreenName.AccountIndex, "Account");
+            var errors = ModelState
+                .Where(x => x.Value!.Errors.Any() && x.Key != "Body" && x.Key != "Subject")
+                .SelectMany(x => x.Value!.Errors, (entry, error) =>
+                {
+                    var field = entry.Key;
+                    // Phân tích loại lỗi từ nội dung thông báo
+                    var errorType = GetErrorType(error.ErrorMessage);
+
+                    string message = $"<b>&#10031; [{_localizer.GetLocalizedString(field)}]</b> {_localizer.GetLocalizedString(errorType)}";
+
+                    return new { Field = field, Message = message };
+                })
+                .ToList();
+
+            return Json(errors);
         }
+
+        private static string GetErrorType(string message)
+        {
+            if (message.Contains("required", StringComparison.OrdinalIgnoreCase))
+                return "Required";
+            if (message.Contains("valid e-mail", StringComparison.OrdinalIgnoreCase))
+                return "Regex";
+            if (message.Contains("is invalid", StringComparison.OrdinalIgnoreCase))
+                return "Invalid";
+
+            return "Other";
+        }
+
+        #endregion
 
         #endregion
     }

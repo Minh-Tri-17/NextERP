@@ -138,6 +138,15 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>();
         }
 
+        public async Task<APIBaseResult<bool>> SendOTP(MailModel mail)
+        {
+            var result = await MailHelper.SendMail(mail);
+            if (result)
+                return new APISuccessResult<bool>(Messages.SendMailSuccess, true);
+
+            return new APIErrorResult<bool>(Messages.SendMailFailed);
+        }
+
         #endregion
     }
 }

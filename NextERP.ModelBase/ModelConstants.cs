@@ -567,6 +567,7 @@ namespace NextERP.ModelBase
             public const string Username = "Username";
             public const string Password = "Password";
             public const string PhoneNumber = "PhoneNumber";
+            public const string Otp = "Otp";
             public const string LastLoginDate = "LastLoginDate";
             public const string OperatingStatus = "OperatingStatus";
             public const string GroupRole = "GroupRole";

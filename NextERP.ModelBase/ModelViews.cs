@@ -143,7 +143,6 @@ namespace NextERP.ModelBase
         [DataType(DataType.Upload)]
         public List<IFormFile>? ImageFiles { get; set; }
         public List<string> Base64Images { get; set; } = new List<string>();
-
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
         public string Ids { get; set; } = string.Empty;
@@ -257,11 +256,11 @@ namespace NextERP.ModelBase
     public partial class UserModel : User
     {
         public bool Remember { get; set; } = false;
+        [Required]
         public string Password { get; set; } = string.Empty;
         [ViewField]
         public string EmployeeName { get; set; } = string.Empty;
-
-
+        public string Otp { get; set; } = string.Empty;
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
         public string Ids { get; set; } = string.Empty;
@@ -331,7 +330,7 @@ namespace NextERP.ModelBase
     public class DataChartXYModel
     {
         public List<XYSeriesModel>? Values { get; set; }
-        public string[]? Labels { get; set; }   // Có thể null nếu không dùng
+        public string[]? Labels { get; set; }
     }
 
     public class XYSeriesModel

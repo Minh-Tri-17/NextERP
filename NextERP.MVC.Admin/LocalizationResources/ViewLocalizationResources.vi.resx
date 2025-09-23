@@ -138,9 +138,6 @@
   <data name="PhoneNumberRegistered" xml:space="preserve">
     <value>Số điện thoại đăng ký</value>
   </data>
-  <data name="SentOTP" xml:space="preserve">
-    <value>Gửi mã xác nhận</value>
-  </data>
   <data name="BackLogin" xml:space="preserve">
     <value>Quay về đăng nhập</value>
   </data>
@@ -1039,16 +1036,13 @@
     <value>Danh sách mẫu mail</value>
   </data>
   <data name="SendMailSuccess" xml:space="preserve">
-    <value>F:Gửi mail thất bại</value>
+    <value>S:Gửi mail thành công</value>
   </data>
   <data name="TemplateNotificationList" xml:space="preserve">
     <value>Danh sách mẫu thông báo</value>
   </data>
-  <data name="zstring189" xml:space="preserve">
-    <value />
-  </data>
-  <data name="zstring186" xml:space="preserve">
-    <value />
+  <data name="InvalidPhoneNumberRegistered" xml:space="preserve">
+    <value>Số điện thoại đăng ký không được bỏ trống</value>
   </data>
   <data name="zstring192" xml:space="preserve">
     <value />
@@ -1059,11 +1053,11 @@
   <data name="HistoryMailList" xml:space="preserve">
     <value>Danh sách lịch sử mail</value>
   </data>
-  <data name="zstring188" xml:space="preserve">
-    <value />
+  <data name="OTP" xml:space="preserve">
+    <value>Mã xác thực</value>
   </data>
-  <data name="zstring185" xml:space="preserve">
-    <value />
+  <data name="InvalidNewPassword" xml:space="preserve">
+    <value>Mật khẩu mới không được bỏ trống</value>
   </data>
   <data name="zstring191" xml:space="preserve">
     <value />
@@ -1071,14 +1065,14 @@
   <data name="SendMailFailed" xml:space="preserve">
     <value>S:Gửi mail thành công</value>
   </data>
-  <data name="zstring184" xml:space="preserve">
-    <value />
+  <data name="InvalidUsername" xml:space="preserve">
+    <value>Tên đăng nhập không được bỏ trống</value>
   </data>
-  <data name="zstring190" xml:space="preserve">
-    <value />
+  <data name="YourOTP" xml:space="preserve">
+    <value>Mã xác nhận của bạn: {0}</value>
   </data>
-  <data name="zstring187" xml:space="preserve">
-    <value />
+  <data name="Register" xml:space="preserve">
+    <value>Đăng ký</value>
   </data>
   <data name="zstring193" xml:space="preserve">
     <value />
@@ -1091,5 +1085,8 @@
   </data>
   <data name="HistoryMail" xml:space="preserve">
     <value>Lịch sử mail</value>
+  </data>
+  <data name="SendOTP" xml:space="preserve">
+    <value>Gửi mã xác nhận</value>
   </data>
 </root>

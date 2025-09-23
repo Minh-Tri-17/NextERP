@@ -1,4 +1,5 @@
 ﻿@using NextERP.ModelBase
+@using NextERP.Util
 @using static NextERP.Util.Enums
 @model NextERP.ModelBase.UserModel
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
@@ -17,10 +18,14 @@
     <link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
     <link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/login.css" />
+    <script src="~/lib/js/jquery/jquery.min.js"></script>
+    <script src="~/js/helper.js"></script>
 </head>
 
 <body>
     <div class="login-wrapper" id="loginWrapper">
+        <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
         <!--& LOGIN -->
         <form class="card login-container needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
             <input type="hidden" asp-for="GroupRole" value="Admin" />
@@ -28,25 +33,25 @@
             <h2 class="text-center" localize-content>Account</h2>
             <div class="login-form">
                 <div class="mb-2">
-                    <label for="user-name" class="col-form-label col-md-6" localize-content>Username</label>
+                    <label for="@AttributeNames.User.Username" class="col-form-label col-md-6" localize-content>Username</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-sm" id="user-name" type="text" asp-for="Username" required />
+                        <input class="form-control form-control-sm" type="text" asp-for="Username" required />
                         <div class="invalid-feedback" localize-content>InvalidUsername</div>
                     </div>
                 </div>
 
                 <div class="mb-2">
-                    <label for="password" class="col-form-label col-md-6" localize-content>Password</label>
+                    <label for="@AttributeNames.User.Password" class="col-form-label col-md-6" localize-content>Password</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-sm" id="password" type="password" asp-for="Password" required minlength="6" />
+                        <input class="form-control form-control-sm" type="password" asp-for="Password" required minlength="3" />
                         <div class="invalid-feedback" localize-content>InvalidPassword</div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center my-3">
                     <div class="form-check">
-                        <input class="form-check-input" id="rememberMe" type="checkbox" asp-for="Remember" />
-                        <label class="form-check-label" for="rememberMe" localize-content>RememberMe</label>
+                        <input class="form-check-input" type="checkbox" asp-for="Remember" />
+                        <label class="form-check-label" for="@AttributeNames.User.Remember" localize-content>RememberMe</label>
                     </div>
                     <a href="#" id="forgot-password" localize-content>ForgotPassword</a>
                 </div>
@@ -62,26 +67,84 @@
             <h2 class="text-center" localize-content>ForgotPassword</h2>
             <div class="forgot-form">
                 <div class="mb-2">
-                    <label for="new-password" class="col-form-label" localize-content>NewPassword</label>
-                    <input class="form-control form-control-sm" id="new-password" type="password" asp-for="Password" required minlength="6" />
-                    <div class="invalid-feedback" localize-content>InvalidNewPassword</div>
+                    <label for="New-@AttributeNames.User.Password" class="col-form-label" localize-content>NewPassword</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="password" id="New-@AttributeNames.User.Password" asp-for="Password" />
+                        <div class="invalid-feedback" localize-content>InvalidNewPassword</div>
+                    </div>
                 </div>
 
                 <div class="mb-2">
-                    <label for="forgot-phone" class="col-form-label" localize-content>phone number registered</label>
-                    <input class="form-control form-control-sm" id="forgot-phone" type="text" asp-for="PhoneNumber" required minlength="10" />
-                    <div class="invalid-feedback" localize-content>InvalidPhoneNumberRegistered</div>
+                    <label for="@AttributeNames.User.PhoneNumber" class="col-form-label" localize-content>PhoneNumberRegistered</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" />
+                        <div class="invalid-feedback" localize-content>InvalidPhoneNumberRegistered</div>
+                    </div>
                 </div>
 
-                <div class="my-3 text-center">
-                    <button type="button" onclick="alert('Chức năng chưa làm nào rảnh rồi làm sau')" class="btn btn-primary" localize-content>SentOTP</button>
+                <div class="mb-2">
+                    <label for="To" class="col-form-label col-md-6" localize-content>Mail</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" name="To" />
+                        <div class="invalid-feedback" id="invalid-To" localize-content></div>
+                    </div>
                 </div>
+
+                <div class="mb-2">
+                    <label for="@AttributeNames.User.Otp" class="col-form-label col-md-6" localize-content>OTP</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="Otp" />
+                        <div class="invalid-feedback" localize-content>InvalidOTP</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between my-3">
+                    <div><button type="button" id="send-otp" class="btn btn-outline-primary" localize-content>SendOTP</button></div>
+
+                    <div><button type="button" onclick="alert('Chức năng chưa làm nào rảnh rồi làm sau')" class="btn btn-primary" localize-content>Register</button></div>
+                </div>
+
                 <div class="text-center">
                     <a href="#" id="back-login" localize-content>BackLogin</a>
                 </div>
             </div>
         </form>
     </div>
+
+    <script>
+        $(function () {
+            'use strict';
+
+            // Lấy tất cả form cần validation
+            const forms = document.querySelectorAll('.needs-validation');
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        });
+
+        $("#send-otp").click(function () {
+            const $form = $(this).closest("form");
+            const formData = new FormData($form[0]);
+            const formElement = $form[0];
+
+            callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", formData)
+                .then(data => {
+                    if (data && Array.isArray(data)) {
+                        showInvalid(data, formElement);
+                    }
+                })
+                .catch(err => {
+                    showMessage("F:Có lỗi js xảy ra!");
+                });
+        });
+    </script>
 
     <script src="~/lib/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="~/lib/js/bootstrap/popper.min.js"></script>

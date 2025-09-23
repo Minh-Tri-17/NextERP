@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NextERP.BLL.Interface;
+using NextERP.BLL.Service;
 using NextERP.DAL.Models;
 using NextERP.ModelBase;
+using NextERP.ModelBase.APIResult;
 using NextERP.Util;
 
 namespace NextERP.API.Controllers
@@ -95,6 +97,42 @@ namespace NextERP.API.Controllers
                 return BadRequest();
 
             var result = await _accountService.Register(user);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(SendOTP))]
+        public async Task<ActionResult<APIBaseResult<bool>>> SendOTP()
+        {
+            var mail = new MailModel();
+
+            if (Request.HasFormContentType)
+            {
+                var json = Request.Form["Json"];
+                if (!string.IsNullOrEmpty(json))
+                    mail = JsonConvert.DeserializeObject<MailModel>(json!);
+
+                //// Khi nào model có field file thì mở ra
+                //if (mail != null)
+                //{
+                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
+                //    mail.ImageFiles = files;
+                //}
+            }
+            else
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                if (!string.IsNullOrEmpty(body))
+                    mail = JsonConvert.DeserializeObject<MailModel>(body);
+            }
+
+            if (mail == null)
+                return BadRequest();
+
+            var result = await _accountService.SendOTP(mail);
             if (!result.IsSuccess)
                 return BadRequest(result);
 
