@@ -1044,7 +1044,28 @@
   <data name="InvalidPhoneNumberRegistered" xml:space="preserve">
     <value>Số điện thoại đăng ký không được bỏ trống</value>
   </data>
-  <data name="zstring192" xml:space="preserve">
+  <data name="StepResetPassword" xml:space="preserve">
+    <value>Bước 2: đặt lại mật khẩu</value>
+  </data>
+  <data name="zstring204" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring198" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring210" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring195" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring207" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring201" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring213" xml:space="preserve">
     <value />
   </data>
   <data name="BCC" xml:space="preserve">
@@ -1059,7 +1080,28 @@
   <data name="InvalidNewPassword" xml:space="preserve">
     <value>Mật khẩu mới không được bỏ trống</value>
   </data>
-  <data name="zstring191" xml:space="preserve">
+  <data name="StepSendOTP" xml:space="preserve">
+    <value>Bước 1: Gửi mã xác thực</value>
+  </data>
+  <data name="zstring203" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring197" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring209" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring194" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring206" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring200" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring212" xml:space="preserve">
     <value />
   </data>
   <data name="SendMailFailed" xml:space="preserve">
@@ -1075,6 +1117,27 @@
     <value>Đăng ký</value>
   </data>
   <data name="zstring193" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring205" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring199" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring211" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring196" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring208" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring202" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring214" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

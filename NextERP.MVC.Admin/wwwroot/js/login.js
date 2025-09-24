@@ -19,7 +19,11 @@ function handleForgotPasswordClick() {
 function handleBackToLoginClick() {
     $("#back-login").on("click", function () {
         $("#loginWrapper").removeClass("show-forgot");
-        $(".forgot-container")[0].reset();
-        $(".forgot-container").removeClass("was-validated");
+
+        // Reset tất cả form trong forgot-container
+        $(".forgot-container form").each(function () {
+            this.reset();
+            $(this).removeClass("was-validated");
+        });
     });
 }

@@ -96,7 +96,7 @@ function parseResponse(response) {
 }
 
 //& Sau khi load dữ liệu thành công, ẩn loader và xử lý cuộn bảng
-function affterCallAPISuccess() {
+function afterCallAPISuccess() {
     $(".loader").css("display", "none");
 
     // Gọi hàm tableScrollHandler để xử lý cuộn bảng
