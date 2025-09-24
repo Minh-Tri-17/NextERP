@@ -64,14 +64,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.User.UserCode,
+                        FilterName = UserModel.AttributeNames.UserCode,
                         FilterValue = DataHelper.GetString(request.UserCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.User.OperatingStatus,
+                        FilterName = UserModel.AttributeNames.OperatingStatus,
                         FilterValue = DataHelper.GetString(request.UserCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
@@ -172,14 +172,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.User.UserCode,
+                        FilterName = UserModel.AttributeNames.UserCode,
                         FilterValue = DataHelper.GetString(request.UserCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.User.OperatingStatus,
+                        FilterName = UserModel.AttributeNames.OperatingStatus,
                         FilterValue = DataHelper.GetString(request.UserCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),

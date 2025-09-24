@@ -11,28 +11,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Position.PositionId" type="hidden" asp-for="Id" />
+                    <input id="@PositionModel.AttributeNames.PositionId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Position.PositionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.PositionCode</label>
+                        <label for="@PositionModel.AttributeNames.PositionCode" class="col-form-label col-md-6" localize-content>@PositionModel.AttributeNames.PositionCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="PositionCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Position.PositionName" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.PositionName</label>
+                        <label for="@PositionModel.AttributeNames.PositionName" class="col-form-label col-md-6" localize-content>@PositionModel.AttributeNames.PositionName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="PositionName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Position.PositionName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@PositionModel.AttributeNames.PositionName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Position.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Position.Note</label>
+                        <label for="@PositionModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@PositionModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Position.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@PositionModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

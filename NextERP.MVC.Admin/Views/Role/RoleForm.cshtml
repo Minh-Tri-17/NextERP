@@ -11,25 +11,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Role.RoleId" type="hidden" asp-for="Id" />
+                    <input id="@RoleModel.AttributeNames.RoleId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Role.RoleCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.RoleCode</label>
+                        <label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="RoleCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Role.RoleName" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.RoleName</label>
+                        <label for="@RoleModel.AttributeNames.RoleName" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="RoleName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Role.RoleName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.RoleName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Role.GroupRole" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.GroupRole</label>
+                        <label for="@RoleModel.AttributeNames.GroupRole" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.GroupRole</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="GroupRole">
                                 <option value=""></option>
@@ -38,12 +38,12 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Role.GroupRole" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.GroupRole" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Role.Permissions" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.Permissions</label>
+                        <label for="@RoleModel.AttributeNames.Permissions" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Permissions</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="Permissions" multiple>
                                 <option value=""></option>
@@ -52,15 +52,15 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Role.Permissions" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Permissions" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Role.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.Note</label>
+                        <label for="@RoleModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Role.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>
@@ -86,18 +86,18 @@
             formData.set("@Constants.Id", "@Guid.Empty");
         }
         // Xóa dữ liệu cũ nếu có
-        formData.delete("@AttributeNames.Role.Permissions");
+        formData.delete("@RoleModel.AttributeNames.Permissions");
 
         // Lấy tất cả giá trị được chọn trong select[multiple]
         const selectedPermissions = [];
-        $(`#@AttributeNames.Role.Permissions option:selected`).each(function () {
+        $(`#@RoleModel.AttributeNames.Permissions option:selected`).each(function () {
             selectedPermissions.push($(this).val());
         });
 
         // Ghép các giá trị lại bằng dấu chấm phẩy
         const permissionsString = selectedPermissions.join(";");
         // Ghi đè lại giá trị "Permissions" nếu đã có
-        formData.set("@AttributeNames.Role.Permissions", permissionsString);
+        formData.set("@RoleModel.AttributeNames.Permissions", permissionsString);
 
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", formData)
             .then(data => {

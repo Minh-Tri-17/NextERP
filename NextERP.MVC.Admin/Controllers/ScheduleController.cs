@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Schedule.ScheduleCode,
+                        FilterName = ScheduleModel.AttributeNames.ScheduleCode,
                         FilterValue = DataHelper.GetString(request.ScheduleCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -173,7 +173,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Schedule.ScheduleCode,
+                        FilterName = ScheduleModel.AttributeNames.ScheduleCode,
                         FilterValue = DataHelper.GetString(request.ScheduleCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

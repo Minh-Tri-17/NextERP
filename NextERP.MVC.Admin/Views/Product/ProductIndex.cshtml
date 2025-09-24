@@ -53,12 +53,12 @@
             <form id="@TableName.Product-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Product.ProductCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ProductCode</label>
+                        <label for="@ProductModel.AttributeNames.ProductCode" class="col-form-label col-md-6" localize-content>@ProductModel.AttributeNames.ProductCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="ProductCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Product.ExpirationDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Product.ExpirationDate</label>
+                        <label for="@ProductModel.AttributeNames.ExpirationDate" class="col-form-label col-md-6" localize-content>@ProductModel.AttributeNames.ExpirationDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="ExpirationDate" />
                     </div>
 
@@ -114,7 +114,7 @@
 
     $(document).on("change", ".@TableName.Product-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $productId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Product.ProductId"]').val() : "";
+        $productId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@ProductModel.AttributeNames.ProductId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Product-checkbox:checked").length;
@@ -131,16 +131,16 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Product)/" + $productId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Product #@AttributeNames.Product.ProductId").val(data.id);
-                $("#@TableName.Product #@AttributeNames.Product.ProductCode").val(data.productCode);
-                $("#@TableName.Product #@AttributeNames.Product.ProductName").val(data.productName);
-                $("#@TableName.Product #@AttributeNames.Product.QuantityInStock").val(data.quantityInStock);
-                $("#@TableName.Product #@AttributeNames.Product.Price").val(data.price);
-                $("#@TableName.Product #@AttributeNames.Product.ExpirationDate").val(formatDateToInput(data.expirationDate));
-                $("#@TableName.Product #@AttributeNames.Product.Manufacturer").val(data.manufacturer);
-                $("#@TableName.Product #@AttributeNames.Product.CountryOfOrigin").val(data.countryOfOrigin);
-                $("#@TableName.Product #@AttributeNames.Product.ReorderLevel").val(data.reorderLevel);
-                $("#@TableName.Product #@AttributeNames.Product.Note").val(data.note);
+                $("#@TableName.Product #@ProductModel.AttributeNames.ProductId").val(data.id);
+                $("#@TableName.Product #@ProductModel.AttributeNames.ProductCode").val(data.productCode);
+                $("#@TableName.Product #@ProductModel.AttributeNames.ProductName").val(data.productName);
+                $("#@TableName.Product #@ProductModel.AttributeNames.QuantityInStock").val(data.quantityInStock);
+                $("#@TableName.Product #@ProductModel.AttributeNames.Price").val(data.price);
+                $("#@TableName.Product #@ProductModel.AttributeNames.ExpirationDate").val(formatDateToInput(data.expirationDate));
+                $("#@TableName.Product #@ProductModel.AttributeNames.Manufacturer").val(data.manufacturer);
+                $("#@TableName.Product #@ProductModel.AttributeNames.CountryOfOrigin").val(data.countryOfOrigin);
+                $("#@TableName.Product #@ProductModel.AttributeNames.ReorderLevel").val(data.reorderLevel);
+                $("#@TableName.Product #@ProductModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -150,7 +150,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Product-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Product.ProductId"]').val();
+            return $(this).closest("tr").find('input[name="@ProductModel.AttributeNames.ProductId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -170,7 +170,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Product-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Product.ProductId"]').val();
+            return $(this).closest("tr").find('input[name="@ProductModel.AttributeNames.ProductId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

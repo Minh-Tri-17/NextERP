@@ -53,12 +53,12 @@
             <form id="@TableName.Employee-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Employee.EmployeeCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EmployeeCode</label>
+                        <label for="@EmployeeModel.AttributeNames.EmployeeCode" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.EmployeeCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="EmployeeCode" />
                     </div>
 
                     <div class="col-3 d-none">
-                        <label for="@AttributeNames.Employee.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.OperatingStatus</label>
+                        <label for="@EmployeeModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Employee.HireDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HireDate</label>
+                        <label for="@EmployeeModel.AttributeNames.HireDate" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.HireDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="HireDate" />
                     </div>
 
@@ -125,7 +125,7 @@
 
     $(document).on("change", ".@TableName.Employee-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $employeeId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Employee.EmployeeId"]').val() : "";
+        $employeeId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@EmployeeModel.AttributeNames.EmployeeId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Employee-checkbox:checked").length;
@@ -142,23 +142,23 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Employee)/" + $employeeId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Employee #@AttributeNames.Employee.EmployeeId").val(data.id);
-                $("#@TableName.Employee #@AttributeNames.Employee.EmployeeCode").val(data.employeeCode);
-                $("#@TableName.Employee #@AttributeNames.Employee.FullName").val(data.fullName);
-                $("#@TableName.Employee #@AttributeNames.Employee.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.Employee #@AttributeNames.Employee.Gender").val(data.gender);
-                $("#@TableName.Employee #@AttributeNames.Employee.Dob").val(formatDateToInput(data.dob));
-                $("#@TableName.Employee #@AttributeNames.Employee.Address").val(data.address);
-                $("#@TableName.Employee #@AttributeNames.Employee.NationalId").val(data.nationalId);
-                $("#@TableName.Employee #@AttributeNames.Employee.Email").val(data.email);
-                $("#@TableName.Employee #@AttributeNames.Employee.EducationLevel").val(data.educationLevel);
-                $("#@TableName.Employee #@AttributeNames.Employee.BankAccountNumber").val(data.bankAccountNumber);
-                $("#@TableName.Employee #@AttributeNames.Employee.HealthInsuranceNumber").val(data.healthInsuranceNumber);
-                $("#@TableName.Employee #@AttributeNames.Employee.SocialInsuranceNumber").val(data.socialInsuranceNumber);
-                $("#@TableName.Employee #@AttributeNames.Employee.TaxCode").val(data.taxCode);
-                $("#@TableName.Employee #@AttributeNames.Employee.HireDate").val(formatDateToInput(data.hireDate));
-                $("#@TableName.Employee #@AttributeNames.Employee.Note").val(data.note);
-                $("#@TableName.Employee #@AttributeNames.Employee.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.EmployeeId").val(data.id);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.EmployeeCode").val(data.employeeCode);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.FullName").val(data.fullName);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.Gender").val(data.gender);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.Dob").val(formatDateToInput(data.dob));
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.Address").val(data.address);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.NationalId").val(data.nationalId);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.Email").val(data.email);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.EducationLevel").val(data.educationLevel);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.BankAccountNumber").val(data.bankAccountNumber);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.HealthInsuranceNumber").val(data.healthInsuranceNumber);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.SocialInsuranceNumber").val(data.socialInsuranceNumber);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.TaxCode").val(data.taxCode);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.HireDate").val(formatDateToInput(data.hireDate));
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.Employee #@EmployeeModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -168,7 +168,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Employee-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Employee.EmployeeId"]').val();
+            return $(this).closest("tr").find('input[name="@EmployeeModel.AttributeNames.EmployeeId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -188,7 +188,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Employee-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Employee.EmployeeId"]').val();
+             return $(this).closest("tr").find('input[name="@EmployeeModel.AttributeNames.EmployeeId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

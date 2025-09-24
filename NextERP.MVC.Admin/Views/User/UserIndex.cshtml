@@ -53,12 +53,12 @@
             <form id="@TableName.User-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.User.UserCode" class="col-form-label col-md-6" localize-content>@AttributeNames.User.UserCode</label>
+                        <label for="@UserModel.AttributeNames.UserCode" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.UserCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="UserCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.User.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.User.OperatingStatus</label>
+                        <label for="@UserModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.User-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $userId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.User.UserId"]').val() : "";
+        $userId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.User-checkbox:checked").length;
@@ -137,15 +137,15 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.User #@AttributeNames.User.UserId").val(data.id);
-                $("#@TableName.User #@AttributeNames.User.UserCode").val(data.userCode);
-                $("#@TableName.User #@AttributeNames.User.Username").val(data.username);
-                $("#@TableName.User #@AttributeNames.User.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.User #@AttributeNames.User.GroupRole").val(data.groupRole);
-                $("#@TableName.User #@AttributeNames.User.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
-                $("#@TableName.User #@AttributeNames.User.Note").val(data.note);
-                $("#@TableName.User #@AttributeNames.User.OperatingStatus").val(data.operatingStatus).trigger("change");
-                $("#@TableName.User #@AttributeNames.Employee.EmployeeId").val(data.employeeId).trigger("change");
+                $("#@TableName.User #@UserModel.AttributeNames.UserId").val(data.id);
+                $("#@TableName.User #@UserModel.AttributeNames.UserCode").val(data.userCode);
+                $("#@TableName.User #@UserModel.AttributeNames.Username").val(data.username);
+                $("#@TableName.User #@UserModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.User #@UserModel.AttributeNames.GroupRole").val(data.groupRole);
+                $("#@TableName.User #@UserModel.AttributeNames.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
+                $("#@TableName.User #@UserModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.User #@UserModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.User #@EmployeeModel.AttributeNames.EmployeeId").val(data.employeeId).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -155,7 +155,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.User-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.User.UserId"]').val();
+            return $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -175,7 +175,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.User-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.User.UserId"]').val();
+            return $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

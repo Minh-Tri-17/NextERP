@@ -53,12 +53,12 @@
             <form id="@TableName.Attendance-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Attendance.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.AttendanceCode</label>
+                        <label for="@AttendanceModel.AttributeNames.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.AttendanceCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="AttendanceCode" />
                     </div>
 
                     <div class=" col-3">
-                        <label for="@AttributeNames.Attendance.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkDate</label>
+                        <label for="@AttendanceModel.AttributeNames.WorkDate" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.WorkDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="WorkDate" />
                     </div>
 
@@ -114,7 +114,7 @@
 
     $(document).on("change", ".@TableName.Attendance-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $attendanceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val() : "";
+        $attendanceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttendanceModel.AttributeNames.AttendanceId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Attendance-checkbox:checked").length;
@@ -131,14 +131,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Attendance)/" + $attendanceId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Attendance #@AttributeNames.Attendance.AttendanceId").val(data.id);
-                $("#@TableName.Attendance #@AttributeNames.Attendance.AttendanceCode").val(data.attendanceCode);
-                $("#@TableName.Attendance #@AttributeNames.Attendance.WorkingHours").val(data.workingHours);
-                $("#@TableName.Attendance #@AttributeNames.Attendance.WorkDate").val(formatDateToInput(data.workDate));
-                $("#@TableName.Attendance #@AttributeNames.Attendance.InTime").val(formatTimeToInput(data.inTime));
-                $("#@TableName.Attendance #@AttributeNames.Attendance.OutTime").val(formatTimeToInput(data.outTime));
-                $("#@TableName.Attendance #@AttributeNames.Attendance.OvertimeHours").val(data.overtimeHours);
-                $("#@TableName.Attendance #@AttributeNames.Attendance.Note").val(data.note);
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.AttendanceId").val(data.id);
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.AttendanceCode").val(data.attendanceCode);
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.WorkingHours").val(data.workingHours);
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.WorkDate").val(formatDateToInput(data.workDate));
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.InTime").val(formatTimeToInput(data.inTime));
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.OutTime").val(formatTimeToInput(data.outTime));
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.OvertimeHours").val(data.overtimeHours);
+                $("#@TableName.Attendance #@AttendanceModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -148,7 +148,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Attendance-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val();
+            return $(this).closest("tr").find('input[name="@AttendanceModel.AttributeNames.AttendanceId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -168,7 +168,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Attendance-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Attendance.AttendanceId"]').val();
+            return $(this).closest("tr").find('input[name="@AttendanceModel.AttributeNames.AttendanceId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

@@ -11,49 +11,49 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Employee.EmployeeId" type="hidden" asp-for="Id" />
+                    <input id="@EmployeeModel.AttributeNames.EmployeeId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.EmployeeCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EmployeeCode</label>
+                        <label for="@EmployeeModel.AttributeNames.EmployeeCode" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.EmployeeCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="EmployeeCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.Dob" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Dob</label>
+                        <label for="@EmployeeModel.AttributeNames.Dob" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.Dob</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="date" asp-for="Dob" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Dob" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.Dob" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.HireDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HireDate</label>
+                        <label for="@EmployeeModel.AttributeNames.HireDate" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.HireDate</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="date" asp-for="HireDate" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.HireDate" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.HireDate" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.FullName" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.FullName</label>
+                        <label for="@EmployeeModel.AttributeNames.FullName" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.FullName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="FullName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.FullName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.FullName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.PhoneNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.PhoneNumber</label>
+                        <label for="@EmployeeModel.AttributeNames.PhoneNumber" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.PhoneNumber</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" min="10" max="10" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.PhoneNumber" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.PhoneNumber" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.Gender" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Gender</label>
+                        <label for="@EmployeeModel.AttributeNames.Gender" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.Gender</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="Gender">
                                 <option value=""></option>
@@ -62,36 +62,36 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Gender" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.Gender" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.Address" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Address</label>
+                        <label for="@EmployeeModel.AttributeNames.Address" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.Address</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Address"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Address" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.Address" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.NationalId" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.NationalId</label>
+                        <label for="@EmployeeModel.AttributeNames.NationalId" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.NationalId</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="NationalId" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.NationalId" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.NationalId" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.Email" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Email</label>
+                        <label for="@EmployeeModel.AttributeNames.Email" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.Email</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="email" asp-for="Email" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Email" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.Email" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.EducationLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.EducationLevel</label>
+                        <label for="@EmployeeModel.AttributeNames.EducationLevel" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.EducationLevel</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="EducationLevel">
                                 <option value=""></option>
@@ -100,44 +100,44 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.EducationLevel" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.EducationLevel" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.BankAccountNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.BankAccountNumber</label>
+                        <label for="@EmployeeModel.AttributeNames.BankAccountNumber" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.BankAccountNumber</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="BankAccountNumber" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.BankAccountNumber" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.BankAccountNumber" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.HealthInsuranceNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.HealthInsuranceNumber</label>
+                        <label for="@EmployeeModel.AttributeNames.HealthInsuranceNumber" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.HealthInsuranceNumber</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="HealthInsuranceNumber" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.HealthInsuranceNumber" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.HealthInsuranceNumber" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.SocialInsuranceNumber" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.SocialInsuranceNumber</label>
+                        <label for="@EmployeeModel.AttributeNames.SocialInsuranceNumber" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.SocialInsuranceNumber</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="SocialInsuranceNumber" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.SocialInsuranceNumber" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.SocialInsuranceNumber" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.TaxCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.TaxCode</label>
+                        <label for="@EmployeeModel.AttributeNames.TaxCode" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.TaxCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="TaxCode" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.TaxCode" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.TaxCode" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.OperatingStatus</label>
+                        <label for="@EmployeeModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.OperatingStatus</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
@@ -146,15 +146,15 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.OperatingStatus" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.OperatingStatus" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Employee.Note</label>
+                        <label for="@EmployeeModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@EmployeeModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

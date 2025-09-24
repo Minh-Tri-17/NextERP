@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
+                        FilterName = HistoryNotificationModel.AttributeNames.HistoryNotificationCode,
                         FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -158,7 +158,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.HistoryNotification.HistoryNotificationCode,
+                        FilterName = HistoryNotificationModel.AttributeNames.HistoryNotificationCode,
                         FilterValue = DataHelper.GetString(request.HistoryNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

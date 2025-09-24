@@ -53,12 +53,12 @@
             <form id="@TableName.TrainingSession-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.TrainingSession.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingSessionCode</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingSessionCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="TrainingSessionCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.TrainingSession.SessionStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.SessionStatus</label>
+                        <label for="@TrainingSessionModel.AttributeNames.SessionStatus" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.SessionStatus</label>
                         <select class="form-select form-select-sm" asp-for="SessionStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.SessionStatus)))
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.TrainingSession.TrainingDate" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingDate</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingDate" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="TrainingDate" />
                     </div>
 
@@ -125,7 +125,7 @@
 
     $(document).on("change", ".@TableName.TrainingSession-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.TrainingSession.TrainingSessionId"]').val() : "";
+        $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.TrainingSession-checkbox:checked").length;
@@ -142,14 +142,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionId").val(data.id);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionCode").val(data.trainingSessionCode);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingSessionName").val(data.trainingSessionName);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Trainer").val(data.trainer);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Duration").val(data.duration);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.TrainingDate").val(formatDateToInput(data.trainingDate));
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.Note").val(data.note);
-                $("#@TableName.TrainingSession #@AttributeNames.TrainingSession.SessionStatus").val(data.sessionStatus).trigger("change");
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionId").val(data.id);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionCode").val(data.trainingSessionCode);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionName").val(data.trainingSessionName);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Trainer").val(data.trainer);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Duration").val(data.duration);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingDate").val(formatDateToInput(data.trainingDate));
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -159,7 +159,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TrainingSession.TrainingSessionId"]').val();
+            return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -179,7 +179,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TrainingSession.TrainingSessionId"]').val();
+            return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

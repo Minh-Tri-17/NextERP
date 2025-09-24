@@ -47,42 +47,42 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.SupplierOrderCode,
+                        FilterName = SupplierOrderModel.AttributeNames.SupplierOrderCode,
                         FilterValue = DataHelper.GetString(request.SupplierOrderCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.OrderStatus,
+                        FilterName = SupplierOrderModel.AttributeNames.OrderStatus,
                         FilterValue = DataHelper.GetString(request.OrderStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.PaymentStatus,
+                        FilterName = SupplierOrderModel.AttributeNames.PaymentStatus,
                         FilterValue = DataHelper.GetString(request.PaymentStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.OrderDate,
+                        FilterName = SupplierOrderModel.AttributeNames.OrderDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.OrderDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.ExpectedDeliveryDate,
+                        FilterName = SupplierOrderModel.AttributeNames.ExpectedDeliveryDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ExpectedDeliveryDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.ActualDeliveryDate,
+                        FilterName = SupplierOrderModel.AttributeNames.ActualDeliveryDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ActualDeliveryDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
@@ -170,42 +170,42 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.SupplierOrderCode,
+                        FilterName = SupplierOrderModel.AttributeNames.SupplierOrderCode,
                         FilterValue = DataHelper.GetString(request.SupplierOrderCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.OrderStatus,
+                        FilterName = SupplierOrderModel.AttributeNames.OrderStatus,
                         FilterValue = DataHelper.GetString(request.OrderStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.PaymentStatus,
+                        FilterName = SupplierOrderModel.AttributeNames.PaymentStatus,
                         FilterValue = DataHelper.GetString(request.PaymentStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.OrderDate,
+                        FilterName = SupplierOrderModel.AttributeNames.OrderDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.OrderDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.ExpectedDeliveryDate,
+                        FilterName = SupplierOrderModel.AttributeNames.ExpectedDeliveryDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ExpectedDeliveryDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrder.ActualDeliveryDate,
+                        FilterName = SupplierOrderModel.AttributeNames.ActualDeliveryDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ActualDeliveryDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),

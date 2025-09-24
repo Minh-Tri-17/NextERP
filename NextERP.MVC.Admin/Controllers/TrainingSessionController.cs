@@ -57,14 +57,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TrainingSession.TrainingSessionCode,
+                        FilterName = TrainingSessionModel.AttributeNames.TrainingSessionCode,
                         FilterValue = DataHelper.GetString(request.TrainingSessionCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TrainingSession.SessionStatus,
+                        FilterName = TrainingSessionModel.AttributeNames.SessionStatus,
                         FilterValue = DataHelper.GetString(request.SessionStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
@@ -165,14 +165,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TrainingSession.TrainingSessionCode,
+                        FilterName = TrainingSessionModel.AttributeNames.TrainingSessionCode,
                         FilterValue = DataHelper.GetString(request.TrainingSessionCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TrainingSession.SessionStatus,
+                        FilterName = TrainingSessionModel.AttributeNames.SessionStatus,
                         FilterValue = DataHelper.GetString(request.SessionStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),

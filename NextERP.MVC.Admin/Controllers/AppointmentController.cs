@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Appointment.AppointmentCode,
+                        FilterName = AppointmentModel.AttributeNames.AppointmentCode,
                         FilterValue = DataHelper.GetString(request.AppointmentCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -174,7 +174,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Appointment.AppointmentCode,
+                        FilterName = AppointmentModel.AttributeNames.AppointmentCode,
                         FilterValue = DataHelper.GetString(request.AppointmentCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

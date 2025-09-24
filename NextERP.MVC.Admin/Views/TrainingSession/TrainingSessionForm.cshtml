@@ -11,65 +11,65 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.TrainingSession.TrainingSessionId" type="hidden" asp-for="Id" />
+                    <input id="@TrainingSessionModel.AttributeNames.TrainingSessionId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingSessionCode</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingSessionCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="TrainingSessionCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.TrainingSessionName" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingSessionName</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingSessionName" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingSessionName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="TrainingSessionName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.TrainingSessionName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.TrainingSessionName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.Trainer" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.Trainer</label>
+                        <label for="@TrainingSessionModel.AttributeNames.Trainer" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.Trainer</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="Trainer" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.Trainer" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.Trainer" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.TrainingDate" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingDate</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingDate" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingDate</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="date" asp-for="TrainingDate" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.TrainingDate" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.TrainingDate" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.Participants" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.Participants</label>
+                        <label for="@TrainingSessionModel.AttributeNames.Participants" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.Participants</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="file" asp-for="Participants" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.Participants" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.Participants" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.TrainingMaterial" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.TrainingMaterial</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingMaterial" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingMaterial</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="file" asp-for="TrainingMaterial" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.TrainingMaterial" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.TrainingMaterial" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.Duration" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.Duration</label>
+                        <label for="@TrainingSessionModel.AttributeNames.Duration" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.Duration</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="Duration" min="10" max="10" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.Duration" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.Duration" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.SessionStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.SessionStatus</label>
+                        <label for="@TrainingSessionModel.AttributeNames.SessionStatus" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.SessionStatus</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="SessionStatus">
                                 <option value=""></option>
@@ -78,15 +78,15 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.SessionStatus" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.SessionStatus" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.TrainingSession.Note" clasKDs="col-form-label col-md-6" localize-content>@AttributeNames.TrainingSession.Note</label>
+                        <label for="@TrainingSessionModel.AttributeNames.Note" clasKDs="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.TrainingSession.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@TrainingSessionModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

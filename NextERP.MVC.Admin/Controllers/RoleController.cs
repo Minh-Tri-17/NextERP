@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Role.RoleCode,
+                        FilterName = RoleModel.AttributeNames.RoleCode,
                         FilterValue = DataHelper.GetString(request.RoleCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -169,7 +169,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Role.RoleCode,
+                        FilterName = RoleModel.AttributeNames.RoleCode,
                         FilterValue = DataHelper.GetString(request.RoleCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

@@ -11,36 +11,36 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.HistoryNotification.HistoryNotificationId" type="hidden" asp-for="Id" />
+                    <input id="@HistoryNotificationModel.AttributeNames.HistoryNotificationId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryNotification.HistoryNotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryNotification.HistoryNotificationCode</label>
+                        <label for="@HistoryNotificationModel.AttributeNames.HistoryNotificationCode" class="col-form-label col-md-6" localize-content>@HistoryNotificationModel.AttributeNames.HistoryNotificationCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="HistoryNotificationCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryNotification.HistoryNotificationName" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryNotification.HistoryNotificationName</label>
+                        <label for="@HistoryNotificationModel.AttributeNames.HistoryNotificationName" class="col-form-label col-md-6" localize-content>@HistoryNotificationModel.AttributeNames.HistoryNotificationName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="HistoryNotificationName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryNotification.HistoryNotificationName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryNotificationModel.AttributeNames.HistoryNotificationName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryNotification.HistoryNotificationContent" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryNotification.HistoryNotificationContent</label>
+                        <label for="@HistoryNotificationModel.AttributeNames.HistoryNotificationContent" class="col-form-label col-md-6" localize-content>@HistoryNotificationModel.AttributeNames.HistoryNotificationContent</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="HistoryNotificationContent"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryNotification.HistoryNotificationContent" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryNotificationModel.AttributeNames.HistoryNotificationContent" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryNotification.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryNotification.Note</label>
+                        <label for="@HistoryNotificationModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@HistoryNotificationModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryNotification.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryNotificationModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

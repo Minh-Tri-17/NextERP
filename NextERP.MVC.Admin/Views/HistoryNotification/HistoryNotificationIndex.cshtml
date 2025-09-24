@@ -53,7 +53,7 @@
             <form id="@TableName.HistoryNotification-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.HistoryNotification.HistoryNotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryNotification.HistoryNotificationCode</label>
+                        <label for="@HistoryNotificationModel.AttributeNames.HistoryNotificationCode" class="col-form-label col-md-6" localize-content>@HistoryNotificationModel.AttributeNames.HistoryNotificationCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="HistoryNotificationCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.HistoryNotification-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $historyNotificationId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.HistoryNotification.HistoryNotificationId"]').val() : "";
+        $historyNotificationId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@HistoryNotificationModel.AttributeNames.HistoryNotificationId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.HistoryNotification-checkbox:checked").length;
@@ -126,11 +126,11 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.HistoryNotification)/" + $historyNotificationId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.HistoryNotification #@AttributeNames.HistoryNotification.HistoryNotificationId").val(data.id);
-                $("#@TableName.HistoryNotification #@AttributeNames.HistoryNotification.HistoryNotificationCode").val(data.historyNotificationCode);
-                $("#@TableName.HistoryNotification #@AttributeNames.HistoryNotification.HistoryNotificationName").val(data.historyNotificationName);
-                $("#@TableName.HistoryNotification #@AttributeNames.HistoryNotification.HistoryNotificationContent").val(data.historyNotificationContent);
-                $("#@TableName.HistoryNotification #@AttributeNames.HistoryNotification.Note").val(data.note);
+                $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.HistoryNotificationId").val(data.id);
+                $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.HistoryNotificationCode").val(data.historyNotificationCode);
+                $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.HistoryNotificationName").val(data.historyNotificationName);
+                $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.HistoryNotificationContent").val(data.historyNotificationContent);
+                $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -140,7 +140,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.HistoryNotification-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.HistoryNotification.HistoryNotificationId"]').val();
+            return $(this).closest("tr").find('input[name="@HistoryNotificationModel.AttributeNames.HistoryNotificationId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -160,7 +160,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.HistoryNotification-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.HistoryNotification.HistoryNotificationId"]').val();
+            return $(this).closest("tr").find('input[name="@HistoryNotificationModel.AttributeNames.HistoryNotificationId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

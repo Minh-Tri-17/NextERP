@@ -53,7 +53,7 @@
             <form id="@TableName.Supplier-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Supplier.SupplierCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Supplier.SupplierCode</label>
+                        <label for="@SupplierModel.AttributeNames.SupplierCode" class="col-form-label col-md-6" localize-content>@SupplierModel.AttributeNames.SupplierCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="SupplierCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.Supplier-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $supplierId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val() : "";
+        $supplierId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierModel.AttributeNames.SupplierId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Supplier-checkbox:checked").length;
@@ -126,14 +126,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Supplier)/" + $supplierId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierId").val(data.id);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierCode").val(data.supplierCode);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.SupplierName").val(data.supplierName);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.Address").val(data.address);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.Email").val(data.email);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.ContactName").val(data.contactName);
-                $("#@TableName.Supplier #@AttributeNames.Supplier.Note").val(data.note);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.SupplierId").val(data.id);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.SupplierCode").val(data.supplierCode);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.SupplierName").val(data.supplierName);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.Address").val(data.address);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.Email").val(data.email);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.ContactName").val(data.contactName);
+                $("#@TableName.Supplier #@SupplierModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -143,7 +143,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
+            return $(this).closest("tr").find('input[name="@SupplierModel.AttributeNames.SupplierId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -163,7 +163,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Supplier-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Supplier.SupplierId"]').val();
+            return $(this).closest("tr").find('input[name="@SupplierModel.AttributeNames.SupplierId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

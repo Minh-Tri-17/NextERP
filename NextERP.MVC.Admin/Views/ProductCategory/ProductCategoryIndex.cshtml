@@ -53,7 +53,7 @@
             <form id="@TableName.ProductCategory-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.ProductCategory.ProductCategoryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.ProductCategory.ProductCategoryCode</label>
+                        <label for="@ProductCategoryModel.AttributeNames.ProductCategoryCode" class="col-form-label col-md-6" localize-content>@ProductCategoryModel.AttributeNames.ProductCategoryCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="ProductCategoryCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.ProductCategory-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $productCategoryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.ProductCategory.ProductCategoryId"]').val() : "";
+        $productCategoryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@ProductCategoryModel.AttributeNames.ProductCategoryId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.ProductCategory-checkbox:checked").length;
@@ -126,10 +126,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.ProductCategory)/" + $productCategoryId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryId").val(data.id);
-                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryCode").val(data.productCategoryCode);
-                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.ProductCategoryName").val(data.productCategoryName);
-                $("#@TableName.ProductCategory #@AttributeNames.ProductCategory.Note").val(data.note);
+                $("#@TableName.ProductCategory #@ProductCategoryModel.AttributeNames.ProductCategoryId").val(data.id);
+                $("#@TableName.ProductCategory #@ProductCategoryModel.AttributeNames.ProductCategoryCode").val(data.productCategoryCode);
+                $("#@TableName.ProductCategory #@ProductCategoryModel.AttributeNames.ProductCategoryName").val(data.productCategoryName);
+                $("#@TableName.ProductCategory #@ProductCategoryModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -139,7 +139,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.ProductCategory-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.ProductCategory.ProductCategoryId"]').val();
+            return $(this).closest("tr").find('input[name="@ProductCategoryModel.AttributeNames.ProductCategoryId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -159,7 +159,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.ProductCategory-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.ProductCategory.ProductCategoryId"]').val();
+            return $(this).closest("tr").find('input[name="@ProductCategoryModel.AttributeNames.ProductCategoryId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

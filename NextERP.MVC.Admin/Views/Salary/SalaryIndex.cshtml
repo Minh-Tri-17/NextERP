@@ -53,12 +53,12 @@
             <form id="@TableName.Salary-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Salary.SalaryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryCode</label>
+                        <label for="@SalaryModel.AttributeNames.SalaryCode" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.SalaryCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="SalaryCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Salary.SalaryMonth" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryMonth</label>
+                        <label for="@SalaryModel.AttributeNames.SalaryMonth" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.SalaryMonth</label>
                         <input type="month" class="form-control form-control-sm" asp-for="SalaryMonth" />
                     </div>
 
@@ -114,7 +114,7 @@
 
     $(document).on("change", ".@TableName.Salary-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $salaryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Salary.SalaryId"]').val() : "";
+        $salaryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SalaryModel.AttributeNames.SalaryId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Salary-checkbox:checked").length;
@@ -131,17 +131,17 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Salary)/" + $salaryId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Salary #@AttributeNames.Salary.SalaryId").val(data.id);
-                $("#@TableName.Salary #@AttributeNames.Salary.SalaryCode").val(data.salaryCode);
-                $("#@TableName.Salary #@AttributeNames.Salary.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
-                $("#@TableName.Salary #@AttributeNames.Salary.GrossSalary").val(data.grossSalary);
-                $("#@TableName.Salary #@AttributeNames.Salary.Bonus").val(data.bonus);
-                $("#@TableName.Salary #@AttributeNames.Salary.TaxAmount").val(data.taxAmount);
-                $("#@TableName.Salary #@AttributeNames.Salary.InsuranceContribution").val(data.insuranceContribution);
-                $("#@TableName.Salary #@AttributeNames.Salary.AdvanceSalary").val(data.advanceSalary);
-                $("#@TableName.Salary #@AttributeNames.Salary.Deductions").val(data.deductions);
-                $("#@TableName.Salary #@AttributeNames.Salary.NetSalary").val(data.netSalary);
-                $("#@TableName.Salary #@AttributeNames.Salary.Note").val(data.note);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.SalaryId").val(data.id);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.SalaryCode").val(data.salaryCode);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.SalaryMonth").val(formatMonthToInput(data.salaryMonth));
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.GrossSalary").val(data.grossSalary);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.Bonus").val(data.bonus);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.TaxAmount").val(data.taxAmount);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.InsuranceContribution").val(data.insuranceContribution);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.AdvanceSalary").val(data.advanceSalary);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.Deductions").val(data.deductions);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.NetSalary").val(data.netSalary);
+                $("#@TableName.Salary #@SalaryModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -151,7 +151,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Salary-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Salary.SalaryId"]').val();
+            return $(this).closest("tr").find('input[name="@SalaryModel.AttributeNames.SalaryId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -171,7 +171,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Salary-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Salary.SalaryId"]').val();
+            return $(this).closest("tr").find('input[name="@SalaryModel.AttributeNames.SalaryId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

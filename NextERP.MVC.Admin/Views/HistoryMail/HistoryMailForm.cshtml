@@ -11,36 +11,36 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.HistoryMail.HistoryMailId" type="hidden" asp-for="Id" />
+                    <input id="@HistoryMailModel.AttributeNames.HistoryMailId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryMail.HistoryMailCode" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailCode</label>
+                        <label for="@HistoryMailModel.AttributeNames.HistoryMailCode" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.HistoryMailCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="HistoryMailCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryMail.HistoryMailName" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailName</label>
+                        <label for="@HistoryMailModel.AttributeNames.HistoryMailName" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.HistoryMailName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="HistoryMailName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.HistoryMailName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryMailModel.AttributeNames.HistoryMailName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryMail.HistoryMailContent" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailContent</label>
+                        <label for="@HistoryMailModel.AttributeNames.HistoryMailContent" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.HistoryMailContent</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="HistoryMailContent"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.HistoryMailContent" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryMailModel.AttributeNames.HistoryMailContent" localize-content></div>
                         </div>
                     </div>
                 
                     <div class="mb-2">
-                        <label for="@AttributeNames.HistoryMail.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.Note</label>
+                        <label for="@HistoryMailModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.HistoryMail.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@HistoryMailModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

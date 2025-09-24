@@ -53,12 +53,12 @@
             <form id="@TableName.Branch-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Branch.BranchCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.BranchCode</label>
+                        <label for="@BranchModel.AttributeNames.BranchCode" class="col-form-label col-md-6" localize-content>@BranchModel.AttributeNames.BranchCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="BranchCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Branch.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Branch.OperatingStatus</label>
+                        <label for="@BranchModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@BranchModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.Branch-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $branchId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Branch.BranchId"]').val() : "";
+        $branchId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@BranchModel.AttributeNames.BranchId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Branch-checkbox:checked").length;
@@ -137,13 +137,13 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Branch)/" + $branchId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Branch #@AttributeNames.Branch.BranchId").val(data.id);
-                $("#@TableName.Branch #@AttributeNames.Branch.BranchCode").val(data.branchCode);
-                $("#@TableName.Branch #@AttributeNames.Branch.BranchName").val(data.branchName);
-                $("#@TableName.Branch #@AttributeNames.Branch.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.Branch #@AttributeNames.Branch.Address").val(data.address);
-                $("#@TableName.Branch #@AttributeNames.Branch.Note").val(data.note);
-                $("#@TableName.Branch #@AttributeNames.Branch.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.Branch #@BranchModel.AttributeNames.BranchId").val(data.id);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.BranchCode").val(data.branchCode);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.BranchName").val(data.branchName);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.Address").val(data.address);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.Branch #@BranchModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -153,7 +153,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Branch-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Branch.BranchId"]').val();
+            return $(this).closest("tr").find('input[name="@BranchModel.AttributeNames.BranchId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -173,7 +173,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Branch-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Branch.BranchId"]').val();
+            return $(this).closest("tr").find('input[name="@BranchModel.AttributeNames.BranchId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

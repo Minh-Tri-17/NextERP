@@ -56,14 +56,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Attendance.AttendanceCode,
+                        FilterName = AttendanceModel.AttributeNames.AttendanceCode,
                         FilterValue = DataHelper.GetString(request.AttendanceCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Attendance.WorkDate,
+                        FilterName = AttendanceModel.AttributeNames.WorkDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
@@ -164,14 +164,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Attendance.AttendanceCode,
+                        FilterName = AttendanceModel.AttributeNames.AttendanceCode,
                         FilterValue = DataHelper.GetString(request.AttendanceCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Attendance.WorkDate,
+                        FilterName = AttendanceModel.AttributeNames.WorkDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.WorkDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),

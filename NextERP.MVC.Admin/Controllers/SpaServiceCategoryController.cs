@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SpaServiceCategory.SpaServiceCategoryCode,
+                        FilterName = SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode,
                         FilterValue = DataHelper.GetString(request.SpaServiceCategoryCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -158,7 +158,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SpaServiceCategory.SpaServiceCategoryCode,
+                        FilterName = SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode,
                         FilterValue = DataHelper.GetString(request.SpaServiceCategoryCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

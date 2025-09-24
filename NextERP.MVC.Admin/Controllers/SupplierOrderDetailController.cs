@@ -38,7 +38,7 @@ namespace NextERP.MVC.Admin.Controllers
                 {
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.SupplierOrderDetail.SupplierOrderDetailCode,
+                        FilterName = SupplierOrderDetailModel.AttributeNames.SupplierOrderDetailCode,
                         FilterValue = DataHelper.GetString(request.SupplierOrderDetailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

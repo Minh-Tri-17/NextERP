@@ -53,7 +53,7 @@
             <form id="@TableName.HistoryMail-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.HistoryMail.HistoryMailCode" class="col-form-label col-md-6" localize-content>@AttributeNames.HistoryMail.HistoryMailCode</label>
+                        <label for="@HistoryMailModel.AttributeNames.HistoryMailCode" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.HistoryMailCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="HistoryMailCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.HistoryMail-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $historyMailId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.HistoryMail.HistoryMailId"]').val() : "";
+        $historyMailId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@HistoryMailModel.AttributeNames.HistoryMailId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.HistoryMail-checkbox:checked").length;
@@ -126,11 +126,11 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.HistoryMail)/" + $historyMailId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.HistoryMail #@AttributeNames.HistoryMail.HistoryMailId").val(data.id);
-                $("#@TableName.HistoryMail #@AttributeNames.HistoryMail.HistoryMailCode").val(data.historyMailCode);
-                $("#@TableName.HistoryMail #@AttributeNames.HistoryMail.HistoryMailName").val(data.historyMailName);
-                $("#@TableName.HistoryMail #@AttributeNames.HistoryMail.HistoryMailContent").val(data.historyMailContent);
-                $("#@TableName.HistoryMail #@AttributeNames.HistoryMail.Note").val(data.note);
+                $("#@TableName.HistoryMail #@HistoryMailModel.AttributeNames.HistoryMailId").val(data.id);
+                $("#@TableName.HistoryMail #@HistoryMailModel.AttributeNames.HistoryMailCode").val(data.historyMailCode);
+                $("#@TableName.HistoryMail #@HistoryMailModel.AttributeNames.HistoryMailName").val(data.historyMailName);
+                $("#@TableName.HistoryMail #@HistoryMailModel.AttributeNames.HistoryMailContent").val(data.historyMailContent);
+                $("#@TableName.HistoryMail #@HistoryMailModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -140,7 +140,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.HistoryMail-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.HistoryMail.HistoryMailId"]').val();
+            return $(this).closest("tr").find('input[name="@HistoryMailModel.AttributeNames.HistoryMailId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -160,7 +160,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.HistoryMail-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.HistoryMail.HistoryMailId"]').val();
+            return $(this).closest("tr").find('input[name="@HistoryMailModel.AttributeNames.HistoryMailId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

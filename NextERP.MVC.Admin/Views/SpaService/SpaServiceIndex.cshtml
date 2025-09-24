@@ -53,12 +53,12 @@
             <form id="@TableName.SpaService-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.SpaService.SpaServiceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceCode</label>
+                        <label for="@SpaServiceModel.AttributeNames.SpaServiceCode" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="SpaServiceCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SpaService.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.OperatingStatus</label>
+                        <label for="@SpaServiceModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.SpaService-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $spaServiceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.SpaService.SpaServiceId"]').val() : "";
+        $spaServiceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SpaServiceModel.AttributeNames.SpaServiceId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.SpaService-checkbox:checked").length;
@@ -137,15 +137,15 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaService)/" + $spaServiceId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceId").val(data.id);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceCode").val(data.spaServiceCode);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceName").val(data.spaServiceName);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.Price").val(data.price);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.Duration").val(data.duration);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.SpaServiceLevel").val(data.spaServiceLevel);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.IsPromotional").val(data.isPromotional);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.Note").val(data.note);
-                $("#@TableName.SpaService #@AttributeNames.SpaService.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.SpaServiceId").val(data.id);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.SpaServiceCode").val(data.spaServiceCode);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.SpaServiceName").val(data.spaServiceName);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Price").val(data.price);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Duration").val(data.duration);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.SpaServiceLevel").val(data.spaServiceLevel);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.IsPromotional").val(data.isPromotional);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.SpaService #@SpaServiceModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -155,7 +155,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.SpaService-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.SpaService.SpaServiceId"]').val();
+            return $(this).closest("tr").find('input[name="@SpaServiceModel.AttributeNames.SpaServiceId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -175,7 +175,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.SpaService-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.SpaService.SpaServiceId"]').val();
+            return $(this).closest("tr").find('input[name="@SpaServiceModel.AttributeNames.SpaServiceId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

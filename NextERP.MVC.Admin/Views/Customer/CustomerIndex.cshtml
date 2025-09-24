@@ -53,12 +53,12 @@
             <form id="@TableName.Customer-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Customer.CustomerCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.CustomerCode</label>
+                        <label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="CustomerCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Customer.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Customer.OperatingStatus</label>
+                        <label for="@CustomerModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.Customer-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $customerId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Customer.CustomerId"]').val() : "";
+        $customerId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Customer-checkbox:checked").length;
@@ -137,18 +137,18 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Customer)/" + $customerId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Customer #@AttributeNames.Customer.CustomerId").val(data.id);
-                $("#@TableName.Customer #@AttributeNames.Customer.CustomerCode").val(data.customerCode);
-                $("#@TableName.Customer #@AttributeNames.Customer.FullName").val(data.fullName);
-                $("#@TableName.Customer #@AttributeNames.Customer.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.Customer #@AttributeNames.Customer.Gender").val(data.gender);
-                $("#@TableName.Customer #@AttributeNames.Customer.LoyaltyPoints").val(data.loyaltyPoints);
-                $("#@TableName.Customer #@AttributeNames.Customer.TotalSpent").val(data.totalSpent);
-                $("#@TableName.Customer #@AttributeNames.Customer.Dob").val(formatDateToInput(data.dob));
-                $("#@TableName.Customer #@AttributeNames.Customer.JoinDate").val(formatDateToInput(data.joinDate));
-                $("#@TableName.Customer #@AttributeNames.Customer.Email").val(data.email);
-                $("#@TableName.Customer #@AttributeNames.Customer.Note").val(data.note);
-                $("#@TableName.Customer #@AttributeNames.Customer.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerId").val(data.id);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerCode").val(data.customerCode);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.FullName").val(data.fullName);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.Gender").val(data.gender);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.LoyaltyPoints").val(data.loyaltyPoints);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.TotalSpent").val(data.totalSpent);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.Dob").val(formatDateToInput(data.dob));
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate").val(formatDateToInput(data.joinDate));
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.Email").val(data.email);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -158,7 +158,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Customer-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Customer.CustomerId"]').val();
+            return $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -178,7 +178,7 @@
     $("#delete-permanently-button").click(function () {
          // Lấy tất cả các Id của các checkbox đã chọn
          const $ids = $(".@TableName.Customer-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@AttributeNames.Customer.CustomerId"]').val();
+             return $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val();
          }).get().join(",");
 
          $("#Ids").val($ids);

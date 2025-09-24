@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.HistoryMail.HistoryMailCode,
+                        FilterName = HistoryMailModel.AttributeNames.HistoryMailCode,
                         FilterValue = DataHelper.GetString(request.HistoryMailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -158,7 +158,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.HistoryMail.HistoryMailCode,
+                        FilterName = HistoryMailModel.AttributeNames.HistoryMailCode,
                         FilterValue = DataHelper.GetString(request.HistoryMailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

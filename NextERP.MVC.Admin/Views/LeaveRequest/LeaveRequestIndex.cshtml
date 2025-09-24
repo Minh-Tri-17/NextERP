@@ -53,12 +53,12 @@
             <form id="@TableName.LeaveRequest-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.LeaveRequest.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveRequestCode</label>
+                        <label for="@LeaveRequestModel.AttributeNames.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveRequestCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="LeaveRequestCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.LeaveRequest.ApprovalStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalStatus</label>
+                        <label for="@LeaveRequestModel.AttributeNames.ApprovalStatus" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalStatus</label>
                         <select class="form-select form-select-sm" asp-for="ApprovalStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.LeaveRequest.LeaveDayType" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.LeaveDayType</label>
+                        <label for="@LeaveRequestModel.AttributeNames.LeaveDayType" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveDayType</label>
                         <select class="form-select form-select-sm" asp-for="LeaveDayType">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
@@ -80,12 +80,12 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.LeaveRequest.ApprovalDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.ApprovalDate</label>
+                        <label for="@LeaveRequestModel.AttributeNames.ApprovalDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="ApprovalDate" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.LeaveRequest.RequestDate" class="col-form-label col-md-6" localize-content>@AttributeNames.LeaveRequest.RequestDate</label>
+                        <label for="@LeaveRequestModel.AttributeNames.RequestDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.RequestDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="RequestDate" />
                     </div>
 
@@ -141,7 +141,7 @@
 
     $(document).on("change", ".@TableName.LeaveRequest-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $leaveRequestId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.LeaveRequest.LeaveRequestId"]').val() : "";
+        $leaveRequestId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@LeaveRequestModel.AttributeNames.LeaveRequestId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.LeaveRequest-checkbox:checked").length;
@@ -158,17 +158,17 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)/" + $leaveRequestId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveRequestId").val(data.id);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveRequestCode").val(data.leaveRequestCode);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.RequestDate").val(formatDateToInput(data.requestDate));
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.TotalLeaveDays").val(data.totalLeaveDays);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovedByIds").val(data.approvedByIds);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalDate").val(formatDateToInput(data.approvalDate));
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.Note").val(data.note);
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.ApprovalStatus").val(data.approvalStatus).trigger("change");
-                $("#@TableName.LeaveRequest #@AttributeNames.LeaveRequest.LeaveDayType").val(data.leaveDayType).trigger("change");
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.LeaveRequestId").val(data.id);
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.LeaveRequestCode").val(data.leaveRequestCode);
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.RequestDate").val(formatDateToInput(data.requestDate));
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.LeaveStartDate").val(formatDateToInput(data.leaveStartDate));
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.LeaveEndDate").val(formatDateToInput(data.leaveEndDate));
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.TotalLeaveDays").val(data.totalLeaveDays);
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.ApprovedByIds").val(data.approvedByIds);
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.ApprovalDate").val(formatDateToInput(data.approvalDate));
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.ApprovalStatus").val(data.approvalStatus).trigger("change");
+                $("#@TableName.LeaveRequest #@LeaveRequestModel.AttributeNames.LeaveDayType").val(data.leaveDayType).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -178,7 +178,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.LeaveRequest-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.LeaveRequest.LeaveRequestId"]').val();
+            return $(this).closest("tr").find('input[name="@LeaveRequestModel.AttributeNames.LeaveRequestId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -198,7 +198,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.LeaveRequest-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.LeaveRequest.LeaveRequestId"]').val();
+            return $(this).closest("tr").find('input[name="@LeaveRequestModel.AttributeNames.LeaveRequestId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

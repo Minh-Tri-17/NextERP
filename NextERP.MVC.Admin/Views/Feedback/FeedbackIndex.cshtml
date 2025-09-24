@@ -53,12 +53,12 @@
             <form id="@TableName.Feedback-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Feedback.FeedbackCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.FeedbackCode</label>
+                        <label for="@FeedbackModel.AttributeNames.FeedbackCode" class="col-form-label col-md-6" localize-content>@FeedbackModel.AttributeNames.FeedbackCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="FeedbackCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Feedback.DateFeedback" class="col-form-label col-md-6" localize-content>@AttributeNames.Feedback.DateFeedback</label>
+                        <label for="@FeedbackModel.AttributeNames.DateFeedback" class="col-form-label col-md-6" localize-content>@FeedbackModel.AttributeNames.DateFeedback</label>
                         <input type="date" class="form-control form-control-sm" asp-for="DateFeedback" />
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 
     $(document).on("change", ".@TableName.Feedback-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $feedbackId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Feedback.FeedbackId"]').val() : "";
+        $feedbackId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Feedback-checkbox:checked").length;
@@ -121,10 +121,10 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Feedback)/" + $feedbackId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackId").val(data.id);
-                $("#@TableName.Feedback #@AttributeNames.Feedback.FeedbackCode").val(data.feedbackCode);
-                $("#@TableName.Feedback #@AttributeNames.Feedback.Comment").val(data.comment);
-                $("#@TableName.Feedback #@AttributeNames.Feedback.DateFeedback").val(formatDateToInput(data.dateFeedback));
+                $("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackId").val(data.id);
+                $("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackCode").val(data.feedbackCode);
+                $("#@TableName.Feedback #@FeedbackModel.AttributeNames.Comment").val(data.comment);
+                $("#@TableName.Feedback #@FeedbackModel.AttributeNames.DateFeedback").val(formatDateToInput(data.dateFeedback));
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -134,7 +134,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Feedback-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Feedback.FeedbackId"]').val();
+            return $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -154,7 +154,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Feedback-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Feedback.FeedbackId"]').val();
+            return $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

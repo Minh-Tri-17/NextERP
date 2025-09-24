@@ -47,12 +47,12 @@
             <form id="@TableName.SupplierOrder-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.SupplierOrderCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.SupplierOrderCode</label>
+                        <label for="@SupplierOrderModel.AttributeNames.SupplierOrderCode" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.SupplierOrderCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="SupplierOrderCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.OrderStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.OrderStatus</label>
+                        <label for="@SupplierOrderModel.AttributeNames.OrderStatus" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.OrderStatus</label>
                         <select class="form-select form-select-sm" asp-for="OrderStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OrderStatus)))
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.PaymentStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.PaymentStatus</label>
+                        <label for="@SupplierOrderModel.AttributeNames.PaymentStatus" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.PaymentStatus</label>
                         <select class="form-select form-select-sm" asp-for="PaymentStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
@@ -74,17 +74,17 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.OrderDate" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.OrderDate</label>
+                        <label for="@SupplierOrderModel.AttributeNames.OrderDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.OrderDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="OrderDate" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.ExpectedDeliveryDate" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.ExpectedDeliveryDate</label>
+                        <label for="@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="ExpectedDeliveryDate" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.SupplierOrder.ActualDeliveryDate" class="col-form-label col-md-6" localize-content>@AttributeNames.SupplierOrder.ActualDeliveryDate</label>
+                        <label for="@SupplierOrderModel.AttributeNames.ActualDeliveryDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.ActualDeliveryDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="ActualDeliveryDate" />
                     </div>
 
@@ -148,7 +148,7 @@
 
     $(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val() : "";
+        $supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
@@ -156,14 +156,14 @@
     });
 
     $("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
-        $supplierOrderId = $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val()
+        $supplierOrderId = $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val()
         loadSupplierOrderDetails();
     })
 
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.SupplierOrder-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val();
+            return $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -183,7 +183,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.SupplierOrder-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.SupplierOrder.SupplierOrderId"]').val();
+            return $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -243,7 +243,7 @@
         // Khỏi tạo filter và gán giá trị
         let filter = new FormData();
         filter.append("@Constants.PageIndex", pageIndex);
-        filter.append("@AttributeNames.SupplierOrder.SupplierOrderId", $supplierOrderId);
+        filter.append("@SupplierOrderModel.AttributeNames.SupplierOrderId", $supplierOrderId);
 
         $(".loader").css("display", "flex");
 

@@ -18,7 +18,7 @@
                 <th>#</th>
                 @{
                     var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete,
-                        AttributeNames.User.Remember, AttributeNames.User.PasswordHash, AttributeNames.User.Password };
+                        UserModel.AttributeNames.Remember, UserModel.AttributeNames.PasswordHash, UserModel.AttributeNames.Password };
 
                     var listField = UtilHtmlHelper.GetOrderedProperties<UserModel>(excludedFields);
 
@@ -39,7 +39,7 @@
                 {
                     <tr>
                         <td>
-                            <input type="hidden" name="@AttributeNames.User.UserId" value="@row.Id" />
+                            <input type="hidden" name="@UserModel.AttributeNames.UserId" value="@row.Id" />
                             <div class="form-check">
                                 <input class="form-check-input @TableName.User-checkbox" type="checkbox" />
                             </div>

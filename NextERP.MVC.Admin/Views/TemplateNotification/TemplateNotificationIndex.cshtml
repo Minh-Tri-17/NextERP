@@ -53,7 +53,7 @@
             <form id="@TableName.TemplateNotification-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.TemplateNotification.TemplateNotificationCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateNotification.TemplateNotificationCode</label>
+                        <label for="@TemplateNotificationModel.AttributeNames.TemplateNotificationCode" class="col-form-label col-md-6" localize-content>@TemplateNotificationModel.AttributeNames.TemplateNotificationCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="TemplateNotificationCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.TemplateNotification-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $templateNotificationId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val() : "";
+        $templateNotificationId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TemplateNotificationModel.AttributeNames.TemplateNotificationId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.TemplateNotification-checkbox:checked").length;
@@ -126,11 +126,11 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.TemplateNotification)/" + $templateNotificationId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationId").val(data.id);
-                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationCode").val(data.templateNotificationCode);
-                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateNotificationName").val(data.templateNotificationName);
-                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.TemplateContent").val(data.templateContent);
-                $("#@TableName.TemplateNotification #@AttributeNames.TemplateNotification.Note").val(data.note);
+                $("#@TableName.TemplateNotification #@TemplateNotificationModel.AttributeNames.TemplateNotificationId").val(data.id);
+                $("#@TableName.TemplateNotification #@TemplateNotificationModel.AttributeNames.TemplateNotificationCode").val(data.templateNotificationCode);
+                $("#@TableName.TemplateNotification #@TemplateNotificationModel.AttributeNames.TemplateNotificationName").val(data.templateNotificationName);
+                $("#@TableName.TemplateNotification #@TemplateNotificationModel.AttributeNames.TemplateContent").val(data.templateContent);
+                $("#@TableName.TemplateNotification #@TemplateNotificationModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -140,7 +140,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TemplateNotification-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val();
+            return $(this).closest("tr").find('input[name="@TemplateNotificationModel.AttributeNames.TemplateNotificationId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -160,7 +160,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TemplateNotification-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateNotification.TemplateNotificationId"]').val();
+            return $(this).closest("tr").find('input[name="@TemplateNotificationModel.AttributeNames.TemplateNotificationId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

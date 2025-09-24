@@ -53,12 +53,12 @@
             <form id="@TableName.Department-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Department.DepartmentCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.DepartmentCode</label>
+                        <label for="@DepartmentModel.AttributeNames.DepartmentCode" class="col-form-label col-md-6" localize-content>@DepartmentModel.AttributeNames.DepartmentCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="DepartmentCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Department.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Department.OperatingStatus</label>
+                        <label for="@DepartmentModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@DepartmentModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.Department-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $departmentId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val() : "";
+        $departmentId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@DepartmentModel.AttributeNames.DepartmentId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Department-checkbox:checked").length;
@@ -137,12 +137,12 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Department)/" + $departmentId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Department #@AttributeNames.Department.DepartmentId").val(data.id);
-                $("#@TableName.Department #@AttributeNames.Department.DepartmentCode").val(data.departmentCode);
-                $("#@TableName.Department #@AttributeNames.Department.DepartmentName").val(data.departmentName);
-                $("#@TableName.Department #@AttributeNames.Department.NumberOfEmployees").val(data.numberOfEmployees);
-                $("#@TableName.Department #@AttributeNames.Department.Note").val(data.note);
-                $("#@TableName.Department #@AttributeNames.Department.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.DepartmentId").val(data.id);
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.DepartmentCode").val(data.departmentCode);
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.DepartmentName").val(data.departmentName);
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.NumberOfEmployees").val(data.numberOfEmployees);
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.Department #@DepartmentModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -152,7 +152,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Department-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val();
+            return $(this).closest("tr").find('input[name="@DepartmentModel.AttributeNames.DepartmentId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -172,7 +172,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Department-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Department.DepartmentId"]').val();
+            return $(this).closest("tr").find('input[name="@DepartmentModel.AttributeNames.DepartmentId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -194,10 +194,10 @@
     })
 
     $("#clear-button").click(function () {
-        $("#@TableName.Department-search-form #@AttributeNames.Department.DepartmentCode").val("");
+        $("#@TableName.Department-search-form #@DepartmentModel.AttributeNames.DepartmentCode").val("");
         $("#@TableName.Department-search-form #@Constants.DateCreate").val("");
         $("#@TableName.Department-search-form #@Constants.DateUpdate").val("");
-        $("#@TableName.Department-search-form #@AttributeNames.Department.OperatingStatus").val("").trigger("change");
+        $("#@TableName.Department-search-form #@DepartmentModel.AttributeNames.OperatingStatus").val("").trigger("change");
 
         loadDepartments();
     })

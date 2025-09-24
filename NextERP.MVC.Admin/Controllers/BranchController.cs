@@ -57,14 +57,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Branch.BranchCode,
+                        FilterName = BranchModel.AttributeNames.BranchCode,
                         FilterValue = DataHelper.GetString(request.BranchCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Branch.OperatingStatus,
+                        FilterName = BranchModel.AttributeNames.OperatingStatus,
                         FilterValue = DataHelper.GetString(request.BranchCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
@@ -165,14 +165,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Branch.BranchCode,
+                        FilterName = BranchModel.AttributeNames.BranchCode,
                         FilterValue = DataHelper.GetString(request.BranchCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Branch.OperatingStatus,
+                        FilterName = BranchModel.AttributeNames.OperatingStatus,
                         FilterValue = DataHelper.GetString(request.BranchCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),

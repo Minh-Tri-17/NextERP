@@ -56,7 +56,7 @@
             <form id="@TableName.TemplateMail-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.TemplateMail.TemplateMailCode" class="col-form-label col-md-6" localize-content>@AttributeNames.TemplateMail.TemplateMailCode</label>
+                        <label for="@TemplateMailModel.AttributeNames.TemplateMailCode" class="col-form-label col-md-6" localize-content>@TemplateMailModel.AttributeNames.TemplateMailCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="TemplateMailCode" />
                     </div>
 
@@ -113,7 +113,7 @@
 
     $(document).on("change", ".@TableName.TemplateMail-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $templateMailId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.TemplateMail.TemplateMailId"]').val() : "";
+        $templateMailId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TemplateMailModel.AttributeNames.TemplateMailId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.TemplateMail-checkbox:checked").length;
@@ -130,11 +130,11 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.TemplateMail)/" + $templateMailId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.TemplateMail #@AttributeNames.TemplateMail.TemplateMailId").val(data.id);
-                $("#@TableName.TemplateMail #@AttributeNames.TemplateMail.TemplateMailCode").val(data.templateMailCode);
-                $("#@TableName.TemplateMail #@AttributeNames.TemplateMail.TemplateMailName").val(data.templateMailName);
-                $("#@TableName.TemplateMail #@AttributeNames.TemplateMail.TemplateContent").val(data.templateContent);
-                $("#@TableName.TemplateMail #@AttributeNames.TemplateMail.Note").val(data.note);
+                $("#@TableName.TemplateMail #@TemplateMailModel.AttributeNames.TemplateMailId").val(data.id);
+                $("#@TableName.TemplateMail #@TemplateMailModel.AttributeNames.TemplateMailCode").val(data.templateMailCode);
+                $("#@TableName.TemplateMail #@TemplateMailModel.AttributeNames.TemplateMailName").val(data.templateMailName);
+                $("#@TableName.TemplateMail #@TemplateMailModel.AttributeNames.TemplateContent").val(data.templateContent);
+                $("#@TableName.TemplateMail #@TemplateMailModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -144,7 +144,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TemplateMail-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateMail.TemplateMailId"]').val();
+            return $(this).closest("tr").find('input[name="@TemplateMailModel.AttributeNames.TemplateMailId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -164,7 +164,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TemplateMail-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.TemplateMail.TemplateMailId"]').val();
+            return $(this).closest("tr").find('input[name="@TemplateMailModel.AttributeNames.TemplateMailId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

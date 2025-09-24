@@ -11,60 +11,60 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Attendance.AttendanceId" type="hidden" asp-for="Id" />
+                    <input id="@AttendanceModel.AttributeNames.AttendanceId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.AttendanceCode</label>
+                        <label for="@AttendanceModel.AttributeNames.AttendanceCode" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.AttendanceCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="AttendanceCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.WorkDate" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkDate</label>
+                        <label for="@AttendanceModel.AttributeNames.WorkDate" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.WorkDate</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="date" asp-for="WorkDate" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.WorkDate" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.WorkDate" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.InTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.InTime</label>
+                        <label for="@AttendanceModel.AttributeNames.InTime" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.InTime</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="time" asp-for="InTime" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.InTime" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.InTime" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.OutTime" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OutTime</label>
+                        <label for="@AttendanceModel.AttributeNames.OutTime" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.OutTime</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="time" asp-for="OutTime" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.OutTime" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.OutTime" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.WorkingHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.WorkingHours</label>
+                        <label for="@AttendanceModel.AttributeNames.WorkingHours" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.WorkingHours</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="WorkingHours" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.WorkingHours" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.WorkingHours" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.OvertimeHours" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.OvertimeHours</label>
+                        <label for="@AttendanceModel.AttributeNames.OvertimeHours" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.OvertimeHours</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="OvertimeHours" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.OvertimeHours" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.OvertimeHours" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Attendance.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Attendance.Note</label>
+                        <label for="@AttendanceModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@AttendanceModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Attendance.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@AttendanceModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

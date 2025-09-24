@@ -33,7 +33,7 @@
             <h2 class="text-center" localize-content>Account</h2>
             <div class="login-form">
                 <div class="mb-2">
-                    <label for="@AttributeNames.User.Username" class="col-form-label col-md-6" localize-content>Username</label>
+                    <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>Username</label>
                     <div class="col-md-12">
                         <input class="form-control form-control-sm" type="text" asp-for="Username" required />
                         <div class="invalid-feedback" localize-content>InvalidUsername</div>
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="mb-2">
-                    <label for="@AttributeNames.User.Password" class="col-form-label col-md-6" localize-content>Password</label>
+                    <label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-6" localize-content>Password</label>
                     <div class="col-md-12">
                         <input class="form-control form-control-sm" type="password" asp-for="Password" required minlength="3" />
                         <div class="invalid-feedback" localize-content>InvalidPassword</div>
@@ -51,7 +51,7 @@
                 <div class="d-flex justify-content-between align-items-center my-3">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" asp-for="Remember" />
-                        <label class="form-check-label" for="@AttributeNames.User.Remember" localize-content>RememberMe</label>
+                        <label class="form-check-label" for="@UserModel.AttributeNames.Remember" localize-content>RememberMe</label>
                     </div>
                     <a href="#" id="forgot-password" localize-content>ForgotPassword</a>
                 </div>
@@ -67,15 +67,15 @@
             <h2 class="text-center" localize-content>ForgotPassword</h2>
             <div class="forgot-form">
                 <div class="mb-2">
-                    <label for="New-@AttributeNames.User.Password" class="col-form-label" localize-content>NewPassword</label>
+                    <label for="New-@UserModel.AttributeNames.Password" class="col-form-label" localize-content>NewPassword</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-sm" type="password" id="New-@AttributeNames.User.Password" asp-for="Password" />
+                        <input class="form-control form-control-sm" type="password" id="New-@UserModel.AttributeNames.Password" asp-for="Password" />
                         <div class="invalid-feedback" localize-content>InvalidNewPassword</div>
                     </div>
                 </div>
 
                 <div class="mb-2">
-                    <label for="@AttributeNames.User.PhoneNumber" class="col-form-label" localize-content>PhoneNumberRegistered</label>
+                    <label for="@UserModel.AttributeNames.PhoneNumber" class="col-form-label" localize-content>PhoneNumberRegistered</label>
                     <div class="col-md-12">
                         <input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" />
                         <div class="invalid-feedback" localize-content>InvalidPhoneNumberRegistered</div>
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="mb-2">
-                    <label for="@AttributeNames.User.Otp" class="col-form-label col-md-6" localize-content>OTP</label>
+                    <label for="@UserModel.AttributeNames.Otp" class="col-form-label col-md-6" localize-content>OTP</label>
                     <div class="col-md-12">
                         <input class="form-control form-control-sm" type="text" asp-for="Otp" />
                         <div class="invalid-feedback" localize-content>InvalidOTP</div>

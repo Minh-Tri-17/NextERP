@@ -57,21 +57,21 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.LeaveRequestCode,
+                        FilterName = LeaveRequestModel.AttributeNames.LeaveRequestCode,
                         FilterValue = DataHelper.GetString(request.LeaveRequestCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.ApprovalStatus,
+                        FilterName = LeaveRequestModel.AttributeNames.ApprovalStatus,
                         FilterValue = DataHelper.GetString(request.ApprovalStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.LeaveDayType,
+                        FilterName = LeaveRequestModel.AttributeNames.LeaveDayType,
                         FilterValue = DataHelper.GetString(request.LeaveDayType),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
@@ -172,21 +172,21 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.LeaveRequestCode,
+                        FilterName = LeaveRequestModel.AttributeNames.LeaveRequestCode,
                         FilterValue = DataHelper.GetString(request.LeaveRequestCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.ApprovalStatus,
+                        FilterName = LeaveRequestModel.AttributeNames.ApprovalStatus,
                         FilterValue = DataHelper.GetString(request.ApprovalStatus),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.LeaveRequest.LeaveDayType,
+                        FilterName = LeaveRequestModel.AttributeNames.LeaveDayType,
                         FilterValue = DataHelper.GetString(request.LeaveDayType),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),

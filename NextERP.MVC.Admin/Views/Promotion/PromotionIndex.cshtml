@@ -53,12 +53,12 @@
             <form id="@TableName.Promotion-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Promotion.PromotionCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.PromotionCode</label>
+                        <label for="@PromotionModel.AttributeNames.PromotionCode" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.PromotionCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="PromotionCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@AttributeNames.Promotion.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.Promotion.OperatingStatus</label>
+                        <label for="@PromotionModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.OperatingStatus</label>
                         <select class="form-select form-select-sm" asp-for="OperatingStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -120,7 +120,7 @@
 
     $(document).on("change", ".@TableName.Promotion-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $promotionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Promotion.PromotionId"]').val() : "";
+        $promotionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@PromotionModel.AttributeNames.PromotionId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Promotion-checkbox:checked").length;
@@ -137,14 +137,14 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)/" + $promotionId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionId").val(data.id);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionCode").val(data.promotionCode);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.PromotionName").val(data.promotionName);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.DiscountPercentage").val(data.discountPercentage);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.StartDate").val(formatDateToInput(data.startDate));
-                $("#@TableName.Promotion #@AttributeNames.Promotion.EndDate").val(formatDateToInput(data.endDate));
-                $("#@TableName.Promotion #@AttributeNames.Promotion.Note").val(data.note);
-                $("#@TableName.Promotion #@AttributeNames.Promotion.OperatingStatus").val(data.operatingStatus).trigger("change");
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.PromotionId").val(data.id);
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.PromotionCode").val(data.promotionCode);
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.PromotionName").val(data.promotionName);
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.DiscountPercentage").val(data.discountPercentage);
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.StartDate").val(formatDateToInput(data.startDate));
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.EndDate").val(formatDateToInput(data.endDate));
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.Note").val(data.note);
+                $("#@TableName.Promotion #@PromotionModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
             })
             .catch(err => {
                 showMessage("F:Có lỗi call api xảy ra!");
@@ -154,7 +154,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Promotion-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Promotion.PromotionId"]').val();
+            return $(this).closest("tr").find('input[name="@PromotionModel.AttributeNames.PromotionId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -174,7 +174,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Promotion-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Promotion.PromotionId"]').val();
+            return $(this).closest("tr").find('input[name="@PromotionModel.AttributeNames.PromotionId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

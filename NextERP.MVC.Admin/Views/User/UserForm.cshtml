@@ -11,33 +11,33 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.User.UserId" type="hidden" asp-for="Id" />
+                    <input id="@UserModel.AttributeNames.UserId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.UserCode" class="col-form-label col-md-6" localize-content>@AttributeNames.User.UserCode</label>
+                        <label for="@UserModel.AttributeNames.UserCode" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.UserCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="UserCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.LastLoginDate" class="col-form-label col-md-6" localize-content>@AttributeNames.User.LastLoginDate</label>
+                        <label for="@UserModel.AttributeNames.LastLoginDate" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.LastLoginDate</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="date" asp-for="LastLoginDate" disabled />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.User.LastLoginDate" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@UserModel.AttributeNames.LastLoginDate" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.Username" class="col-form-label col-md-6" localize-content>@AttributeNames.User.Username</label>
+                        <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Username</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="Username" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.User.Username" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@UserModel.AttributeNames.Username" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.Password" class="col-form-label col-md-6" localize-content>@AttributeNames.User.Password</label>
+                        <label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Password</label>
                         <div class="col-md-12">
                             <input class="form-control" type="password" asp-for="Password" required />
                             <div class="invalid-feedback" localize-content>InvalidPassword</div>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.GroupRole" class="col-form-label col-md-6" localize-content>@AttributeNames.User.GroupRole</label>
+                        <label for="@UserModel.AttributeNames.GroupRole" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.GroupRole</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="GroupRole">
                                 <option value=""></option>
@@ -54,12 +54,12 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.User.GroupRole" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@UserModel.AttributeNames.GroupRole" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.User.OperatingStatus</label>
+                        <label for="@UserModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.OperatingStatus</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
@@ -68,12 +68,12 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.User.OperatingStatus" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@UserModel.AttributeNames.OperatingStatus" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Employee.EmployeeId" class="col-form-label col-md-6" localize-content>@TableName.Employee</label>
+                        <label for="@EmployeeModel.AttributeNames.EmployeeId" class="col-form-label col-md-6" localize-content>@TableName.Employee</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="EmployeeId">
                                 <option value=""></option>
@@ -87,17 +87,17 @@
                                     }
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Employee.EmployeeId" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@EmployeeModel.AttributeNames.EmployeeId" localize-content></div>
                         </div>
                     </div>
 
-                    <div class="mb-3" id="@AttributeNames.User.Roles"></div>
+                    <div class="mb-3" id="@UserModel.AttributeNames.Roles"></div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.User.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.User.Note</label>
+                        <label for="@UserModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.User.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@UserModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

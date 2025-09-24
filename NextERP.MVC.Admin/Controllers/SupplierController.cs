@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Supplier.SupplierCode,
+                        FilterName = SupplierModel.AttributeNames.SupplierCode,
                         FilterValue = DataHelper.GetString(request.SupplierCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -158,7 +158,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Supplier.SupplierCode,
+                        FilterName = SupplierModel.AttributeNames.SupplierCode,
                         FilterValue = DataHelper.GetString(request.SupplierCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

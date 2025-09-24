@@ -73,8 +73,8 @@
                             return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
                         };
                         
-                        $("#@TableName.Schedule #@AttributeNames.Schedule.WorkDate").val(formatDateTime(start));
-                        $("#@TableName.Schedule #@AttributeNames.Schedule.WorkDate").val(formatDateTime(end));
+                        $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(start));
+                        $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(end));
 
                         //? Mở modal khi chọn ngày trên lịch
                         const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));

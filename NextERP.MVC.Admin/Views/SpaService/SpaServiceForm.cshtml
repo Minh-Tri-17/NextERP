@@ -11,48 +11,48 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.SpaService.SpaServiceId" type="hidden" asp-for="Id" />
+                    <input id="@SpaServiceModel.AttributeNames.SpaServiceId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.SpaServiceCode" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceCode</label>
+                        <label for="@SpaServiceModel.AttributeNames.SpaServiceCode" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="SpaServiceCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.SpaServiceName" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceName</label>
+                        <label for="@SpaServiceModel.AttributeNames.SpaServiceName" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceName</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="SpaServiceName" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.SpaServiceName" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceName" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.Price" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Price</label>
+                        <label for="@SpaServiceModel.AttributeNames.Price" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Price</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="Price" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Price" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Price" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.Duration" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Duration</label>
+                        <label for="@SpaServiceModel.AttributeNames.Duration" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Duration</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="Duration" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Duration" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Duration" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
                         <div class="col-md-12">
                             <input class="form-check-input" type="checkbox" asp-for="IsPromotional">
-                            <label class="form-check-label" for="@AttributeNames.SpaService.IsPromotional" localize-content>IsPromotional</label>
+                            <label class="form-check-label" for="@SpaServiceModel.AttributeNames.IsPromotional" localize-content>IsPromotional</label>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.SpaServiceLevel" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.SpaServiceLevel</label>
+                        <label for="@SpaServiceModel.AttributeNames.SpaServiceLevel" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceLevel</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="SpaServiceLevel">
                                 <option value=""></option>
@@ -61,12 +61,12 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.SpaServiceLevel" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceLevel" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.OperatingStatus" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.OperatingStatus</label>
+                        <label for="@SpaServiceModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.OperatingStatus</label>
                         <div class="col-md-12">
                             <select class="form-select form-select-sm" asp-for="OperatingStatus">
                                 <option value=""></option>
@@ -75,15 +75,15 @@
                                     <option value="@item" localize-content>@item</option>
                                 }
                             </select>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.OperatingStatus" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.OperatingStatus" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.SpaService.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.SpaService.Note</label>
+                        <label for="@SpaServiceModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.SpaService.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

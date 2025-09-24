@@ -48,7 +48,7 @@ namespace NextERP.MVC.Admin.Controllers
                 {
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.InvoiceDetail.InvoiceDetailCode,
+                        FilterName = InvoiceDetailModel.AttributeNames.InvoiceDetailCode,
                         FilterValue = DataHelper.GetString(request.InvoiceDetailCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),

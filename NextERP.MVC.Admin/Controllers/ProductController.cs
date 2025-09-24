@@ -60,14 +60,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Product.ProductCode,
+                        FilterName = ProductModel.AttributeNames.ProductCode,
                         FilterValue = DataHelper.GetString(request.ProductCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Product.ExpirationDate,
+                        FilterName = ProductModel.AttributeNames.ExpirationDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ExpirationDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
@@ -193,14 +193,14 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Product.ProductCode,
+                        FilterName = ProductModel.AttributeNames.ProductCode,
                         FilterValue = DataHelper.GetString(request.ProductCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.Product.ExpirationDate,
+                        FilterName = ProductModel.AttributeNames.ExpirationDate,
                         FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.ExpirationDate)),
                         FilterType = Util.Enums.FilterType.Date.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),

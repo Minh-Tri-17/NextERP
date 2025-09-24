@@ -53,7 +53,7 @@
             <form id="@TableName.Role-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@AttributeNames.Role.RoleCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Role.RoleCode</label>
+                        <label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="RoleCode" />
                     </div>
 
@@ -109,7 +109,7 @@
 
     $(document).on("change", ".@TableName.Role-checkbox", function () {
         // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $roleId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@AttributeNames.Role.RoleId"]').val() : "";
+        $roleId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@RoleModel.AttributeNames.RoleId"]').val() : "";
 
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.Role-checkbox:checked").length;
@@ -126,15 +126,15 @@
         callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)/" + $roleId, "GET")
             .then(data => {
                 // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Role #@AttributeNames.Role.RoleId").val(data.id);
-                $("#@TableName.Role #@AttributeNames.Role.RoleCode").val(data.roleCode);
-                $("#@TableName.Role #@AttributeNames.Role.RoleName").val(data.roleName);
-                $("#@TableName.Role #@AttributeNames.Role.GroupRole").val(data.groupRole);
-                $("#@TableName.Role #@AttributeNames.Role.Note").val(data.note);
+                $("#@TableName.Role #@RoleModel.AttributeNames.RoleId").val(data.id);
+                $("#@TableName.Role #@RoleModel.AttributeNames.RoleCode").val(data.roleCode);
+                $("#@TableName.Role #@RoleModel.AttributeNames.RoleName").val(data.roleName);
+                $("#@TableName.Role #@RoleModel.AttributeNames.GroupRole").val(data.groupRole);
+                $("#@TableName.Role #@RoleModel.AttributeNames.Note").val(data.note);
 
                 const permissions = data.permissions ? data.permissions.split(";") : [];
                 permissions.forEach(function (perm) {
-                    $("#@TableName.Role #@AttributeNames.Role.Permissions").val(perm).trigger("change");
+                    $("#@TableName.Role #@RoleModel.AttributeNames.Permissions").val(perm).trigger("change");
                 });
             })
             .catch(err => {
@@ -145,7 +145,7 @@
     $("#delete-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Role-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Role.RoleId"]').val();
+            return $(this).closest("tr").find('input[name="@RoleModel.AttributeNames.RoleId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);
@@ -165,7 +165,7 @@
     $("#delete-permanently-button").click(function () {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.Role-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@AttributeNames.Role.RoleId"]').val();
+            return $(this).closest("tr").find('input[name="@RoleModel.AttributeNames.RoleId"]').val();
         }).get().join(",");
 
         $("#Ids").val($ids);

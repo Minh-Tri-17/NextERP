@@ -11,84 +11,84 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="@AttributeNames.Salary.SalaryId" type="hidden" asp-for="Id" />
+                    <input id="@SalaryModel.AttributeNames.SalaryId" type="hidden" asp-for="Id" />
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.SalaryCode" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryCode</label>
+                        <label for="@SalaryModel.AttributeNames.SalaryCode" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.SalaryCode</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="text" asp-for="SalaryCode" disabled />
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.SalaryMonth" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.SalaryMonth</label>
+                        <label for="@SalaryModel.AttributeNames.SalaryMonth" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.SalaryMonth</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="month" asp-for="SalaryMonth" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.SalaryMonth" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.SalaryMonth" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.GrossSalary" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.GrossSalary</label>
+                        <label for="@SalaryModel.AttributeNames.GrossSalary" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.GrossSalary</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="GrossSalary" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.GrossSalary" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.GrossSalary" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.Bonus" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.Bonus</label>
+                        <label for="@SalaryModel.AttributeNames.Bonus" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.Bonus</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="Bonus" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.Bonus" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.Bonus" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.TaxAmount" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.TaxAmount</label>
+                        <label for="@SalaryModel.AttributeNames.TaxAmount" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.TaxAmount</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="TaxAmount" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.TaxAmount" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.TaxAmount" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.InsuranceContribution" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.InsuranceContribution</label>
+                        <label for="@SalaryModel.AttributeNames.InsuranceContribution" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.InsuranceContribution</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="InsuranceContribution" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.InsuranceContribution" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.InsuranceContribution" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.AdvanceSalary" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.AdvanceSalary</label>
+                        <label for="@SalaryModel.AttributeNames.AdvanceSalary" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.AdvanceSalary</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="AdvanceSalary" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.AdvanceSalary" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.AdvanceSalary" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.Deductions" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.Deductions</label>
+                        <label for="@SalaryModel.AttributeNames.Deductions" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.Deductions</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="Deductions" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.Deductions" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.Deductions" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.NetSalary" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.NetSalary</label>
+                        <label for="@SalaryModel.AttributeNames.NetSalary" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.NetSalary</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-sm" type="number" asp-for="NetSalary" />
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.NetSalary" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.NetSalary" localize-content></div>
                         </div>
                     </div>
 
                     <div class="mb-2">
-                        <label for="@AttributeNames.Salary.Note" class="col-form-label col-md-6" localize-content>@AttributeNames.Salary.Note</label>
+                        <label for="@SalaryModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@SalaryModel.AttributeNames.Note</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@AttributeNames.Salary.Note" localize-content></div>
+                            <div class="invalid-feedback" id="invalid-@SalaryModel.AttributeNames.Note" localize-content></div>
                         </div>
                     </div>
                 </div>

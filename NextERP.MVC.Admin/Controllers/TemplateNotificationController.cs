@@ -57,7 +57,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TemplateNotification.TemplateNotificationCode,
+                        FilterName = TemplateNotificationModel.AttributeNames.TemplateNotificationCode,
                         FilterValue = DataHelper.GetString(request.TemplateNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
@@ -158,7 +158,7 @@ namespace NextERP.MVC.Admin.Controllers
                     },
                     new FilterItemModel()
                     {
-                        FilterName = AttributeNames.TemplateNotification.TemplateNotificationCode,
+                        FilterName = TemplateNotificationModel.AttributeNames.TemplateNotificationCode,
                         FilterValue = DataHelper.GetString(request.TemplateNotificationCode),
                         FilterType = Util.Enums.FilterType.String.ToString(),
                         FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
