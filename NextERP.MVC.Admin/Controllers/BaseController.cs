@@ -1,4 +1,6 @@
 ﻿using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Logging;
@@ -45,6 +47,9 @@ namespace NextERP.MVC.Admin.Controllers
             var cookiesToken = HttpContext.Request.Cookies[Constants.Token];
             if (string.IsNullOrWhiteSpace(cookiesToken))
             {
+                // Xóa Authentication cookie
+                context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).GetAwaiter().GetResult();
+
                 // Nếu không có thông tin phiên, Redirect đến trang Index trong Controller Account
                 context.Result = new RedirectToActionResult(ScreenName.AccountIndex, "Account", null);
             }
