@@ -6,7 +6,7 @@ namespace NextERP.Util
     public class PasswordHasher
     {
         // Số lần lặp để tăng độ khó cho tấn công brute force
-        private const int IterationCount = 10000;
+        private const int IterationCount = 1000000;
 
         // Kích thước của salt để tăng độ ngẫu nhiên
         private const int SaltSize = 128 / 8;

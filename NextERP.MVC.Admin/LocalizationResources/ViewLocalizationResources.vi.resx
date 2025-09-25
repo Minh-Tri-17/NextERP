@@ -1050,20 +1050,20 @@
   <data name="zstring204" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring198" xml:space="preserve">
-    <value />
+  <data name="RequireDigit" xml:space="preserve">
+    <value>Mật khẩu phải chứa ít nhất một chữ số.</value>
   </data>
   <data name="zstring210" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring195" xml:space="preserve">
-    <value />
+  <data name="OTPNoAttemptsLeft" xml:space="preserve">
+    <value>Mã xác thực hết lượt nhập</value>
   </data>
   <data name="zstring207" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring201" xml:space="preserve">
-    <value />
+  <data name="RequireNonAlphanumeric" xml:space="preserve">
+    <value>Mật khẩu phải chứa ít nhất một ký tự đặc biệt.</value>
   </data>
   <data name="zstring213" xml:space="preserve">
     <value />
@@ -1086,20 +1086,20 @@
   <data name="zstring203" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring197" xml:space="preserve">
-    <value />
+  <data name="RequiredLength" xml:space="preserve">
+    <value>Mật khẩu phải có ít nhất {0} ký tự.</value>
   </data>
   <data name="zstring209" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring194" xml:space="preserve">
-    <value />
+  <data name="OTPExpired" xml:space="preserve">
+    <value>Mã xác thực hết hạn</value>
   </data>
   <data name="zstring206" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring200" xml:space="preserve">
-    <value />
+  <data name="RequireUppercase" xml:space="preserve">
+    <value>Mật khẩu phải chứa ít nhất một chữ in hoa.</value>
   </data>
   <data name="zstring212" xml:space="preserve">
     <value />
@@ -1116,26 +1116,26 @@
   <data name="Register" xml:space="preserve">
     <value>Đăng ký</value>
   </data>
-  <data name="zstring193" xml:space="preserve">
-    <value />
+  <data name="OTPNotFound" xml:space="preserve">
+    <value>Mã xác thực không tồn tại</value>
   </data>
   <data name="zstring205" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring199" xml:space="preserve">
-    <value />
+  <data name="RequireLowercase" xml:space="preserve">
+    <value>Mật khẩu phải chứa ít nhất một chữ thường.</value>
   </data>
   <data name="zstring211" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring196" xml:space="preserve">
-    <value />
+  <data name="OTPIncorrect" xml:space="preserve">
+    <value>Mã xác thực không khớp</value>
   </data>
   <data name="zstring208" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring202" xml:space="preserve">
-    <value />
+  <data name="RequiredUniqueChars" xml:space="preserve">
+    <value>Mật khẩu phải chứa ít nhất {0} ký tự duy nhất.</value>
   </data>
   <data name="zstring214" xml:space="preserve">
     <value />

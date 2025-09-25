@@ -28,6 +28,10 @@ public partial class User
     [Unicode(false)]
     public string? PhoneNumber { get; set; }
 
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? Mail { get; set; }
+
     [Column(TypeName = "datetime")]
     public DateTime? LastLoginDate { get; set; }
 
@@ -67,12 +71,4 @@ public partial class User
     [StringLength(50)]
     [Unicode(false)]
     public string? UserUpdate { get; set; }
-
-    [ForeignKey("CustomerId")]
-    [InverseProperty("Users")]
-    public virtual Customer? Customer { get; set; }
-
-    [ForeignKey("EmployeeId")]
-    [InverseProperty("Users")]
-    public virtual Employee? Employee { get; set; }
 }

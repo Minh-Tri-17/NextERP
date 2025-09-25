@@ -81,6 +81,23 @@ namespace NextERP.MVC.Admin.Services.Services
             return JsonConvert.DeserializeObject<APIErrorResult<bool>>(await response.Content.ReadAsStringAsync())!;
         }
 
+        public async Task<APIBaseResult<bool>> ResetPassword(UserModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var baseAddress = _configuration[Constants.APIAddress];
+            // Tạo client không có Bearer Token
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(baseAddress);
+            var response = await client.PostAsync(Constants.UrlResetPassword, httpContent);
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<APISuccessResult<bool>>(await response.Content.ReadAsStringAsync())!;
+
+            return JsonConvert.DeserializeObject<APIErrorResult<bool>>(await response.Content.ReadAsStringAsync())!;
+        }
+
         #endregion
     }
 }

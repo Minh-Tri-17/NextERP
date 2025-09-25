@@ -130,34 +130,47 @@ namespace NextERP.MVC.Admin.Controllers
             if (mail.To == null)
                 return GetModelStateErrors();
 
-            // 1. Sinh OTP 6 chữ số an toàn
-            byte[] rngBytes = new byte[4];
-            RandomNumberGenerator.Fill(rngBytes);
-            var otp = BitConverter.ToUInt32(rngBytes, 0) % 1_000_000;
-            var otpString = otp.ToString("D6");
+            var otpString = GenerateOtp(mail.To);
 
-            // 2. Tạo salt + hash OTP
-            var salt = Guid.NewGuid().ToString();
-            using var sha = SHA256.Create();
-            var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(otpString + salt));
-            var hashed = Convert.ToBase64String(hashBytes);
-
-            // 3. Lưu vào store tạm
-            otpStore[mail.To] = new
-            {
-                Hashed = hashed,
-                Salt = salt,
-                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
-                AttemptsLeft = 3
-            };
-
-            // 4. Tạo nội dung email
             mail.Subject = _localizer.GetLocalizedString(Constants.SendOTP);
             mail.Body = _localizer.GetLocalizedString(Messages.YourOTP, new object[] { otpString });
 
             var result = await _accountAPIService.SendOTP(mail);
             if (!DataHelper.IsNotNull(result))
                 return Json(_localizer.GetLocalizedString(result.Message));
+
+            return Json(_localizer.GetLocalizedString(result.Message));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(UserModel request)
+        {
+            var validateMessage = ValidateOtp(DataHelper.GetString(request.Mail), DataHelper.GetString(request.Otp));
+
+            if (!string.IsNullOrEmpty(validateMessage))
+                return Json(_localizer.GetLocalizedString(validateMessage));
+
+            var result = await _accountAPIService.ResetPassword(request);
+
+            if (!DataHelper.IsNotNull(result))
+            {
+                var errors = result.Message.ToString().Split(',')
+                     .Select(errorItem =>
+                     {
+                         var parts = errorItem.Split('|');
+                         var code = parts[0].Trim();
+                         var args = parts.Skip(1).ToArray();
+
+                         return new
+                         {
+                             Field = UserModel.AttributeNames.Password,
+                             Message = $"<b>&#10031; [{UserModel.AttributeNames.Password}]</b> {_localizer.GetLocalizedString(code, args)}"
+                         };
+                     })
+                    .ToList();
+
+                return Json(errors);
+            }
 
             return Json(_localizer.GetLocalizedString(result.Message));
         }
@@ -211,6 +224,71 @@ namespace NextERP.MVC.Admin.Controllers
                 return "Invalid";
 
             return "Other";
+        }
+
+        private string ValidateOtp(string email, string otp)
+        {
+            if (!otpStore.TryGetValue(email, out var entryObj))
+                return Messages.OTPNotFound;
+
+            var entry = (dynamic)entryObj;
+
+            // Kiểm tra hết hạn
+            if (DateTime.UtcNow > entry.ExpiresAt)
+            {
+                otpStore.TryRemove(email, out _);
+                return Messages.OTPExpired;
+            }
+
+            // Kiểm tra số lần thử còn lại
+            if (entry.AttemptsLeft <= 0)
+            {
+                otpStore.TryRemove(email, out _);
+                return Messages.OTPNoAttemptsLeft;
+            }
+
+            // Hash OTP nhập để so sánh
+            using var sha = SHA256.Create();
+            var hashInput = sha.ComputeHash(Encoding.UTF8.GetBytes(otp + entry.Salt));
+            var hashInputString = Convert.ToBase64String(hashInput);
+
+            if (hashInputString != entry.Hashed)
+            {
+                entry.AttemptsLeft--;
+                otpStore[email] = entry; // cập nhật số lần thử
+                return Messages.OTPIncorrect;
+            }
+
+            // OTP đúng → remove khỏi store
+            otpStore.TryRemove(email, out _);
+
+            return string.Empty;
+        }
+
+        private string GenerateOtp(string email)
+        {
+            // 1. Sinh OTP 6 chữ số an toàn
+            byte[] rngBytes = new byte[4];
+            RandomNumberGenerator.Fill(rngBytes);
+            var otp = BitConverter.ToUInt32(rngBytes, 0) % 1000000;
+            var otpString = otp.ToString("D6");
+
+            // 2. Tạo salt + hash OTP
+            var salt = Guid.NewGuid().ToString();
+            using var sha = SHA256.Create();
+            var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(otpString + salt));
+            var hashed = Convert.ToBase64String(hashBytes);
+
+            // 3. Lưu vào store tạm
+            otpStore[email] = new
+            {
+                Hashed = hashed,
+                Salt = salt,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(10),
+                AttemptsLeft = 3
+            };
+
+            return otpString;
         }
 
         #endregion

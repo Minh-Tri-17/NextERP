@@ -314,10 +314,6 @@ public partial class NextErpContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Customer).WithMany(p => p.Users).HasConstraintName("FK_Users_Customers");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Users).HasConstraintName("FK_Users_Employees");
         });
 
         OnModelCreatingPartial(modelBuilder);

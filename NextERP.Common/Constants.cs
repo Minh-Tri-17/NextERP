@@ -44,6 +44,7 @@
         public const string GetChartSlope = "GetChartSlope";
         public const string Login = "Login";
         public const string Account = "Account";
+        public const string ResetPassword = "ResetPassword";
 
         #region Format
 
@@ -67,6 +68,7 @@
         public const string UrlAuthentication = "/api/Account/Authentication";
         public const string UrlRegister = "/api/Account/Register";
         public const string UrlSendOTP = "/api/Account/SendOTP";
+        public const string UrlResetPassword = "/api/Account/ResetPassword";
 
         #endregion
 

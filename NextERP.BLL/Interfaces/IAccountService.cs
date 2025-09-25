@@ -8,5 +8,6 @@ namespace NextERP.BLL.Interface
         public Task<APIBaseResult<string>> Auth(UserModel request);
         public Task<APIBaseResult<bool>> Register(UserModel request);
         public Task<APIBaseResult<bool>> SendOTP(MailModel mail);
+        public Task<APIBaseResult<bool>> ResetPassword(UserModel request);
     }
 }

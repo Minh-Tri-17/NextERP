@@ -132,7 +132,4 @@ public partial class Employee
 
     [InverseProperty("Employee")]
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-
-    [InverseProperty("Employee")]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

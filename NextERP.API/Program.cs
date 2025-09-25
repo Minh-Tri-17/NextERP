@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +10,7 @@ using NextERP.BLL.Interface;
 using NextERP.BLL.Service;
 using NextERP.DAL.Models;
 using NextERP.Util;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -143,6 +145,16 @@ builder.Services.AddAuthentication(opt =>
         ClockSkew = System.TimeSpan.Zero,
         IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
     };
+});
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 5;
 });
 
 #endregion

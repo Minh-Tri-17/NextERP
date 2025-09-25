@@ -1,6 +1,5 @@
 ﻿using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using NextERP.MVC.Admin.LocalizationResources;
 using NextERP.MVC.Admin.Services.Interfaces;
@@ -77,7 +76,7 @@ builder.Configuration
 
 #endregion
 
-#region Cookie Auth & Identity Options
+#region Cookie Auth
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -88,22 +87,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.Cookie.Path = "/";
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.SlidingExpiration = true;
-});
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Có ký tự số
-    options.Password.RequireDigit = true;
-    // Có chữ thường
-    options.Password.RequireLowercase = true;
-    // Có chữ in hoa
-    options.Password.RequireUppercase = true;
-    // Có ký tự đặc biệt
-    options.Password.RequireNonAlphanumeric = true;
-    // Từ 12 ký tự trở lên
-    options.Password.RequiredLength = 8;
-    // Có 1 ký tự không trùng lặp
-    options.Password.RequiredUniqueChars = 5;
 });
 
 #endregion

@@ -39,5 +39,17 @@
         public const string FileNotFound = "FileNotFound";
         public const string NotFoundSupplier = "NotFoundSupplier";
         public const string YourOTP = "YourOTP";
+        public const string ResetPasswordFailed = "ResetPasswordFailed";
+        public const string ResetPasswordSuccess = "ResetPasswordSuccess";
+        public const string RequiredLength = "RequiredLength";
+        public const string RequireDigit = "RequireDigit";
+        public const string RequireLowercase = "RequireLowercase";
+        public const string RequireUppercase = "RequireUppercase";
+        public const string RequireNonAlphanumeric = "RequireNonAlphanumeric";
+        public const string RequiredUniqueChars = "RequiredUniqueChars";
+        public const string OTPNotFound = "OTPNotFound";
+        public const string OTPExpired = "OTPExpired";
+        public const string OTPNoAttemptsLeft = "OTPNoAttemptsLeft";
+        public const string OTPIncorrect = "OTPIncorrect";
     }
 }

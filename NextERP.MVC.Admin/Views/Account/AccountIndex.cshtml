@@ -35,7 +35,7 @@
                 <div class="mb-2">
                     <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>Username</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-sm" type="text" asp-for="Username" required />
+                        <input class="form-control form-control-sm" type="text" asp-for="Username" />
                         <div class="invalid-feedback" localize-content>InvalidUsername</div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="mb-2">
                     <label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-6" localize-content>Password</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-sm" type="password" asp-for="Password" required minlength="3" />
+                        <input class="form-control form-control-sm" type="password" asp-for="Password" />
                         <div class="invalid-feedback" localize-content>InvalidPassword</div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="mb-2">
                         <label for="To" class="col-form-label col-md-6" localize-content>Mail</label>
                         <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" name="To" />
+                            <input class="form-control form-control-sm" type="text" id="mail-to" name="To" />
                             <div class="invalid-feedback" id="invalid-To" localize-content></div>
                         </div>
                     </div>
@@ -85,6 +85,15 @@
             <form class="needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
                 <h4 class="text-center" localize-content>StepResetPassword</h4>
                 <div class="forgot-form">
+                    <input type="hidden" asp-for="Mail" />
+                    <div class="mb-2">
+                        <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>Username</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-sm" type="text" asp-for="Username" />
+                            <div class="invalid-feedback" localize-content>InvalidUsername</div>
+                        </div>
+                    </div>
+
                     <div class="mb-2">
                         <label for="New-@UserModel.AttributeNames.Password" class="col-form-label" localize-content>NewPassword</label>
                         <div class="col-md-12">
@@ -110,7 +119,7 @@
                     </div>
 
                     <div class="my-3 text-center">
-                        <button type="button" onclick="alert('Chức năng chưa làm nào rảnh rồi làm sau')" class="btn btn-primary" localize-content>Register</button>
+                        <button type="button" id="reset-password" class="btn btn-primary" localize-content>Register</button>
                     </div>
                 </div>
             </form>
@@ -145,6 +154,24 @@
             const formElement = $form[0];
 
             callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", formData)
+                .then(data => {
+                    if (data && Array.isArray(data)) {
+                        showInvalid(data, formElement);
+                    }
+                    var mailTo = $("#mail-to").val();
+                    $("#Mail").val(mailTo);
+                })
+                .catch(err => {
+                    showMessage("F:Có lỗi call api xảy ra!");
+                });
+        });
+
+        $("#reset-password").click(function () {
+            const $form = $(this).closest("form");
+            const formData = new FormData($form[0]);
+            const formElement = $form[0];
+
+            callApi("@Url.Action(Constants.ResetPassword, Constants.Account)", "POST", formData)
                 .then(data => {
                     if (data && Array.isArray(data)) {
                         showInvalid(data, formElement);
