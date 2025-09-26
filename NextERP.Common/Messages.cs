@@ -24,20 +24,17 @@
 
         #endregion
 
-        #region Meassages auth
+        #region Meassages account
 
         public const string AuthSuccess = "AuthSuccess";
+        public const string RegisterSuccess = "RegisterSuccess";
         public const string AuthFailed = "AuthFailed";
-        public const string UserNameNotExist = "UserName {0} is not exist.";
-        public const string UserNameExist = "UserName {0} is exist.";
-        public const string UserNameOrPasswordIncorrect = "UserName {0} or Password {1} is incorrect.";
-        public const string TokenKeyNotConfigured = "Token key is not configured properly in the application settings.";
-        public const string RoleNotExist = "Role Customer is not exist.";
-
-        #endregion
-
-        public const string FileNotFound = "FileNotFound";
-        public const string NotFoundSupplier = "NotFoundSupplier";
+        public const string RegisterFailed = "RegisterFailed";
+        public const string UserNameNotExist = "UserNameNotExist";
+        public const string UserNameExist = "UserNameExist";
+        public const string UserNameOrPasswordIncorrect = "UserNameOrPasswordIncorrect";
+        public const string TokenKeyNotConfigured = "TokenKeyNotConfigured";
+        public const string RoleNotExist = "RoleNotExist";
         public const string YourOTP = "YourOTP";
         public const string ResetPasswordFailed = "ResetPasswordFailed";
         public const string ResetPasswordSuccess = "ResetPasswordSuccess";
@@ -51,5 +48,10 @@
         public const string OTPExpired = "OTPExpired";
         public const string OTPNoAttemptsLeft = "OTPNoAttemptsLeft";
         public const string OTPIncorrect = "OTPIncorrect";
+
+        #endregion
+
+        public const string FileNotFound = "FileNotFound";
+        public const string NotFoundSupplier = "NotFoundSupplier";
     }
 }

@@ -84,7 +84,7 @@ namespace NextERP.BLL.Service
             var tokenKey = _config["Tokens:Key"];
             if (string.IsNullOrEmpty(tokenKey))
             {
-                throw new InvalidOperationException(Messages.TokenKeyNotConfigured);
+                return new APIErrorResult<string>(Messages.TokenKeyNotConfigured);
             }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -98,7 +98,10 @@ namespace NextERP.BLL.Service
                expires: expirationTime,
                signingCredentials: creds);
 
-            return new APISuccessResult<string>(Messages.AuthSuccess, new JwtSecurityTokenHandler().WriteToken(token));
+            if (token != null)
+                return new APISuccessResult<string>(Messages.AuthSuccess, new JwtSecurityTokenHandler().WriteToken(token));
+
+            return new APIErrorResult<string>(Messages.AuthSuccess);
         }
 
         /// <summary>
@@ -138,9 +141,9 @@ namespace NextERP.BLL.Service
             await _context.Users.AddAsync(user);
             var result = await _context.SaveChangesAsync();
             if (result > 0)
-                return new APISuccessResult<bool>();
+                return new APISuccessResult<bool>(Messages.RegisterSuccess, true);
 
-            return new APIErrorResult<bool>();
+            return new APIErrorResult<bool>(Messages.RegisterFailed);
         }
 
         public async Task<APIBaseResult<bool>> SendOTP(MailModel mail)

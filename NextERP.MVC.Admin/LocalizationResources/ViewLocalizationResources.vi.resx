@@ -1047,25 +1047,67 @@
   <data name="StepResetPassword" xml:space="preserve">
     <value>Bước 2: đặt lại mật khẩu</value>
   </data>
-  <data name="zstring204" xml:space="preserve">
-    <value />
+  <data name="UserNameExist" xml:space="preserve">
+    <value>F:Tên đăng nhập {0} đã tồn tại</value>
   </data>
   <data name="RequireDigit" xml:space="preserve">
-    <value>Mật khẩu phải chứa ít nhất một chữ số.</value>
+    <value>F:Mật khẩu phải chứa ít nhất một chữ số.</value>
   </data>
-  <data name="zstring210" xml:space="preserve">
+  <data name="RegisterSuccess" xml:space="preserve">
+    <value>S:Đăng ký thành công</value>
+  </data>
+  <data name="zstring230" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring220" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring240" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring215" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring235" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring225" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring245" xml:space="preserve">
     <value />
   </data>
   <data name="OTPNoAttemptsLeft" xml:space="preserve">
-    <value>Mã xác thực hết lượt nhập</value>
+    <value>F:Mã xác thực hết lượt nhập</value>
   </data>
-  <data name="zstring207" xml:space="preserve">
-    <value />
+  <data name="RoleNotExist" xml:space="preserve">
+    <value>F:Quyền không tồn tại</value>
   </data>
   <data name="RequireNonAlphanumeric" xml:space="preserve">
-    <value>Mật khẩu phải chứa ít nhất một ký tự đặc biệt.</value>
+    <value>F:Mật khẩu phải chứa ít nhất một ký tự đặc biệt.</value>
   </data>
-  <data name="zstring213" xml:space="preserve">
+  <data name="AuthFailed" xml:space="preserve">
+    <value>F:Đăng nhập thất bại</value>
+  </data>
+  <data name="zstring233" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring223" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring243" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring218" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring238" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring228" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring248" xml:space="preserve">
     <value />
   </data>
   <data name="BCC" xml:space="preserve">
@@ -1083,29 +1125,50 @@
   <data name="StepSendOTP" xml:space="preserve">
     <value>Bước 1: Gửi mã xác thực</value>
   </data>
-  <data name="zstring203" xml:space="preserve">
-    <value />
+  <data name="UserNameNotExist" xml:space="preserve">
+    <value>F:Tên đăng nhập {0} không tồn tại</value>
   </data>
   <data name="RequiredLength" xml:space="preserve">
-    <value>Mật khẩu phải có ít nhất {0} ký tự.</value>
+    <value>F:Mật khẩu phải có ít nhất {0} ký tự.</value>
   </data>
-  <data name="zstring209" xml:space="preserve">
-    <value />
+  <data name="ResetPasswordSuccess" xml:space="preserve">
+    <value>S:Đặt lại mật khẩu thành công</value>
   </data>
   <data name="OTPExpired" xml:space="preserve">
-    <value>Mã xác thực hết hạn</value>
+    <value>F:Mã xác thực hết hạn</value>
   </data>
-  <data name="zstring206" xml:space="preserve">
-    <value />
+  <data name="TokenKeyNotConfigured" xml:space="preserve">
+    <value>F:Khóa mã thông báo không được cấu hình đúng trong cài đặt ứng dụng.</value>
   </data>
   <data name="RequireUppercase" xml:space="preserve">
-    <value>Mật khẩu phải chứa ít nhất một chữ in hoa.</value>
+    <value>F:Mật khẩu phải chứa ít nhất một chữ in hoa.</value>
   </data>
-  <data name="zstring212" xml:space="preserve">
+  <data name="AuthSuccess" xml:space="preserve">
+    <value>S:Đăng nhập thành công</value>
+  </data>
+  <data name="zstring232" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring222" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring242" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring217" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring237" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring227" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring247" xml:space="preserve">
     <value />
   </data>
   <data name="SendMailFailed" xml:space="preserve">
-    <value>S:Gửi mail thành công</value>
+    <value>F:Gửi mail thất bại</value>
   </data>
   <data name="InvalidUsername" xml:space="preserve">
     <value>Tên đăng nhập không được bỏ trống</value>
@@ -1117,27 +1180,69 @@
     <value>Đăng ký</value>
   </data>
   <data name="OTPNotFound" xml:space="preserve">
-    <value>Mã xác thực không tồn tại</value>
+    <value>F:Mã xác thực không tồn tại</value>
   </data>
-  <data name="zstring205" xml:space="preserve">
-    <value />
+  <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
+    <value>F:Tên đăng nhập {0} hoặc mật khẩu {1} không khớp</value>
   </data>
   <data name="RequireLowercase" xml:space="preserve">
-    <value>Mật khẩu phải chứa ít nhất một chữ thường.</value>
+    <value>F:Mật khẩu phải chứa ít nhất một chữ thường.</value>
   </data>
-  <data name="zstring211" xml:space="preserve">
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>F:Đăng ký thất bại</value>
+  </data>
+  <data name="zstring231" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring221" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring241" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring216" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring236" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring226" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring246" xml:space="preserve">
     <value />
   </data>
   <data name="OTPIncorrect" xml:space="preserve">
-    <value>Mã xác thực không khớp</value>
+    <value>F:Mã xác thực không khớp</value>
   </data>
-  <data name="zstring208" xml:space="preserve">
-    <value />
+  <data name="ResetPasswordFailed" xml:space="preserve">
+    <value>F:Đặt lại mật khẩu thất bại</value>
   </data>
   <data name="RequiredUniqueChars" xml:space="preserve">
-    <value>Mật khẩu phải chứa ít nhất {0} ký tự duy nhất.</value>
+    <value>F:Mật khẩu phải chứa ít nhất {0} ký tự duy nhất.</value>
   </data>
   <data name="zstring214" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring234" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring224" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring244" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring219" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring239" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring229" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring249" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">

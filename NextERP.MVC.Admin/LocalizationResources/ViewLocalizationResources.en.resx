@@ -1036,7 +1036,7 @@
     <value>List template mail </value>
   </data>
   <data name="SendMailSuccess" xml:space="preserve">
-    <value>Send mail success</value>
+    <value>S:Send mail success</value>
   </data>
   <data name="TemplateNotificationList" xml:space="preserve">
     <value>List template notification</value>
@@ -1047,25 +1047,67 @@
   <data name="StepResetPassword" xml:space="preserve">
     <value>Step 2: reset password</value>
   </data>
-  <data name="zstring204" xml:space="preserve">
-    <value />
+  <data name="UserNameExist" xml:space="preserve">
+    <value>F:Username {0} is exist.</value>
   </data>
   <data name="RequireDigit" xml:space="preserve">
-    <value>Password must contain at least one digit.</value>
+    <value>F:Password must contain at least one digit.</value>
   </data>
-  <data name="zstring210" xml:space="preserve">
+  <data name="RegisterSuccess" xml:space="preserve">
+    <value>S:Register success</value>
+  </data>
+  <data name="zstring230" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring220" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring240" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring215" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring235" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring225" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring245" xml:space="preserve">
     <value />
   </data>
   <data name="OTPNoAttemptsLeft" xml:space="preserve">
-    <value>OTP no attempts left</value>
+    <value>F:OTP no attempts left</value>
   </data>
-  <data name="zstring207" xml:space="preserve">
-    <value />
+  <data name="RoleNotExist" xml:space="preserve">
+    <value>F:Role is not exist.</value>
   </data>
   <data name="RequireNonAlphanumeric" xml:space="preserve">
-    <value>Password must contain at least one special character.</value>
+    <value>F:Password must contain at least one special character.</value>
   </data>
-  <data name="zstring213" xml:space="preserve">
+  <data name="AuthFailed" xml:space="preserve">
+    <value>F:Login failed</value>
+  </data>
+  <data name="zstring233" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring223" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring243" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring218" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring238" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring228" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring248" xml:space="preserve">
     <value />
   </data>
   <data name="BCC" xml:space="preserve">
@@ -1083,29 +1125,50 @@
   <data name="StepSendOTP" xml:space="preserve">
     <value>Step 1: send OTP</value>
   </data>
-  <data name="zstring203" xml:space="preserve">
-    <value />
+  <data name="UserNameNotExist" xml:space="preserve">
+    <value>F:Username {0} is not exist.</value>
   </data>
   <data name="RequiredLength" xml:space="preserve">
-    <value>Password must be at least {0} characters.</value>
+    <value>F:Password must be at least {0} characters.</value>
   </data>
-  <data name="zstring209" xml:space="preserve">
-    <value />
+  <data name="ResetPasswordSuccess" xml:space="preserve">
+    <value>S:Reset password success</value>
   </data>
   <data name="OTPExpired" xml:space="preserve">
-    <value>OTP Expried</value>
+    <value>F:OTP Expried</value>
   </data>
-  <data name="zstring206" xml:space="preserve">
-    <value />
+  <data name="TokenKeyNotConfigured" xml:space="preserve">
+    <value>F:Token key is not configured properly in the application settings.</value>
   </data>
   <data name="RequireUppercase" xml:space="preserve">
-    <value>Password must contain at least one uppercase letter.</value>
+    <value>F:Password must contain at least one uppercase letter.</value>
   </data>
-  <data name="zstring212" xml:space="preserve">
+  <data name="AuthSuccess" xml:space="preserve">
+    <value>S:Login success</value>
+  </data>
+  <data name="zstring232" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring222" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring242" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring217" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring237" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring227" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring247" xml:space="preserve">
     <value />
   </data>
   <data name="SendMailFailed" xml:space="preserve">
-    <value>Send mail failed</value>
+    <value>F:Send mail failed</value>
   </data>
   <data name="InvalidUsername" xml:space="preserve">
     <value>Username is required.</value>
@@ -1117,27 +1180,69 @@
     <value>Register</value>
   </data>
   <data name="OTPNotFound" xml:space="preserve">
-    <value>OTP not found</value>
+    <value>F:OTP not found</value>
   </data>
-  <data name="zstring205" xml:space="preserve">
-    <value />
+  <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
+    <value>F:Username {0} or Password {1} is incorrect.</value>
   </data>
   <data name="RequireLowercase" xml:space="preserve">
-    <value>Password must contain at least one lowercase letter.</value>
+    <value>F:Password must contain at least one lowercase letter.</value>
   </data>
-  <data name="zstring211" xml:space="preserve">
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>F:Register failed</value>
+  </data>
+  <data name="zstring231" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring221" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring241" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring216" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring236" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring226" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring246" xml:space="preserve">
     <value />
   </data>
   <data name="OTPIncorrect" xml:space="preserve">
-    <value>OTP Incorrect</value>
+    <value>F:OTP Incorrect</value>
   </data>
-  <data name="zstring208" xml:space="preserve">
-    <value />
+  <data name="ResetPasswordFailed" xml:space="preserve">
+    <value>F:Reset password failed</value>
   </data>
   <data name="RequiredUniqueChars" xml:space="preserve">
-    <value>Password must contain at least {0} unique characters.</value>
+    <value>F:Password must contain at least {0} unique characters.</value>
   </data>
   <data name="zstring214" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring234" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring224" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring244" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring219" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring239" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring229" xml:space="preserve">
+    <value />
+  </data>
+  <data name="zstring249" xml:space="preserve">
     <value />
   </data>
   <data name="NotFoundSupplier" xml:space="preserve">
