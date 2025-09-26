@@ -22,11 +22,13 @@ namespace NextERP.BLL.Service
 
 		private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
 		private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
+		private readonly AccountService _accountService;
 
-		public UserService(NextErpContext context, ICurrentUserService currentUser)
+		public UserService(NextErpContext context, ICurrentUserService currentUser, AccountService accountService)
 		{
 			_context = context;
 			_currentUser = currentUser;
+			_accountService = accountService;
 		}
 
 		#endregion
@@ -38,8 +40,10 @@ namespace NextERP.BLL.Service
 			#region Check null request and create variable
 
 			var id = DataHelper.GetGuid(request.Id);
+			var employeeId = DataHelper.GetGuid(request.EmployeeId);
 			var groupRole = DataHelper.GetString(request.GroupRole);
-			var passwordHashed = PasswordHasher.HashPassword(request.Password);
+			var password = DataHelper.GetString(request.Password);
+			var passwordHashed = PasswordHasher.HashPassword(password);
 
 			#endregion
 
@@ -48,13 +52,27 @@ namespace NextERP.BLL.Service
 			if (listRole == null || listRole.Count() == 0)
 				return new APIErrorResult<bool>(Messages.RoleNotExist);
 
-			request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
+            var validationResult = _accountService.ValidatePassword(password);
+            if (validationResult.Any())
+            {
+                var error = string.Join(", ", validationResult.Select(e =>
+                    e.Description != null && e.Description.Length > 0
+                    ? $"{e.Code}|{string.Join("|", e.Description)}" : e.Code));
+
+                return new APIErrorResult<bool>(error);
+            }
+
+            request.PasswordHash = passwordHashed; // Mã hóa mật khẩu trước khi lưu
 			request.RoleIds = string.Join(";", listRole);
 
 			if (id == Guid.Empty)
 			{
 				var user = new User();
 				DataHelper.MapAudit(request, user, _currentUser.UserName);
+
+				var employee = await _context.Employees.FindAsync(employeeId);
+				user.PhoneNumber = employee?.PhoneNumber;
+				user.Mail = employee?.Email;
 
 				await _context.Users.AddAsync(user);
 
@@ -70,9 +88,13 @@ namespace NextERP.BLL.Service
 				if (user == null)
 					return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
-				DataHelper.MapAudit(request, user, _currentUser.UserName);
+                DataHelper.MapAudit(request, user, _currentUser.UserName);
 
-				var result = await _context.SaveChangesAsync();
+                var employee = await _context.Employees.FindAsync(employeeId);
+                user.PhoneNumber = employee?.PhoneNumber;
+                user.Mail = employee?.Email;
+
+                var result = await _context.SaveChangesAsync();
 				if (result > 0)
 					return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
 

@@ -158,8 +158,9 @@ namespace NextERP.BLL.Service
 
             var username = DataHelper.GetString(request.Username);
             var phoneNumber = DataHelper.GetString(request.PhoneNumber);
-            var password = DataHelper.GetString(request.Password);
             var mail = DataHelper.GetString(request.Mail);
+            var password = DataHelper.GetString(request.Password);
+            var passwordHashed = PasswordHasher.HashPassword(password);
 
             #endregion
 
@@ -179,7 +180,7 @@ namespace NextERP.BLL.Service
                 return new APIErrorResult<bool>(error);
             }
 
-            user.PasswordHash = PasswordHasher.HashPassword(password);
+            user.PasswordHash = passwordHashed;
 
             var result = await _context.SaveChangesAsync();
             if (result > 0)
@@ -188,7 +189,7 @@ namespace NextERP.BLL.Service
             return new APIErrorResult<bool>(Messages.ResetPasswordFailed);
         }
 
-        private List<IdentityError> ValidatePassword(string password)
+        public List<IdentityError> ValidatePassword(string password)
         {
             var errors = new List<IdentityError>();
 
