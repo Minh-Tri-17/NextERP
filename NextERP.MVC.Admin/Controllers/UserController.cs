@@ -109,8 +109,33 @@ namespace NextERP.MVC.Admin.Controllers
                 return GetModelStateErrors();
 
             var result = await _userAPIService.CreateOrEdit(request);
+
             if (!DataHelper.IsNotNull(result))
-                return Json(_localizer.GetLocalizedString(result.Message));
+            {
+                if (result.Message.Contains("|"))
+                {
+                    var errors = result.Message.ToString().Split(',')
+                       .Select(errorItem =>
+                       {
+                           var parts = errorItem.Split('|');
+                           var code = parts[0].Trim();
+                           var args = parts.Skip(1).ToArray();
+
+                           return new
+                           {
+                               Field = UserModel.AttributeNames.Password,
+                               Message = $"<b>&#10031; [{UserModel.AttributeNames.Password}]</b> {_localizer.GetLocalizedString(code, args)}"
+                           };
+                       })
+                      .ToList();
+
+                    return Json(errors);
+                }
+                else
+                {
+                    return Json(_localizer.GetLocalizedString(result.Message));
+                }
+            }
 
             return Json(_localizer.GetLocalizedString(result.Message));
         }

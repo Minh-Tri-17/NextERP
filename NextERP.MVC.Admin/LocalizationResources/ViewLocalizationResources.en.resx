@@ -1051,7 +1051,7 @@
     <value>F:Username {0} is exist.</value>
   </data>
   <data name="RequireDigit" xml:space="preserve">
-    <value>F:Password must contain at least one digit.</value>
+    <value>Password must contain at least one digit.</value>
   </data>
   <data name="RegisterSuccess" xml:space="preserve">
     <value>S:Register success</value>
@@ -1084,7 +1084,7 @@
     <value>F:Role is not exist.</value>
   </data>
   <data name="RequireNonAlphanumeric" xml:space="preserve">
-    <value>F:Password must contain at least one special character.</value>
+    <value>Password must contain at least one special character.</value>
   </data>
   <data name="AuthFailed" xml:space="preserve">
     <value>F:Login failed</value>
@@ -1129,7 +1129,7 @@
     <value>F:Username {0} is not exist.</value>
   </data>
   <data name="RequiredLength" xml:space="preserve">
-    <value>F:Password must be at least {0} characters.</value>
+    <value>Password must be at least {0} characters.</value>
   </data>
   <data name="ResetPasswordSuccess" xml:space="preserve">
     <value>S:Reset password success</value>
@@ -1141,7 +1141,7 @@
     <value>F:Token key is not configured properly in the application settings.</value>
   </data>
   <data name="RequireUppercase" xml:space="preserve">
-    <value>F:Password must contain at least one uppercase letter.</value>
+    <value>Password must contain at least one uppercase letter.</value>
   </data>
   <data name="AuthSuccess" xml:space="preserve">
     <value>S:Login success</value>
@@ -1186,7 +1186,7 @@
     <value>F:Username {0} or Password {1} is incorrect.</value>
   </data>
   <data name="RequireLowercase" xml:space="preserve">
-    <value>F:Password must contain at least one lowercase letter.</value>
+    <value>Password must contain at least one lowercase letter.</value>
   </data>
   <data name="RegisterFailed" xml:space="preserve">
     <value>F:Register failed</value>
@@ -1219,7 +1219,7 @@
     <value>F:Reset password failed</value>
   </data>
   <data name="RequiredUniqueChars" xml:space="preserve">
-    <value>F:Password must contain at least {0} unique characters.</value>
+    <value>Password must contain at least {0} unique characters.</value>
   </data>
   <data name="zstring214" xml:space="preserve">
     <value />
