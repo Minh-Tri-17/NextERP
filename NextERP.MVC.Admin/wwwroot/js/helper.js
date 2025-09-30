@@ -182,6 +182,7 @@ async function callApi(url, method = "GET", data = null, id) {
     const response = await fetch(url, options);
 
     if (!response.ok) {
+        $(".loader").css("display", "none");
         throw new Error(`HTTP error ${response.status}`);
     }
 
