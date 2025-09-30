@@ -21,6 +21,7 @@
         public const string SendMailFailed = "SendMailFailed";
         public const string GetListResultSuccess = "GetListResultSuccess";
         public const string GetResultSuccess = "GetResultSuccess";
+        public const string ErrorCallAPI = "ErrorCallAPI";
 
         #endregion
 

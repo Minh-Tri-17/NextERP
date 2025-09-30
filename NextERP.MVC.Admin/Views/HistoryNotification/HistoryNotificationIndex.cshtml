@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.HistoryNotificationModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.HistoryNotification;
@@ -133,7 +134,7 @@
                 $("#@TableName.HistoryNotification #@HistoryNotificationModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -153,7 +154,7 @@
                 loadHistoryNotifications();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -173,7 +174,7 @@
                 loadHistoryNotifications();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -212,7 +213,7 @@
                 $historyNotificationId = "";
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

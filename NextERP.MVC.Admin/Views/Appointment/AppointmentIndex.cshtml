@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.AppointmentModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.Appointment;
@@ -90,7 +91,7 @@
                             const options = { hour12: false };
                             return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
                         };
-                        
+
                         $("#@TableName.Appointment #@AppointmentModel.AttributeNames.AppointmentDate").val(formatDateTime(start));
                         $("#@TableName.Appointment #@AppointmentModel.AttributeNames.AppointmentDate").val(formatDateTime(end));
 
@@ -151,7 +152,7 @@
                 $(".loader").css("display", "none");
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

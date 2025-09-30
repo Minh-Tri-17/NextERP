@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.AttendanceModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -99,7 +100,7 @@
                 }
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 </script>

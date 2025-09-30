@@ -1221,8 +1221,8 @@
   <data name="RequiredUniqueChars" xml:space="preserve">
     <value>Mật khẩu phải chứa ít nhất {0} ký tự duy nhất.</value>
   </data>
-  <data name="zstring214" xml:space="preserve">
-    <value />
+  <data name="ErrorCallAPI" xml:space="preserve">
+    <value>F:Có lỗi call api xảy ra!</value>
   </data>
   <data name="zstring234" xml:space="preserve">
     <value />

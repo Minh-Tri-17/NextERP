@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.UserModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.User;
@@ -148,7 +149,7 @@
                 $("#@TableName.User #@EmployeeModel.AttributeNames.EmployeeId").val(data.employeeId).trigger("change");
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -168,7 +169,7 @@
                 loadUsers();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -188,7 +189,7 @@
                 loadUsers();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -227,7 +228,7 @@
                 $userId = "";
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.HistoryMailModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -35,7 +36,7 @@
                             <div class="invalid-feedback" id="invalid-@HistoryMailModel.AttributeNames.HistoryMailContent" localize-content></div>
                         </div>
                     </div>
-                
+
                     <div class="mb-2">
                         <label for="@HistoryMailModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@HistoryMailModel.AttributeNames.Note</label>
                         <div class="col-md-12">
@@ -75,7 +76,7 @@
                 }
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 </script>

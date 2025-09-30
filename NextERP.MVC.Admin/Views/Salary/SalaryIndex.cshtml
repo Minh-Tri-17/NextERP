@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.SalaryModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.Salary;
@@ -144,7 +145,7 @@
                 $("#@TableName.Salary #@SalaryModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -164,7 +165,7 @@
                 loadSalarys();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -184,7 +185,7 @@
                 loadSalarys();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -223,7 +224,7 @@
                 $salaryId = "";
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

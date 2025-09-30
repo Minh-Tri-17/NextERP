@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.TrainingSessionModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.TrainingSession;
@@ -152,7 +153,7 @@
                 $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -172,7 +173,7 @@
                 loadTrainingSessions();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -192,7 +193,7 @@
                 loadTrainingSessions();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -231,7 +232,7 @@
                 $trainingSessionId = "";
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

@@ -158,11 +158,12 @@
                     if (data && Array.isArray(data)) {
                         showInvalid(data, formElement);
                     }
+
                     var mailTo = $("#mail-to").val();
                     $("#Mail").val(mailTo);
                 })
                 .catch(err => {
-                    showMessage("F:Có lỗi call api xảy ra!");
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
                 });
         });
 
@@ -178,7 +179,7 @@
                     }
                 })
                 .catch(err => {
-                    showMessage("F:Có lỗi call api xảy ra!");
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
                 });
         });
     </script>

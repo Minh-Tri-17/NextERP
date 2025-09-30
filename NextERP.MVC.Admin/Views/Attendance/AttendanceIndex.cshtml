@@ -1,12 +1,13 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.AttendanceModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.Attendance;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
-    {
+{
         (TableName.Attendance + "List", "", true),
     };
 }
@@ -141,7 +142,7 @@
                 $("#@TableName.Attendance #@AttendanceModel.AttributeNames.Note").val(data.note);
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -161,7 +162,7 @@
                 loadAttendances();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -181,7 +182,7 @@
                 loadAttendances();
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     });
 
@@ -220,7 +221,7 @@
                 $attendanceId = "";
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

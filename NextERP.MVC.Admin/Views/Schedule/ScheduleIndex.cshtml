@@ -1,6 +1,7 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.ScheduleModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.Schedule;
@@ -72,7 +73,7 @@
                             const options = { hour12: false };
                             return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
                         };
-                        
+
                         $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(start));
                         $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(end));
 
@@ -111,7 +112,7 @@
                 $(".loader").css("display", "none");
             })
             .catch(err => {
-                showMessage("F:Có lỗi call api xảy ra!");
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
     }
 </script>

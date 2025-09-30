@@ -1,12 +1,13 @@
 ﻿@using NextERP.ModelBase
 @using NextERP.Util
 @model NextERP.ModelBase.InvoiceModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
     ViewData["Title"] = TableName.Invoice;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
-    {
+{
         (TableName.Invoice + "List", "", true),
     };
 }

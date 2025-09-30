@@ -1221,8 +1221,8 @@
   <data name="RequiredUniqueChars" xml:space="preserve">
     <value>Password must contain at least {0} unique characters.</value>
   </data>
-  <data name="zstring214" xml:space="preserve">
-    <value />
+  <data name="ErrorCallAPI" xml:space="preserve">
+    <value>F:An API call error occurred!</value>
   </data>
   <data name="zstring234" xml:space="preserve">
     <value />
