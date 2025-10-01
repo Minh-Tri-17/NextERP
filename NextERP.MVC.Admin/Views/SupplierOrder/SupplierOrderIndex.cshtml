@@ -33,6 +33,9 @@
                 <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
+                <button type="button" class="btn btn-secondary" id="signature-button" data-bs-toggle="modal" data-bs-target="#signature-modal" localize-content>
+                    Signature
+                </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
                 </button>
@@ -127,6 +130,34 @@
     <section class="modal-wrapper">
         @await Component.InvokeAsync(Constants.Import, TableName.SupplierOrder)
         @await Component.InvokeAsync(Constants.Export, TableName.SupplierOrder)
+
+        <div class="modal fade" id="signature-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <form class="needs-validation" novalidate>
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>Signature</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-2">
+                                <label for="Signature" class="col-form-label col-md-6" localize-content>Signature</label>
+                                <div class="col-md-12">
+                                    <div style="border: 1px solid #ccc; height: 250px;">
+                                        <canvas id="signature-pad" style="width: 100%; height: 100%; display: block;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
+                            <button type="button" class="btn btn-secondary" id="clear-signature-button" localize-content>Clear</button>
+                            <button type="button" class="btn btn-primary" id="save-signature-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 
@@ -259,5 +290,62 @@
             .catch(err => {
                 showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
+    }
+
+    const signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
+
+    $("#clear-signature-button").on("click", function () {
+        signaturePad.clear(); // Xóa toàn bộ chữ ký
+    });
+
+    $("#save-signature-button").on("click", function () {
+        // Xuất ra Base64 (PNG)
+        const dataUrl = signaturePad.toDataURL("image/png");
+        
+        //$.ajax({
+        //    url: "/Signature/SaveSignature",
+        //    type: "POST",
+        //    contentType: "application/json",
+        //    data: JSON.stringify({ imageBase64: dataUrl }),
+        //    success: function (data) {
+        //        alert("Lưu thành công: " + data.filePath);
+        //    },
+        //    error: function () {
+        //        alert("Lưu thất bại");
+        //    }
+        //});
+    });
+
+    function signaturePadInit(modalSelector, canvasSelector) {
+        // Tạo đối tượng SignaturePad
+        const canvas = document.querySelector(canvasSelector);
+        const signaturePad = new SignaturePad(canvas, {
+            backgroundColor: "rgb(255,255,255)",
+            penColor: "rgb(0, 0, 0)"
+        });
+
+        // Hàm resizeCanvas -> đảm bảo chữ ký luôn rõ nét
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * ratio;
+            canvas.height = rect.height * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+
+        // Resize khi modal mở ra
+        $(modalSelector).on("shown.bs.modal", function () {
+            resizeCanvas();
+        });
+
+        // Resize khi thay đổi kích thước màn hình
+        $(window).on("resize", function () {
+            resizeCanvas();
+        });
+
+        resizeCanvas();
+
+        return signaturePad;
     }
 </script>
