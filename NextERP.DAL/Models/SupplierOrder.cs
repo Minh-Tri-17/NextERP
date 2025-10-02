@@ -28,6 +28,9 @@ public partial class SupplierOrder
     [Column(TypeName = "decimal(18, 0)")]
     public decimal? TotalAmount { get; set; }
 
+    [StringLength(500)]
+    public string? ImagePath { get; set; }
+
     [StringLength(50)]
     public string? OrderStatus { get; set; }
 

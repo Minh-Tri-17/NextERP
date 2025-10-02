@@ -19,7 +19,8 @@
                 </th>
                 <th>#</th>
                 @{
-                    var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete };
+                    var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize,
+                        Constants.Id, Constants.Ids, Constants.IsDelete, Constants.ImageFile, Constants.ImagePath };
 
                     var listField = UtilHtmlHelper.GetOrderedProperties<SupplierOrderModel>(excludedFields);
 
@@ -49,7 +50,20 @@
                         @foreach (var field in listField)
                         {
                             var value = field.GetValue(row);
-                            <td localize-content>@(value ?? "")</td>
+
+                            if (field.Name == Constants.Base64Image)
+                            {
+                                <td>
+                                    @if (row.Base64Image != null)
+                                    {
+                                        <img src="@row.Base64Image" alt="Image" width="50" height="50">
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td localize-content>@(value ?? "")</td>
+                            }
                         }
                     </tr>
 

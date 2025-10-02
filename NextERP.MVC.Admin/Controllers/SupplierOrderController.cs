@@ -4,6 +4,10 @@ using NextERP.ModelBase;
 using NextERP.MVC.Admin.Services.Interfaces;
 using NextERP.MVC.Admin.Services.Services;
 using NextERP.Util;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.PixelFormats;
+using System.Text.RegularExpressions;
 
 namespace NextERP.MVC.Admin.Controllers
 {
@@ -109,6 +113,24 @@ namespace NextERP.MVC.Admin.Controllers
             var result = await _supplierOrderAPIService.GetPaging(filter);
             if (!DataHelper.ListIsNotNull(result))
                 return Json(_localizer.GetLocalizedString(result.Message));
+
+            foreach (var supplierOrder in result!.Result!.Items!)
+            {
+                var imageBytes = await _supplierOrderAPIService.GetImageBytes(DataHelper.GetGuid(supplierOrder.Id), DataHelper.GetString(supplierOrder.ImagePath));
+
+                if (imageBytes.Length > 0)
+                {
+                    using (var image = Image.Load<Rgba32>(imageBytes, out IImageFormat format))
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            image.Save(ms, format); // Lưu lại đúng định dạng gốc
+                            string base64Image = $"data:{format.DefaultMimeType};base64,{Convert.ToBase64String(ms.ToArray())}";
+                            supplierOrder.Base64Image = base64Image;
+                        }
+                    }
+                }
+            }
 
             return PartialView(ScreenName.SupplierOrder.SupplierOrderList, result);
         }
@@ -241,6 +263,37 @@ namespace NextERP.MVC.Admin.Controllers
         #endregion
 
         #region Custom Operations
+
+        [HttpPost]
+        public async Task<ActionResult> Signature(SupplierOrderModel request)
+        {
+            if (!ModelState.IsValid)
+                return GetModelStateErrors();
+
+            if (!string.IsNullOrWhiteSpace(request.Base64Image))
+            {
+                // Cắt bỏ prefix "data:image/png;base64,"
+                var base64Data = Regex.Replace(request.Base64Image, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+
+                var bytes = Convert.FromBase64String(base64Data);
+
+                // KHÔNG dùng using, để stream còn tồn tại khi gọi OpenReadStream
+                var stream = new MemoryStream(bytes);
+                IFormFile file = new FormFile(stream, 0, bytes.Length, "ImageFile", "signature.png")
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = "image/png"
+                };
+
+                request.ImageFile = file;
+            }
+
+            var result = await _supplierOrderAPIService.Signature(request);
+            if (!DataHelper.IsNotNull(result))
+                return Json(_localizer.GetLocalizedString(result.Message));
+
+            return Json(_localizer.GetLocalizedString(result.Message));
+        }
 
         #endregion
     }

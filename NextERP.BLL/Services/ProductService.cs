@@ -103,15 +103,12 @@ namespace NextERP.BLL.Service
                         .ToListAsync();
 
                     // Xóa các ảnh củ trong database và trong folder theo $productId
-                    if (listImageFileOld.Count > 0)
+                    foreach (var imgaeFileOld in listImageFileOld)
                     {
-                        foreach (var imgaeFileOld in listImageFileOld)
+                        if (imgaeFileOld != null && imgaeFileOld.ImagePath != null)
                         {
-                            if (imgaeFileOld != null && imgaeFileOld.ImagePath != null)
-                            {
-                                await _storageService.DeleteFileAsync(imgaeFileOld.ImagePath, Constants.ProductsFolderPath);
-                                _context.ProductImages.Remove(imgaeFileOld);
-                            }
+                            await _storageService.DeleteFileAsync(imgaeFileOld.ImagePath, Constants.ProductsFolderPath);
+                            _context.ProductImages.Remove(imgaeFileOld);
                         }
                     }
 

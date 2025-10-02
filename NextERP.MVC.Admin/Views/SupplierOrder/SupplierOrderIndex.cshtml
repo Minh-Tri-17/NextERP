@@ -33,7 +33,7 @@
                 <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
                     Export
                 </button>
-                <button type="button" class="btn btn-secondary" id="signature-button" data-bs-toggle="modal" data-bs-target="#signature-modal" localize-content>
+                <button type="button" class="btn btn-secondary disabled" id="signature-button" data-bs-toggle="modal" data-bs-target="#signature-modal" localize-content>
                     Signature
                 </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
@@ -185,6 +185,13 @@
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
         checkLengthCheckbox($length, false, false, true, true, "@TableName.SupplierOrder-checkbox");
+
+        if ($length == 1) {
+            $("#signature-button").removeClass('disabled');
+        }
+        else {
+            $("#signature-button").addClass('disabled');
+        }
     });
 
     $("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
@@ -283,9 +290,6 @@
             .then(data => {
                 // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
                 checkLengthCheckbox(0, true, true, true, true, "@TableName.SupplierOrderDetail-checkbox");
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $supplierOrderId = "";
             })
             .catch(err => {
                 showMessage("@Localizer[Messages.ErrorCallAPI]");
@@ -299,8 +303,26 @@
     });
 
     $("#save-signature-button").on("click", function () {
+        const $form = $(this).closest("form");
+        const formData = new FormData($form[0]);
+        const formElement = $form[0];
+        formData.set("@Constants.Id", $supplierOrderId);
+
         // Xuất ra Base64 (PNG)
         const dataUrl = signaturePad.toDataURL("image/png");
+
+        // Thêm base64 image vào form data để map vào model
+        formData.append("Base64Image", dataUrl);
+
+        callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", formData)
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    showInvalid(data, formElement);
+                }
+            })
+            .catch(err => {
+                showMessage("@Localizer[Messages.ErrorCallAPI]");
+            });
     });
 
     function signaturePadInit(modalSelector, canvasSelector) {

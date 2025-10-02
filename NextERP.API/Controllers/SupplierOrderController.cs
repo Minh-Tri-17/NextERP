@@ -107,6 +107,39 @@ namespace NextERP.API.Controllers
 
         #region Custom Operations
 
+        [HttpGet($"{nameof(GetImageSupplierOrder)}/{{supplierOrderId}}/Image/{{imagePath}}")]
+        public async Task<IActionResult> GetImageSupplierOrder(Guid supplierOrderId, string imagePath)
+        {
+            byte[] imageData = await _supplierOrderService.GetImageBytes(supplierOrderId, imagePath);
+
+            return File(imageData, "image/jpg");
+        }
+
+        [HttpPost(nameof(SignatureSupplierOrder))]
+        public async Task<ActionResult<SupplierOrder>> SignatureSupplierOrder()
+        {
+            var supplierOrder = new SupplierOrderModel();
+
+            var json = Request.Form["Json"];
+            if (!string.IsNullOrEmpty(json))
+                supplierOrder = JsonConvert.DeserializeObject<SupplierOrderModel>(json!);
+
+            if (supplierOrder != null)
+            {
+                var files = Request.Form.Files.FirstOrDefault(s => s.Name == Constants.Files);
+                supplierOrder.ImageFile = files;
+            }
+
+            if (supplierOrder == null)
+                return BadRequest();
+
+            var result = await _supplierOrderService.Signature(supplierOrder);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         #endregion
     }
 }

@@ -239,7 +239,7 @@
         public const string UrlGetProducts = "/api/Product/GetProducts";
         public const string UrlImportProduct = "/api/Product/ImportProduct";
         public const string UrlExportProduct = "/api/Product/ExportProduct";
-        public const string UrlGetImageProduct = "/api/Product/GetImage/{0}/Image/{1}";
+        public const string UrlGetImageProduct = "/api/Product/GetImageProduct/{0}/Image/{1}";
 
         #endregion
 
@@ -347,6 +347,8 @@
         public const string UrlGetSupplierOrders = "/api/SupplierOrder/GetSupplierOrders";
         public const string UrlImportSupplierOrder = "/api/SupplierOrder/ImportSupplierOrder";
         public const string UrlExportSupplierOrder = "/api/SupplierOrder/ExportSupplierOrder";
+        public const string UrlGetImageSupplierOrder = "/api/SupplierOrder/GetImageSupplierOrder/{0}/Image/{1}";
+        public const string UrlSignatureSupplierOrder = "/api/SupplierOrder/SignatureSupplierOrder";
 
         #endregion
 
@@ -393,7 +395,6 @@
         public const string IdMain = "IdMain";
         public const string Code = "Code";
         public const string AllowPaging = "AllowPaging";
-        public const string ImageFiles = "ImageFiles";
         public const string PageIndex = "PageIndex";
         public const string PageSize = "PageSize";
         public const string IsDelete = "IsDelete";
@@ -410,6 +411,10 @@
         public const string DateTo = "DateTo";
         public const string KeyWord = "KeyWord";
         public const string Base64Images = "Base64Images";
+        public const string Base64Image = "Base64Image";
+        public const string ImagePath = "ImagePath";
+        public const string ImageFiles = "ImageFiles";
+        public const string ImageFile = "ImageFile";
         public const string CreateOrEdit = "CreateOrEdit";
         public const string GetList = "GetList";
         public const string Delete = "Delete";
@@ -429,5 +434,7 @@
         public const string Account = "Account";
         public const string ResetPassword = "ResetPassword";
         public const string ProductsFolderPath = "Products";
+        public const string SignatureFolderPath = "Signature";
+        public const string Signature = "Signature";
     }
 }

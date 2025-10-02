@@ -60,6 +60,16 @@ namespace NextERP.MVC.Admin.Services.Services
 
         #region Custom Operations
 
+        public async Task<byte[]> GetImageBytes(Guid? supplierOrderId, string imagePath)
+        {
+            return await GetAsync<byte[]>(string.Format(Constants.UrlGetImageSupplierOrder, supplierOrderId, imagePath));
+        }
+
+        public async Task<APIBaseResult<bool>> Signature(SupplierOrderModel request)
+        {
+            return await PostAsync<APIBaseResult<bool>, SupplierOrderModel>(Constants.UrlSignatureSupplierOrder, request);
+        }
+
         #endregion
     }
 }

@@ -142,8 +142,8 @@ namespace NextERP.API.Controllers
 
         #region Custom Operations
 
-        [HttpGet($"{nameof(GetImage)}/{{productId}}/Image/{{imagePath}}")]
-        public async Task<IActionResult> GetImage(Guid productId, string imagePath)
+        [HttpGet($"{nameof(GetImageProduct)}/{{productId}}/Image/{{imagePath}}")]
+        public async Task<IActionResult> GetImageProduct(Guid productId, string imagePath)
         {
             byte[] imageData = await _productService.GetImageBytes(productId, imagePath);
 

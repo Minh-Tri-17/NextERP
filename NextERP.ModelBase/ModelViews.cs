@@ -525,6 +525,9 @@ namespace NextERP.ModelBase
             public const string Note = "Note";
         }
 
+        [DataType(DataType.Upload)]
+        public IFormFile? ImageFile { get; set; }
+        public string Base64Image { get; set; } = string.Empty;
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
         public string Ids { get; set; } = string.Empty;

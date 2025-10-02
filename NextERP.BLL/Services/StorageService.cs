@@ -41,7 +41,7 @@ namespace NextERP.BLL.Service
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            var filePath = Path.Combine(_userContentFolder, fileName);
+            var filePath = Path.Combine(folderPath, fileName);
             using var output = new FileStream(filePath, FileMode.Create);
             await mediaBinaryStream.CopyToAsync(output);
         }

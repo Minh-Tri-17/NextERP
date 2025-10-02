@@ -12,5 +12,7 @@ namespace NextERP.MVC.Admin.Services.Interfaces
         public Task<APIBaseResult<PagingResult<SupplierOrderModel>>> GetPaging(FilterModel filter);
         public Task<APIBaseResult<bool>> Import(IFormFile fileImport);
         public Task<APIBaseResult<byte[]>> Export(FilterModel filter);
+        public Task<byte[]> GetImageBytes(Guid? supplierOrderId, string imagePath);
+        public Task<APIBaseResult<bool>> Signature(SupplierOrderModel request);
     }
 }
