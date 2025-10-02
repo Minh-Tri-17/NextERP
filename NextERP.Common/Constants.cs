@@ -2,50 +2,6 @@
 {
     public class Constants
     {
-        public const string Context = "Context";
-        public const string Token = "Token";
-        public const string APIAddress = "APIAddress";
-        public const string Id = "Id";
-        public const string Ids = "Ids";
-        public const string IdMain = "IdMain";
-        public const string Code = "Code";
-        public const string AllowPaging = "AllowPaging";
-        public const string ImageFiles = "ImageFiles";
-        public const string PageIndex = "PageIndex";
-        public const string PageSize = "PageSize";
-        public const string IsDelete = "IsDelete";
-        public const string UserCreate = "UserCreate";
-        public const string UserUpdate = "UserUpdate";
-        public const string DateCreate = "DateCreate";
-        public const string DateUpdate = "DateUpdate";
-        public const string ExcelFiles = "ExcelFiles";
-        public const string Files = "Files";
-        public const string Filter = "Filter";
-        public const string SearchBox = "SearchBox";
-        public const string Pagination = "Pagination";
-        public const string DateFrom = "DateFrom";
-        public const string DateTo = "DateTo";
-        public const string KeyWord = "KeyWord";
-        public const string Base64Images = "Base64Images";
-        public const string CreateOrEdit = "CreateOrEdit";
-        public const string GetList = "GetList";
-        public const string Delete = "Delete";
-        public const string Import = "Import";
-        public const string Export = "Export";
-        public const string SendMail = "SendMail";
-        public const string SendOTP = "SendOTP";
-        public const string DeletePermanently = "DeletePermanently";
-        public const string Dashboard = "Dashboard";
-        public const string GetChartColumn = "GetChartColumn";
-        public const string GetChartRadar = "GetChartRadar";
-        public const string GetChartDonut = "GetChartDonut";
-        public const string GetChartLine = "GetChartLine";
-        public const string GetChartFunnel = "GetChartFunnel";
-        public const string GetChartSlope = "GetChartSlope";
-        public const string Login = "Login";
-        public const string Account = "Account";
-        public const string ResetPassword = "ResetPassword";
-
         #region Format
 
         public const string FileName = "{0}_{1}.xlsx";
@@ -428,5 +384,50 @@
         #endregion
 
         #endregion
+
+        public const string Context = "Context";
+        public const string Token = "Token";
+        public const string APIAddress = "APIAddress";
+        public const string Id = "Id";
+        public const string Ids = "Ids";
+        public const string IdMain = "IdMain";
+        public const string Code = "Code";
+        public const string AllowPaging = "AllowPaging";
+        public const string ImageFiles = "ImageFiles";
+        public const string PageIndex = "PageIndex";
+        public const string PageSize = "PageSize";
+        public const string IsDelete = "IsDelete";
+        public const string UserCreate = "UserCreate";
+        public const string UserUpdate = "UserUpdate";
+        public const string DateCreate = "DateCreate";
+        public const string DateUpdate = "DateUpdate";
+        public const string ExcelFiles = "ExcelFiles";
+        public const string Files = "Files";
+        public const string Filter = "Filter";
+        public const string SearchBox = "SearchBox";
+        public const string Pagination = "Pagination";
+        public const string DateFrom = "DateFrom";
+        public const string DateTo = "DateTo";
+        public const string KeyWord = "KeyWord";
+        public const string Base64Images = "Base64Images";
+        public const string CreateOrEdit = "CreateOrEdit";
+        public const string GetList = "GetList";
+        public const string Delete = "Delete";
+        public const string Import = "Import";
+        public const string Export = "Export";
+        public const string SendMail = "SendMail";
+        public const string SendOTP = "SendOTP";
+        public const string DeletePermanently = "DeletePermanently";
+        public const string Dashboard = "Dashboard";
+        public const string GetChartColumn = "GetChartColumn";
+        public const string GetChartRadar = "GetChartRadar";
+        public const string GetChartDonut = "GetChartDonut";
+        public const string GetChartLine = "GetChartLine";
+        public const string GetChartFunnel = "GetChartFunnel";
+        public const string GetChartSlope = "GetChartSlope";
+        public const string Login = "Login";
+        public const string Account = "Account";
+        public const string ResetPassword = "ResetPassword";
+        public const string ProductsFolderPath = "Products";
     }
 }

@@ -301,19 +301,6 @@
     $("#save-signature-button").on("click", function () {
         // Xuất ra Base64 (PNG)
         const dataUrl = signaturePad.toDataURL("image/png");
-        
-        //$.ajax({
-        //    url: "/Signature/SaveSignature",
-        //    type: "POST",
-        //    contentType: "application/json",
-        //    data: JSON.stringify({ imageBase64: dataUrl }),
-        //    success: function (data) {
-        //        alert("Lưu thành công: " + data.filePath);
-        //    },
-        //    error: function () {
-        //        alert("Lưu thất bại");
-        //    }
-        //});
     });
 
     function signaturePadInit(modalSelector, canvasSelector) {
