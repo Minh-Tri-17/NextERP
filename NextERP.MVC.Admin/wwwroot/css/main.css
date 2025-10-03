@@ -22,6 +22,26 @@ body {
   overflow: hidden;
   position: relative;
   height: 100vh;
+  background-color: #f8f5f2;
+  color: #6a6a6a;
+}
+body .sidebar-menu-item a span,
+body .breadcrumb-item {
+  color: #6a6a6a;
+}
+body .breadcrumb-item::before {
+  color: #6a6a6a !important;
+}
+body.dark-mode {
+  background-color: #2f2f2f;
+  color: #b0a695;
+}
+body.dark-mode .sidebar-menu-item a span,
+body.dark-mode .breadcrumb-item {
+  color: #b0a695;
+}
+body.dark-mode .breadcrumb-item::before {
+  color: #b0a695 !important;
 }
 
 a {
@@ -208,7 +228,6 @@ p {
 .layout-wrapper {
   position: relative;
   display: flex;
-  background-color: #f8f5f2;
 }
 
 .sidebar {
@@ -216,7 +235,6 @@ p {
   height: 100%;
   border-right: 2px solid #c7c8cc;
   z-index: 1040;
-  background-color: #f8f5f2;
 }
 .sidebar .sidebar-header {
   display: flex;
@@ -295,23 +313,39 @@ p {
 }
 .sidebar .sidebar-menu .sidebar-menu-item:hover > a,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item:hover > a {
-  color: #e3e1d9 !important;
   background-color: #585858;
+}
+.sidebar .sidebar-menu .sidebar-menu-item:hover > a span,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item:hover > a span {
+  color: #e3e1d9 !important;
 }
 .sidebar .sidebar-menu .sidebar-menu-item:hover > a span i,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item:hover > a span i {
   color: #585858;
   background-color: #e1dbcc;
 }
+.sidebar .sidebar-menu .sidebar-menu-item:hover > a .fa-plus, .sidebar .sidebar-menu .sidebar-menu-item:hover > a .fa-minus,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item:hover > a .fa-plus,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item:hover > a .fa-minus {
+  color: #e3e1d9 !important;
+}
 .sidebar .sidebar-menu .sidebar-menu-item.active > a,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item.active > a {
-  color: #e3e1d9 !important;
   background-color: #585858;
+}
+.sidebar .sidebar-menu .sidebar-menu-item.active > a span,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item.active > a span {
+  color: #e3e1d9 !important;
 }
 .sidebar .sidebar-menu .sidebar-menu-item.active > a span i,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item.active > a span i {
   color: #585858;
   background-color: #e1dbcc;
+}
+.sidebar .sidebar-menu .sidebar-menu-item.active > a .fa-plus, .sidebar .sidebar-menu .sidebar-menu-item.active > a .fa-minus,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item.active > a .fa-plus,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item.active > a .fa-minus {
+  color: #e3e1d9 !important;
 }
 .sidebar .sidebar-menu .sidebar-menu-item .submenu,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu {
@@ -324,8 +358,11 @@ p {
 }
 .sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item:hover > a,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item:hover > a {
-  color: #585858 !important;
   background-color: #e1dbcc;
+}
+.sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item:hover > a span,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item:hover > a span {
+  color: #585858 !important;
 }
 .sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item:hover > a span i,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item:hover > a span i {
@@ -334,8 +371,11 @@ p {
 }
 .sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item.active > a,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item.active > a {
-  color: #585858 !important;
   background-color: #e1dbcc;
+}
+.sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item.active > a span,
+.sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item.active > a span {
+  color: #585858 !important;
 }
 .sidebar .sidebar-menu .sidebar-menu-item .submenu .sidebar-menu-item.active > a span i,
 .sidebar .sidebar-menu-offcanvas .sidebar-menu-item .submenu .sidebar-menu-item.active > a span i {
@@ -358,7 +398,6 @@ p {
   position: fixed;
   width: calc(100% - 250px);
   z-index: 1040;
-  background-color: #f8f5f2;
 }
 .layout-content .header .header-logo {
   padding: 0.5rem;
@@ -621,10 +660,10 @@ p {
   box-shadow: 0 4px 12px rgba(119, 107, 93, 0.3);
   transform: translateY(-5px);
 }
-.layout-content .header .header-right .dark-mode input {
+.layout-content .header .header-right .toggle-mode input {
   display: none;
 }
-.layout-content .header .header-right .dark-mode .slider {
+.layout-content .header .header-right .toggle-mode .slider {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -635,7 +674,7 @@ p {
   position: relative;
   cursor: pointer;
 }
-.layout-content .header .header-right .dark-mode .slider .circle {
+.layout-content .header .header-right .toggle-mode .slider .circle {
   top: -7.5px;
   left: 0;
   width: 30px;
@@ -660,7 +699,7 @@ p {
   justify-content: center;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
-.layout-content .header .header-right .dark-mode .slider .circle::before {
+.layout-content .header .header-right .toggle-mode .slider .circle::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -670,12 +709,12 @@ p {
   transition: all 500ms;
   opacity: 0;
 }
-.layout-content .header .header-right .dark-mode input:checked + .slider .circle {
+.layout-content .header .header-right .toggle-mode input:checked + .slider .circle {
   left: calc(100% - 30px);
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTQuMiAyLjVsLS43IDEuOC0xLjguNyAxLjguNy43IDEuOC42LTEuOEw2LjcgNWwtMS45LS43LS42LTEuOHptMTUgOC4zYTYuNyA2LjcgMCAxMS02LjYtNi42IDUuOCA1LjggMCAwMDYuNiA2LjZ6IiAvPgo8L3N2Zz4=");
   background-color: rgb(100, 120, 200);
 }
-.layout-content .header .header-right .dark-mode input:active + .slider .circle::before {
+.layout-content .header .header-right .toggle-mode input:active + .slider .circle::before {
   transition: 0s;
   opacity: 1;
   width: 0;

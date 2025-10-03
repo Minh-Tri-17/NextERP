@@ -4,7 +4,6 @@
 .layout-wrapper {
     position: relative;
     display: flex;
-    background-color: #f8f5f2;
 }
 
 .sidebar {
@@ -12,7 +11,6 @@
     height: $h-100;
     border-right: 2px solid $border-color;
     z-index: $z-index-2;
-    background-color: #f8f5f2;
 
     .sidebar-header {
         @include flex-center();
@@ -83,26 +81,36 @@
             }
 
             &:hover > a {
-                color: $text-light !important;
                 background-color: $background-dark;
 
                 span {
+                    color: $text-light !important;
+
                     i {
                         color: $text-dark;
                         background-color: $background-light;
                     }
                 }
+
+                .fa-plus, .fa-minus {
+                    color: $text-light !important;
+                }
             }
 
-            &.active > a { // Sửa
-                color: $text-light !important;
+            &.active > a {
                 background-color: $background-dark;
 
                 span {
+                    color: $text-light !important;
+
                     i {
                         color: $text-dark;
                         background-color: $background-light;
                     }
+                }
+
+                .fa-plus, .fa-minus {
+                    color: $text-light !important;
                 }
             }
 
@@ -114,10 +122,11 @@
                     margin: $mr-2 0 $mr-2 $mr-2;
 
                     &:hover > a {
-                        color: $text-dark !important;
                         background-color: $background-light;
 
                         span {
+                            color: $text-dark !important;
+
                             i {
                                 color: $text-secondary;
                                 background-color: $background-mid;
@@ -125,11 +134,12 @@
                         }
                     }
 
-                    &.active > a { // Sửa
-                        color: $text-dark !important;
+                    &.active > a {
                         background-color: $background-light;
 
                         span {
+                            color: $text-dark !important;
+
                             i {
                                 color: $text-secondary;
                                 background-color: $background-mid;
@@ -155,7 +165,6 @@
         position: fixed;
         width: calc($w-100 - 250px);
         z-index: $z-index-2;
-        background-color: #f8f5f2;
 
         .header-logo {
             padding: $pd-2;
@@ -461,7 +470,7 @@
                 }
             }
 
-            .dark-mode {
+            .toggle-mode {
                 input {
                     display: none;
                 }

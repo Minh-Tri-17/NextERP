@@ -29,6 +29,31 @@ body {
     overflow: hidden;
     position: relative;
     height: 100vh;
+    background-color: $light-mode-bg;
+    color: $light-mode-text;
+
+    .sidebar-menu-item a span,
+    .breadcrumb-item {
+        color: $light-mode-text;
+    }
+
+    .breadcrumb-item::before {
+        color: $light-mode-text !important;
+    }
+
+    &.dark-mode {
+        background-color: $dark-mode-bg;
+        color: $dark-mode-text;
+
+        .sidebar-menu-item a span,
+        .breadcrumb-item {
+            color: $dark-mode-text;
+        }
+
+        .breadcrumb-item::before {
+            color: $dark-mode-text !important;
+        }
+    }
 }
 
 a {

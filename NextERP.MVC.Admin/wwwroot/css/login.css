@@ -22,6 +22,26 @@ body {
   overflow: hidden;
   position: relative;
   height: 100vh;
+  background-color: #f8f5f2;
+  color: #6a6a6a;
+}
+body .sidebar-menu-item a span,
+body .breadcrumb-item {
+  color: #6a6a6a;
+}
+body .breadcrumb-item::before {
+  color: #6a6a6a !important;
+}
+body.dark-mode {
+  background-color: #2f2f2f;
+  color: #b0a695;
+}
+body.dark-mode .sidebar-menu-item a span,
+body.dark-mode .breadcrumb-item {
+  color: #b0a695;
+}
+body.dark-mode .breadcrumb-item::before {
+  color: #b0a695 !important;
 }
 
 a {
