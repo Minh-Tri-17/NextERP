@@ -56,7 +56,7 @@
                                 <td>
                                     @if (row.Base64Image != null)
                                     {
-                                        <img src="@row.Base64Image" alt="Image" width="50" height="50">
+                                        <img src="@row.Base64Image" alt="Image" width="50" height="50" data-bs-toggle="modal" data-bs-target="#view-signature-modal">
                                     }
                                 </td>
                             }
@@ -104,5 +104,12 @@
         // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
         const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
         checkLengthCheckbox($length, true, true, true, true, "@TableName.SupplierOrder-checkbox");
+    });
+
+    $("table img[data-bs-toggle='modal']").click(function () {
+        var src = $(this).attr("src"); // lấy src của ảnh click
+
+        // Gán src vào ảnh trong modal
+        $("#view-signature-modal img").attr("src", src).css({ "width": "100%", "height": "auto" });
     });
 </script>
