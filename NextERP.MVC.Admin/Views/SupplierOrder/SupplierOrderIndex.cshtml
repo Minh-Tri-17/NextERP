@@ -332,8 +332,8 @@
         const formElement = $form[0];
         formData.set("@Constants.Id", $supplierOrderId);
 
-        // Xuất ra Base64 (PNG)
-        const dataUrl = signaturePad.toDataURL("image/png");
+        // Xuất ra Base64 (JPG)
+        const dataUrl = signaturePad.toDataURL("image/jpg");
 
         // Thêm base64 image vào form data để map vào model
         formData.append("@Constants.Base64Image", dataUrl);
