@@ -208,15 +208,15 @@ namespace NextERP.BLL.Service
             if (supplierOrder == null)
                 return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
+            if (!string.IsNullOrWhiteSpace(supplierOrder.ImagePath))
+            {
+                await _storageService.DeleteFileAsync(supplierOrder.ImagePath, Constants.SignatureFolderPath);
+            }
+
             DataHelper.MapAudit(request, supplierOrder, _currentUser.UserName);
 
             if (request.ImageFile != null)
             {
-                if (!string.IsNullOrWhiteSpace(supplierOrder.ImagePath))
-                {
-                    await _storageService.DeleteFileAsync(supplierOrder.ImagePath, Constants.SignatureFolderPath);
-                }
-
                 supplierOrder.ImagePath = await SaveFile(request.ImageFile);
             }
 

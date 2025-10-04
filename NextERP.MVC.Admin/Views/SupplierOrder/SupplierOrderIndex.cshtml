@@ -322,11 +322,11 @@
 
     const signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
 
-    $("#clear-signature-button").on("click", function () {
-        signaturePad.clear(); // Xóa toàn bộ chữ ký
+    $("#clear-signature-button").click(function () {
+        signaturePad.clear(); 
     });
 
-    $("#save-signature-button").on("click", function () {
+    $("#save-signature-button").click(function () {
         const $form = $(this).closest("form");
         const formData = new FormData($form[0]);
         const formElement = $form[0];
@@ -340,6 +340,8 @@
 
         callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", formData)
             .then(data => {
+                loadSupplierOrders();
+
                 if (data && Array.isArray(data)) {
                     showInvalid(data, formElement);
                 }

@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Images\" />
+    <Folder Include="Images\Signature\" />
   </ItemGroup>
 
 </Project>
