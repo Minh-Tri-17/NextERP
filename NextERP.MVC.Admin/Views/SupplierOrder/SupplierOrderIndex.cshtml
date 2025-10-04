@@ -336,7 +336,7 @@
         const dataUrl = signaturePad.toDataURL("image/png");
 
         // Thêm base64 image vào form data để map vào model
-        formData.append("Base64Image", dataUrl);
+        formData.append("@Constants.Base64Image", dataUrl);
 
         callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", formData)
             .then(data => {
