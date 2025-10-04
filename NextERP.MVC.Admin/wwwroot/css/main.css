@@ -871,15 +871,15 @@ thead.sticky-active {
   font-size: 1.25rem;
   margin-right: 0.5rem;
 }
-.main .main-wrapper .main-container .filter-panel .filter-inputs {
+.main .main-wrapper .main-container .filter-panel #filter-inputs {
   overflow-x: hidden;
   margin-top: 0.5rem;
 }
-.main .main-wrapper .main-container .filter-panel .filter-inputs::-webkit-scrollbar {
+.main .main-wrapper .main-container .filter-panel #filter-inputs::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
-.main .main-wrapper .main-container .filter-panel .filter-inputs::-webkit-scrollbar-thumb {
+.main .main-wrapper .main-container .filter-panel #filter-inputs::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #776b5d;
 }
