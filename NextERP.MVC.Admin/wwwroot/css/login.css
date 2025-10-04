@@ -25,6 +25,10 @@ body {
   background-color: #f8f5f2;
   color: #6a6a6a;
 }
+body .header,
+body .sidebar {
+  background-color: #f8f5f2;
+}
 body .sidebar-menu-item a span,
 body .breadcrumb-item {
   color: #6a6a6a;
@@ -35,6 +39,10 @@ body .breadcrumb-item::before {
 body.dark-mode {
   background-color: #2f2f2f;
   color: #b0a695;
+}
+body.dark-mode .header,
+body.dark-mode .sidebar {
+  background-color: #2f2f2f;
 }
 body.dark-mode .sidebar-menu-item a span,
 body.dark-mode .breadcrumb-item {

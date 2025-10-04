@@ -32,6 +32,11 @@ body {
     background-color: $light-mode-bg;
     color: $light-mode-text;
 
+    .header,
+    .sidebar {
+        background-color: $light-mode-bg;
+    }
+
     .sidebar-menu-item a span,
     .breadcrumb-item {
         color: $light-mode-text;
@@ -44,6 +49,11 @@ body {
     &.dark-mode {
         background-color: $dark-mode-bg;
         color: $dark-mode-text;
+
+        .header,
+        .sidebar {
+            background-color: $dark-mode-bg;
+        }
 
         .sidebar-menu-item a span,
         .breadcrumb-item {
