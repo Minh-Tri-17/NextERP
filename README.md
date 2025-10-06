@@ -68,7 +68,7 @@ In your **MVC project** `appsettings.json`, configure API access and authenticat
 "APIAddress": "https://localhost:20258",
 "Tokens": {
   "Key": "a8D#4x!2@Lpq9$Km*E3Z5^N7&wHT0vC+oYjRUI6MsdgBX1!fzQ",
-  "Issuer": "https://www.facebook.com/minhtri8552/"
+  "Issuer": "your contact"
 }
 ```
 
