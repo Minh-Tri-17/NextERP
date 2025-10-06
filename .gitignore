@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/NextERP.MVC.Admin/appsettings.Development.json
+/NextERP.MVC.Admin/appsettings.Production.json
+/NextERP.API/appsettings.Development.json
+/NextERP.API/appsettings.Production.json
