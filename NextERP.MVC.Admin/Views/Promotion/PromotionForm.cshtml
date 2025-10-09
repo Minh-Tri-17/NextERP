@@ -4,109 +4,123 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <form class="needs-validation" id="@TableName.Promotion" novalidate>
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input id="@PromotionModel.AttributeNames.PromotionId" type="hidden" asp-for="Id" />
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<form class="needs-validation" id="@TableName.Promotion" novalidate>
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="@PromotionModel.AttributeNames.PromotionId" type="hidden" asp-for="Id" />
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.PromotionCode" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.PromotionCode</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="PromotionCode" disabled />
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.PromotionCode" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.PromotionCode</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="PromotionCode" disabled />
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.PromotionName" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.PromotionName</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="PromotionName" />
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.PromotionName" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.PromotionName" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.PromotionName</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="PromotionName" />
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.PromotionName" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.StartDate" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.StartDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="StartDate" />
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.StartDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.StartDate" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.StartDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="StartDate" />
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.StartDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.EndDate" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.EndDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="EndDate" />
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.EndDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.EndDate" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.EndDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="EndDate" />
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.EndDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.DiscountPercentage" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.DiscountPercentage</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="number" asp-for="DiscountPercentage" />
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.DiscountPercentage" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.DiscountPercentage" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.DiscountPercentage</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" asp-for="DiscountPercentage" />
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.DiscountPercentage" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.OperatingStatus</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.OperatingStatus" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.OperatingStatus</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="OperatingStatus">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.OperatingStatus" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@PromotionModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.Note</label>
-                        <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.Note" localize-content></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
+					<div class="mb-2">
+						<label for="@PromotionModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@PromotionModel.AttributeNames.Note</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
+							<div class="invalid-feedback" id="invalid-@PromotionModel.AttributeNames.Note" localize-content></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+					</button>
+					<button type="button" class="button-outline btn save-button" id="only-save-button">
+						@{
+							var saveIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.Save, iconHtml = saveIcon })
+					</button>
+					<button type="button" class="button btn save-button" data-bs-dismiss="modal">
+						@{
+							var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SaveAndClose, iconHtml = saveAndCloseIcon })
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-    $(".save-button").click(function () {
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-        const formElement = $form[0];
-        let id = formData.get("@Constants.Id");
+	$(".save-button").click(function () {
+		const $form = $(this).closest("form");
+		const formData = new FormData($form[0]);
+		const formElement = $form[0];
+		let id = formData.get("@Constants.Id");
 
-        // Nếu không có ID (tạo mới), set Guid.Empty
-        if (!id || id === "") {
-            formData.set("@Constants.Id", "@Guid.Empty");
-        }
+		// Nếu không có ID (tạo mới), set Guid.Empty
+		if (!id || id === "") {
+			formData.set("@Constants.Id", "@Guid.Empty");
+		}
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)", "POST", formData)
-            .then(data => {
-                loadPromotions();
+		callApi("@Url.Action(Constants.CreateOrEdit, TableName.Promotion)", "POST", formData)
+			.then(data => {
+				loadPromotions();
 
-                if (data && Array.isArray(data)) {
-                    showInvalid(data, formElement);
-                }
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+				if (data && Array.isArray(data)) {
+					showInvalid(data, formElement);
+				}
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	});
 </script>

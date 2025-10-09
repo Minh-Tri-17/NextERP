@@ -3,89 +3,97 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="send-mail-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <form class="needs-validation" novalidate>
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>SendMail</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-2">
-                        <label for="To" class="col-form-label col-md-6" localize-content>To</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" name="To" />
-                            <div class="invalid-feedback" id="invalid-To" localize-content></div>
-                        </div>
-                    </div>
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content">
+			<form class="needs-validation" novalidate>
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>SendMail</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-2">
+						<label for="To" class="col-form-label col-md-6" localize-content>To</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="To" />
+							<div class="invalid-feedback" id="invalid-To" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="CC" class="col-form-label col-md-6" localize-content>CC</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" name="CC" />
-                            <div class="invalid-feedback" id="invalid-CC" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="CC" class="col-form-label col-md-6" localize-content>CC</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="CC" />
+							<div class="invalid-feedback" id="invalid-CC" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="BCC" class="col-form-label col-md-6" localize-content>BCC</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" name="BCC" />
-                            <div class="invalid-feedback" id="invalid-BCC" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="BCC" class="col-form-label col-md-6" localize-content>BCC</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="BCC" />
+							<div class="invalid-feedback" id="invalid-BCC" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="Subject" class="col-form-label col-md-6" localize-content>Subject</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" name="Subject" />
-                            <div class="invalid-feedback" id="invalid-Subject" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="Subject" class="col-form-label col-md-6" localize-content>Subject</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="Subject" />
+							<div class="invalid-feedback" id="invalid-Subject" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="Body" class="col-form-label col-md-6" localize-content>Body</label>
-                        <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" id="Body" name="Body"></textarea>
-                            <div class="invalid-feedback" id="invalid-Body" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="Body" class="col-form-label col-md-6" localize-content>Body</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" id="Body" name="Body"></textarea>
+							<div class="invalid-feedback" id="invalid-Body" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="Attachments" class="col-form-label col-md-6" localize-content>Attachments</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="file" name="Attachments" multiple />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-primary" id="send-button" data-bs-dismiss="modal" localize-content>SendMail</button>
-                </div>
-            </form>
-        </div>
-    </div>
+					<div class="mb-2">
+						<label for="Attachments" class="col-form-label col-md-6" localize-content>Attachments</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="file" name="Attachments" multiple />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+					</button>
+					<button type="button" class="button btn save-button" id="send-button" data-bs-dismiss="modal">
+						@{
+							var sendMailIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><line x1=""22"" y1=""2"" x2=""11"" y2=""13""></line><polygon points=""22 2 15 22 11 13 2 9 22 2""></polygon></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SendMail, iconHtml = sendMailIcon })
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-    //! CKEditor yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
-    $(function () {
-        ClassicEditor.create(document.querySelector('#Body'));
-    });
+	//! CKEditor yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
+	$(function () {
+		ClassicEditor.create(document.querySelector('#Body'));
+	});
 
-    $("#send-button").click(function () {
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-        const formElement = $form[0];
+	$("#send-button").click(function () {
+		const $form = $(this).closest("form");
+		const formData = new FormData($form[0]);
+		const formElement = $form[0];
 
-        callApi("@Url.Action(Constants.SendMail, Model)", "POST", formData)
-            .then(data => {
-                if (data && Array.isArray(data)) {
-                    showInvalid(data, formElement);
-                }
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+		callApi("@Url.Action(Constants.SendMail, Model)", "POST", formData)
+			.then(data => {
+				if (data && Array.isArray(data)) {
+					showInvalid(data, formElement);
+				}
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	});
 </script>

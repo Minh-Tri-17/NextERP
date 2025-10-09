@@ -436,5 +436,8 @@
         public const string ProductsFolderPath = "Products";
         public const string SignatureFolderPath = "Signature";
         public const string Signature = "Signature";
+        public const string Save = "Save";
+        public const string Button = "Button";
+        public const string SaveAndClose = "SaveAndClose";
     }
 }

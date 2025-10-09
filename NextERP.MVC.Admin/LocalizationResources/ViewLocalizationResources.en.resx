@@ -186,10 +186,10 @@
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
-  <data name="Service" xml:space="preserve">
+  <data name="SpaService" xml:space="preserve">
     <value>Service</value>
   </data>
-  <data name="ServiceCategory" xml:space="preserve">
+  <data name="SpaServiceCategory" xml:space="preserve">
     <value>Service category</value>
   </data>
   <data name="Customer" xml:space="preserve">
@@ -261,7 +261,7 @@
   <data name="ProductList" xml:space="preserve">
     <value>List product</value>
   </data>
-  <data name="Save&amp;Close" xml:space="preserve">
+  <data name="SaveAndClose" xml:space="preserve">
     <value>Save &amp; close</value>
   </data>
   <data name="ProductCategoryList" xml:space="preserve">

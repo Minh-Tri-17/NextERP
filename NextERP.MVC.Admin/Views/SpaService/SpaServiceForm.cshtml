@@ -4,126 +4,140 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <form class="needs-validation" id="@TableName.SpaService" novalidate>
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input id="@SpaServiceModel.AttributeNames.SpaServiceId" type="hidden" asp-for="Id" />
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<form class="needs-validation" id="@TableName.SpaService" novalidate>
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="@SpaServiceModel.AttributeNames.SpaServiceId" type="hidden" asp-for="Id" />
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.SpaServiceCode" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceCode</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceCode" disabled />
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.SpaServiceCode" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceCode</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="SpaServiceCode" disabled />
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.SpaServiceName" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceName</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="SpaServiceName" />
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceName" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.SpaServiceName" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceName</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="SpaServiceName" />
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceName" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.Price" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Price</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="number" asp-for="Price" />
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Price" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.Price" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Price</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" asp-for="Price" />
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Price" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.Duration" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Duration</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="number" asp-for="Duration" />
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Duration" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.Duration" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Duration</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" asp-for="Duration" />
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Duration" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <div class="col-md-12">
-                            <input class="form-check-input" type="checkbox" asp-for="IsPromotional">
-                            <label class="form-check-label" for="@SpaServiceModel.AttributeNames.IsPromotional" localize-content>IsPromotional</label>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<div class="col-md-12">
+							<input class="form-check-input" type="checkbox" asp-for="IsPromotional">
+							<label class="form-check-label" for="@SpaServiceModel.AttributeNames.IsPromotional" localize-content>IsPromotional</label>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.SpaServiceLevel" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceLevel</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="SpaServiceLevel">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.SpaServiceLevel)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceLevel" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.SpaServiceLevel" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.SpaServiceLevel</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="SpaServiceLevel">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.SpaServiceLevel)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.SpaServiceLevel" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.OperatingStatus</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="OperatingStatus">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.OperatingStatus" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.OperatingStatus</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="OperatingStatus">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.OperatingStatus" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@SpaServiceModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Note</label>
-                        <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Note" localize-content></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
+					<div class="mb-2">
+						<label for="@SpaServiceModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@SpaServiceModel.AttributeNames.Note</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
+							<div class="invalid-feedback" id="invalid-@SpaServiceModel.AttributeNames.Note" localize-content></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+					</button>
+					<button type="button" class="button-outline btn save-button" id="only-save-button">
+						@{
+							var saveIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.Save, iconHtml = saveIcon })
+					</button>
+					<button type="button" class="button btn save-button" data-bs-dismiss="modal">
+						@{
+							var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SaveAndClose, iconHtml = saveAndCloseIcon })
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-    $(".save-button").click(function () {
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-        const formElement = $form[0];
-        let id = formData.get("@Constants.Id");
+	$(".save-button").click(function () {
+		const $form = $(this).closest("form");
+		const formData = new FormData($form[0]);
+		const formElement = $form[0];
+		let id = formData.get("@Constants.Id");
 
-        // Nếu không có ID (tạo mới), set Guid.Empty
-        if (!id || id === "") {
-            formData.set("@Constants.Id", "@Guid.Empty");
-        }
+		// Nếu không có ID (tạo mới), set Guid.Empty
+		if (!id || id === "") {
+			formData.set("@Constants.Id", "@Guid.Empty");
+		}
 
-        $form.find("input[type=checkbox]").each(function () {
-            formData.set(this.name, $(this).is(":checked"));
-        });
+		$form.find("input[type=checkbox]").each(function () {
+			formData.set(this.name, $(this).is(":checked"));
+		});
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaService)", "POST", formData)
-            .then(data => {
-                loadSpaServices();
+		callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaService)", "POST", formData)
+			.then(data => {
+				loadSpaServices();
 
-                if (data && Array.isArray(data)) {
-                    showInvalid(data, formElement);
-                }
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+				if (data && Array.isArray(data)) {
+					showInvalid(data, formElement);
+				}
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	});
 </script>

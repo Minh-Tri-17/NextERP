@@ -692,4 +692,11 @@ namespace NextERP.ModelBase
         public int StatisticsCustomer { get; set; } = 0;
         public List<string> StatisticsService { get; set; } = new List<string>();
     }
+
+    public class ButtonComponentViewModel
+    {
+        public string NameButton { get; set; } = string.Empty;
+
+        public string IconHtml { get; set; } = string.Empty;
+    }
 }

@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    font: $fw-3 $fs-5/ $lh-4 $font-sans-serif;
+    font: $fw-3 $fs-5/ $lh-4 $font-monospace;
     overflow: hidden;
     position: relative;
     height: 100vh;
@@ -98,6 +98,16 @@ h5,
 h6,
 label {
     color: $text-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $text-primary;
+    font-weight: $fw-5
 }
 
 p {

@@ -20,24 +20,24 @@
     <section class="filter-panel card">
         <form method="post">
             <div class="filter-actions">
-                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
-                    Create
+                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-plus"></i> <span localize-content>Create</span>
                 </button>
-                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal" localize-content>
-                    Edit
+                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-pen"></i> <span localize-content>Edit</span>
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
-                <button type="button" class="btn btn-danger disabled" id="delete-button" localize-content>
-                    Delete
+                <button type="button" class="btn btn-danger disabled" id="delete-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>Delete</span>
                 </button>
-                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button" localize-content>
-                    DeletePermanently
+                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>DeletePermanently</span>
                 </button>
-                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal" localize-content>
-                    Import
+                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <i class="fa-solid fa-file-import"></i> <span localize-content>Import</span>
                 </button>
-                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal" localize-content>
-                    Export
+                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+                    <i class="fa-solid fa-file-export"></i> <span localize-content>Export</span>
                 </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
@@ -81,8 +81,12 @@
                 </div>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-info" id="search-button" localize-content>Search</button>
-                    <button type="button" class="btn btn-secondary" id="clear-button" localize-content>Clear</button>
+                    <button type="button" class="btn btn-info" id="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>Search</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="clear-button">
+                        <i class="fa-solid fa-broom"></i> <span localize-content>Clear</span>
+                    </button>
                 </div>
             </form>
         </div>
@@ -129,7 +133,7 @@
     });
 
     $("#create-button").click(function () {
-        $("#only-save-button").css("display", "block");
+        $("#only-save-button").css("display", "flex");
     });
 
     $("#edit-button").click(function () {

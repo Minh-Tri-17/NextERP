@@ -4,132 +4,146 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <form class="needs-validation" id="@TableName.LeaveRequest" novalidate>
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input id="@LeaveRequestModel.AttributeNames.LeaveRequestId" type="hidden" asp-for="Id" />
-                    <input id="@LeaveRequestModel.AttributeNames.ApprovedByIds" type="hidden" asp-for="ApprovedByIds" />
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<form class="needs-validation" id="@TableName.LeaveRequest" novalidate>
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="@LeaveRequestModel.AttributeNames.LeaveRequestId" type="hidden" asp-for="Id" />
+					<input id="@LeaveRequestModel.AttributeNames.ApprovedByIds" type="hidden" asp-for="ApprovedByIds" />
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveRequestCode</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="LeaveRequestCode" disabled />
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveRequestCode</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="LeaveRequestCode" disabled />
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.RequestDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.RequestDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="RequestDate" />
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.RequestDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.RequestDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.RequestDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="RequestDate" />
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.RequestDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.LeaveStartDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveStartDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="LeaveStartDate" />
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveStartDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.LeaveStartDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveStartDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="LeaveStartDate" />
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveStartDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.LeaveEndDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveEndDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="LeaveEndDate" />
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveEndDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.LeaveEndDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveEndDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="LeaveEndDate" />
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveEndDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.TotalLeaveDays" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.TotalLeaveDays</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="number" asp-for="TotalLeaveDays" />
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.TotalLeaveDays" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.TotalLeaveDays" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.TotalLeaveDays</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" asp-for="TotalLeaveDays" />
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.TotalLeaveDays" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.LeaveDayType" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveDayType</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="LeaveDayType">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveDayType" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.LeaveDayType" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveDayType</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="LeaveDayType">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.LeaveDayType" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.ApprovalStatus" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalStatus</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="ApprovalStatus">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.ApprovalStatus" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.ApprovalStatus" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalStatus</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="ApprovalStatus">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.ApprovalStatus" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.ApprovalDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalDate</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="date" asp-for="ApprovalDate" />
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.ApprovalDate" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.ApprovalDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" asp-for="ApprovalDate" />
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.ApprovalDate" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@LeaveRequestModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.Note</label>
-                        <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.Note" localize-content></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
+					<div class="mb-2">
+						<label for="@LeaveRequestModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.Note</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
+							<div class="invalid-feedback" id="invalid-@LeaveRequestModel.AttributeNames.Note" localize-content></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+					</button>
+					<button type="button" class="button-outline btn save-button" id="only-save-button">
+						@{
+							var saveIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.Save, iconHtml = saveIcon })
+					</button>
+					<button type="button" class="button btn save-button" data-bs-dismiss="modal">
+						@{
+							var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SaveAndClose, iconHtml = saveAndCloseIcon })
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-    $(".save-button").click(function () {
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-        const formElement = $form[0];
-        let id = formData.get("@Constants.Id");
+	$(".save-button").click(function () {
+		const $form = $(this).closest("form");
+		const formData = new FormData($form[0]);
+		const formElement = $form[0];
+		let id = formData.get("@Constants.Id");
 
-        // Nếu không có ID (tạo mới), set Guid.Empty
-        if (!id || id === "") {
-            formData.set("@Constants.Id", "@Guid.Empty");
-        }
+		// Nếu không có ID (tạo mới), set Guid.Empty
+		if (!id || id === "") {
+			formData.set("@Constants.Id", "@Guid.Empty");
+		}
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)", "POST", formData)
-            .then(data => {
-                loadLeaveRequests();
+		callApi("@Url.Action(Constants.CreateOrEdit, TableName.LeaveRequest)", "POST", formData)
+			.then(data => {
+				loadLeaveRequests();
 
-                if (data && Array.isArray(data)) {
-                    showInvalid(data, formElement);
-                }
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+				if (data && Array.isArray(data)) {
+					showInvalid(data, formElement);
+				}
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	});
 </script>

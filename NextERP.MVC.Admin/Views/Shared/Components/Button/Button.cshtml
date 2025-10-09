@@ -1,0 +1,43 @@
+﻿@using NextERP.Util;
+@using NextERP.ModelBase
+@model ButtonComponentViewModel
+
+@{
+	var listButtonOutLine = new List<string>() { Constants.Save, Constants.SendOTP };
+}
+
+<span class="fold"></span>
+
+@if (listButtonOutLine.Contains(Model.NameButton))
+{
+	<div class="points-wrapper-outline">
+		@for (int i = 0; i < 15; i++)
+		{
+			<i class="point"></i>
+		}
+	</div>
+
+	<span class="inner-outline">
+		@* @if (Model == Constants.Save)
+        {
+            
+        } *@
+
+		@Html.Raw(Model.IconHtml)
+		<span localize-content>@Model.NameButton</span>
+	</span>
+}
+else
+{
+	<div class="points-wrapper">
+		@for (int i = 0; i < 15; i++)
+		{
+			<i class="point"></i>
+		}
+	</div>
+
+	<span class="inner">
+		@Html.Raw(Model.IconHtml)
+		<span localize-content>@Model.NameButton</span>
+	</span>
+}

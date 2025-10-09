@@ -4,112 +4,126 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <form class="needs-validation" id="@TableName.Role" novalidate>
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input id="@RoleModel.AttributeNames.RoleId" type="hidden" asp-for="Id" />
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<form class="needs-validation" id="@TableName.Role" novalidate>
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input id="@RoleModel.AttributeNames.RoleId" type="hidden" asp-for="Id" />
 
-                    <div class="mb-2">
-                        <label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleCode</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="RoleCode" disabled />
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleCode</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="RoleCode" disabled />
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@RoleModel.AttributeNames.RoleName" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleName</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-sm" type="text" asp-for="RoleName" />
-                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.RoleName" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@RoleModel.AttributeNames.RoleName" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleName</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" asp-for="RoleName" />
+							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.RoleName" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@RoleModel.AttributeNames.GroupRole" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.GroupRole</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="GroupRole">
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.GroupRole)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.GroupRole" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@RoleModel.AttributeNames.GroupRole" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.GroupRole</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="GroupRole">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.GroupRole)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.GroupRole" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@RoleModel.AttributeNames.Permissions" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Permissions</label>
-                        <div class="col-md-12">
-                            <select class="form-select form-select-sm" asp-for="Permissions" multiple>
-                                <option value=""></option>
-                                @foreach (var item in Enum.GetValues(typeof(Enums.Permissions)))
-                                {
-                                    <option value="@item" localize-content>@item</option>
-                                }
-                            </select>
-                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Permissions" localize-content></div>
-                        </div>
-                    </div>
+					<div class="mb-2">
+						<label for="@RoleModel.AttributeNames.Permissions" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Permissions</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="Permissions" multiple>
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.Permissions)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Permissions" localize-content></div>
+						</div>
+					</div>
 
-                    <div class="mb-2">
-                        <label for="@RoleModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Note</label>
-                        <div class="col-md-12">
-                            <textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
-                            <div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Note" localize-content></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" localize-content>Close</button>
-                    <button type="button" class="btn btn-outline-primary save-button" id="only-save-button" localize-content>Save</button>
-                    <button type="button" class="btn btn-primary save-button" data-bs-dismiss="modal" localize-content>Save&Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
+					<div class="mb-2">
+						<label for="@RoleModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Note</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
+							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Note" localize-content></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+					</button>
+					<button type="button" class="button-outline btn save-button" id="only-save-button">
+						@{
+							var saveIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.Save, iconHtml = saveIcon })
+					</button>
+					<button type="button" class="button btn save-button" data-bs-dismiss="modal">
+						@{
+							var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+						}
+
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SaveAndClose, iconHtml = saveAndCloseIcon })
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script>
-    $(".save-button").click(function () {
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-        const formElement = $form[0];
-        let id = formData.get("@Constants.Id");
+	$(".save-button").click(function () {
+		const $form = $(this).closest("form");
+		const formData = new FormData($form[0]);
+		const formElement = $form[0];
+		let id = formData.get("@Constants.Id");
 
-        // Nếu không có ID (tạo mới), set Guid.Empty
-        if (!id || id === "") {
-            formData.set("@Constants.Id", "@Guid.Empty");
-        }
-        // Xóa dữ liệu cũ nếu có
-        formData.delete("@RoleModel.AttributeNames.Permissions");
+		// Nếu không có ID (tạo mới), set Guid.Empty
+		if (!id || id === "") {
+			formData.set("@Constants.Id", "@Guid.Empty");
+		}
+		// Xóa dữ liệu cũ nếu có
+		formData.delete("@RoleModel.AttributeNames.Permissions");
 
-        // Lấy tất cả giá trị được chọn trong select[multiple]
-        const selectedPermissions = [];
-        $(`#@RoleModel.AttributeNames.Permissions option:selected`).each(function () {
-            selectedPermissions.push($(this).val());
-        });
+		// Lấy tất cả giá trị được chọn trong select[multiple]
+		const selectedPermissions = [];
+		$(`#@RoleModel.AttributeNames.Permissions option:selected`).each(function () {
+			selectedPermissions.push($(this).val());
+		});
 
-        // Ghép các giá trị lại bằng dấu chấm phẩy
-        const permissionsString = selectedPermissions.join(";");
-        // Ghi đè lại giá trị "Permissions" nếu đã có
-        formData.set("@RoleModel.AttributeNames.Permissions", permissionsString);
+		// Ghép các giá trị lại bằng dấu chấm phẩy
+		const permissionsString = selectedPermissions.join(";");
+		// Ghi đè lại giá trị "Permissions" nếu đã có
+		formData.set("@RoleModel.AttributeNames.Permissions", permissionsString);
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", formData)
-            .then(data => {
-                loadRoles();
+		callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", formData)
+			.then(data => {
+				loadRoles();
 
-                if (data && Array.isArray(data)) {
-                    showInvalid(data, formElement);
-                }
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+				if (data && Array.isArray(data)) {
+					showInvalid(data, formElement);
+				}
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	});
 </script>

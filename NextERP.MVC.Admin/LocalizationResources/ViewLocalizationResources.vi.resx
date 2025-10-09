@@ -186,10 +186,10 @@
   <data name="Department" xml:space="preserve">
     <value>Phòng ban</value>
   </data>
-  <data name="Service" xml:space="preserve">
+  <data name="SpaService" xml:space="preserve">
     <value>Dịch vụ</value>
   </data>
-  <data name="ServiceCategory" xml:space="preserve">
+  <data name="SpaServiceCategory" xml:space="preserve">
     <value>Danh mục dịch vụ</value>
   </data>
   <data name="Customer" xml:space="preserve">
@@ -261,8 +261,8 @@
   <data name="ProductList" xml:space="preserve">
     <value>Danh sách sản phẩm</value>
   </data>
-  <data name="Save&amp;Close" xml:space="preserve">
-    <value>Lưu và đóng</value>
+  <data name="SaveAndClose" xml:space="preserve">
+    <value>Lưu &amp; đóng</value>
   </data>
   <data name="ProductCategoryList" xml:space="preserve">
     <value>Danh sách danh mục sản phẩm</value>

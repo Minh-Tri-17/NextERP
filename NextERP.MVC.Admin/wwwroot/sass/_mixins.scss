@@ -68,6 +68,31 @@
     }
 }
 
+@keyframes floating-points {
+    0% {
+        transform: translateY(0);
+    }
+
+    85% {
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(-55px);
+        opacity: 0;
+    }
+}
+
+@keyframes dasharray {
+    from {
+        stroke-dasharray: 0 0 0 0;
+    }
+
+    to {
+        stroke-dasharray: 68 68 0 0;
+    }
+}
+
 @mixin transition($time, $ease, $properties...) {
     $transitions: ();
 
