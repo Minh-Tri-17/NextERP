@@ -20,7 +20,7 @@ This folder contains SQL scripts used for creating and initializing the **NextER
 
 ### 📂 Files
 
-* 📜 **script.sql** → Combined script for quick setup.
+* 📜 **DAL → SQL → script.sql** → Combined script for quick setup.
 
 ### ⚡ How to Use
 
