@@ -22,7 +22,7 @@
 		$"{ScreenName.Appointment.AppointmentIndex}";
 	//Model Payment
 	string ctrModulePayment = $"{TableName.Invoice},{TableName.InvoiceDetail}";
-	string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex}";
+	string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex},{ScreenName.InvoiceDetail.InvoiceDetailIndex}";
 	//Model Merchandise
 	string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder}," +
 		$"{TableName.Supplier}";
@@ -185,6 +185,11 @@
 						<li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
 							<a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice">
 								<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
+							</a>
+						</li>
+						<li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
+							<a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail">
+								<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
 							</a>
 						</li>
 					</ul>
@@ -397,6 +402,11 @@
 							<li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
 								<a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice">
 									<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
+								</a>
+							</li>
+							<li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
+								<a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail">
+									<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
 								</a>
 							</li>
 						</ul>

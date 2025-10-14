@@ -115,117 +115,118 @@
 
 <script>
     let $trainingSessionId;
+    let $searchForm;
 
     $(function () {
-        loadTrainingSessions();
+        // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+        'use strict';
+
+        $searchForm = $("#@TableName.TrainingSession-search-form");
+
+        loadTrainingSessions($searchForm);
+
+        $("#refresh-list").click(function(){
+            loadTrainingSessions($searchForm);
+        });
+
+        $("#is-delete").change(function () {
+            loadTrainingSessions($searchForm);
+        });
+
+        $(document).on("change", ".@TableName.TrainingSession-checkbox", function () {
+            // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+            $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val() : "";
+
+            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+            const $length = $(".@TableName.TrainingSession-checkbox:checked").length;
+            checkLengthCheckbox($length, true, true, true, true, "@TableName.TrainingSession-checkbox");
+        });
+
+        $("#create-button").click(function () {
+            $("#only-save-button").css("display", "flex");
+        });
+
+        $("#edit-button").click(function () {
+            $("#only-save-button").css("display", "none");
+
+            callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
+                .then(data => {
+                    // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionId").val(data.id);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionCode").val(data.trainingSessionCode);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionName").val(data.trainingSessionName);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Trainer").val(data.trainer);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Duration").val(data.duration);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingDate").val(formatDateToInput(data.trainingDate));
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Note").val(data.note);
+                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        });
+
+        $("#delete-button").click(function () {
+		    deleteTrainingSession("@Constants.Delete", $(this).closest("form"));
+	    });
+
+	    $("#delete-permanently-button").click(function () {
+		    deleteTrainingSession("@Constants.DeletePermanently", $(this).closest("form"));
+	    });
+
+        $("#search-button").click(function () {
+             loadTrainingSessions($searchForm);
+        });
+
+        $("#clear-button").click(function () {
+             $searchForm.get(0).reset();
+
+            loadTrainingSessions($searchForm);
+        });
     });
 
-    $("#refresh-list").click(function(){
-        loadTrainingSessions();
-    });
-
-    $("#is-delete").change(function () {
-        loadTrainingSessions();
-    })
-
-    $(document).on("change", ".@TableName.TrainingSession-checkbox", function () {
-        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val() : "";
-
-        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.TrainingSession-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.TrainingSession-checkbox");
-    });
-
-    $("#create-button").click(function () {
-        $("#only-save-button").css("display", "flex");
-    });
-
-    $("#edit-button").click(function () {
-        $("#only-save-button").css("display", "none");
-
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
-            .then(data => {
-                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionId").val(data.id);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionCode").val(data.trainingSessionCode);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionName").val(data.trainingSessionName);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Trainer").val(data.trainer);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Duration").val(data.duration);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingDate").val(formatDateToInput(data.trainingDate));
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Note").val(data.note);
-                $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
-
-    $("#delete-button").click(function () {
+    function deleteTrainingSession(actionName, $form) {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
             return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
         }).get().join(",");
 
-        $("#Ids").val($ids);
+        $form.find("#Ids").val($ids);
 
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
+        // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+        const baseUrl = "@Url.Action("", TableName.TrainingSession)";
 
-        callApi("@Url.Action(Constants.Delete, TableName.TrainingSession)", "POST", formData)
+        // Thay thế 'actionName' vào URL
+        const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
+
+        const $formData = new FormData($form[0]);
+
+        callApi(apiUrl, "POST", $formData)
             .then(data => {
-                loadTrainingSessions();
+                loadTrainingSessions($searchForm);
             })
             .catch(err => {
                 showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
-    });
+    }
 
-    $("#delete-permanently-button").click(function () {
-        // Lấy tất cả các Id của các checkbox đã chọn
-        const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
-        }).get().join(",");
-
-        $("#Ids").val($ids);
-
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-
-        callApi("@Url.Action(Constants.DeletePermanently, TableName.TrainingSession)", "POST", formData)
-            .then(data => {
-                loadTrainingSessions();
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
-
-    $("#search-button").click(function () {
-        loadTrainingSessions();
-    })
-
-    $("#clear-button").click(function () {
-        $("#@TableName.TrainingSession-search-form")[0].reset();
-
-        loadTrainingSessions();
-    })
-
-    function loadTrainingSessions(el, pageIndex) {
-        // Khỏi tạo filter và gán giá trị
-        const $isDelete = $("#is-delete").is(":checked");
+    function loadTrainingSessions($form, pageIndex) {
         $(".loader").css("display", "flex");
 
-        const $form = $(el).closest("form");
-        const formData = new FormData($form[0]);
-
-        // Xóa các key không cần thiết (__Invariant)
-        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+        const $formData = new FormData($form.get(0));
 
         const filter = new FormData();
-        cleanEntries.forEach(([key, value]) => filter.append(key, value));
         filter.append("@Constants.PageIndex", pageIndex);
+
+        const $isDelete = $("#is-delete").is(":checked");
         filter.append("@Constants.IsDelete", $isDelete);
+
+        // Xóa các key không cần thiết (__Invariant)
+        for (const [key, value] of $formData.entries()) {
+            if (key !== "__Invariant") {
+                filter.append(key, value);
+            }
+        }
 
         callApi("@Url.Action(Constants.GetList, TableName.TrainingSession)", "POST", filter, "#@TableName.TrainingSession-table")
             .then(data => {

@@ -62,7 +62,7 @@
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
 					</button>
-					<button type="button" class="button btn save-button" id="send-button" data-bs-dismiss="modal">
+					<button type="button" class="button btn" id="send-button" data-bs-dismiss="modal">
 						@{
 							var sendMailIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><line x1=""22"" y1=""2"" x2=""11"" y2=""13""></line><polygon points=""22 2 15 22 11 13 2 9 22 2""></polygon></svg>";
 						}
@@ -83,13 +83,13 @@
 
 	$("#send-button").click(function () {
 		const $form = $(this).closest("form");
-		const formData = new FormData($form[0]);
-		const formElement = $form[0];
+		const $formData = new FormData($form[0]);
+		const $formElement = $form[0];
 
-		callApi("@Url.Action(Constants.SendMail, Model)", "POST", formData)
+		callApi("@Url.Action(Constants.SendMail, Model)", "POST", $formData)
 			.then(data => {
 				if (data && Array.isArray(data)) {
-					showInvalid(data, formElement);
+					showInvalid(data, $formElement);
 				}
 			})
 			.catch(err => {

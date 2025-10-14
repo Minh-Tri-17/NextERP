@@ -4,115 +4,118 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
-    ViewData["Title"] = TableName.Schedule;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+	ViewData["Title"] = TableName.Schedule;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-        (TableName.Schedule + "List", "", true),
-    };
+		(TableName.Schedule + "List", "", true),
+	};
 }
 
 <div class="calendar-content">
-    <!--& CALENDAR -->
-    <section class="calendar-wrapper card" id="calendar"></section>
+	<!--& CALENDAR -->
+	<section class="calendar-wrapper card" id="calendar"></section>
 
-    <!--& MODAL -->
-    <section class="modal-wrapper">
-        @await Html.PartialAsync(ScreenName.Schedule.ScheduleForm, Model)
-    </section>
+	<!--& MODAL -->
+	<section class="modal-wrapper">
+		@await Html.PartialAsync(ScreenName.Schedule.ScheduleForm, Model)
+	</section>
 </div>
 
 <script>
-    $(function () {
-        loadSchedules();
-    });
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
 
-    function loadSchedules() {
-        let filter = new FormData();
+		loadSchedules();
+	});
 
-        $(".loader").css("display", "flex");
+	 function loadSchedules() {
+		let filter = new FormData();
 
-        callApi("@Url.Action(Constants.GetList, TableName.Schedule)", "POST", filter)
-            .then(result => {
-                //! FullCalendar yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
-                const calendarEl = document.getElementById("calendar");
+		$(".loader").css("display", "flex");
 
-                //? Xử lý để hiển thị đúng (cộng thêm 1 ngày tạm thời) vì Fullcalendar vẽ sự kiện không tính ngày kết thúc
-                const events = result.map((event) => {
-                        const formatDate = (dateStr) => {
-                            const date = moment(dateStr);
-                            return date.format("HH:mm:ss") === "00:00:00"
-                                ? date.format("YYYY-MM-DD")
-                                : date.format("YYYY-MM-DDTHH:mm:ss");
-                        };
+		callApi("@Url.Action(Constants.GetList, TableName.Schedule)", "POST", filter)
+			.then(result => {
+				//! FullCalendar yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
+				const calendarEl = document.getElementById("calendar");
 
-                        return {
-                            ...event,
-                            start: formatDate(event.start),
-                            end: formatDate(moment(event.end)),
-                            color: "#28a745",
-                            allDay: event.allDay
-                        };
-                    });
+				//? Xử lý để hiển thị đúng (cộng thêm 1 ngày tạm thời) vì Fullcalendar vẽ sự kiện không tính ngày kết thúc
+				const events = result.map((event) => {
+						const formatDate = (dateStr) => {
+							const date = moment(dateStr);
+							return date.format("HH:mm:ss") === "00:00:00"
+								? date.format("YYYY-MM-DD")
+								: date.format("YYYY-MM-DDTHH:mm:ss");
+						};
 
-                const calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: "dayGridMonth",
-                    themeSystem: "bootstrap5",
-                    editable: true, //? Kéo thả sự kiện
-                    eventResizableFromStart: true, //? Thay đổi độ dài sự kiện
-                    dayMaxEvents: true, //? Xem thêm sự kiện
-                    selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
-                    select: function (info) {
-                        const start = info.start;
-                        let end = info.end;
+						return {
+							...event,
+							start: formatDate(event.start),
+							end: formatDate(moment(event.end)),
+							color: "#28a745",
+							allDay: event.allDay
+						};
+					});
 
-                        end = new Date(info.end);
-                        end.setDate(end.getDate() - 1);
+				const calendar = new FullCalendar.Calendar(calendarEl, {
+					initialView: "dayGridMonth",
+					themeSystem: "bootstrap5",
+					editable: true, //? Kéo thả sự kiện
+					eventResizableFromStart: true, //? Thay đổi độ dài sự kiện
+					dayMaxEvents: true, //? Xem thêm sự kiện
+					selectable: true, //? Tạo sự kiện bằng cách chọn vùng trên lịch
+					select: function (info) {
+						const start = info.start;
+						let end = info.end;
 
-                        const formatDateTime = (date) => {
-                            const options = { hour12: false };
-                            return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
-                        };
+						end = new Date(info.end);
+						end.setDate(end.getDate() - 1);
 
-                        $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(start));
-                        $("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(end));
+						const formatDateTime = (date) => {
+							const options = { hour12: false };
+							return date.toLocaleString("sv-SE", options).slice(0, 16); //? yyyy-MM-ddTHH:mm
+						};
 
-                        //? Mở modal khi chọn ngày trên lịch
-                        const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
-                        exportModal.show();
-                    },
-                    eventDidMount: function (info) {
-                        if (info.event.allDay) {
-                            const mainFrame = info.el.querySelector(".fc-event-title-container");
-                            mainFrame.style.setProperty("background-color", "#d4f8c4", "important");
-                        } else {
-                            info.el.style.setProperty("background-color", "#d4f8c4", "important");
-                        }
+						$("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(start));
+						$("#@TableName.Schedule #@ScheduleModel.AttributeNames.WorkDate").val(formatDateTime(end));
 
-                        //? Thêm tooltip dùng thư viện Tippy.js
-                        tippy(info.el, {
-                            content: info.event.extendedProps.description,
-                            allowHTML: true,
-                            theme: "light",
-                            animation: "shift-away",
-                            delay: [100, 0],
-                            placement: "top",
-                        });
-                    },
-                    headerToolbar: {
-                        left: "prev,next today",
-                        center: "title",
-                        right: "dayGridMonth,timeGridWeek,timeGridDay", //? Lịch theo ngày/tuần/tháng
-                    },
-                    events: events,
-                });
+						//? Mở modal khi chọn ngày trên lịch
+						const exportModal = new bootstrap.Modal(document.getElementById("create-edit-modal"));
+						exportModal.show();
+					},
+					eventDidMount: function (info) {
+						if (info.event.allDay) {
+							const mainFrame = info.el.querySelector(".fc-event-title-container");
+							mainFrame.style.setProperty("background-color", "#d4f8c4", "important");
+						} else {
+							info.el.style.setProperty("background-color", "#d4f8c4", "important");
+						}
 
-                calendar.render();
+						//? Thêm tooltip dùng thư viện Tippy.js
+						tippy(info.el, {
+							content: info.event.extendedProps.description,
+							allowHTML: true,
+							theme: "light",
+							animation: "shift-away",
+							delay: [100, 0],
+							placement: "top",
+						});
+					},
+					headerToolbar: {
+						left: "prev,next today",
+						center: "title",
+						right: "dayGridMonth,timeGridWeek,timeGridDay", //? Lịch theo ngày/tuần/tháng
+					},
+					events: events,
+				});
 
-                $(".loader").css("display", "none");
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    }
+				calendar.render();
+
+				$(".loader").css("display", "none");
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	}
 </script>

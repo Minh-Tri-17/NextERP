@@ -90,40 +90,47 @@
 </div>
 
 <script>
-	$(".save-button").click(function () {
-		const $form = $(this).closest("form");
-		const formData = new FormData($form[0]);
-		const formElement = $form[0];
-		let id = formData.get("@Constants.Id");
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
 
-		// Nếu không có ID (tạo mới), set Guid.Empty
-		if (!id || id === "") {
-			formData.set("@Constants.Id", "@Guid.Empty");
-		}
-		// Xóa dữ liệu cũ nếu có
-		formData.delete("@RoleModel.AttributeNames.Permissions");
+		$(".save-button").click(function () {
+			const $searchForm = $("#@TableName.Role-search-form");
+			const $saveForm = $(this).closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
+			let id = $formData.get("@Constants.Id");
 
-		// Lấy tất cả giá trị được chọn trong select[multiple]
-		const selectedPermissions = [];
-		$(`#@RoleModel.AttributeNames.Permissions option:selected`).each(function () {
-			selectedPermissions.push($(this).val());
-		});
+			// Nếu không có ID (tạo mới), set Guid.Empty
+			if (!id || id.trim() === "") {
+				$formData.set("@Constants.Id", "@Guid.Empty");
+			}
 
-		// Ghép các giá trị lại bằng dấu chấm phẩy
-		const permissionsString = selectedPermissions.join(";");
-		// Ghi đè lại giá trị "Permissions" nếu đã có
-		formData.set("@RoleModel.AttributeNames.Permissions", permissionsString);
+			// Xóa dữ liệu cũ nếu có
+			$formData.delete("@RoleModel.AttributeNames.Permissions");
 
-		callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", formData)
-			.then(data => {
-				loadRoles();
-
-				if (data && Array.isArray(data)) {
-					showInvalid(data, formElement);
-				}
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			// Lấy tất cả giá trị được chọn trong select[multiple]
+			const selectedPermissions = [];
+			$(`#@RoleModel.AttributeNames.Permissions option:selected`).each(function () {
+				selectedPermissions.push($(this).val());
 			});
+
+			// Ghép các giá trị lại bằng dấu chấm phẩy
+			const permissionsString = selectedPermissions.join(";");
+			// Ghi đè lại giá trị "Permissions" nếu đã có
+			$formData.set("@RoleModel.AttributeNames.Permissions", permissionsString);
+
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Role)", "POST", $formData)
+				.then(data => {
+					loadRoles($searchForm);
+
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
 	});
 </script>

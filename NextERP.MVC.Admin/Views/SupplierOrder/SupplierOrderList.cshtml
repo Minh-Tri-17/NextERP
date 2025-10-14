@@ -9,107 +9,110 @@
 <h5 class="text-center" localize-content>@TableName.SupplierOrder</h5>
 
 <div class="table-container">
-    <table class="table table-hover me-2">
-        <thead>
-            <tr>
-                <th>
-                    <div class="form-check">
-                        <input class="check-all form-check-input" type="checkbox" />
-                    </div>
-                </th>
-                <th>#</th>
-                @{
-                    var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize,
-                        Constants.Id, Constants.Ids, Constants.IsDelete, Constants.ImageFile, Constants.ImagePath };
+	<table class="table table-hover me-2">
+		<thead>
+			<tr>
+				<th>
+					<div class="form-check">
+						<input class="check-all form-check-input" type="checkbox" />
+					</div>
+				</th>
+				<th>#</th>
+				@{
+					var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize,
+								Constants.Id, Constants.Ids, Constants.IsDelete, Constants.ImageFile, Constants.ImagePath };
 
-                    var listField = UtilHtmlHelper.GetOrderedProperties<SupplierOrderModel>(excludedFields);
+					var listField = UtilHtmlHelper.GetOrderedProperties<SupplierOrderModel>(excludedFields);
 
-                    foreach (var item in listField)
-                    {
-                        <th localize-content>@item.Name</th>
-                    }
-                }
-            </tr>
-        </thead>
+					foreach (var item in listField)
+					{
+						<th localize-content>@item.Name</th>
+					}
+				}
+			</tr>
+		</thead>
 
-        <tbody class="sortable-group table-group-divider">
-            @if (DataHelper.ListIsNotNull(Model))
-            {
-                int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
+		<tbody class="sortable-group table-group-divider">
+			@if (DataHelper.ListIsNotNull(Model))
+			{
+				int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
 
-                foreach (var row in Model!.Result!.Items!)
-                {
-                    <tr>
-                        <td>
-                            <input type="hidden" name="@SupplierOrderModel.AttributeNames.SupplierOrderId" value="@row.Id" />
-                            <div class="form-check">
-                                <input class="form-check-input @TableName.SupplierOrder-checkbox" type="checkbox" />
-                            </div>
-                        </td>
-                        <td>@counter</td>
-                        @foreach (var field in listField)
-                        {
-                            var value = field.GetValue(row);
+				foreach (var row in Model!.Result!.Items!)
+				{
+					<tr>
+						<td>
+							<input type="hidden" name="@SupplierOrderModel.AttributeNames.SupplierOrderId" value="@row.Id" />
+							<div class="form-check">
+								<input class="form-check-input @TableName.SupplierOrder-checkbox" type="checkbox" />
+							</div>
+						</td>
+						<td>@counter</td>
+						@foreach (var field in listField)
+						{
+							var value = field.GetValue(row);
 
-                            if (field.Name == Constants.Base64Image)
-                            {
-                                <td>
-                                    @if (row.Base64Image != null)
-                                    {
-                                        <img src="@row.Base64Image" alt="Image" width="50" height="50" data-bs-toggle="modal" data-bs-target="#view-signature-modal">
-                                    }
-                                </td>
-                            }
-                            else
-                            {
-                                <td localize-content>@(value ?? "")</td>
-                            }
-                        }
-                    </tr>
+							if (field.Name == Constants.Base64Image)
+							{
+								<td>
+									@if (row.Base64Image != null)
+									{
+										<img src="@row.Base64Image" alt="Image" width="50" height="50" data-bs-toggle="modal" data-bs-target="#view-signature-modal">
+									}
+								</td>
+							}
+							else
+							{
+								<td localize-content>@(value ?? "")</td>
+							}
+						}
+					</tr>
 
-                    counter++;
-                }
-            }
-        </tbody>
-    </table>
+					counter++;
+				}
+			}
+		</tbody>
+	</table>
 </div>
 
 @if (DataHelper.ListIsNotNull(Model))
 {
-    <nav id="pagination-container" aria-label="Page navigation">
-        @await Component.InvokeAsync(Constants.Pagination, Model.Result)
-    </nav>
+	<nav id="pagination-container" aria-label="Page navigation">
+		@await Component.InvokeAsync(Constants.Pagination, Model.Result)
+	</nav>
 }
 
 <script>
-    $("#pagination-container").on("click", ".page-link", function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển trang
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
 
-        const $pageIndex = $(this).data("page");
-        if (!$pageIndex) return;
+		$("#pagination-container").on("click", ".page-link", function () {
+			const $pageIndex = $(this).data("page");
+			if (!$pageIndex) return;
 
-        $("#current-page-index").val($pageIndex);
+			// Xử lý active
+			$("#pagination-container .page-item").removeClass("active");
+			$(this).parent().addClass("active");
 
-        // Xử lý active
-        $("#pagination-container .page-item").removeClass("active");
-        $(this).parent().addClass("active");
+			const $searchForm = $("#@TableName.SupplierOrder-search-form");
 
-        loadSupplierOrders($("#@TableName.SupplierOrder-search-form")[0], $pageIndex);
-    });
+			loadSupplierOrders($searchForm, $pageIndex);
+		});
 
-    $(".check-all").change(function () {
-        // Gán giá trị cho tất cả checkbox SupplierOrder-checkbox
-        $(".@TableName.SupplierOrder-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+		$(".check-all").change(function () {
+			// Gán giá trị cho tất cả checkbox SupplierOrder-checkbox
+			$(".@TableName.SupplierOrder-checkbox").prop("checked", $(this).is(":checked") ? true : false);
 
-        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.SupplierOrder-checkbox");
-    });
+			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+			const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
+			checkLengthCheckbox($length, true, true, true, true, "@TableName.SupplierOrder-checkbox");
+		});
 
-    $("table img[data-bs-toggle='modal']").click(function () {
-        var src = $(this).attr("src"); // lấy src của ảnh click
+		$("table img[data-bs-toggle='modal']").click(function () {
+			var src = $(this).attr("src"); // lấy src của ảnh click
 
-        // Gán src vào ảnh trong modal
-        $("#view-signature-modal img").attr("src", src);
-    });
+			// Gán src vào ảnh trong modal
+			$("#view-signature-modal img").attr("src", src);
+		});
+	});
 </script>

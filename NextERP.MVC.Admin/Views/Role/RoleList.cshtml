@@ -66,27 +66,30 @@
 }
 
 <script>
-    $("#pagination-container").on("click", ".page-link", function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển trang
+    $(function () {
+        // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+        'use strict';
 
-        const $pageIndex = $(this).data("page");
-        if (!$pageIndex) return;
+        $("#pagination-container").on("click", ".page-link", function () {
+		    const $pageIndex = $(this).data("page");
+		    if (!$pageIndex) return;
 
-        $("#current-page-index").val($pageIndex);
+		    // Xử lý active
+		    $("#pagination-container .page-item").removeClass("active");
+		    $(this).parent().addClass("active");
 
-        // Xử lý active
-        $("#pagination-container .page-item").removeClass("active");
-        $(this).parent().addClass("active");
+		    const $searchForm = $("#@TableName.Role-search-form");
 
-        loadRoles($("#@TableName.Role-search-form")[0], $pageIndex);
-    });
+            loadRoles($searchForm, $pageIndex);
+        });
 
-    $(".check-all").change(function () {
-        // Gán giá trị cho tất cả checkbox Role-checkbox
-        $(".@TableName.Role-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+        $(".check-all").change(function () {
+            // Gán giá trị cho tất cả checkbox Role-checkbox
+            $(".@TableName.Role-checkbox").prop("checked", $(this).is(":checked") ? true : false);
 
-        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.Role-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.Role-checkbox");
+            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+            const $length = $(".@TableName.Role-checkbox:checked").length;
+            checkLengthCheckbox($length, true, true, true, true, "@TableName.Role-checkbox");
+        });
     });
 </script>

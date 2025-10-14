@@ -36,7 +36,7 @@
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
 					</button>
-					<button type="button" class="button btn save-button" id="start-export-button" data-bs-dismiss="modal">
+					<button type="button" class="button btn" id="start-export-button">
 						@{
 							var startExportIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4""></path><polyline points=""17 8 12 3 7 8""></polyline><line x1=""12"" y1=""3"" x2=""12"" y2=""15""></line></svg>";
 						}
@@ -51,7 +51,7 @@
 
 <script>
 	$("#start-export-button").click(function () {
-		const formData = createInitialFilterFormData();
+		const $formData = createInitialFilterFormData();
 
 		const MIN_LOADING_TIME = 3000;
 		let progressValue = 0;
@@ -70,7 +70,7 @@
 
 			fetch('@Url.Action("Export", Model)', {
 				method: "POST",
-				body: formData
+				body: $formData
 			}).then(response => {
 					exportedResponse = response;
 
@@ -101,7 +101,7 @@
 							$("#export-modal").modal("hide");
 						}, 500)
 					}, remaining);
-				})
+				});
 		}, 500);
 	});
 
@@ -113,10 +113,10 @@
 		}).get().join(",");
 
 		const $form = $("#@Model-search-form").closest("form");
-		const formData = new FormData($form[0]);
+		const $formData = new FormData($form.get(0));
 
 		// Xóa các key không cần thiết (__Invariant)
-		const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+		const cleanEntries = Array.from($formData.entries()).filter(([key]) => key !== "__Invariant");
 
 		const filter = new FormData();
 		cleanEntries.forEach(([key, value]) => filter.append(key, value));
@@ -124,19 +124,19 @@
 
 		switch (selectedValue) {
 			case "all":
-				formData.append("AllowPaging", false);
+				$formData.append("AllowPaging", false);
 				break;
 			case "current":
-				formData.append("AllowPaging", true);
+				$formData.append("AllowPaging", true);
 				break;
 			case "item":
-				formData.append("AllowPaging", false);
-				formData.append("Ids", ids);
+				$formData.append("AllowPaging", false);
+				$formData.append("Ids", ids);
 				break;
 			default:
 		}
 
-		return formData;
+		return $formData;
 	}
 
 	function extractFileNameFromDisposition(disposition) {

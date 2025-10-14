@@ -150,6 +150,7 @@
 
 	<script>
 		$(function () {
+			// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
 			'use strict';
 
 			// Lấy tất cả form cần validation
@@ -164,41 +165,41 @@
 					form.classList.add('was-validated');
 				}, false);
 			});
-		});
 
-		$("#send-otp").click(function () {
-			const $form = $(this).closest("form");
-			const formData = new FormData($form[0]);
-			const formElement = $form[0];
+			$("#send-otp").click(function () {
+				const $saveForm = $(this).closest("form");
+				const $formElement = $saveForm.get(0);
+				const $formData = new FormData($formElement);
 
-			callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", formData)
-				.then(data => {
-					if (data && Array.isArray(data)) {
-						showInvalid(data, formElement);
-					}
+				callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", $formData)
+					.then(data => {
+						if (data && Array.isArray(data)) {
+							showInvalid(data, $formElement);
+						}
 
-					var mailTo = $("#mail-to").val();
-					$("#Mail").val(mailTo);
-				})
-				.catch(err => {
-					showMessage("@Localizer[Messages.ErrorCallAPI]");
-				});
-		});
+						const mailTo = $("#mail-to").val();
+						$("#Mail").val(mailTo);
+					})
+					.catch(err => {
+						showMessage("@Localizer[Messages.ErrorCallAPI]");
+					});
+			});
 
-		$("#reset-password").click(function () {
-			const $form = $(this).closest("form");
-			const formData = new FormData($form[0]);
-			const formElement = $form[0];
+			$("#reset-password").click(function () {
+				const $saveForm = $(this).closest("form");
+				const $formElement = $saveForm.get(0);
+				const $formData = new FormData($formElement);
 
-			callApi("@Url.Action(Constants.ResetPassword, Constants.Account)", "POST", formData)
-				.then(data => {
-					if (data && Array.isArray(data)) {
-						showInvalid(data, formElement);
-					}
-				})
-				.catch(err => {
-					showMessage("@Localizer[Messages.ErrorCallAPI]");
-				});
+				callApi("@Url.Action(Constants.ResetPassword, Constants.Account)", "POST", $formData)
+					.then(data => {
+						if (data && Array.isArray(data)) {
+							showInvalid(data, $formElement);
+						}
+					})
+					.catch(err => {
+						showMessage("@Localizer[Messages.ErrorCallAPI]");
+					});
+			});
 		});
 	</script>
 

@@ -117,27 +117,33 @@
 </div>
 
 <script>
-	$(".save-button").click(function () {
-		const $form = $(this).closest("form");
-		const formData = new FormData($form[0]);
-		const formElement = $form[0];
-		let id = formData.get("@Constants.Id");
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
 
-		// Nếu không có ID (tạo mới), set Guid.Empty
-		if (!id || id === "") {
-			formData.set("@Constants.Id", "@Guid.Empty");
-		}
+		$(".save-button").click(function () {
+			const $searchForm = $("#@TableName.Product-search-form");
+			const $saveForm = $(this).closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
+			let id = $formData.get("@Constants.Id");
 
-		callApi("@Url.Action(Constants.CreateOrEdit, TableName.Product)", "POST", formData)
-			.then(data => {
-				loadProducts();
+			// Nếu không có ID (tạo mới), set Guid.Empty
+			if (!id || id.trim() === "") {
+				$formData.set("@Constants.Id", "@Guid.Empty");
+			}
 
-				if (data && Array.isArray(data)) {
-					showInvalid(data, formElement);
-				}
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Product)", "POST", $formData)
+				.then(data => {
+					loadProducts($searchForm);
+
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
 	});
 </script>

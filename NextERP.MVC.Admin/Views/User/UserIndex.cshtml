@@ -110,118 +110,119 @@
 
 <script>
     let $userId;
+    let $searchForm;
 
     $(function () {
-        loadUsers();
+        // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+        'use strict';
+
+        $searchForm = $("#@TableName.User-search-form");
+
+        loadUsers($searchForm);
+
+        $("#refresh-list").click(function(){
+            loadUsers($searchForm);
+        });
+
+        $("#is-delete").change(function () {
+            loadUsers($searchForm);
+        });
+
+        $(document).on("change", ".@TableName.User-checkbox", function () {
+            // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+            $userId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val() : "";
+
+            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+            const $length = $(".@TableName.User-checkbox:checked").length;
+            checkLengthCheckbox($length, true, true, true, true, "@TableName.User-checkbox");
+        });
+
+        $("#create-button").click(function () {
+            $("#only-save-button").css("display", "flex");
+        });
+
+        $("#edit-button").click(function () {
+            $("#only-save-button").css("display", "none");
+
+            callApi("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, "GET")
+                .then(data => {
+                    // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                    $("#@TableName.User #@UserModel.AttributeNames.UserId").val(data.id);
+                    $("#@TableName.User #@UserModel.AttributeNames.UserCode").val(data.userCode);
+                    $("#@TableName.User #@UserModel.AttributeNames.Username").val(data.username);
+                    $("#@TableName.User #@UserModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+                    $("#@TableName.User #@UserModel.AttributeNames.GroupRole").val(data.groupRole);
+                    $("#@TableName.User #@UserModel.AttributeNames.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
+                    $("#@TableName.User #@UserModel.AttributeNames.Note").val(data.note);
+                    $("#@TableName.User #@UserModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
+                    $("#@TableName.User #@EmployeeModel.AttributeNames.EmployeeId").val(data.employeeId).trigger("change");
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        });
+
+        $("#delete-button").click(function () {
+		    deleteUser("@Constants.Delete", $(this).closest("form"));
+	    });
+
+	    $("#delete-permanently-button").click(function () {
+		    deleteUser("@Constants.DeletePermanently", $(this).closest("form"));
+	    });
+
+        $("#search-button").click(function () {
+             loadUsers($searchForm);
+        });
+
+        $("#clear-button").click(function () {
+             $searchForm.get(0).reset();
+
+            loadUsers($searchForm);
+        });
     });
 
-    $("#refresh-list").click(function(){
-        loadUsers();
-    });
-
-    $("#is-delete").change(function () {
-        loadUsers();
-    })
-
-    $(document).on("change", ".@TableName.User-checkbox", function () {
-        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $userId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val() : "";
-
-        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.User-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.User-checkbox");
-    });
-
-    $("#create-button").click(function () {
-        $("#only-save-button").css("display", "flex");
-    });
-
-    $("#edit-button").click(function () {
-        $("#only-save-button").css("display", "none");
-
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.User)/" + $userId, "GET")
-            .then(data => {
-                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.User #@UserModel.AttributeNames.UserId").val(data.id);
-                $("#@TableName.User #@UserModel.AttributeNames.UserCode").val(data.userCode);
-                $("#@TableName.User #@UserModel.AttributeNames.Username").val(data.username);
-                $("#@TableName.User #@UserModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.User #@UserModel.AttributeNames.GroupRole").val(data.groupRole);
-                $("#@TableName.User #@UserModel.AttributeNames.LastLoginDate").val(formatDateToInput(data.lastLoginDate));
-                $("#@TableName.User #@UserModel.AttributeNames.Note").val(data.note);
-                $("#@TableName.User #@UserModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
-                $("#@TableName.User #@EmployeeModel.AttributeNames.EmployeeId").val(data.employeeId).trigger("change");
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
-
-    $("#delete-button").click(function () {
+    function deleteUser(actionName, $form) {
         // Lấy tất cả các Id của các checkbox đã chọn
         const $ids = $(".@TableName.User-checkbox:checked").map(function () {
             return $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val();
         }).get().join(",");
 
-        $("#Ids").val($ids);
+        $form.find("#Ids").val($ids);
 
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
+        // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+        const baseUrl = "@Url.Action("", TableName.User)";
 
-        callApi("@Url.Action(Constants.Delete, TableName.User)", "POST", formData)
+        // Thay thế 'actionName' vào URL
+        const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
+
+        const $formData = new FormData($form[0]);
+
+        callApi(apiUrl, "POST", $formData)
             .then(data => {
-                loadUsers();
+                loadUsers($searchForm);
             })
             .catch(err => {
                 showMessage("@Localizer[Messages.ErrorCallAPI]");
             });
-    });
+    }
 
-    $("#delete-permanently-button").click(function () {
-        // Lấy tất cả các Id của các checkbox đã chọn
-        const $ids = $(".@TableName.User-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@UserModel.AttributeNames.UserId"]').val();
-        }).get().join(",");
-
-        $("#Ids").val($ids);
-
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
-
-        callApi("@Url.Action(Constants.DeletePermanently, TableName.User)", "POST", formData)
-            .then(data => {
-                loadUsers();
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
-
-    $("#search-button").click(function () {
-        loadUsers();
-    })
-
-    $("#clear-button").click(function () {
-        $("#@TableName.User-search-form")[0].reset();
-
-        loadUsers();
-    })
-
-    function loadUsers(el, pageIndex) {
-        // Khỏi tạo filter và gán giá trị
-        const $isDelete = $("#is-delete").is(":checked");
+    function loadUsers($form, pageIndex) {
         $(".loader").css("display", "flex");
 
-        const $form = $(el).closest("form");
-        const formData = new FormData($form[0]);
-
-        // Xóa các key không cần thiết (__Invariant)
-        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+        const $formData = new FormData($form.get(0));
 
         const filter = new FormData();
-        cleanEntries.forEach(([key, value]) => filter.append(key, value));
         filter.append("@Constants.PageIndex", pageIndex);
+
+        const $isDelete = $("#is-delete").is(":checked");
         filter.append("@Constants.IsDelete", $isDelete);
+
+        // Xóa các key không cần thiết (__Invariant)
+        for (const [key, value] of $formData.entries()) {
+            if (key !== "__Invariant") {
+                filter.append(key, value);
+            }
+        }
 
         callApi("@Url.Action(Constants.GetList, TableName.User)", "POST", filter, "#@TableName.User-table")
             .then(data => {

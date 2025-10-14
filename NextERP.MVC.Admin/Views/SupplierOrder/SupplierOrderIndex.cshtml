@@ -190,60 +190,101 @@
 
 <script>
 	let $supplierOrderId;
+	let $searchForm;
+	let signaturePad;
 
 	$(function () {
-		loadSupplierOrders();
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		$searchForm = $("#@TableName.SupplierOrder-search-form");
+		signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
+
+		loadSupplierOrders($searchForm);
+
+		$("#refresh-list").click(function(){
+			loadSupplierOrders($searchForm);
+			loadSupplierOrderDetails();
+		});
+
+		$(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
+			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+			$supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
+
+			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+			const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
+			checkLengthCheckbox($length, false, false, false, false, "@TableName.SupplierOrder-checkbox");
+
+			if ($length == 1) {
+				$("#signature-button").removeClass('disabled');
+			}
+			else {
+				$("#signature-button").addClass('disabled');
+			}
+		});
+
+		$("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
+			$supplierOrderId = $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val()
+			loadSupplierOrderDetails();
+		});
+
+		$("#search-button").click(function () {
+			 loadSupplierOrders($searchForm);
+		});
+
+		$("#clear-button").click(function () {
+			 $searchForm.get(0).reset();
+
+			loadSupplierOrders($searchForm);
+		});
+
+		$("#clear-signature-button").click(function () {
+			signaturePad.clear();
+		});
+
+		$("#save-signature-button").click(function () {
+			const $form = $(this).closest("form");
+			const $formData = new FormData($form[0]);
+			const $formElement = $form[0];
+			$formData.set("@Constants.Id", $supplierOrderId);
+
+			// Xuất ra Base64 (JPG)
+			const dataUrl = signaturePad.toDataURL("image/jpg");
+
+			// Thêm base64 image vào form data để map vào model
+			$formData.append("@Constants.Base64Image", dataUrl);
+
+			callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", $formData)
+				.then(data => {
+					loadSupplierOrders($searchForm);
+
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
 	});
 
-	$("#refresh-list").click(function(){
-		loadSupplierOrders();
-		loadSupplierOrderDetails();
-	});
-
-	$(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
-		// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-		$supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
-
-		// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-		const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
-		checkLengthCheckbox($length, false, false, false, false, "@TableName.SupplierOrder-checkbox");
-
-		if ($length == 1) {
-			$("#signature-button").removeClass('disabled');
-		}
-		else {
-			$("#signature-button").addClass('disabled');
-		}
-	});
-
-	$("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
-		$supplierOrderId = $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val()
-		loadSupplierOrderDetails();
-	})
-
-	$("#search-button").click(function () {
-		loadSupplierOrders();
-	})
-
-	$("#clear-button").click(function () {
-		$("#@TableName.SupplierOrder-search-form")[0].reset();
-
-		loadSupplierOrders();
-	})
-
-	function loadSupplierOrders(el, pageIndex) {
-		// Khỏi tạo filter và gán giá trị
+	function loadSupplierOrders($form, pageIndex) {
 		$(".loader").css("display", "flex");
 
-		const $form = $(el).closest("form");
-		const formData = new FormData($form[0]);
-
-		// Xóa các key không cần thiết (__Invariant)
-		const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+		const $formData = new FormData($form.get(0));
 
 		const filter = new FormData();
-		cleanEntries.forEach(([key, value]) => filter.append(key, value));
 		filter.append("@Constants.PageIndex", pageIndex);
+
+		const $isDelete = $("#is-delete").is(":checked");
+		filter.append("@Constants.IsDelete", $isDelete);
+
+		// Xóa các key không cần thiết (__Invariant)
+		for (const [key, value] of $formData.entries()) {
+			if (key !== "__Invariant") {
+				filter.append(key, value);
+			}
+		}
 
 		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrder)", "POST", filter, "#@TableName.SupplierOrder-table")
 			.then(data => {
@@ -275,37 +316,6 @@
 				showMessage("@Localizer[Messages.ErrorCallAPI]");
 			});
 	}
-
-	const signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
-
-	$("#clear-signature-button").click(function () {
-		signaturePad.clear();
-	});
-
-	$("#save-signature-button").click(function () {
-		const $form = $(this).closest("form");
-		const formData = new FormData($form[0]);
-		const formElement = $form[0];
-		formData.set("@Constants.Id", $supplierOrderId);
-
-		// Xuất ra Base64 (JPG)
-		const dataUrl = signaturePad.toDataURL("image/jpg");
-
-		// Thêm base64 image vào form data để map vào model
-		formData.append("@Constants.Base64Image", dataUrl);
-
-		callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", formData)
-			.then(data => {
-				loadSupplierOrders();
-
-				if (data && Array.isArray(data)) {
-					showInvalid(data, formElement);
-				}
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	});
 
 	function signaturePadInit(modalSelector, canvasSelector) {
 		// Tạo đối tượng SignaturePad

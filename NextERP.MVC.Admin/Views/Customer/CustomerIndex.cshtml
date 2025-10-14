@@ -4,238 +4,239 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
-    ViewData["Title"] = TableName.Customer;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+	ViewData["Title"] = TableName.Customer;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-        (TableName.Customer + "List", "", true),
-    };
+		(TableName.Customer + "List", "", true),
+	};
 }
 
 <div class="main-container">
-    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
-    <input type="hidden" id="current-page-index" value="1" />
+	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+	<input type="hidden" id="current-page-index" value="1" />
 
-    <!--& FILTER -->
-    <section class="filter-panel card">
-        <form method="post">
-            <div class="filter-actions">
-                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-                    <i class="fa-solid fa-plus"></i> <span localize-content>Create</span>
-                </button>
-                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-                    <i class="fa-solid fa-pen"></i> <span localize-content>Edit</span>
-                </button>
-                <input type="text" name="Ids" id="Ids" hidden />
-                <button type="button" class="btn btn-danger disabled" id="delete-button">
-                    <i class="fa-solid fa-trash"></i> <span localize-content>Delete</span>
-                </button>
-                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
-                    <i class="fa-solid fa-trash"></i> <span localize-content>DeletePermanently</span>
-                </button>
-                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
-                    <i class="fa-solid fa-file-import"></i> <span localize-content>Import</span>
-                </button>
-                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
-                    <i class="fa-solid fa-file-export"></i> <span localize-content>Export</span>
-                </button>
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
-                    <i class="fa-solid fa-filter"></i>
-                </button>
-                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-                <div class="d-flex align-items-center ms-2 pb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
-                    <label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
-                </div>
-            </div>
-        </form>
+	<!--& FILTER -->
+	<section class="filter-panel card">
+		<form method="post">
+			<div class="filter-actions">
+				<button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+					<i class="fa-solid fa-plus"></i> <span localize-content>Create</span>
+				</button>
+				<button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+					<i class="fa-solid fa-pen"></i> <span localize-content>Edit</span>
+				</button>
+				<input type="text" name="Ids" id="Ids" hidden />
+				<button type="button" class="btn btn-danger disabled" id="delete-button">
+					<i class="fa-solid fa-trash"></i> <span localize-content>Delete</span>
+				</button>
+				<button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
+					<i class="fa-solid fa-trash"></i> <span localize-content>DeletePermanently</span>
+				</button>
+				<button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+					<i class="fa-solid fa-file-import"></i> <span localize-content>Import</span>
+				</button>
+				<button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+					<i class="fa-solid fa-file-export"></i> <span localize-content>Export</span>
+				</button>
+				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+					<i class="fa-solid fa-filter"></i>
+				</button>
+				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+				<div class="d-flex align-items-center ms-2 pb-2">
+					<input class="form-check-input" type="checkbox" value="" id="is-delete">
+					<label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
+				</div>
+			</div>
+		</form>
 
-        <div class="collapse" id="filter-inputs">
-            <form id="@TableName.Customer-search-form" class="m-2">
-                <div class="row g-2 mb-2">
-                    <div class="col-3">
-                        <label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
-                        <input type="text" class="form-control form-control-sm" asp-for="CustomerCode" />
-                    </div>
+		<div class="collapse" id="filter-inputs">
+			<form id="@TableName.Customer-search-form" class="m-2">
+				<div class="row g-2 mb-2">
+					<div class="col-3">
+						<label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
+						<input type="text" class="form-control form-control-sm" asp-for="CustomerCode" />
+					</div>
 
-                    <div class="col-3">
-                        <label for="@CustomerModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
-                        <select class="form-select form-select-sm" asp-for="OperatingStatus">
-                            <option value=""></option>
-                            @foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
-                            {
-                                <option value="@item" localize-content>@item</option>
-                            }
-                        </select>
-                    </div>
+					<div class="col-3">
+						<label for="@CustomerModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
+						<select class="form-select form-select-sm" asp-for="OperatingStatus">
+							<option value=""></option>
+							@foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+							{
+								<option value="@item" localize-content>@item</option>
+							}
+						</select>
+					</div>
 
-                    <div class="col-3">
-                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
-                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
-                    </div>
+					<div class="col-3">
+						<label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+					</div>
 
-                    <div class="col-3">
-                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
-                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
-                    </div>
-                </div>
+					<div class="col-3">
+						<label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+					</div>
+				</div>
 
-                <div class="text-end">
-                    <button type="button" class="btn btn-info" id="search-button">
-                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>Search</span>
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="clear-button">
-                        <i class="fa-solid fa-broom"></i> <span localize-content>Clear</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
+				<div class="text-end">
+					<button type="button" class="btn btn-info" id="search-button">
+						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>Search</span>
+					</button>
+					<button type="button" class="btn btn-secondary" id="clear-button">
+						<i class="fa-solid fa-broom"></i> <span localize-content>Clear</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</section>
 
-    <!--& TABLE -->
-    <section class="table-wrapper card">
-        <div class="table-wrapper-body row">
-            <div class="table-wrapper-main" id="@TableName.Customer-table">
-            </div>
-        </div>
-    </section>
+	<!--& TABLE -->
+	<section class="table-wrapper card">
+		<div class="table-wrapper-body row">
+			<div class="table-wrapper-main" id="@TableName.Customer-table">
+			</div>
+		</div>
+	</section>
 
-    <!--& MODAL -->
-    <section class="modal-wrapper">
-        @await Html.PartialAsync(ScreenName.Customer.CustomerForm, Model)
-        @await Component.InvokeAsync(Constants.Import, TableName.Customer)
-        @await Component.InvokeAsync(Constants.Export, TableName.Customer)
-    </section>
+	<!--& MODAL -->
+	<section class="modal-wrapper">
+		@await Html.PartialAsync(ScreenName.Customer.CustomerForm, Model)
+		@await Component.InvokeAsync(Constants.Import, TableName.Customer)
+		@await Component.InvokeAsync(Constants.Export, TableName.Customer)
+	</section>
 </div>
 
 <script>
-    let $customerId;
+	let $customerId;
+	let $searchForm;
 
-    $(function () {
-        loadCustomers();
-    });
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
 
-    $("#refresh-list").click(function(){
-        loadCustomers();
-    });
+		$searchForm = $("#@TableName.Customer-search-form");
 
-    $("#is-delete").change(function () {
-        loadCustomers();
-    })
+		loadCustomers($searchForm);
 
-    $(document).on("change", ".@TableName.Customer-checkbox", function () {
-        // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-        $customerId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val() : "";
+		$("#refresh-list").click(function(){
+			loadCustomers($searchForm);
+		});
 
-        // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-        const $length = $(".@TableName.Customer-checkbox:checked").length;
-        checkLengthCheckbox($length, true, true, true, true, "@TableName.Customer-checkbox");
-    });
+		$("#is-delete").change(function () {
+			loadCustomers($searchForm);
+		});
 
-    $("#create-button").click(function () {
-        $("#only-save-button").css("display", "flex");
-    });
+		$(document).on("change", ".@TableName.Customer-checkbox", function () {
+			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+			$customerId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val() : "";
 
-    $("#edit-button").click(function () {
-        $("#only-save-button").css("display", "none");
+			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+			const $length = $(".@TableName.Customer-checkbox:checked").length;
+			checkLengthCheckbox($length, true, true, true, true, "@TableName.Customer-checkbox");
+		});
 
-        callApi("@Url.Action(Constants.CreateOrEdit, TableName.Customer)/" + $customerId, "GET")
-            .then(data => {
-                // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerId").val(data.id);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerCode").val(data.customerCode);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.FullName").val(data.fullName);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.Gender").val(data.gender);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.LoyaltyPoints").val(data.loyaltyPoints);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.TotalSpent").val(data.totalSpent);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.Dob").val(formatDateToInput(data.dob));
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate").val(formatDateToInput(data.joinDate));
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.Email").val(data.email);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.Note").val(data.note);
-                $("#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+		$("#create-button").click(function () {
+			$("#only-save-button").css("display", "flex");
+		});
 
-    $("#delete-button").click(function () {
-        // Lấy tất cả các Id của các checkbox đã chọn
-        const $ids = $(".@TableName.Customer-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val();
-        }).get().join(",");
+		$("#edit-button").click(function () {
+			$("#only-save-button").css("display", "none");
 
-        $("#Ids").val($ids);
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Customer)/" + $customerId, "GET")
+				.then(data => {
+					// Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerId").val(data.id);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerCode").val(data.customerCode);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.FullName").val(data.fullName);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.Gender").val(data.gender);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.LoyaltyPoints").val(data.loyaltyPoints);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.TotalSpent").val(data.totalSpent);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.Dob").val(formatDateToInput(data.dob));
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate").val(formatDateToInput(data.joinDate));
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.Email").val(data.email);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.Note").val(data.note);
+					$("#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
 
-        const $form = $(this).closest("form");
-        const formData = new FormData($form[0]);
+		$$("#delete-button").click(function () {
+			deleteCustomer("@Constants.Delete", $(this).closest("form"));
+		});
 
-        callApi("@Url.Action(Constants.Delete, TableName.Customer)", "POST", formData)
-            .then(data => {
-                loadCustomers();
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+		$("#delete-permanently-button").click(function () {
+			deleteCustomer("@Constants.DeletePermanently", $(this).closest("form"));
+		});
 
-    $("#delete-permanently-button").click(function () {
-         // Lấy tất cả các Id của các checkbox đã chọn
-         const $ids = $(".@TableName.Customer-checkbox:checked").map(function () {
-             return $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val();
-         }).get().join(",");
+		$("#search-button").click(function () {
+			 loadCustomers($searchForm);
+		});
 
-         $("#Ids").val($ids);
+		$("#clear-button").click(function () {
+			 $searchForm.get(0).reset();
 
-         const $form = $(this).closest("form");
-         const formData = new FormData($form[0]);
+			loadCustomers($searchForm);
+		});
+	});
 
-         callApi("@Url.Action(Constants.DeletePermanently, TableName.Customer)", "POST", formData)
-            .then(data => {
-                loadCustomers();
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    });
+	function deleteCustomer(actionName, $form) {
+		// Lấy tất cả các Id của các checkbox đã chọn
+		const $ids = $(".@TableName.Customer-checkbox:checked").map(function () {
+			return $(this).closest("tr").find('input[name="@CustomerModel.AttributeNames.CustomerId"]').val();
+		}).get().join(",");
 
-    $("#search-button").click(function () {
-        loadCustomers();
-    })
+		$form.find("#Ids").val($ids);
 
-    $("#clear-button").click(function () {
-        $("#@TableName.Customer-search-form")[0].reset();
+		// Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+		const baseUrl = "@Url.Action("", TableName.Customer)";
 
-        loadCustomers();
-    })
+		// Thay thế 'actionName' vào URL
+		const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-    function loadCustomers(el, pageIndex) {
-        // Khỏi tạo filter và gán giá trị
-        const $isDelete = $("#is-delete").is(":checked");
-        $(".loader").css("display", "flex");
+		const $formData = new FormData($form[0]);
 
-        const $form = $(el).closest("form");
-        const formData = new FormData($form[0]);
+		callApi(apiUrl, "POST", $formData)
+			.then(data => {
+				loadCustomers($searchForm);
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	}
 
-        // Xóa các key không cần thiết (__Invariant)
-        const cleanEntries = Array.from(formData.entries()).filter(([key]) => key !== "__Invariant");
+	function loadCustomers($form, pageIndex) {
+		$(".loader").css("display", "flex");
 
-        const filter = new FormData();
-        cleanEntries.forEach(([key, value]) => filter.append(key, value));
-        filter.append("@Constants.PageIndex", pageIndex);
-        filter.append("@Constants.IsDelete", $isDelete);
+		const $formData = new FormData($form.get(0));
 
-        callApi("@Url.Action(Constants.GetList, TableName.Customer)", "POST", filter, "#@TableName.Customer-table")
-            .then(data => {
-                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-                checkLengthCheckbox(0, true, true, true, true, "@TableName.Customer-checkbox");
+		const filter = new FormData();
+		filter.append("@Constants.PageIndex", pageIndex);
 
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $customerId = "";
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    }
+		const $isDelete = $("#is-delete").is(":checked");
+		filter.append("@Constants.IsDelete", $isDelete);
+
+		// Xóa các key không cần thiết (__Invariant)
+		for (const [key, value] of $formData.entries()) {
+			if (key !== "__Invariant") {
+				filter.append(key, value);
+			}
+		}
+
+		callApi("@Url.Action(Constants.GetList, TableName.Customer)", "POST", filter, "#@TableName.Customer-table")
+			.then(data => {
+				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+				checkLengthCheckbox(0, true, true, true, true, "@TableName.Customer-checkbox");
+
+				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+				$customerId = "";
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	}
 </script>
