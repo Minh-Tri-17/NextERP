@@ -15,14 +15,14 @@
 					<input id="@RoleModel.AttributeNames.RoleId" type="hidden" asp-for="Id" />
 
 					<div class="mb-2">
-						<label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleCode</label>
+						<label for="@RoleModel.AttributeNames.RoleCode" class="col-form-label col-md-12" localize-content>@RoleModel.AttributeNames.RoleCode</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="RoleCode" disabled />
 						</div>
 					</div>
 
 					<div class="mb-2">
-						<label for="@RoleModel.AttributeNames.RoleName" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.RoleName</label>
+						<label for="@RoleModel.AttributeNames.RoleName" class="col-form-label col-md-12" localize-content>@RoleModel.AttributeNames.RoleName</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="RoleName" />
 							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.RoleName" localize-content></div>
@@ -30,7 +30,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@RoleModel.AttributeNames.GroupRole" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.GroupRole</label>
+						<label for="@RoleModel.AttributeNames.GroupRole" class="col-form-label col-md-12" localize-content>@RoleModel.AttributeNames.GroupRole</label>
 						<div class="col-md-12">
 							<select class="form-select form-select-sm" asp-for="GroupRole">
 								<option value=""></option>
@@ -44,7 +44,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@RoleModel.AttributeNames.Permissions" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Permissions</label>
+						<label for="@RoleModel.AttributeNames.Permissions" class="col-form-label col-md-12" localize-content>@RoleModel.AttributeNames.Permissions</label>
 						<div class="col-md-12">
 							<select class="form-select form-select-sm" asp-for="Permissions" multiple>
 								<option value=""></option>
@@ -58,7 +58,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@RoleModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@RoleModel.AttributeNames.Note</label>
+						<label for="@RoleModel.AttributeNames.Note" class="col-form-label col-md-12" localize-content>@RoleModel.AttributeNames.Note</label>
 						<div class="col-md-12">
 							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
 							<div class="invalid-feedback" id="invalid-@RoleModel.AttributeNames.Note" localize-content></div>

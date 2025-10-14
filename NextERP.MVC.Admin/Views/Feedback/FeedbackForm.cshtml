@@ -15,14 +15,14 @@
 					<input id="@FeedbackModel.AttributeNames.FeedbackId" type="hidden" asp-for="Id" />
 
 					<div class="mb-2">
-						<label for="@FeedbackModel.AttributeNames.FeedbackCode" class="col-form-label col-md-6" localize-content>@FeedbackModel.AttributeNames.FeedbackCode</label>
+						<label for="@FeedbackModel.AttributeNames.FeedbackCode" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.FeedbackCode</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="FeedbackCode" disabled />
 						</div>
 					</div>
 
 					<div class="mb-2">
-						<label for="@FeedbackModel.AttributeNames.DateFeedback" class="col-form-label col-md-6" localize-content>@FeedbackModel.AttributeNames.DateFeedback</label>
+						<label for="@FeedbackModel.AttributeNames.DateFeedback" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.DateFeedback</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="date" asp-for="DateFeedback" />
 							<div class="invalid-feedback" id="invalid-@FeedbackModel.AttributeNames.DateFeedback" localize-content></div>
@@ -30,7 +30,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@FeedbackModel.AttributeNames.Comment" class="col-form-label col-md-6" localize-content>@FeedbackModel.AttributeNames.Comment</label>
+						<label for="@FeedbackModel.AttributeNames.Comment" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.Comment</label>
 						<div class="col-md-12">
 							<textarea class="form-control form-control-sm" rows="3" asp-for="Comment"></textarea>
 							<div class="invalid-feedback" id="invalid-@FeedbackModel.AttributeNames.Comment" localize-content></div>

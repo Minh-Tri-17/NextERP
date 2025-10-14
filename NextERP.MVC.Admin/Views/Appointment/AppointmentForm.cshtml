@@ -15,14 +15,14 @@
 					<input id="@AppointmentModel.AttributeNames.AppointmentId" type="hidden" asp-for="Id" />
 
 					<div class="mb-2">
-						<label for="@AppointmentModel.AttributeNames.AppointmentCode" class="col-form-label col-md-6" localize-content>@AppointmentModel.AttributeNames.AppointmentCode</label>
+						<label for="@AppointmentModel.AttributeNames.AppointmentCode" class="col-form-label col-md-12" localize-content>@AppointmentModel.AttributeNames.AppointmentCode</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="AppointmentCode" disabled />
 						</div>
 					</div>
 
 					<div class="mb-2">
-						<label for="@AppointmentModel.AttributeNames.AppointmentDate" class="col-form-label col-md-6" localize-content>@AppointmentModel.AttributeNames.AppointmentDate</label>
+						<label for="@AppointmentModel.AttributeNames.AppointmentDate" class="col-form-label col-md-12" localize-content>@AppointmentModel.AttributeNames.AppointmentDate</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="datetime-local" asp-for="AppointmentDate" />
 							<div class="invalid-feedback" id="invalid-@AppointmentModel.AttributeNames.AppointmentDate" localize-content></div>
@@ -30,7 +30,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@AppointmentModel.AttributeNames.AppointmentStatus" class="col-form-label col-md-6" localize-content>@AppointmentModel.AttributeNames.AppointmentStatus</label>
+						<label for="@AppointmentModel.AttributeNames.AppointmentStatus" class="col-form-label col-md-12" localize-content>@AppointmentModel.AttributeNames.AppointmentStatus</label>
 						<div class="col-md-12">
 							<select class="form-select form-select-sm" asp-for="AppointmentStatus">
 								<option value=""></option>
@@ -44,7 +44,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@AppointmentModel.AttributeNames.TotalCost" class="col-form-label col-md-6" localize-content>@AppointmentModel.AttributeNames.TotalCost</label>
+						<label for="@AppointmentModel.AttributeNames.TotalCost" class="col-form-label col-md-12" localize-content>@AppointmentModel.AttributeNames.TotalCost</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="number" asp-for="TotalCost" disabled />
 							<div class="invalid-feedback" id="invalid-@AppointmentModel.AttributeNames.TotalCost" localize-content></div>
@@ -52,7 +52,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@AppointmentModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@AppointmentModel.AttributeNames.Note</label>
+						<label for="@AppointmentModel.AttributeNames.Note" class="col-form-label col-md-12" localize-content>@AppointmentModel.AttributeNames.Note</label>
 						<div class="col-md-12">
 							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
 							<div class="invalid-feedback" id="invalid-@AppointmentModel.AttributeNames.Note" localize-content></div>

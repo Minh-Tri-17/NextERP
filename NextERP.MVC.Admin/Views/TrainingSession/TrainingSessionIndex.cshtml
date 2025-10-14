@@ -54,12 +54,12 @@
             <form id="@TableName.TrainingSession-search-form" class="m-2">
                 <div class="row g-2 mb-2">
                     <div class="col-3">
-                        <label for="@TrainingSessionModel.AttributeNames.TrainingSessionCode" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingSessionCode</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingSessionCode" class="col-form-label col-md-12" localize-content>@TrainingSessionModel.AttributeNames.TrainingSessionCode</label>
                         <input type="text" class="form-control form-control-sm" asp-for="TrainingSessionCode" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@TrainingSessionModel.AttributeNames.SessionStatus" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.SessionStatus</label>
+                        <label for="@TrainingSessionModel.AttributeNames.SessionStatus" class="col-form-label col-md-12" localize-content>@TrainingSessionModel.AttributeNames.SessionStatus</label>
                         <select class="form-select form-select-sm" asp-for="SessionStatus">
                             <option value=""></option>
                             @foreach (var item in Enum.GetValues(typeof(Enums.SessionStatus)))
@@ -70,17 +70,17 @@
                     </div>
 
                     <div class="col-3">
-                        <label for="@TrainingSessionModel.AttributeNames.TrainingDate" class="col-form-label col-md-6" localize-content>@TrainingSessionModel.AttributeNames.TrainingDate</label>
+                        <label for="@TrainingSessionModel.AttributeNames.TrainingDate" class="col-form-label col-md-12" localize-content>@TrainingSessionModel.AttributeNames.TrainingDate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="TrainingDate" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
                     </div>
 
                     <div class="col-3">
-                        <label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
                         <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
                     </div>
                 </div>

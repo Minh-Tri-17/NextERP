@@ -54,12 +54,12 @@
 			<form id="@TableName.Branch-search-form" class="m-2">
 				<div class="row g-2 mb-2">
 					<div class="col-3">
-						<label for="@BranchModel.AttributeNames.BranchCode" class="col-form-label col-md-6" localize-content>@BranchModel.AttributeNames.BranchCode</label>
+						<label for="@BranchModel.AttributeNames.BranchCode" class="col-form-label col-md-12" localize-content>@BranchModel.AttributeNames.BranchCode</label>
 						<input type="text" class="form-control form-control-sm" asp-for="BranchCode" />
 					</div>
 
 					<div class="col-3">
-						<label for="@BranchModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@BranchModel.AttributeNames.OperatingStatus</label>
+						<label for="@BranchModel.AttributeNames.OperatingStatus" class="col-form-label col-md-12" localize-content>@BranchModel.AttributeNames.OperatingStatus</label>
 						<select class="form-select form-select-sm" asp-for="OperatingStatus">
 							<option value=""></option>
 							@foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
@@ -70,12 +70,12 @@
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
 					</div>
 				</div>

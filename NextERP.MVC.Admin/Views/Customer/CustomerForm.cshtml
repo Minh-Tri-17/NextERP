@@ -15,14 +15,14 @@
 					<input id="@CustomerModel.AttributeNames.CustomerId" type="hidden" asp-for="Id" />
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
+						<label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="CustomerCode" disabled />
 						</div>
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.Dob" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.Dob</label>
+						<label for="@CustomerModel.AttributeNames.Dob" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Dob</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="date" asp-for="Dob" />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Dob" localize-content></div>
@@ -30,7 +30,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.FullName" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.FullName</label>
+						<label for="@CustomerModel.AttributeNames.FullName" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.FullName</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="FullName" />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.FullName" localize-content></div>
@@ -38,7 +38,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.PhoneNumber" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.PhoneNumber</label>
+						<label for="@CustomerModel.AttributeNames.PhoneNumber" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.PhoneNumber</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" min="10" max="10" />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.PhoneNumber" localize-content></div>
@@ -46,7 +46,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.Gender" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.Gender</label>
+						<label for="@CustomerModel.AttributeNames.Gender" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Gender</label>
 						<div class="col-md-12">
 							<select class="form-select form-select-sm" asp-for="Gender">
 								<option value=""></option>
@@ -60,7 +60,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.JoinDate" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.JoinDate</label>
+						<label for="@CustomerModel.AttributeNames.JoinDate" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.JoinDate</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="date" asp-for="JoinDate" />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.JoinDate" localize-content></div>
@@ -68,7 +68,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.LoyaltyPoints" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.LoyaltyPoints</label>
+						<label for="@CustomerModel.AttributeNames.LoyaltyPoints" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.LoyaltyPoints</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="number" asp-for="LoyaltyPoints" disabled />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.LoyaltyPoints" localize-content></div>
@@ -76,7 +76,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.TotalSpent" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.TotalSpent</label>
+						<label for="@CustomerModel.AttributeNames.TotalSpent" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.TotalSpent</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="number" asp-for="TotalSpent" disabled />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.TotalSpent" localize-content></div>
@@ -84,7 +84,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.Email" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.Email</label>
+						<label for="@CustomerModel.AttributeNames.Email" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Email</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="email" asp-for="Email" />
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Email" localize-content></div>
@@ -92,7 +92,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.OperatingStatus" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
+						<label for="@CustomerModel.AttributeNames.OperatingStatus" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
 						<div class="col-md-12">
 							<select class="form-select form-select-sm" asp-for="OperatingStatus">
 								<option value=""></option>
@@ -106,7 +106,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@CustomerModel.AttributeNames.Note" class="col-form-label col-md-6" localize-content>@CustomerModel.AttributeNames.Note</label>
+						<label for="@CustomerModel.AttributeNames.Note" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Note</label>
 						<div class="col-md-12">
 							<textarea class="form-control form-control-sm" rows="3" asp-for="Note"></textarea>
 							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Note" localize-content></div>

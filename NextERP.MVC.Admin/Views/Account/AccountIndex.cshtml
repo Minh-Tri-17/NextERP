@@ -33,7 +33,7 @@
 			<h2 class="text-center" localize-content>Account</h2>
 			<div class="login-form">
 				<div class="mb-2">
-					<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Username</label>
+					<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
 					<div class="col-md-12">
 						<input class="form-control form-control-sm" type="text" asp-for="Username" />
 						<div class="invalid-feedback" localize-content>InvalidUsername</div>
@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="mb-2">
-					<label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Password</label>
+					<label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Password</label>
 					<div class="col-md-12">
 						<input class="form-control form-control-sm" type="password" asp-for="Password" />
 						<div class="invalid-feedback" localize-content>InvalidPassword</div>
@@ -75,7 +75,7 @@
 				<h4 class="text-center" localize-content>StepSendOTP</h4>
 				<div class="forgot-form">
 					<div class="mb-2">
-						<label for="To" class="col-form-label col-md-6" localize-content>Mail</label>
+						<label for="To" class="col-form-label col-md-12" localize-content>Mail</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" id="mail-to" name="To" />
 							<div class="invalid-feedback" id="invalid-To" localize-content></div>
@@ -99,7 +99,7 @@
 				<div class="forgot-form">
 					<input type="hidden" asp-for="Mail" />
 					<div class="mb-2">
-						<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Username</label>
+						<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="Username" />
 							<div class="invalid-feedback" localize-content>InvalidUsername</div>
@@ -123,7 +123,7 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="@UserModel.AttributeNames.Otp" class="col-form-label col-md-6" localize-content>@UserModel.AttributeNames.Otp</label>
+						<label for="@UserModel.AttributeNames.Otp" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Otp</label>
 						<div class="col-md-12">
 							<input class="form-control form-control-sm" type="text" asp-for="Otp" />
 							<div class="invalid-feedback" localize-content>InvalidOTP</div>

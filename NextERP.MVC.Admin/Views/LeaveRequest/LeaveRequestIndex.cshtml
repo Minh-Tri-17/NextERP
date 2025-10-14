@@ -54,12 +54,12 @@
 			<form id="@TableName.LeaveRequest-search-form" class="m-2">
 				<div class="row g-2 mb-2">
 					<div class="col-3">
-						<label for="@LeaveRequestModel.AttributeNames.LeaveRequestCode" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveRequestCode</label>
+						<label for="@LeaveRequestModel.AttributeNames.LeaveRequestCode" class="col-form-label col-md-12" localize-content>@LeaveRequestModel.AttributeNames.LeaveRequestCode</label>
 						<input type="text" class="form-control form-control-sm" asp-for="LeaveRequestCode" />
 					</div>
 
 					<div class="col-3">
-						<label for="@LeaveRequestModel.AttributeNames.ApprovalStatus" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalStatus</label>
+						<label for="@LeaveRequestModel.AttributeNames.ApprovalStatus" class="col-form-label col-md-12" localize-content>@LeaveRequestModel.AttributeNames.ApprovalStatus</label>
 						<select class="form-select form-select-sm" asp-for="ApprovalStatus">
 							<option value=""></option>
 							@foreach (var item in Enum.GetValues(typeof(Enums.ApprovalStatus)))
@@ -70,7 +70,7 @@
 					</div>
 
 					<div class="col-3">
-						<label for="@LeaveRequestModel.AttributeNames.LeaveDayType" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.LeaveDayType</label>
+						<label for="@LeaveRequestModel.AttributeNames.LeaveDayType" class="col-form-label col-md-12" localize-content>@LeaveRequestModel.AttributeNames.LeaveDayType</label>
 						<select class="form-select form-select-sm" asp-for="LeaveDayType">
 							<option value=""></option>
 							@foreach (var item in Enum.GetValues(typeof(Enums.LeaveDayType)))
@@ -81,22 +81,22 @@
 					</div>
 
 					<div class="col-3">
-						<label for="@LeaveRequestModel.AttributeNames.ApprovalDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.ApprovalDate</label>
+						<label for="@LeaveRequestModel.AttributeNames.ApprovalDate" class="col-form-label col-md-12" localize-content>@LeaveRequestModel.AttributeNames.ApprovalDate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="ApprovalDate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@LeaveRequestModel.AttributeNames.RequestDate" class="col-form-label col-md-6" localize-content>@LeaveRequestModel.AttributeNames.RequestDate</label>
+						<label for="@LeaveRequestModel.AttributeNames.RequestDate" class="col-form-label col-md-12" localize-content>@LeaveRequestModel.AttributeNames.RequestDate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="RequestDate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
 					</div>
 				</div>

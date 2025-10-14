@@ -40,12 +40,12 @@
 			<form id="@TableName.SupplierOrder-search-form" class="m-2">
 				<div class="row g-2 mb-2">
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.SupplierOrderCode" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.SupplierOrderCode</label>
+						<label for="@SupplierOrderModel.AttributeNames.SupplierOrderCode" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.SupplierOrderCode</label>
 						<input type="text" class="form-control form-control-sm" asp-for="SupplierOrderCode" />
 					</div>
 
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.OrderStatus" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.OrderStatus</label>
+						<label for="@SupplierOrderModel.AttributeNames.OrderStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderStatus</label>
 						<select class="form-select form-select-sm" asp-for="OrderStatus">
 							<option value=""></option>
 							@foreach (var item in Enum.GetValues(typeof(Enums.OrderStatus)))
@@ -56,7 +56,7 @@
 					</div>
 
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.PaymentStatus" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.PaymentStatus</label>
+						<label for="@SupplierOrderModel.AttributeNames.PaymentStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.PaymentStatus</label>
 						<select class="form-select form-select-sm" asp-for="PaymentStatus">
 							<option value=""></option>
 							@foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
@@ -67,27 +67,27 @@
 					</div>
 
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.OrderDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.OrderDate</label>
+						<label for="@SupplierOrderModel.AttributeNames.OrderDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderDate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="OrderDate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate</label>
+						<label for="@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="ExpectedDeliveryDate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.ActualDeliveryDate" class="col-form-label col-md-6" localize-content>@SupplierOrderModel.AttributeNames.ActualDeliveryDate</label>
+						<label for="@SupplierOrderModel.AttributeNames.ActualDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ActualDeliveryDate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="ActualDeliveryDate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-6" localize-content>@Constants.DateCreate</label>
+						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
 					</div>
 
 					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-6" localize-content>@Constants.DateUpdate</label>
+						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
 						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
 					</div>
 				</div>
@@ -134,7 +134,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="mb-2">
-								<label for="Signature" class="col-form-label col-md-6" localize-content>Signature</label>
+								<label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
 								<div class="col-md-12">
 									<div style="border: 1px solid #ccc; height: 250px;">
 										<canvas id="signature-pad" style="width: 100%; height: 100%; display: block;"></canvas>
@@ -172,7 +172,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="mb-2">
-								<label for="Signature" class="col-form-label col-md-6" localize-content>Signature</label>
+								<label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
 								<div class="col-md-12">
 									<img src="" alt="Signature" style="max-width:100%; height:auto;">
 								</div>
