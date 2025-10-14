@@ -60,14 +60,14 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-						<i class="fa-solid fa-xmark"></i> <span localize-content>Close</span>
+						<i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
 					</button>
 					<button type="button" class="button btn" id="send-button" data-bs-dismiss="modal">
 						@{
 							var sendMailIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><line x1=""22"" y1=""2"" x2=""11"" y2=""13""></line><polygon points=""22 2 15 22 11 13 2 9 22 2""></polygon></svg>";
 						}
 
-						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.SendMail, iconHtml = sendMailIcon })
+						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSendMail, iconHtml = sendMailIcon })
 					</button>
 				</div>
 			</form>

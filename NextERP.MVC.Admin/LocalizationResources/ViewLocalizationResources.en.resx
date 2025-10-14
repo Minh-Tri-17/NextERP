@@ -126,7 +126,7 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="RememberMe" xml:space="preserve">
+  <data name="Remember" xml:space="preserve">
     <value>Remember me</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
@@ -152,9 +152,6 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
   </data>
   <data name="Employee" xml:space="preserve">
     <value>Employee</value>
@@ -249,49 +246,49 @@
   <data name="HistoryNotificationList" xml:space="preserve">
     <value>List history notification</value>
   </data>
-  <data name="Close" xml:space="preserve">
+  <data name="ButtonClose" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="PositionList" xml:space="preserve">
     <value>List position</value>
   </data>
-  <data name="Save" xml:space="preserve">
+  <data name="ButtonSave" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="ProductList" xml:space="preserve">
     <value>List product</value>
   </data>
-  <data name="SaveAndClose" xml:space="preserve">
+  <data name="ButtonSaveAndClose" xml:space="preserve">
     <value>Save &amp; close</value>
   </data>
   <data name="ProductCategoryList" xml:space="preserve">
     <value>List product category</value>
   </data>
-  <data name="Create" xml:space="preserve">
+  <data name="ButtonCreate" xml:space="preserve">
     <value>Create</value>
   </data>
   <data name="PromotionList" xml:space="preserve">
     <value>List promotion</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+  <data name="ButtonEdit" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="RoleList" xml:space="preserve">
     <value>List role</value>
   </data>
-  <data name="Delete" xml:space="preserve">
+  <data name="ButtonDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="SalaryList" xml:space="preserve">
     <value>List salary</value>
   </data>
-  <data name="Import" xml:space="preserve">
+  <data name="ButtonImport" xml:space="preserve">
     <value>Import</value>
   </data>
   <data name="ScheduleList" xml:space="preserve">
     <value>List schedule</value>
   </data>
-  <data name="Export" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Export</value>
   </data>
   <data name="SpaServiceList" xml:space="preserve">
@@ -384,13 +381,13 @@
   <data name="Manufacturer" xml:space="preserve">
     <value>Manufacturer</value>
   </data>
-  <data name="StartImport" xml:space="preserve">
+  <data name="ButtonStartImport" xml:space="preserve">
     <value>Start import</value>
   </data>
   <data name="CountryOfOrigin" xml:space="preserve">
     <value>Country of origin</value>
   </data>
-  <data name="StartExport" xml:space="preserve">
+  <data name="ButtonStartExport" xml:space="preserve">
     <value>Start export</value>
   </data>
   <data name="ReorderLevel" xml:space="preserve">
@@ -420,13 +417,13 @@
   <data name="InTime" xml:space="preserve">
     <value>In time</value>
   </data>
-  <data name="Search" xml:space="preserve">
+  <data name="ButtonSearch" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="OutTime" xml:space="preserve">
     <value>Out time</value>
   </data>
-  <data name="Clear" xml:space="preserve">
+  <data name="ButtonClear" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="SearchCode" xml:space="preserve">
@@ -507,7 +504,7 @@
   <data name="Base64Images" xml:space="preserve">
     <value>Images</value>
   </data>
-  <data name="DeletePermanently" xml:space="preserve">
+  <data name="ButtonDeletePermanently" xml:space="preserve">
     <value>Delete Permanently</value>
   </data>
   <data name="BranchCode" xml:space="preserve">
@@ -981,7 +978,7 @@
   <data name="TemplateNotificationCode" xml:space="preserve">
     <value>Template notification code</value>
   </data>
-  <data name="OpenSendMail" xml:space="preserve">
+  <data name="ButtonOpenSendMail" xml:space="preserve">
     <value>Open send mail</value>
   </data>
   <data name="TemplateNotification" xml:space="preserve">
@@ -999,7 +996,7 @@
   <data name="HistoryMailName" xml:space="preserve">
     <value>History mail name</value>
   </data>
-  <data name="CTA" xml:space="preserve">
+  <data name="ButtonCTA" xml:space="preserve">
     <value>Explore now</value>
   </data>
   <data name="TemplateContent" xml:space="preserve">
@@ -1022,9 +1019,6 @@
   </data>
   <data name="Attachments" xml:space="preserve">
     <value>Attachments</value>
-  </data>
-  <data name="SendMail" xml:space="preserve">
-    <value>Send mail</value>
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>
@@ -1059,8 +1053,8 @@
   <data name="zstring230" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring220" xml:space="preserve">
-    <value />
+  <data name="ButtonRegister" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="zstring240" xml:space="preserve">
     <value />
@@ -1092,14 +1086,11 @@
   <data name="zstring233" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring223" xml:space="preserve">
-    <value />
-  </data>
   <data name="zstring243" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring218" xml:space="preserve">
-    <value />
+  <data name="ButtonSendMail" xml:space="preserve">
+    <value>Send mail</value>
   </data>
   <data name="zstring238" xml:space="preserve">
     <value />
@@ -1149,14 +1140,14 @@
   <data name="zstring232" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring222" xml:space="preserve">
-    <value />
+  <data name="ButtonPayment" xml:space="preserve">
+    <value>Payment</value>
   </data>
   <data name="zstring242" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring217" xml:space="preserve">
-    <value />
+  <data name="ButtonSignature" xml:space="preserve">
+    <value>Signature</value>
   </data>
   <data name="zstring237" xml:space="preserve">
     <value />
@@ -1176,9 +1167,6 @@
   <data name="YourOTP" xml:space="preserve">
     <value>Your OTP: {0}</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
-  </data>
   <data name="OTPNotFound" xml:space="preserve">
     <value>F:OTP not found</value>
   </data>
@@ -1194,8 +1182,8 @@
   <data name="zstring231" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring221" xml:space="preserve">
-    <value />
+  <data name="ButtonSendOTP" xml:space="preserve">
+    <value>Send OTP</value>
   </data>
   <data name="zstring241" xml:space="preserve">
     <value />
@@ -1227,14 +1215,11 @@
   <data name="zstring234" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring224" xml:space="preserve">
-    <value />
-  </data>
   <data name="zstring244" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring219" xml:space="preserve">
-    <value />
+  <data name="ButtonLogin" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="zstring239" xml:space="preserve">
     <value />
@@ -1254,7 +1239,10 @@
   <data name="HistoryMail" xml:space="preserve">
     <value>History mail</value>
   </data>
-  <data name="SendOTP" xml:space="preserve">
-    <value>Send OTP</value>
+  <data name="SendMail" xml:space="preserve">
+    <value>Send mail</value>
+  </data>
+  <data name="zstring224" xml:space="preserve">
+    <value />
   </data>
 </root>

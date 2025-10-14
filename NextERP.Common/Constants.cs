@@ -387,6 +387,31 @@
 
         #endregion
 
+        #region Button
+
+        public const string ButtonClose = "ButtonClose";
+        public const string ButtonSave = "ButtonSave";
+        public const string ButtonSaveAndClose = "ButtonSaveAndClose";
+        public const string ButtonCreate = "ButtonCreate";
+        public const string ButtonEdit = "ButtonEdit";
+        public const string ButtonDelete = "ButtonDelete";
+        public const string ButtonDeletePermanently = "ButtonDeletePermanently";
+        public const string ButtonImport = "ButtonImport";
+        public const string ButtonExport = "ButtonExport";
+        public const string ButtonClear = "ButtonClear";
+        public const string ButtonSearch = "ButtonSearch";
+        public const string ButtonSignature = "ButtonSignature";
+        public const string ButtonSendMail = "ButtonSendMail";
+        public const string ButtonStartExport = "ButtonStartExport";
+        public const string ButtonStartImport = "ButtonStartImport";
+        public const string ButtonCTA = "ButtonCTA";
+        public const string ButtonLogin = "ButtonLogin";
+        public const string ButtonSendOTP = "ButtonSendOTP";
+        public const string ButtonRegister = "ButtonRegister";
+        public const string ButtonPayment = "ButtonPayment";
+
+        #endregion
+
         public const string Context = "Context";
         public const string Token = "Token";
         public const string APIAddress = "APIAddress";
@@ -436,8 +461,9 @@
         public const string ProductsFolderPath = "Products";
         public const string SignatureFolderPath = "Signature";
         public const string Signature = "Signature";
-        public const string Save = "Save";
         public const string Button = "Button";
-        public const string SaveAndClose = "SaveAndClose";
+        public const string GetProducts = "GetProducts";
+        public const string GetInvoiceDetails = "GetInvoiceDetails";
+        public const string ProductsCard = "ProductsCard";
     }
 }

@@ -21,23 +21,23 @@
         <form method="post">
             <div class="filter-actions">
                 <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-                    <i class="fa-solid fa-plus"></i> <span localize-content>Create</span>
+                    <i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
                 </button>
                 <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-                    <i class="fa-solid fa-pen"></i> <span localize-content>Edit</span>
+                    <i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
                 <button type="button" class="btn btn-danger disabled" id="delete-button">
-                    <i class="fa-solid fa-trash"></i> <span localize-content>Delete</span>
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
                 </button>
                 <button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
-                    <i class="fa-solid fa-trash"></i> <span localize-content>DeletePermanently</span>
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
                 </button>
                 <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
-                    <i class="fa-solid fa-file-import"></i> <span localize-content>Import</span>
+                    <i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
                 </button>
                 <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
-                    <i class="fa-solid fa-file-export"></i> <span localize-content>Export</span>
+                    <i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
                 </button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
@@ -82,10 +82,10 @@
 
                 <div class="text-end">
                     <button type="button" class="btn btn-info" id="search-button">
-                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>Search</span>
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
                     </button>
                     <button type="button" class="btn btn-secondary" id="clear-button">
-                        <i class="fa-solid fa-broom"></i> <span localize-content>Clear</span>
+                        <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
                     </button>
                 </div>
             </form>
