@@ -89,15 +89,15 @@ function parseResponse(response) {
     const contentType = response.headers.get("content-type");
 
     if (contentType && contentType.includes("application/json")) {
-        return response.json().then(data => ({ type: 'json', data }));
+        return response.json().then(data => ({type: 'json', data}));
     } else {
-        return response.text().then(data => ({ type: 'html', data }));
+        return response.text().then(data => ({type: 'html', data}));
     }
 }
 
 //& Sau khi load dữ liệu thành công, ẩn loader và xử lý cuộn bảng
 function afterCallAPISuccess() {
-    $(".loader").css("display", "none");
+    $(".loader").fadeOut(350);
 
     // Gọi hàm tableScrollHandler để xử lý cuộn bảng
     tableScrollHandler();

@@ -269,7 +269,7 @@
 	});
 
 	function loadSupplierOrders($form, pageIndex) {
-		$(".loader").css("display", "flex");
+		$(".loader").fadeIn(350);
 
 		const $formData = new FormData($form.get(0));
 
@@ -305,7 +305,7 @@
 		filter.append("@Constants.PageIndex", pageIndex);
 		filter.append("@SupplierOrderModel.AttributeNames.SupplierOrderId", $supplierOrderId);
 
-		$(".loader").css("display", "flex");
+		$(".loader").fadeIn(350);
 
 		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", "POST", filter, "#@TableName.SupplierOrderDetail-table")
 			.then(data => {

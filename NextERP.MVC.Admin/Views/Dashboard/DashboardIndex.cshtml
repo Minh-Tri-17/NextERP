@@ -39,7 +39,7 @@
 
 	<div class="card quick-statistics1">
 		<!--& Dữ liệu thật -->
-		<div class="quick-statistics-container real-data d-none">
+		<div class="quick-statistics-container real-data">
 			<div class="quick-statistics-img1">
 				<img src="/images/atm-card.png" alt="" />
 			</div>
@@ -61,7 +61,7 @@
 
 	<div class="card quick-statistics2">
 		<!--& Dữ liệu thật -->
-		<div class="quick-statistics-container real-data d-none">
+		<div class="quick-statistics-container real-data">
 			<div class="quick-statistics-img2">
 				<img src="/images/analytics.png" alt="" />
 			</div>
@@ -83,7 +83,7 @@
 
 	<div class="card quick-statistics3">
 		<!--& Dữ liệu thật -->
-		<div class="quick-statistics-container real-data d-none">
+		<div class="quick-statistics-container real-data">
 			<div class="quick-statistics-img3">
 				<img src="/images/spending.png" alt="" />
 			</div>
@@ -105,7 +105,7 @@
 
 	<div class="card quick-statistics4">
 		<!--& Dữ liệu thật -->
-		<div class="quick-statistics-container real-data d-none">
+		<div class="quick-statistics-container real-data">
 			<div class="quick-statistics-img4">
 				<img src="/images/join.png" alt="" />
 			</div>
@@ -127,7 +127,7 @@
 
 	<div class="card dashboard-chart-column">
 		<!--& Dữ liệu thật -->
-		<div id="chart-column" class="chart real-data d-none"></div>
+		<div id="chart-column" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -137,7 +137,7 @@
 
 	<div class="card dashboard-chart-line">
 		<!--& Dữ liệu thật -->
-		<div id="chart-line" class="chart real-data d-none"></div>
+		<div id="chart-line" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -147,7 +147,7 @@
 
 	<div class="card dashboard-chart-donut">
 		<!--& Dữ liệu thật -->
-		<div id="chart-donut" class="chart real-data d-none"></div>
+		<div id="chart-donut" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -157,7 +157,7 @@
 
 	<div class="card dashboard-chart-radar">
 		<!--& Dữ liệu thật -->
-		<div id="chart-radar" class="chart real-data d-none"></div>
+		<div id="chart-radar" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -167,7 +167,7 @@
 
 	<div class="card service">
 		<!--& Dữ liệu thật -->
-		<div class="service-container real-data d-none">
+		<div class="service-container real-data">
 			@foreach (var item in Model.StatisticsService)
 			{
 				<div class="service-item">
@@ -187,7 +187,7 @@
 
 	<div class="card dashboard-chart-funnel">
 		<!--& Dữ liệu thật -->
-		<div id="chart-funnel" class="chart real-data d-none"></div>
+		<div id="chart-funnel" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -197,7 +197,7 @@
 
 	<div class="card dashboard-chart-slope">
 		<!--& Dữ liệu thật -->
-		<div id="chart-slope" class="chart real-data d-none"></div>
+		<div id="chart-slope" class="chart real-data"></div>
 
 		<!--& Placeholder khi đang load -->
 		<div class="chart-placeholder loading-data placeholder-glow h-100">
@@ -224,20 +224,21 @@
 		])
 		.then(([column, donut, radar, line, funnel, slope]) => {
 			// 1. Ẩn loading / hiện real-data
-			$(".real-data").removeClass("d-none");
-			$(".loading-data").addClass("d-none");
+			$(".loading-data").fadeOut(500, function() {
+				$(".real-data").fadeIn(500);
+			});
 
-			// 2. Sau 200ms mới render chart
-			setTimeout(() => {
-				animateNumber();
+			// 2. Sau 300ms mới render chart
+				setTimeout(() => {
+					animateNumber();
 
-				renderChartColumn("#chart-column", "Column Chart", column.result);
-				renderChartDonut("#chart-donut", "Donut Chart", donut.result);
-				renderChartRadar("#chart-radar", "Radar Chart", radar.result);
-				renderChartLine("#chart-line", "Line chart", line.result);
-				renderChartFunnel("#chart-funnel", "Funnel chart", funnel.result);
-				renderChartSlope("#chart-slope", "Slope chart", slope.result);
-			}, 200);
+					renderChartColumn("#chart-column", "Column Chart", column.result);
+					renderChartDonut("#chart-donut", "Donut Chart", donut.result);
+					renderChartRadar("#chart-radar", "Radar Chart", radar.result);
+					renderChartLine("#chart-line", "Line chart", line.result);
+					renderChartFunnel("#chart-funnel", "Funnel chart", funnel.result);
+					renderChartSlope("#chart-slope", "Slope chart", slope.result);
+				}, 300);
 		})
 		.catch(err => {
 

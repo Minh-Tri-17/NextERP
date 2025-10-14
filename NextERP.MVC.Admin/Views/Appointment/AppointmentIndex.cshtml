@@ -33,7 +33,7 @@
 	function loadAppointments() {
 		let filter = new FormData();
 
-		$(".loader").css("display", "flex");
+		$(".loader").fadeIn(350);
 
 		callApi("@Url.Action(Constants.GetList, TableName.Appointment)", "POST", filter)
 			.then(result => {
