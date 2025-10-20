@@ -32,10 +32,6 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceDetailModel request)
         {
-            #region Check null request and create variable
-
-            #endregion
-
             var product = await _context.Products.FirstOrDefaultAsync(s => s.Id == request.ProductId);
             if (product == null)
                 return new APIErrorResult<bool>(Messages.NotFoundProduct);
@@ -45,21 +41,20 @@ namespace NextERP.BLL.Service
             if (invoiceDetailUpdate != null)
             {
                 invoiceDetailUpdate.Quantity += request.Quantity;
-                invoiceDetailUpdate.UnitPrice += product.Price;
-
-                _context.InvoiceDetails.Update(invoiceDetailUpdate);
+                invoiceDetailUpdate.UnitPrice = product.Price;
+                invoiceDetailUpdate.TotalPrice = invoiceDetailUpdate.Quantity * invoiceDetailUpdate.UnitPrice;
             }
             else
             {
                 var invoiceDetail = new InvoiceDetail();
-                request.UnitPrice = request.Quantity * product.Price;
+                request.UnitPrice = product.Price;
+                request.TotalPrice = request.Quantity * request.UnitPrice;
                 DataHelper.MapAudit(request, invoiceDetail, _currentUser.UserName);
 
                 await _context.InvoiceDetails.AddAsync(invoiceDetail);
             }
 
             product.QuantityInStock = product.QuantityInStock - request.Quantity;
-            _context.Products.Update(product);
 
             var result = await _context.SaveChangesAsync();
             if (result > 0)
@@ -91,7 +86,6 @@ namespace NextERP.BLL.Service
                 if (product != null)
                 {
                     product.QuantityInStock = product.QuantityInStock + invoiceDetail.Quantity;
-                    _context.Products.Update(product);
                 }
 
                 _context.InvoiceDetails.Remove(invoiceDetail); // Xóa vĩnh viễn

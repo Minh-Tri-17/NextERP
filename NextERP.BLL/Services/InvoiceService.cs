@@ -32,15 +32,12 @@ namespace NextERP.BLL.Service
 
         public async Task<APIBaseResult<bool>> CreateOrEdit(InvoiceModel request)
         {
-            #region Check null request and create variable
-
-            #endregion
-
+            // Sau này thêm field để phân biệt được cái nào của chổ thanh toán cái nào của giỏ hàng => dùng flag IsCart
             var listInvoiceDetail = await _context.InvoiceDetails
                .Where(s => !s.InvoiceId.HasValue)
                .ToListAsync();
 
-            request.TotalAmount = listInvoiceDetail.Sum(s => s.UnitPrice);
+            request.TotalAmount = listInvoiceDetail.Sum(s => s.TotalPrice);
             request.PaymentStatus = Enums.PaymentStatus.Paid.ToString();
             request.InvoiceDate = DateTime.Now;
 
@@ -48,18 +45,12 @@ namespace NextERP.BLL.Service
             DataHelper.MapAudit(request, invoice, _currentUser.UserName);
             _context.Invoices.Add(invoice);
 
-            var saveInvoiceResult = _context.SaveChanges();
-
-            if (saveInvoiceResult > 0)
+            foreach (var invoiceDetail in listInvoiceDetail)
             {
-                foreach (var invoiceDetail in listInvoiceDetail)
-                {
-                    invoiceDetail.InvoiceId = invoice.Id;
-                    _context.InvoiceDetails.Update(invoiceDetail);
-                }
+                invoiceDetail.InvoiceId = invoice.Id;
             }
 
-            var result = _context.SaveChanges();
+            var result = await _context.SaveChangesAsync();
             if (result > 0)
                 return new APISuccessResult<bool>(Messages.CreateSuccess, true);
 
