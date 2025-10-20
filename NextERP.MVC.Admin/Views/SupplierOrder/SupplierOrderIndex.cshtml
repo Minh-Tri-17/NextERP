@@ -204,16 +204,16 @@
 
 		$("#refresh-list").click(function(){
 			loadSupplierOrders($searchForm);
+
+			// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+			$supplierOrderId = "";
+
 			loadSupplierOrderDetails();
 		});
 
 		$(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
 			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
 			$supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
-
-			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-			const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
-			checkLengthCheckbox($length, false, false, false, false, "@TableName.SupplierOrder-checkbox");
 
 			if ($length == 1) {
 				$("#signature-button").removeClass('disabled');
@@ -244,8 +244,8 @@
 
 		$("#save-signature-button").click(function () {
 			const $form = $(this).closest("form");
-			const $formData = new FormData($form[0]);
-			const $formElement = $form[0];
+			const $formData = new FormData($form.get(0));
+			const $formElement = $form.get(0);
 			$formData.set("@Constants.Id", $supplierOrderId);
 
 			// Xuất ra Base64 (JPG)
@@ -257,6 +257,7 @@
 			callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", $formData)
 				.then(data => {
 					loadSupplierOrders($searchForm);
+					loadSupplierOrderDetails();
 
 					if (data && Array.isArray(data)) {
 						showInvalid(data, $formElement);
@@ -288,9 +289,6 @@
 
 		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrder)", "POST", filter, "#@TableName.SupplierOrder-table")
 			.then(data => {
-				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-				checkLengthCheckbox(0, true, true, true, true, "@TableName.SupplierOrder-checkbox");
-
 				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
 				$supplierOrderId = "";
 			})
@@ -309,8 +307,7 @@
 
 		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", "POST", filter, "#@TableName.SupplierOrderDetail-table")
 			.then(data => {
-				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-				checkLengthCheckbox(0, true, true, false, false, "@TableName.SupplierOrderDetail-checkbox");
+
 			})
 			.catch(err => {
 				showMessage("@Localizer[Messages.ErrorCallAPI]");

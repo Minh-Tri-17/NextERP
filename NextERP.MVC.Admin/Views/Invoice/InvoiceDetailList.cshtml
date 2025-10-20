@@ -1,0 +1,76 @@
+﻿@using System.Reflection
+@using NextERP.ModelBase
+@using NextERP.ModelBase.APIResult
+@using NextERP.ModelBase.PagingResult
+@using NextERP.Util
+@using UtilHtmlHelper = NextERP.Util.HtmlHelper
+@model APIBaseResult<PagingResult<InvoiceDetailModel>>
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+
+<div class="table-container">
+	<table class="table table-hover me-2">
+		<thead>
+			<tr>
+				<th>
+					<div class="form-check">
+						<input class="check-all form-check-input" type="checkbox" />
+					</div>
+				</th>
+				<th>#</th>
+				@{
+					var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete };
+
+					var listField = UtilHtmlHelper.GetOrderedProperties<InvoiceDetailModel>(excludedFields);
+
+					foreach (var item in listField)
+					{
+						<th localize-content>@item.Name</th>
+					}
+				}
+			</tr>
+		</thead>
+
+		<tbody class="sortable-group table-group-divider" id="table-invoice-detail">
+			@if (DataHelper.ListIsNotNull(Model))
+			{
+				int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
+
+				foreach (var row in Model!.Result!.Items!)
+				{
+					<tr>
+						<td>
+							<input type="hidden" name="@InvoiceDetailModel.AttributeNames.InvoiceDetailId" value="@row.Id" />
+							<div class="form-check">
+								<input class="form-check-input @TableName.InvoiceDetail-checkbox" type="checkbox" />
+							</div>
+						</td>
+						<td>@counter</td>
+						@foreach (var field in listField)
+						{
+							var value = field.GetValue(row);
+							<td localize-content>@(value ?? "")</td>
+						}
+					</tr>
+
+					counter++;
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+<script>
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		 $(".check-all").change(function () {
+			// Gán giá trị cho tất cả checkbox HistoryNotification-checkbox
+			$(".@TableName.InvoiceDetail-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+
+			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+			const $length = $(".@TableName.InvoiceDetail-checkbox:checked").length;
+			checkLengthCheckbox($length, false, false, true, false, "@TableName.InvoiceDetail-checkbox");
+		});
+	});
+</script>

@@ -4,10 +4,212 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
-    ViewData["Title"] = TableName.Invoice;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
-{
-        (TableName.Invoice + "List", "", true),
-    };
+	ViewData["Title"] = TableName.Invoice;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+	{
+		(TableName.Invoice + "List", "", true),
+	};
 }
+
+<div class="main-container">
+	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+	<input type="hidden" id="current-page-index" value="1" />
+
+	<!--& FILTER -->
+	<section class="filter-panel card">
+		<form method="post">
+			<div class="filter-actions">
+				<button type="button" class="button btn disabled" id="pay-button" data-bs-toggle="modal" data-bs-target="#create-customer-modal">
+					@{
+						var paymentIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><rect x=""1"" y=""4"" width=""22"" height=""16"" rx=""2"" ry=""2""></rect><line x1=""1"" y1=""10"" x2=""23"" y2=""10""></line><path d=""M16 16.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z""></path></svg>";
+					}
+
+					@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonPayment, iconHtml = paymentIcon });
+				</button>
+				<input type="text" name="Ids" id="Ids" hidden />
+				<button type="button" class="btn btn-danger disabled" id="delete-button">
+					<i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
+				</button>
+				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+					<i class="fa-solid fa-filter"></i>
+				</button>
+				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+			</div>
+		</form>
+
+		<div class="collapse" id="filter-inputs">
+			<form id="@TableName.Product-search-form" class="m-2">
+				<div class="row g-2 mb-2">
+					<div class="col-3">
+						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
+						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+					</div>
+
+					<div class="col-3">
+						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
+						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+					</div>
+				</div>
+
+				<div class="text-end">
+					<button type="button" class="btn btn-info" id="search-button">
+						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+					</button>
+					<button type="button" class="btn btn-secondary" id="clear-button">
+						<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<!--& TABLE -->
+	<section class="table-wrapper card">
+		<div class="table-wrapper-body col-12 row">
+			<div class="table-wrapper-main col-7" id="@Constants.ProductsCard-table">
+			</div>
+
+			<div class="col-1 d-flex justify-content-center">
+				<div class="border-start border-2"></div>
+			</div>
+
+			<div class="table-wrapper-secondary col-4" id="@TableName.InvoiceDetail-table">
+			</div>
+		</div>
+	</section>
+
+	<!--& MODAL -->
+	<section class="modal-wrapper">
+		@await Html.PartialAsync(ScreenName.Invoice.CustomerForm, Model)
+	</section>
+</div>
+
+<script>
+	let $searchForm;
+
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		$searchForm = $("#@TableName.Product-search-form");
+
+		loadProductCards($searchForm);
+		loadInvoiceDetail();
+
+		$(document).on("change", ".@TableName.InvoiceDetail-checkbox", function () {
+			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+			const $length = $(".@TableName.InvoiceDetail-checkbox:checked").length;
+			checkLengthCheckbox($length, false, false, true, false, "@TableName.InvoiceDetail-checkbox");
+		});
+
+		$("#refresh-list").click(function () {
+			loadProductCards($searchForm);
+		});
+
+		$("#search-button").click(function () {
+			loadProductCards($searchForm);
+		});
+
+		$("#clear-button").click(function () {
+			$searchForm.get(0).reset();
+
+			loadProductCards($searchForm);
+		});
+
+		$("#pay-button").click(function () {
+			$("#@TableName.Customer-search-form").get(0).reset();
+			$(".save-button").addClass(" disabled");
+			$("#create-customer-button").removeClass(" disabled");
+
+			$([
+				"#@TableName.Customer #@CustomerModel.AttributeNames.FullName",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.Gender",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.Dob",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.Email",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.Note",
+				"#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus"
+			].join(', ')).prop('disabled', false);
+		});
+
+		$("#delete-button").click(function () {
+			// Lấy tất cả các Id của các checkbox đã chọn
+			const $ids = $(".@TableName.InvoiceDetail-checkbox:checked").map(function () {
+				return $(this).closest("tr").find('input[name="@InvoiceDetailModel.AttributeNames.InvoiceDetailId"]').val();
+			}).get().join(",");
+
+			var $form = $(this).closest("form")
+			$form.find("#Ids").val($ids);
+
+			const $formData = new FormData($form.get(0));
+
+			callApi("@Url.Action(Constants.Delete, TableName.InvoiceDetail)", "POST", $formData)
+				.then(data => {
+					loadProductCards($searchForm);
+					loadInvoiceDetail();
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
+	});
+
+	function checkInvoiceDetails() {
+		var tbody = document.querySelector("#table-invoice-detail");
+
+		if (tbody && tbody.children.length > 0) {
+			$("#pay-button").removeClass(" disabled");
+		}
+		else {
+			$("#pay-button").addClass(" disabled");
+		}
+	}
+
+	function loadProductCards($form, pageIndex) {
+		$(".loader").fadeIn(350);
+
+		const $formData = new FormData($form.get(0));
+
+		const filter = new FormData();
+		filter.append("@Constants.PageIndex", pageIndex);
+
+		const $isDelete = $("#is-delete").is(":checked");
+		filter.append("@Constants.IsDelete", $isDelete);
+
+		// Xóa các key không cần thiết (__Invariant)
+		for (const [key, value] of $formData.entries()) {
+			if (key !== "__Invariant") {
+				filter.append(key, value);
+			}
+		}
+
+		callApi("@Url.Action((Constants.GetList + TableName.Product), TableName.Invoice)", "POST", filter, "#@Constants.ProductsCard-table")
+			.then(data => {
+
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	}
+
+	function loadInvoiceDetail() {
+		$(".loader").fadeIn(350);
+
+		const filter = new FormData();
+		const $isDelete = $("#is-delete").is(":checked");
+		filter.append("@Constants.IsDelete", $isDelete);
+
+		callApi("@Url.Action((Constants.GetList + TableName.InvoiceDetail), TableName.Invoice)", "POST", filter, "#@TableName.InvoiceDetail-table")
+			.then(data => {
+				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+				checkLengthCheckbox(0, false, false, true, false, "@TableName.InvoiceDetail-checkbox");
+
+				checkInvoiceDetails();
+			})
+			.catch(err => {
+				showMessage("@Localizer[Messages.ErrorCallAPI]");
+			});
+	}
+</script>

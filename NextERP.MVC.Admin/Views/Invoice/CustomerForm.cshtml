@@ -1,0 +1,288 @@
+﻿@using NextERP.ModelBase
+@using NextERP.Util
+@model NextERP.ModelBase.InvoiceModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+
+<div class="modal fade" id="create-customer-modal" aria-hidden="true" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>CreateOrEdit</h1>
+				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-customer-inputs" aria-expanded="true" aria-controls="filter-customer-inputs">
+					<i class="fa-solid fa-filter"></i>
+				</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="collapse" id="filter-customer-inputs">
+					<form id="@TableName.Customer-search-form" class="m-2">
+						<div class="row g-2 mb-2">
+							<div class="col-4">
+								<label for="@CustomerModel.AttributeNames.PhoneNumber" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.PhoneNumber</label>
+								<input type="text" class="form-control form-control-sm" name="@CustomerModel.AttributeNames.PhoneNumber" id="@CustomerModel.AttributeNames.PhoneNumber" />
+							</div>
+						</div>
+
+						<div class="text-end">
+							<button type="button" class="btn btn-info" id="search-customer-button">
+								<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+							</button>
+						</div>
+					</form>
+				</div>
+				<form class="needs-validation" id="@TableName.Customer" novalidate>
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.CustomerCode" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.CustomerCode</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="@CustomerModel.AttributeNames.CustomerCode" id="@CustomerModel.AttributeNames.CustomerCode" disabled />
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.Dob" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Dob</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" name="@CustomerModel.AttributeNames.Dob" id="@CustomerModel.AttributeNames.Dob" />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Dob" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.FullName" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.FullName</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="@CustomerModel.AttributeNames.FullName" id="@CustomerModel.AttributeNames.FullName" />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.FullName" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.PhoneNumber" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.PhoneNumber</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="text" name="@CustomerModel.AttributeNames.PhoneNumber" id="@CustomerModel.AttributeNames.PhoneNumber" min="10" max="10" />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.PhoneNumber" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.Gender" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Gender</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" name="@CustomerModel.AttributeNames.Gender" id="@CustomerModel.AttributeNames.Gender">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.Gender)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Gender" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.JoinDate" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.JoinDate</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="date" name="@CustomerModel.AttributeNames.JoinDate" id="@CustomerModel.AttributeNames.JoinDate" />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.JoinDate" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.LoyaltyPoints" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.LoyaltyPoints</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" name="@CustomerModel.AttributeNames.LoyaltyPoints" id="@CustomerModel.AttributeNames.LoyaltyPoints" disabled />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.LoyaltyPoints" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.TotalSpent" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.TotalSpent</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="number" name="@CustomerModel.AttributeNames.TotalSpent" id="@CustomerModel.AttributeNames.TotalSpent" disabled />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.TotalSpent" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.Email" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Email</label>
+						<div class="col-md-12">
+							<input class="form-control form-control-sm" type="email" name="@CustomerModel.AttributeNames.Email" id="@CustomerModel.AttributeNames.Email" />
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Email" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.OperatingStatus</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" name="@CustomerModel.AttributeNames.OperatingStatus" id="@CustomerModel.AttributeNames.OperatingStatus">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.OperatingStatus)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.OperatingStatus" localize-content></div>
+						</div>
+					</div>
+
+					<div class="mb-2">
+						<label for="@CustomerModel.AttributeNames.Note" class="col-form-label col-md-12" localize-content>@CustomerModel.AttributeNames.Note</label>
+						<div class="col-md-12">
+							<textarea class="form-control form-control-sm" rows="3" name="@CustomerModel.AttributeNames.Note" id="@CustomerModel.AttributeNames.Note"></textarea>
+							<div class="invalid-feedback" id="invalid-@CustomerModel.AttributeNames.Note" localize-content></div>
+						</div>
+					</div>
+				</form>
+				<form class="needs-validation" id="@TableName.Invoice" novalidate>
+					<input type="hidden" asp-for="Id" />
+					<input type="hidden" asp-for="EmployeeId" value="@ViewBag.OwnerID" />
+					<input type="hidden" asp-for="CustomerId" />
+					<div class="mb-2">
+						<label for="" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.PaymentMethod</label>
+						<div class="col-md-12">
+							<select class="form-select form-select-sm" asp-for="PaymentMethod">
+								<option value=""></option>
+								@foreach (var item in Enum.GetValues(typeof(Enums.PaymentMethod)))
+								{
+									<option value="@item" localize-content>@item</option>
+								}
+							</select>
+							<div class="invalid-feedback" id="invalid-@InvoiceModel.AttributeNames.PaymentMethod" localize-content></div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+					<i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
+				</button>
+				<button type="button" class="button btn" id="create-customer-button">
+					@{
+						var createIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><line x1=""12"" y1=""5"" x2=""12"" y2=""19""></line><line x1=""5"" y1=""12"" x2=""19"" y2=""12""></line></svg>";
+					}
+
+					@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonCreate, iconHtml = createIcon })
+				</button>
+				<button type="button" class="button btn save-button disabled" data-bs-dismiss="modal">
+					@{
+						var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+					}
+
+					@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSaveAndClose, iconHtml = saveAndCloseIcon })
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		$(".save-button").click(function () {
+			const $searchForm = $("#@TableName.Product-search-form");
+			const $saveForm = $("#@TableName.Invoice").closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
+			let id = $formData.get("@Constants.Id");
+
+			// Nếu không có ID (tạo mới), set Guid.Empty
+			if (!id || id.trim() === "") {
+				$formData.set("@Constants.Id", "@Guid.Empty");
+			}
+
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Invoice)", "POST", $formData)
+				.then(data => {
+					loadProductCards($searchForm);
+					loadInvoiceDetail();
+
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
+
+		$("#create-customer-button").click(function () {
+			const $saveForm = $("#@TableName.Customer").closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
+			let id = $formData.get("@Constants.Id");
+
+			// Nếu không có ID (tạo mới), set Guid.Empty
+			if (!id || id.trim() === "") {
+				$formData.set("@Constants.Id", "@Guid.Empty");
+			}
+
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Customer)", "POST", $formData)
+				.then(data => {
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
+
+		$("#search-customer-button").click(function () {
+			const $searchForm = $(this).closest("form");
+			const $formElement = $searchForm.get(0);
+			const $formData = new FormData($formElement);
+
+			callApi("@Url.Action((Constants.GetList + TableName.Customer), TableName.Invoice)/", "POST", $formData)
+				.then(data => {
+					if(data){
+						// Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+						$("#@CustomerModel.AttributeNames.CustomerId").val(data.id);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.CustomerCode").val(data.customerCode);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.FullName").val(data.fullName);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber").val(data.phoneNumber);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.Gender").val(data.gender);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.LoyaltyPoints").val(data.loyaltyPoints);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.TotalSpent").val(data.totalSpent);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.Dob").val(formatDateToInput(data.dob));
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate").val(formatDateToInput(data.joinDate));
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.Email").val(data.email);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.Note").val(data.note);
+						$("#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
+
+						$([
+							"#@TableName.Customer #@CustomerModel.AttributeNames.FullName",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Gender",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Dob",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Email",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Note",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus"
+						].join(', ')).prop('disabled', true);
+
+						$("#create-customer-button").addClass(" disabled");
+						$(".save-button").removeClass(" disabled");
+					}
+					else{
+						$("#@TableName.Customer").get(0).reset();
+
+						$([
+							"#@TableName.Customer #@CustomerModel.AttributeNames.FullName",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.PhoneNumber",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Gender",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Dob",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.JoinDate",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Email",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.Note",
+							"#@TableName.Customer #@CustomerModel.AttributeNames.OperatingStatus"
+						].join(', ')).prop('disabled', false);
+
+						$("#create-customer-button").removeClass(" disabled");
+						$(".save-button").addClass(" disabled");
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
+	});
+</script>

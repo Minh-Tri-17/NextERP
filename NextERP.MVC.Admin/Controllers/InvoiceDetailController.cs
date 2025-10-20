@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NextERP.ModelBase;
 using NextERP.MVC.Admin.Services.Interfaces;
+using NextERP.MVC.Admin.Services.Services;
 using NextERP.Util;
 
 namespace NextERP.MVC.Admin.Controllers
@@ -11,11 +12,14 @@ namespace NextERP.MVC.Admin.Controllers
         #region Infrastructure
 
         private readonly IInvoiceDetailAPIService _invoiceDetailAPIService;
+        private readonly IInvoiceAPIService _invoiceAPIService;
         private readonly ISharedCultureLocalizer _localizer;
 
-        public InvoiceDetailController(IInvoiceDetailAPIService invoiceDetailAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
+        public InvoiceDetailController(IInvoiceDetailAPIService invoiceDetailAPIService, IInvoiceAPIService invoiceAPIService,
+            IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _invoiceDetailAPIService = invoiceDetailAPIService;
+            _invoiceAPIService = invoiceAPIService;
             _localizer = localizer;
         }
 
@@ -26,17 +30,7 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpGet]
         public IActionResult InvoiceDetailIndex()
         {
-            return View(new InvoiceDetailModel());
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> CreateOrEdit(Guid id)
-        {
-            var result = await _invoiceDetailAPIService.GetOne(id);
-            if (!DataHelper.IsNotNull(result))
-                return Json(_localizer.GetLocalizedString(result.Message));
-
-            return Json(result.Result);
+            return View(new InvoiceModel());
         }
 
         [HttpPost]
@@ -68,6 +62,7 @@ namespace NextERP.MVC.Admin.Controllers
                         FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
                     },
                 },
+                IdMain = request.InvoiceId,
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
             };

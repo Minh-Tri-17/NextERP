@@ -188,7 +188,7 @@
 		// Thay thế 'actionName' vào URL
 		const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-		const $formData = new FormData($form[0]);
+		const $formData = new FormData($form.get(0));
 
 		callApi(apiUrl, "POST", $formData)
 			.then(data => {

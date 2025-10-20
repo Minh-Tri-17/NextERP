@@ -36,11 +36,6 @@ namespace NextERP.MVC.Admin.Services.Services
             return await DeleteAsync<APIBaseResult<bool>>($"{Constants.UrlDeleteInvoiceDetail}?ids={ids}");
         }
 
-        public async Task<APIBaseResult<InvoiceDetailModel>> GetOne(Guid id)
-        {
-            return await GetAsync<APIBaseResult<InvoiceDetailModel>>($"{Constants.UrlGetInvoiceDetail}/{id}");
-        }
-
         public async Task<APIBaseResult<PagingResult<InvoiceDetailModel>>> GetPaging(FilterModel filter)
         {
             return await PostAsync<APIBaseResult<PagingResult<InvoiceDetailModel>>, FilterModel>($"{Constants.UrlGetInvoiceDetails}/{Constants.Filter}", filter);

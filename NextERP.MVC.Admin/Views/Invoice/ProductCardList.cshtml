@@ -1,0 +1,125 @@
+﻿@using NextERP.ModelBase
+@using NextERP.ModelBase.APIResult
+@using NextERP.ModelBase.PagingResult
+@using NextERP.Util
+@model APIBaseResult<PagingResult<ProductModel>>
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+
+<div class="table-container">
+	@if (Model != null && Model.Result != null && Model.Result.Items != null)
+	{
+		<div class="row row-cols-lg-5 row-cols-md-4 row-cols-sm-2 row-cols-1 g-2">
+			@foreach (var item in Model.Result.Items)
+			{
+				<div class="col">
+					<div class="card h-100 overflow-hidden">
+						@if (item.Base64Images != null)
+						{
+							<div class="ratio ratio-4x3 bg-light">
+								<img class="card-img-top object-fit-cover" src="@item.Base64Images.FirstOrDefault()" alt="@item.ProductName" />
+							</div>
+						}
+
+						<form class="d-flex flex-column">
+							<input type="text" name="ProductId" value="@item.Id" hidden />
+
+							<div class="my-2">
+								<h6 class="fw-bold text-truncate mb-1" title="@item.ProductName">@item.ProductName</h6>
+
+								<div class="row">
+									<div class="col-7">
+										<input type="number" class="form-control form-control-sm" id="inputQuantity" name="Quantity" min="1" max="@item.QuantityInStock" placeholder="Nhập số lượng..." value="1" />
+									</div>
+
+									<div class="col-5">
+										<h6 class="text-danger">
+											@{
+												string formattedValue;
+												if (item.Price < 1000)
+												{
+													formattedValue = string.Format("{0:#,##0} {1}", item.Price, Constants.Currency);
+												}
+												else if (item.Price < 1000000)
+												{
+													formattedValue = string.Format("{0:#,##0.###}K {1}", item.Price / 1000, Constants.Currency);
+												}
+												else
+												{
+													formattedValue = string.Format("{0:#,##0.###}M {1}", item.Price / 1000000, Constants.Currency);
+												}
+											}
+
+											@Html.Raw(formattedValue)
+										</h6>
+									</div>
+								</div>
+
+								<p class="form-text text-center"><span localize-content>@ProductModel.AttributeNames.QuantityInStock</span> : @item.QuantityInStock</p>
+							</div>
+
+							<div class="d-grid">
+								<button type="button" class="button btn add-button">
+									@{
+										var createIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5"">
+														<path d=""M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z""></path>
+														<path d=""M3.27 6.96L12 12.01L20.73 6.96""></path><line x1=""12"" y1=""13"" x2=""12"" y2=""19""></line>	<line x1=""9"" y1=""16"" x2=""15"" y2=""16""></line></svg>";
+									}
+
+									@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonCreate, iconHtml = createIcon })
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			}
+		</div>
+	}
+</div>
+
+@if (DataHelper.ListIsNotNull(Model!))
+{
+	<nav id="pagination-container" aria-label="Page navigation">
+		@await Component.InvokeAsync(Constants.Pagination, Model!.Result)
+	</nav>
+}
+
+<script>
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		$searchForm = $("#@TableName.Product-search-form");
+
+		$("#pagination-container").on("click", ".page-link", function () {
+			 const $pageIndex = $(this).data("page");
+			 if (!$pageIndex) return;
+
+			 // Xử lý active
+			 $("#pagination-container .page-item").removeClass("active");
+			 $(this).parent().addClass("active");
+
+			 loadProductCards($searchForm, $pageIndex);
+		});
+
+		$(".add-button").click(function () {
+			const $saveForm = $(this).closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
+			let id = $formData.get("@Constants.Id");
+
+			// Nếu không có ID (tạo mới), set Guid.Empty
+			if (!id || id.trim() === "") {
+				$formData.set("@Constants.Id", "@Guid.Empty");
+			}
+
+			callApi("@Url.Action(Constants.CreateOrEdit, TableName.InvoiceDetail)", "POST", $formData)
+				.then(data => {
+					loadInvoiceDetail();
+					loadProductCards($searchForm);
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
+	});
+</script>

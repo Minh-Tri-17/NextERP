@@ -1,0 +1,73 @@
+﻿@using System.Reflection
+@using NextERP.ModelBase
+@using NextERP.ModelBase.APIResult
+@using NextERP.ModelBase.PagingResult
+@using NextERP.Util
+@using UtilHtmlHelper = NextERP.Util.HtmlHelper
+@model APIBaseResult<PagingResult<InvoiceDetailModel>>
+
+<h5 class="text-center" localize-content>@TableName.InvoiceDetail</h5>
+
+<div class="table-container">
+	<table class="table table-hover me-2">
+		<thead>
+			<tr>
+				<th>#</th>
+				@{
+					var excludedFields = new[] { Constants.AllowPaging, Constants.PageIndex, Constants.PageSize, Constants.Id, Constants.Ids, Constants.IsDelete };
+
+					var listField = UtilHtmlHelper.GetOrderedProperties<InvoiceDetailModel>(excludedFields);
+
+					foreach (var item in listField)
+					{
+						<th localize-content>@item.Name</th>
+					}
+				}
+			</tr>
+		</thead>
+
+		<tbody class="sortable-group table-group-divider">
+			@if (DataHelper.ListIsNotNull(Model))
+			{
+				int counter = (Model!.Result!.PageIndex - 1) * Model.Result.PageSize + 1;
+
+				foreach (var row in Model!.Result!.Items!)
+				{
+					<tr>
+						<td>@counter</td>
+						@foreach (var field in listField)
+						{
+							var value = field.GetValue(row);
+							<td localize-content>@(value ?? "")</td>
+						}
+					</tr>
+
+					counter++;
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+<script>
+	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
+		$("#pagination-container").on("click", ".page-link", function () {
+			const $pageIndex = $(this).data("page");
+			if (!$pageIndex) return;
+
+			// Xử lý active
+			$("#pagination-container .page-item").removeClass("active");
+			$(this).parent().addClass("active");
+
+			loadInvoiceDetails($pageIndex);
+		});
+
+		$(".check-all").change(function () {
+			// Gán giá trị cho tất cả checkbox InvoiceDetail-checkbox
+			$(".@TableName.InvoiceDetail-checkbox").prop("checked", $(this).is(":checked") ? true : false);
+		});
+	});
+</script>

@@ -64,7 +64,8 @@ namespace NextERP.BLL.Service
             {
                 new Claim(ClaimTypes.Name, DataHelper.GetString(user.Username)),
                 new Claim(ClaimTypes.GivenName, DataHelper.GetString(fullName)),
-                new Claim(ClaimTypes.NameIdentifier, DataHelper.GetString(id.ToString())),
+                new Claim("UserID", DataHelper.GetString(user.Id.ToString())),
+                new Claim("OwnerID", DataHelper.GetString(id.ToString())),
             };
 
             #region Add roleNames to claim Role

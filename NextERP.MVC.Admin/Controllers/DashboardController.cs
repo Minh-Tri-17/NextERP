@@ -26,8 +26,6 @@ namespace NextERP.MVC.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DashboardIndexAsync()
         {
-            ViewBag.UserId = GetInfor()[0];
-
             var profitTask = _dashboardAPIService.GetStatisticsProfit();
             var revenueTask = _dashboardAPIService.GetStatisticsRevenue();
             var spendingTask = _dashboardAPIService.GetStatisticsSpending();

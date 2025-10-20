@@ -54,5 +54,6 @@
 
         public const string FileNotFound = "FileNotFound";
         public const string NotFoundSupplier = "NotFoundSupplier";
+        public const string NotFoundProduct = "NotFoundProduct";
     }
 }

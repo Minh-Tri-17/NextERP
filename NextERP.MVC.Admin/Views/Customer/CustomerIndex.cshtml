@@ -21,7 +21,7 @@
 		<form method="post">
 			<div class="filter-actions">
 				<button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-					<i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
+					<i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
 				</button>
 				<button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
 					<i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
@@ -165,7 +165,7 @@
 				});
 		});
 
-		$$("#delete-button").click(function () {
+		$("#delete-button").click(function () {
 			deleteCustomer("@Constants.Delete", $(this).closest("form"));
 		});
 
@@ -198,7 +198,7 @@
 		// Thay thế 'actionName' vào URL
 		const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-		const $formData = new FormData($form[0]);
+		const $formData = new FormData($form.get(0));
 
 		callApi(apiUrl, "POST", $formData)
 			.then(data => {

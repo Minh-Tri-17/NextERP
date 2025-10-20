@@ -152,7 +152,6 @@
 
         public const string UrlCreateOrEditInvoiceDetail = "/api/InvoiceDetail/CreateOrEditInvoiceDetail";
         public const string UrlDeleteInvoiceDetail = "/api/InvoiceDetail/DeleteInvoiceDetail";
-        public const string UrlGetInvoiceDetail = "/api/InvoiceDetail/GetInvoiceDetail";
         public const string UrlGetInvoiceDetails = "/api/InvoiceDetail/GetInvoiceDetails";
 
         #endregion
@@ -409,6 +408,7 @@
         public const string ButtonSendOTP = "ButtonSendOTP";
         public const string ButtonRegister = "ButtonRegister";
         public const string ButtonPayment = "ButtonPayment";
+        public const string ButtonOpenSendMail = "ButtonOpenSendMail";
 
         #endregion
 

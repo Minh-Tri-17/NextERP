@@ -18,7 +18,9 @@ namespace NextERP.BLL.Service
             _httpContextAccessor = httpContextAccessor; // Sau khi Authorize, HttpContextAccessor sẽ có thông tin người dùng
         }
 
-        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirst("UserID")?.Value ?? string.Empty;
+
+        public string OwnerId => _httpContextAccessor.HttpContext?.User?.FindFirst("OwnerID")?.Value ?? string.Empty;
 
         public string UserName => _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
 

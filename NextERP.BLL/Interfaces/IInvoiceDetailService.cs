@@ -9,7 +9,6 @@ namespace NextERP.BLL.Interface
     {
         public Task<APIBaseResult<bool>> CreateOrEdit(InvoiceDetailModel request);
         public Task<APIBaseResult<bool>> DeletePermanently(string ids);
-        public Task<APIBaseResult<InvoiceDetailModel>> GetOne(Guid id);
         public Task<APIBaseResult<PagingResult<InvoiceDetailModel>>> GetPaging(FilterModel filter);
     }
 }

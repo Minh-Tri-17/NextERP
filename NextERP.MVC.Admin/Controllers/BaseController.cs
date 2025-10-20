@@ -43,6 +43,11 @@ namespace NextERP.MVC.Admin.Controllers
         /// <param name="context"></param>
         public override void OnActionExecuted(ActionExecutedContext context)
         {
+            var infor = GetInfor();
+
+            ViewBag.UserId = infor[0];
+            ViewBag.OwnerId = infor[1];
+
             // Lấy token từ cookie
             var cookiesToken = HttpContext.Request.Cookies[Constants.Token];
             if (string.IsNullOrWhiteSpace(cookiesToken))
@@ -102,6 +107,8 @@ namespace NextERP.MVC.Admin.Controllers
 
         public List<string> GetInfor()
         {
+            var listInfor = new List<string>();
+
             var cookiesToken = HttpContext.Request.Cookies[Constants.Token];
             var nameIdentifierClaim = string.Empty;
 
@@ -109,15 +116,15 @@ namespace NextERP.MVC.Admin.Controllers
             {
                 var userPrincipal = ValidateToken(cookiesToken);
 
-                nameIdentifierClaim = userPrincipal.Claims
-                    .Where(s => s.Type == ClaimTypes.NameIdentifier)
-                    .Select(s => s.Value.ToString()).FirstOrDefault() ?? string.Empty;
-            }
+                var userIdClaim = userPrincipal.Claims.Where(s => s.Type == "UserID").Select(s => s.Value.ToString()).FirstOrDefault();
+                var ownerIdClaim = userPrincipal.Claims.Where(s => s.Type == "OwnerID").Select(s => s.Value.ToString()).FirstOrDefault();
 
-            var listInfor = new List<string>
-            {
-                nameIdentifierClaim,
-            };
+                if (userIdClaim != null)
+                    listInfor.Add(userIdClaim);
+
+                if (ownerIdClaim != null)
+                    listInfor.Add(ownerIdClaim);
+            }
 
             return listInfor;
         }

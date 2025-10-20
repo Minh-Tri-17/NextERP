@@ -19,15 +19,17 @@ namespace NextERP.MVC.Admin.Controllers
         private readonly IInvoiceAPIService _invoiceAPIService;
         private readonly IProductAPIService _productAPIService;
         private readonly IInvoiceDetailAPIService _invoiceDetailAPIService;
+        private readonly ICustomerAPIService _customerAPIService;
         private readonly ISharedCultureLocalizer _localizer;
 
         public InvoiceController(IInvoiceAPIService invoiceAPIService, IProductAPIService productAPIService,
-            IConfiguration configuration, ISharedCultureLocalizer localizer, IInvoiceDetailAPIService invoiceDetailAPIService) : base(configuration, localizer)
+             IInvoiceDetailAPIService invoiceDetailAPIService, ICustomerAPIService customerAPIService, IConfiguration configuration, ISharedCultureLocalizer localizer) : base(configuration, localizer)
         {
             _invoiceAPIService = invoiceAPIService;
             _productAPIService = productAPIService;
             _localizer = localizer;
             _invoiceDetailAPIService = invoiceDetailAPIService;
+            _customerAPIService = customerAPIService;
         }
 
         #endregion
@@ -41,16 +43,6 @@ namespace NextERP.MVC.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrEdit(Guid id)
-        {
-            var result = await _invoiceAPIService.GetOne(id);
-            if (!DataHelper.IsNotNull(result))
-                return Json(_localizer.GetLocalizedString(result.Message));
-
-            return Json(result.Result);
-        }
-
-        [HttpGet]
         public async Task<ActionResult> GetList(InvoiceModel request)
         {
             FilterModel filter = new FilterModel()
@@ -95,7 +87,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.ListIsNotNull(result))
                 return Json(_localizer.GetLocalizedString(result.Message));
 
-            return PartialView(ScreenName.Invoice.InvoiceList, result);
+            return PartialView($"~/Views/{TableName.InvoiceDetail}/{ScreenName.Invoice.InvoiceList}.cshtml", result);
         }
 
         [HttpPost]
@@ -136,7 +128,7 @@ namespace NextERP.MVC.Admin.Controllers
         #region Custom Operations
 
         [HttpPost]
-        public async Task<ActionResult> GetProducts(ProductModel request)
+        public async Task<ActionResult> GetListProduct(ProductModel request)
         {
             FilterModel filter = new FilterModel()
             {
@@ -215,7 +207,8 @@ namespace NextERP.MVC.Admin.Controllers
             return PartialView(ScreenName.Invoice.ProductCardList, result);
         }
 
-        public async Task<ActionResult> GetInvoiceDetails(InvoiceDetailModel request)
+        [HttpPost]
+        public async Task<ActionResult> GetListInvoiceDetail(InvoiceDetailModel request)
         {
             FilterModel filter = new FilterModel()
             {
@@ -223,24 +216,8 @@ namespace NextERP.MVC.Admin.Controllers
                 {
                     new FilterItemModel()
                     {
-                        FilterName = InvoiceDetailModel.AttributeNames.InvoiceDetailCode,
-                        FilterValue = DataHelper.GetString(request.InvoiceDetailCode),
-                        FilterType = Util.Enums.FilterType.String.ToString(),
-                        FilterOperator = Util.Enums.FilterOperator.Like.ToString(),
-                    },
-                    new FilterItemModel()
-                    {
-                        FilterName = Constants.DateCreate,
-                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateCreate)),
-                        FilterType = Util.Enums.FilterType.Date.ToString(),
-                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
-                    },
-                    new FilterItemModel()
-                    {
-                        FilterName = Constants.DateUpdate,
-                        FilterValue = DataHelper.GetString(DataHelper.GetDateTime(request.DateUpdate)),
-                        FilterType = Util.Enums.FilterType.Date.ToString(),
-                        FilterOperator = Util.Enums.FilterOperator.Equal.ToString(),
+                        FilterName = InvoiceModel.AttributeNames.InvoiceId,
+                        FilterValue = "true",
                     },
                 },
                 PageIndex = request.PageIndex,
@@ -252,6 +229,37 @@ namespace NextERP.MVC.Admin.Controllers
                 return Json(_localizer.GetLocalizedString(result.Message));
 
             return PartialView(ScreenName.InvoiceDetail.InvoiceDetailList, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetListCustomer(CustomerModel request)
+        {
+            FilterModel filter = new FilterModel()
+            {
+                Filters = new List<FilterItemModel>()
+                {
+                    new FilterItemModel()
+                    {
+                        FilterName = CustomerModel.AttributeNames.PhoneNumber,
+                        FilterValue = DataHelper.GetString(request.PhoneNumber),
+                        FilterType = Util.Enums.FilterType.String.ToString(),
+                        FilterOperator = Util.Enums.FilterOperator.Contains.ToString(),
+                    },
+                    new FilterItemModel()
+                    {
+                        FilterName = InvoiceModel.AttributeNames.InvoiceId,
+                        FilterValue = "true",
+                    },
+                },
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var result = await _customerAPIService.GetPaging(filter);
+            if (!DataHelper.ListIsNotNull(result))
+                return Json(_localizer.GetLocalizedString(result.Message));
+
+            return Json(result?.Result?.Items?.FirstOrDefault());
         }
 
         #endregion

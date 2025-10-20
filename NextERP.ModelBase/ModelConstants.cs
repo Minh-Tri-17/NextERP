@@ -95,12 +95,14 @@ namespace NextERP.ModelBase
         public class Invoice
         {
             public const string InvoiceIndex = "InvoiceIndex";
-            public const string InvoiceForm = "InvoiceForm";
+            public const string CustomerForm = "CustomerForm";
+            public const string ProductCardList = "ProductCardList";
             public const string InvoiceList = "InvoiceList";
         }
 
         public class InvoiceDetail
         {
+            public const string InvoiceDetailIndex = "InvoiceDetailIndex";
             public const string InvoiceDetailList = "InvoiceDetailList";
         }
 

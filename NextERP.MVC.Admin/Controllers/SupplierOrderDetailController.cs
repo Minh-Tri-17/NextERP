@@ -67,7 +67,7 @@ namespace NextERP.MVC.Admin.Controllers
             if (!DataHelper.ListIsNotNull(result))
                 return Json(_localizer.GetLocalizedString(result.Message));
 
-            return PartialView(ScreenName.SupplierOrderDetail.SupplierOrderDetailList, result);
+            return PartialView($"~/Views/{TableName.SupplierOrder}/{ScreenName.SupplierOrderDetail.SupplierOrderDetailList}.cshtml", result);
         }
 
         [HttpPost]

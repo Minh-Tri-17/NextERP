@@ -9,6 +9,7 @@ namespace NextERP.BLL.Interface
     public interface ICurrentUserService
     {
         string UserId { get; }
+        string OwnerId { get; }
         string UserName { get; }
         string FullName { get; }
         string RoleId { get; }

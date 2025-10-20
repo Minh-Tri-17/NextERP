@@ -70,7 +70,7 @@ namespace NextERP.BLL.Service
         public async Task<APIBaseResult<PagingResult<SupplierOrderDetailModel>>> GetPaging(FilterModel filter)
         {
             IQueryable<SupplierOrderDetail> query = _context.SupplierOrderDetails.AsNoTracking() // Không theo dõi thay đổi của thực thể
-                .Where(s => s.SupplierOrderId == filter.IdMain);
+                .Where(s => s.SupplierOrderId.HasValue && s.SupplierOrderId == filter.IdMain);
 
             var listSupplierOrderDetail = await query
                 .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)

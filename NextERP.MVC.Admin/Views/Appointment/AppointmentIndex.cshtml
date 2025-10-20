@@ -152,7 +152,7 @@
 
 				calendar.render();
 
-				$(".loader").css("display", "none");
+				$(".loader").fadeOut(350);
 			})
 			.catch(err => {
 				showMessage("@Localizer[Messages.ErrorCallAPI]");

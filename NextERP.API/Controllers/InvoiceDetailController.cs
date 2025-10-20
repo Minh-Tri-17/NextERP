@@ -44,12 +44,6 @@ namespace NextERP.API.Controllers
                 if (!string.IsNullOrEmpty(json))
                     invoiceDetail = JsonConvert.DeserializeObject<InvoiceDetailModel>(json!);
 
-                //// Khi nào model có field file thì mở ra
-                //if (invoiceDetail != null)
-                //{
-                //    var files = Request.Form.Files.Where(s => s.Name == Constants.Files).ToList();
-                //    invoiceDetail.ImageFiles = files;
-                //}
             }
             else
             {
@@ -73,16 +67,6 @@ namespace NextERP.API.Controllers
         public async Task<ActionResult<APIBaseResult<bool>>> DeleteInvoiceDetail(string ids)
         {
             var result = await _invoiceDetailService.DeletePermanently(ids);
-            if (!result.IsSuccess)
-                return BadRequest(result);
-
-            return Ok(result);
-        }
-
-        [HttpGet($"{nameof(GetInvoiceDetail)}/{{id}}")]
-        public async Task<ActionResult<InvoiceDetail>> GetInvoiceDetail(Guid id)
-        {
-            var result = await _invoiceDetailService.GetOne(id);
             if (!result.IsSuccess)
                 return BadRequest(result);
 

@@ -68,10 +68,6 @@
 		$(".check-all").change(function () {
 			// Gán giá trị cho tất cả checkbox SupplierOrderDetail-checkbox
 			$(".@TableName.SupplierOrderDetail-checkbox").prop("checked", $(this).is(":checked") ? true : false);
-
-			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-			const $length = $(".@TableName.SupplierOrderDetail-checkbox:checked").length;
-			checkLengthCheckbox($length, true, true, true, true, "@TableName.SupplierOrderDetail-checkbox");
 		});
 	});
 </script>

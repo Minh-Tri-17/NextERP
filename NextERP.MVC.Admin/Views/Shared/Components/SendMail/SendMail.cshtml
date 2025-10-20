@@ -78,22 +78,25 @@
 <script>
 	//! CKEditor yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
 	$(function () {
+		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+		'use strict';
+
 		ClassicEditor.create(document.querySelector('#Body'));
-	});
 
-	$("#send-button").click(function () {
-		const $form = $(this).closest("form");
-		const $formData = new FormData($form[0]);
-		const $formElement = $form[0];
+		$("#send-button").click(function () {
+			const $saveForm = $(this).closest("form");
+			const $formElement = $saveForm.get(0);
+			const $formData = new FormData($formElement);
 
-		callApi("@Url.Action(Constants.SendMail, Model)", "POST", $formData)
-			.then(data => {
-				if (data && Array.isArray(data)) {
-					showInvalid(data, $formElement);
-				}
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
+			callApi("@Url.Action(Constants.SendMail, Model)", "POST", $formData)
+				.then(data => {
+					if (data && Array.isArray(data)) {
+						showInvalid(data, $formElement);
+					}
+				})
+				.catch(err => {
+					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				});
+		});
 	});
 </script>

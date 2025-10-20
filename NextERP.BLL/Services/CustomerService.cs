@@ -16,208 +16,217 @@ using System.Threading.Tasks;
 
 namespace NextERP.BLL.Service
 {
-	public class CustomerService : ICustomerService
-	{
-		#region Infrastructure
+    public class CustomerService : ICustomerService
+    {
+        #region Infrastructure
 
-		private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
-		private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
+        private readonly NextErpContext _context; // Dùng để truy cập vào DbContext
+        private readonly ICurrentUserService _currentUser; // Dùng để lấy thông tin người dùng hiện tại
 
-		public CustomerService(NextErpContext context, ICurrentUserService currentUser)
-		{
-			_context = context;
-			_currentUser = currentUser;
-		}
+        public CustomerService(NextErpContext context, ICurrentUserService currentUser)
+        {
+            _context = context;
+            _currentUser = currentUser;
+        }
 
-		#endregion
+        #endregion
 
-		#region Default Operations
+        #region Default Operations
 
-		public async Task<APIBaseResult<bool>> CreateOrEdit(CustomerModel request)
-		{
-			#region Check null request and create variable
+        public async Task<APIBaseResult<bool>> CreateOrEdit(CustomerModel request)
+        {
+            #region Check null request and create variable
 
-			var id = DataHelper.GetGuid(request.Id);
+            var id = DataHelper.GetGuid(request.Id);
 
-			#endregion
+            #endregion
 
-			if (id == Guid.Empty)
-			{
-				var customer = new Customer();
-				DataHelper.MapAudit(request, customer, _currentUser.UserName);
+            if (id == Guid.Empty)
+            {
+                var customer = new Customer();
+                DataHelper.MapAudit(request, customer, _currentUser.UserName);
 
-				await _context.Customers.AddAsync(customer);
+                await _context.Customers.AddAsync(customer);
 
-				var result = await _context.SaveChangesAsync();
-				if (result > 0)
-					return new APISuccessResult<bool>(Messages.CreateSuccess, true);
+                var result = await _context.SaveChangesAsync();
+                if (result > 0)
+                    return new APISuccessResult<bool>(Messages.CreateSuccess, true);
 
-				return new APIErrorResult<bool>(Messages.CreateFailed);
-			}
-			else
-			{
-				var customer = await _context.Customers.FindAsync(id);
-				if (customer == null)
-					return new APIErrorResult<bool>(Messages.NotFoundUpdate);
+                return new APIErrorResult<bool>(Messages.CreateFailed);
+            }
+            else
+            {
+                var customer = await _context.Customers.FindAsync(id);
+                if (customer == null)
+                    return new APIErrorResult<bool>(Messages.NotFoundUpdate);
 
-				DataHelper.MapAudit(request, customer, _currentUser.UserName);
+                DataHelper.MapAudit(request, customer, _currentUser.UserName);
 
-				var result = await _context.SaveChangesAsync();
-				if (result > 0)
-					return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
+                var result = await _context.SaveChangesAsync();
+                if (result > 0)
+                    return new APISuccessResult<bool>(Messages.UpdateSuccess, true);
 
-				return new APIErrorResult<bool>(Messages.UpdateFailed);
-			}
-		}
+                return new APIErrorResult<bool>(Messages.UpdateFailed);
+            }
+        }
 
-		public async Task<APIBaseResult<bool>> Delete(string ids)
-		{
-			List<Guid> listCustomerId = ids.Split(',')
-				.Select(id => DataHelper.GetGuid(id.Trim()))
-				.Where(guid => guid != Guid.Empty)
-				.ToList();
+        public async Task<APIBaseResult<bool>> Delete(string ids)
+        {
+            List<Guid> listCustomerId = ids.Split(',')
+                .Select(id => DataHelper.GetGuid(id.Trim()))
+                .Where(guid => guid != Guid.Empty)
+                .ToList();
 
-			var listCustomer = await _context.Customers
-				.Where(s => listCustomerId.Contains(s.Id))
-				.ToListAsync();
+            var listCustomer = await _context.Customers
+                .Where(s => listCustomerId.Contains(s.Id))
+                .ToListAsync();
 
-			foreach (var customer in listCustomer)
-			{
-				customer.IsDelete = true; // Đánh dấu là đã xóa
-			}
+            foreach (var customer in listCustomer)
+            {
+                customer.IsDelete = true; // Đánh dấu là đã xóa
+            }
 
-			var result = await _context.SaveChangesAsync();
-			if (result > 0)
-				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-			return new APIErrorResult<bool>(Messages.DeleteFailed);
-		}
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
 
-		public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
-		{
-			List<Guid> listCustomerId = ids.Split(',')
-				.Select(id => DataHelper.GetGuid(id.Trim()))
-				.Where(guid => guid != Guid.Empty)
-				.ToList();
+        public async Task<APIBaseResult<bool>> DeletePermanently(string ids)
+        {
+            List<Guid> listCustomerId = ids.Split(',')
+                .Select(id => DataHelper.GetGuid(id.Trim()))
+                .Where(guid => guid != Guid.Empty)
+                .ToList();
 
-			var listCustomer = await _context.Customers
-				.Where(s => listCustomerId.Contains(s.Id))
-				.ToListAsync();
+            var listCustomer = await _context.Customers
+                .Where(s => listCustomerId.Contains(s.Id))
+                .ToListAsync();
 
-			foreach (var customer in listCustomer)
-			{
-				_context.Customers.Remove(customer); // Xóa vĩnh viễn
-			}
+            foreach (var customer in listCustomer)
+            {
+                _context.Customers.Remove(customer); // Xóa vĩnh viễn
+            }
 
-			var result = await _context.SaveChangesAsync();
-			if (result > 0)
-				return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.DeleteSuccess, true);
 
-			return new APIErrorResult<bool>(Messages.DeleteFailed);
-		}
+            return new APIErrorResult<bool>(Messages.DeleteFailed);
+        }
 
-		public async Task<APIBaseResult<CustomerModel>> GetOne(Guid id)
-		{
-			var customer = await _context.Customers
-				.AsNoTracking() // Không theo dõi thay đổi của thực thể
-				.FirstOrDefaultAsync(s => s.Id == id);
+        public async Task<APIBaseResult<CustomerModel>> GetOne(Guid id)
+        {
+            var customer = await _context.Customers
+                .AsNoTracking() // Không theo dõi thay đổi của thực thể
+                .FirstOrDefaultAsync(s => s.Id == id);
 
-			if (customer == null)
-				return new APIErrorResult<CustomerModel>(Messages.NotFoundGet);
+            if (customer == null)
+                return new APIErrorResult<CustomerModel>(Messages.NotFoundGet);
 
-			var customerModel = DataHelper.Mapping<Customer, CustomerModel>(customer);
+            var customerModel = DataHelper.Mapping<Customer, CustomerModel>(customer);
 
-			return new APISuccessResult<CustomerModel>(Messages.GetResultSuccess, customerModel);
-		}
+            return new APISuccessResult<CustomerModel>(Messages.GetResultSuccess, customerModel);
+        }
 
-		public async Task<APIBaseResult<PagingResult<CustomerModel>>> GetPaging(FilterModel filter)
-		{
-			IQueryable<Customer> query = _context.Customers.AsNoTracking(); // Không theo dõi thay đổi của thực thể
+        public async Task<APIBaseResult<PagingResult<CustomerModel>>> GetPaging(FilterModel filter)
+        {
+            IQueryable<Customer> query = _context.Customers.AsNoTracking(); // Không theo dõi thay đổi của thực thể
 
-			query = query.ApplyCommonFilters(filter);
+            query = query.ApplyCommonFilters(filter);
 
-			var totalCount = await query.CountAsync();
+            var totalCount = await query.CountAsync();
 
-			query = query.ApplyPaging(filter);
+            query = query.ApplyPaging(filter);
 
-			var listCustomer = await query
-				.OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
-				.ToListAsync();
+            var isCart = filter.Filters.Where(s => s.FilterName == InvoiceModel.AttributeNames.InvoiceId)
+                .Select(s => DataHelper.GetBool(s.FilterValue)).FirstOrDefault();
 
-			var listCustomerModel = DataHelper.MappingList<Customer, CustomerModel>(listCustomer);
-			var pageResult = new PagingResult<CustomerModel>()
-			{
-				TotalRecord = totalCount,
-				PageRecord = listCustomerModel.Count(),
-				PageIndex = filter.PageIndex,
-				PageSize = filter.PageSize,
-				Items = listCustomerModel
-			};
+            var phoneNumber = filter.Filters.Where(s => s.FilterName == CustomerModel.AttributeNames.PhoneNumber)
+                .Select(s => DataHelper.GetString(s.FilterValue)).FirstOrDefault();
 
-			return new APISuccessResult<PagingResult<CustomerModel>>(Messages.GetListResultSuccess, pageResult);
-		}
+            if (isCart && string.IsNullOrEmpty(phoneNumber))
+                query = query.Where(s => string.IsNullOrEmpty(s.PhoneNumber));
 
-		public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
-		{
-			var stream = new MemoryStream();
-			await fileImport.CopyToAsync(stream);
-			stream.Position = 0;
+            var listCustomer = await query
+                .OrderByDescending(s => s.DateUpdate ?? s.DateCreate)
+                .ToListAsync();
 
-			using var workbook = new XSSFWorkbook(stream);
-			var sheet = workbook.GetSheetAt(0);
+            var listCustomerModel = DataHelper.MappingList<Customer, CustomerModel>(listCustomer);
+            var pageResult = new PagingResult<CustomerModel>()
+            {
+                TotalRecord = totalCount,
+                PageRecord = listCustomerModel.Count(),
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                Items = listCustomerModel
+            };
 
-			// Header data
-			var headerRow = sheet.GetRow(0);
+            return new APISuccessResult<PagingResult<CustomerModel>>(Messages.GetListResultSuccess, pageResult);
+        }
 
-			var listCustomerModel = new List<CustomerModel>();
+        public async Task<APIBaseResult<bool>> Import(IFormFile fileImport)
+        {
+            var stream = new MemoryStream();
+            await fileImport.CopyToAsync(stream);
+            stream.Position = 0;
 
-			for (int i = 1; i <= sheet.LastRowNum; i++)
-			{
-				// Row data
-				var row = sheet.GetRow(i);
-				if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
-					continue; // Bỏ qua hàng trống
+            using var workbook = new XSSFWorkbook(stream);
+            var sheet = workbook.GetSheetAt(0);
 
-				CustomerModel customerModel = DataHelper.CopyImport<CustomerModel>(headerRow, row);
-				listCustomerModel.Add(customerModel);
-			}
+            // Header data
+            var headerRow = sheet.GetRow(0);
 
-			var listCustomer = new List<Customer>();
-			DataHelper.MapListAudit<CustomerModel, Customer>(listCustomerModel, listCustomer, _currentUser.UserName);
+            var listCustomerModel = new List<CustomerModel>();
 
-			await _context.Customers.AddRangeAsync(listCustomer);
+            for (int i = 1; i <= sheet.LastRowNum; i++)
+            {
+                // Row data
+                var row = sheet.GetRow(i);
+                if (row == null || row.Cells.All(c => c.CellType == NPOI.SS.UserModel.CellType.Blank))
+                    continue; // Bỏ qua hàng trống
 
-			var result = await _context.SaveChangesAsync();
-			if (result > 0)
-				return new APISuccessResult<bool>(Messages.ImportSuccess, true);
+                CustomerModel customerModel = DataHelper.CopyImport<CustomerModel>(headerRow, row);
+                listCustomerModel.Add(customerModel);
+            }
 
-			return new APIErrorResult<bool>(Messages.ImportFailed);
-		}
+            var listCustomer = new List<Customer>();
+            DataHelper.MapListAudit<CustomerModel, Customer>(listCustomerModel, listCustomer, _currentUser.UserName);
 
-		public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
-		{
-			var data = await GetPaging(filter);
-			var items = data?.Result?.Items ?? new List<CustomerModel>();
+            await _context.Customers.AddRangeAsync(listCustomer);
 
-			using var workbook = new XLWorkbook();
-			var worksheet = workbook.Worksheets.Add(TableName.Customer);
+            var result = await _context.SaveChangesAsync();
+            if (result > 0)
+                return new APISuccessResult<bool>(Messages.ImportSuccess, true);
 
-			var listCustomer = DataHelper.MappingList<CustomerModel, Customer>(items);
-			DataHelper.CopyExport(worksheet, listCustomer);
+            return new APIErrorResult<bool>(Messages.ImportFailed);
+        }
 
-			var stream = new MemoryStream();
-			workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
-			var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
-			if (bytes.Length > 0)
-				return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
+        public async Task<APIBaseResult<byte[]>> Export(FilterModel filter)
+        {
+            var data = await GetPaging(filter);
+            var items = data?.Result?.Items ?? new List<CustomerModel>();
 
-			return new APIErrorResult<byte[]>(Messages.ExportFailed);
-		}
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add(TableName.Customer);
 
-		#endregion
+            var listCustomer = DataHelper.MappingList<CustomerModel, Customer>(items);
+            DataHelper.CopyExport(worksheet, listCustomer);
 
-		#region Custom Operations
+            var stream = new MemoryStream();
+            workbook.SaveAs(stream); // Ghi nội dung của workbook(Excel) vào stream
+            var bytes = stream.ToArray(); // Chuyển toàn bộ nội dung stream thành mảng byte
+            if (bytes.Length > 0)
+                return new APISuccessResult<byte[]>(Messages.ExportSuccess, bytes);
 
-		#endregion
-	}
+            return new APIErrorResult<byte[]>(Messages.ExportFailed);
+        }
+
+        #endregion
+
+        #region Custom Operations
+
+        #endregion
+    }
 }
