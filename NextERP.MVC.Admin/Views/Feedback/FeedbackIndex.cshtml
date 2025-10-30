@@ -101,7 +101,7 @@
 		'use strict';
 
 		let $feedbackId;
-		const $searchForm = $("#@TableName.Feedback-search-form");
+		$searchForm = $("#@TableName.Feedback-search-form");
 
 		loadFeedbacks($searchForm);
 
@@ -136,6 +136,7 @@
 					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackCode").val(data.feedbackCode);
 					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.Comment").val(data.comment);
 					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.DateFeedback").val(formatDateToInput(data.dateFeedback));
+					$('input[name="Rating"][value="' + data.rating + '"]').prop('checked', true);
 				})
 				.catch(err => {
 					showMessage("@Localizer[Messages.ErrorCallAPI]");
@@ -188,7 +189,7 @@
 
 	function loadFeedbacks($form, pageIndex) {
 		$(".loader").fadeIn(350);
-
+        
 		const $formData = new FormData($form.get(0));
 
 		const filter = new FormData();

@@ -45,8 +45,11 @@ namespace NextERP.MVC.Admin.Controllers
         {
             var infor = GetInfor();
 
-            ViewBag.UserId = infor[0];
-            ViewBag.OwnerId = infor[1];
+            if(infor != null && infor.Count() > 0)
+            {
+                ViewBag.UserId = infor[0];
+                ViewBag.OwnerId = infor[1];
+            }
 
             // Lấy token từ cookie
             var cookiesToken = HttpContext.Request.Cookies[Constants.Token];

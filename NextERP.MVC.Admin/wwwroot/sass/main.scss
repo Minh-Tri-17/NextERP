@@ -118,6 +118,208 @@
                     min-height: 500px;
                 }
             }
+
+            .rating-container {
+                display: flex;
+
+                .rating {
+                    > label {
+                        margin-right: 4px;
+                    }
+
+                    &:not(:checked) {
+                        > input {
+                            display: none;
+                        }
+
+                        > label {
+                            float: right;
+                            cursor: pointer;
+                            font-size: 30px;
+
+                            > svg {
+                                fill: #666;
+                                transition: fill 0.3s ease;
+                            }
+
+                            &:hover,
+                            &:hover ~ label {
+                                > svg {
+                                    fill: #ff9e0b;
+                                }
+                            }
+                        }
+                    }
+
+                    > input:checked ~ label > svg {
+                        fill: #ffa723;
+                    }
+
+                    #star-1 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $danger-color !important;
+                            }
+                        }
+                    }
+
+                    #star-2 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $warning-color !important;
+                            }
+                        }
+                    }
+
+                    #star-3 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $info-color !important;
+                            }
+                        }
+                    }
+
+                    #star-4 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $success-color !important;
+                            }
+                        }
+                    }
+
+                    #star-5 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $purple-color !important;
+                            }
+                        }
+                    }
+
+                    #star-1:checked ~ label > svg {
+                        fill: $danger-light-color;
+                    }
+
+                    #star-2:checked ~ label > svg {
+                        fill: $warning-light-color;
+                    }
+
+                    #star-3:checked ~ label > svg {
+                        fill: $info-light-color;
+                    }
+
+                    #star-4:checked ~ label > svg {
+                        fill: $success-light-color;
+                    }
+
+                    #star-5:checked ~ label > svg {
+                        fill: $purple-light-color;
+                    }
+                }
+
+                .rating-view {
+                    > label {
+                        margin-right: 4px;
+                    }
+
+                    &:not(:checked) {
+                        > input {
+                            display: none;
+                        }
+
+                        > label {
+                            float: right;
+                            cursor: pointer;
+                            font-size: 30px;
+
+                            > svg {
+                                fill: #666;
+                                transition: fill 0.3s ease;
+                            }
+
+                            &:hover,
+                            &:hover ~ label {
+                                > svg {
+                                    fill: #ff9e0b;
+                                }
+                            }
+                        }
+                    }
+
+                    > input:checked ~ label > svg {
+                        fill: #ffa723;
+                    }
+
+                    input.star-1 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $danger-color !important;
+                            }
+                        }
+                    }
+
+                    input.star-2 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $warning-color !important;
+                            }
+                        }
+                    }
+
+                    input.star-3 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $info-color !important;
+                            }
+                        }
+                    }
+
+                    input.star-4 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $success-color !important;
+                            }
+                        }
+                    }
+
+                    input.star-5 {
+                        &:hover,
+                        &:hover ~ label {
+                            > svg {
+                                fill: $purple-color !important;
+                            }
+                        }
+                    }
+
+                    input.star-1:checked ~ label > svg {
+                        fill: $danger-light-color;
+                    }
+
+                    input.star-2:checked ~ label > svg {
+                        fill: $warning-light-color;
+                    }
+
+                    input.star-3:checked ~ label > svg {
+                        fill: $info-light-color;
+                    }
+
+                    input.star-4:checked ~ label > svg {
+                        fill: $success-light-color;
+                    }
+
+                    input.star-5:checked ~ label > svg {
+                        fill: $purple-light-color;
+                    }
+                }
+            }
         }
 
         .dashboard-container {

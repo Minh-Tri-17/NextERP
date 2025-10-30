@@ -1341,6 +1341,111 @@ thead.sticky-active {
 .main .main-wrapper .main-container .ck-editor .ck-editor__editable {
   min-height: 500px;
 }
+.main .main-wrapper .main-container .rating-container {
+  display: flex;
+}
+.main .main-wrapper .main-container .rating-container .rating > label {
+  margin-right: 4px;
+}
+.main .main-wrapper .main-container .rating-container .rating:not(:checked) > input {
+  display: none;
+}
+.main .main-wrapper .main-container .rating-container .rating:not(:checked) > label {
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+}
+.main .main-wrapper .main-container .rating-container .rating:not(:checked) > label > svg {
+  fill: #666;
+  transition: fill 0.3s ease;
+}
+.main .main-wrapper .main-container .rating-container .rating:not(:checked) > label:hover > svg, .main .main-wrapper .main-container .rating-container .rating:not(:checked) > label:hover ~ label > svg {
+  fill: #ff9e0b;
+}
+.main .main-wrapper .main-container .rating-container .rating > input:checked ~ label > svg {
+  fill: #ffa723;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-1:hover > svg, .main .main-wrapper .main-container .rating-container .rating #star-1:hover ~ label > svg {
+  fill: #dc3545 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-2:hover > svg, .main .main-wrapper .main-container .rating-container .rating #star-2:hover ~ label > svg {
+  fill: #f0bd00 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-3:hover > svg, .main .main-wrapper .main-container .rating-container .rating #star-3:hover ~ label > svg {
+  fill: #3d7dcf !important;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-4:hover > svg, .main .main-wrapper .main-container .rating-container .rating #star-4:hover ~ label > svg {
+  fill: #28a745 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-5:hover > svg, .main .main-wrapper .main-container .rating-container .rating #star-5:hover ~ label > svg {
+  fill: #8a2be2 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-1:checked ~ label > svg {
+  fill: #f8d4d4;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-2:checked ~ label > svg {
+  fill: #ffe5a8;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-3:checked ~ label > svg {
+  fill: #c4e3f8;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-4:checked ~ label > svg {
+  fill: #d4f8c4;
+}
+.main .main-wrapper .main-container .rating-container .rating #star-5:checked ~ label > svg {
+  fill: #e0c3fc;
+}
+.main .main-wrapper .main-container .rating-container .rating-view > label {
+  margin-right: 4px;
+}
+.main .main-wrapper .main-container .rating-container .rating-view:not(:checked) > input {
+  display: none;
+}
+.main .main-wrapper .main-container .rating-container .rating-view:not(:checked) > label {
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+}
+.main .main-wrapper .main-container .rating-container .rating-view:not(:checked) > label > svg {
+  fill: #666;
+  transition: fill 0.3s ease;
+}
+.main .main-wrapper .main-container .rating-container .rating-view:not(:checked) > label:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view:not(:checked) > label:hover ~ label > svg {
+  fill: #ff9e0b;
+}
+.main .main-wrapper .main-container .rating-container .rating-view > input:checked ~ label > svg {
+  fill: #ffa723;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-1:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view input.star-1:hover ~ label > svg {
+  fill: #dc3545 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-2:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view input.star-2:hover ~ label > svg {
+  fill: #f0bd00 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-3:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view input.star-3:hover ~ label > svg {
+  fill: #3d7dcf !important;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-4:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view input.star-4:hover ~ label > svg {
+  fill: #28a745 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-5:hover > svg, .main .main-wrapper .main-container .rating-container .rating-view input.star-5:hover ~ label > svg {
+  fill: #8a2be2 !important;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-1:checked ~ label > svg {
+  fill: #f8d4d4;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-2:checked ~ label > svg {
+  fill: #ffe5a8;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-3:checked ~ label > svg {
+  fill: #c4e3f8;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-4:checked ~ label > svg {
+  fill: #d4f8c4;
+}
+.main .main-wrapper .main-container .rating-container .rating-view input.star-5:checked ~ label > svg {
+  fill: #e0c3fc;
+}
 .main .main-wrapper .dashboard-container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
