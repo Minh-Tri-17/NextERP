@@ -153,7 +153,7 @@
 					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Price").val(data.price);
 					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Duration").val(data.duration);
 					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.SpaServiceLevel").val(data.spaServiceLevel);
-					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.IsPromotional").val(data.isPromotional);
+					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.IsPromotional").prop("checked", data.isPromotional);
 					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.Note").val(data.note);
 					$("#@TableName.SpaService #@SpaServiceModel.AttributeNames.OperatingStatus").val(data.operatingStatus).trigger("change");
 				})

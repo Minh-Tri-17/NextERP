@@ -48,6 +48,21 @@
 						{
 							var value = field.GetValue(row);
 
+							string statusColorClass = string.Empty;
+
+							if (field.Name == nameof(Enums.OperatingStatus).ToString())
+							{
+								switch (value)
+								{
+									case nameof(Enums.OperatingStatus.Active):
+										statusColorClass = "status-color-success";
+										break;
+									case nameof(Enums.OperatingStatus.Inactive):
+										statusColorClass = "status-color-danger";
+										break;
+								}
+							}
+
 							if (field.PropertyType == typeof(decimal) || field.PropertyType == typeof(decimal?))
 							{
 								<td>
@@ -72,7 +87,7 @@
 							}
 							else
 							{
-								<td localize-content>@(value ?? "")</td>
+								<td><span localize-content class="@statusColorClass">@Html.Raw(value ?? "")</span></td>
 							}
 						}
 					</tr>

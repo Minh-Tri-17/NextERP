@@ -51,18 +51,43 @@
 						{
 							var value = field.GetValue(row);
 
+							string statusColorClass = string.Empty;
+
+							if (field.Name == nameof(Enums.OrderStatus).ToString()
+								|| field.Name == nameof(Enums.PaymentStatus).ToString())
+							{
+								switch (value)
+								{
+									case nameof(Enums.OrderStatus.Delivered):
+										statusColorClass = "status-color-success";
+										break;
+									case nameof(Enums.OrderStatus.Cancelled):
+										statusColorClass = "status-color-danger";
+										break;
+									case nameof(Enums.PaymentStatus.Paid):
+										statusColorClass = "status-color-success";
+										break;
+									case nameof(Enums.PaymentStatus.Unpaid):
+										statusColorClass = "status-color-danger";
+										break;
+									case nameof(Enums.OrderStatus.Processing):
+										statusColorClass = "status-color-warning";
+										break;
+								}
+							}
+
 							if (field.Name == Constants.Base64Image)
 							{
 								<td>
 									@if (row.Base64Image != null)
 									{
-										<img src="@row.Base64Image" alt="Image" width="50" height="50" data-bs-toggle="modal" data-bs-target="#view-signature-modal">
+										<img src="@row.Base64Image" alt="Image" width="30" height="30" data-bs-toggle="modal" data-bs-target="#view-signature-modal">
 									}
 								</td>
 							}
 							else
 							{
-								<td localize-content>@(value ?? "")</td>
+								<td><span localize-content class="@statusColorClass">@Html.Raw(value ?? "")</span></td>
 							}
 						}
 					</tr>

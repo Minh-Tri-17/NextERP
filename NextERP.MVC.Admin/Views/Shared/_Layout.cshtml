@@ -274,7 +274,7 @@
 		<div class="offcanvas offcanvas-start" id="offcanvas-menu">
 			<aside class="sidebar">
 				<div class="sidebar-header">
-					<a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard">
+					<a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
 						<img src="~/images/logo.png" alt="Logo" />
 						<h3>NextERP</h3>
 					</a>
@@ -671,7 +671,7 @@
 									<hr class="dropdown-divider" />
 								</li>
 								<li>
-									<a class="dropdown-item" id="logout" asp-action="Logout" asp-controller="Account">
+									<a class="dropdown-item" id="logout" asp-action="Logout" asp-controller="Account" asp-route-culture="@culture">
 										<div localize-content>Logout</div>
 										<i class="fa-solid fa-arrow-right-from-bracket"></i>
 									</a>

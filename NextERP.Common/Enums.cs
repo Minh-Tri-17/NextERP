@@ -2,34 +2,6 @@
 {
     public class Enums
     {
-        public enum Color
-        {
-            /// <summary>
-            /// Màu sắc mặc định
-            /// </summary>
-            ColorPrimary,
-
-            /// <summary>
-            /// Màu sắc cảnh báo lỗi
-            /// </summary>
-            ColorDanger,
-
-            /// <summary>
-            /// Màu sắc thông tin
-            /// </summary>
-            ColorInfo,
-
-            /// <summary>
-            /// Màu sắc thành công
-            /// </summary>
-            ColorSuccess,
-
-            /// <summary>
-            /// Màu sắc cảnh báo
-            /// </summary>
-            ColorWarning,
-        }
-
         public enum GroupRole
         {
             /// <summary>

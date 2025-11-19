@@ -895,10 +895,10 @@
     <value>View</value>
   </data>
   <data name="SessionCompleted" xml:space="preserve">
-    <value>The training session is completed</value>
+    <value>Completed</value>
   </data>
   <data name="SessionCancelled" xml:space="preserve">
-    <value>The training session is cancelled</value>
+    <value>Cancelled</value>
   </data>
   <data name="Inactive" xml:space="preserve">
     <value>Inactive</value>
@@ -907,7 +907,7 @@
     <value>is required.</value>
   </data>
   <data name="SessionOngoing" xml:space="preserve">
-    <value>The training session is ongoing</value>
+    <value>On going</value>
   </data>
   <data name="InvalidPassword" xml:space="preserve">
     <value>Password is required.</value>
@@ -1224,8 +1224,8 @@
   <data name="zstring239" xml:space="preserve">
     <value />
   </data>
-  <data name="zstring229" xml:space="preserve">
-    <value />
+  <data name="Delivered" xml:space="preserve">
+    <value>Delivered</value>
   </data>
   <data name="zstring249" xml:space="preserve">
     <value />

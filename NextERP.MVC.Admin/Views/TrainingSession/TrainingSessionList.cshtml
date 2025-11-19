@@ -47,7 +47,26 @@
 						@foreach (var field in listField)
 						{
 							var value = field.GetValue(row);
-							<td localize-content>@(value ?? "")</td>
+
+							string statusColorClass = string.Empty;
+
+							if (field.Name == nameof(Enums.SessionStatus).ToString())
+							{
+								switch (value)
+								{
+									case nameof(Enums.SessionStatus.SessionCompleted):
+										statusColorClass = "status-color-success";
+										break;
+									case nameof(Enums.SessionStatus.SessionCancelled):
+										statusColorClass = "status-color-danger";
+										break;
+									case nameof(Enums.SessionStatus.SessionOngoing):
+										statusColorClass = "status-color-primary";
+										break;
+								}
+							}
+
+							<td><span localize-content class="@statusColorClass">@Html.Raw(value ?? "")</span></td>
 						}
 					</tr>
 

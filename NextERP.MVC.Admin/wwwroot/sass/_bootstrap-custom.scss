@@ -55,6 +55,62 @@ thead {
         color: $text-secondary !important;
         background-color: $background-mid !important;
     }
+
+    .status-color-success {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $success-color;
+        background-color: $success-light-color;
+        color: $success-color;
+    }
+
+    .status-color-danger {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $danger-color;
+        background-color: $danger-light-color;
+        color: $danger-color;
+    }
+
+    .status-color-warning {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $warning-color;
+        background-color: $warning-light-color;
+        color: $warning-color;
+    }
+
+    .status-color-info {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $info-color;
+        background-color: $info-light-color;
+        color: $info-color;
+    }
+
+    .status-color-primary {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $primary-color;
+        background-color: $primary-light-color;
+        color: $primary-color;
+    }
+
+    .status-color-purple {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $purple-color;
+        background-color: $purple-light-color;
+        color: $purple-color;
+    }
+
+    .status-color-secondary {
+        padding: $pd-1;
+        border-radius: 3px;
+        border: 1px solid $secondary-color;
+        background-color: $secondary-light-color;
+        color: $secondary-color;
+    }
 }
 
 .carousel-inner {

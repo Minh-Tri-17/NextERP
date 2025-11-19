@@ -213,8 +213,6 @@ namespace NextERP.BLL.Service
                 await _storageService.DeleteFileAsync(supplierOrder.ImagePath, Constants.SignatureFolderPath);
             }
 
-            DataHelper.MapAudit(request, supplierOrder, _currentUser.UserName);
-
             if (request.ImageFile != null)
             {
                 supplierOrder.ImagePath = await SaveFile(request.ImageFile);

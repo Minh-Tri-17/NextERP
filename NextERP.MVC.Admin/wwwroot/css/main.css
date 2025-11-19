@@ -567,7 +567,8 @@ p {
 
 .sidebar {
   min-width: 250px;
-  height: 100%;
+  max-width: 250px;
+  height: 100vh;
   border-right: 2px solid #c7c8cc;
   z-index: 1040;
 }
@@ -594,7 +595,7 @@ p {
 }
 .sidebar .sidebar-menu,
 .sidebar .sidebar-menu-offcanvas {
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 7rem);
   font-size: 1rem;
   overflow-y: auto;
 }
@@ -1136,6 +1137,55 @@ thead.sticky-active {
 .table td:hover {
   color: #6a6a6a !important;
   background-color: #edeef3 !important;
+}
+.table td .status-color-success {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #28a745;
+  background-color: #d4f8c4;
+  color: #28a745;
+}
+.table td .status-color-danger {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #dc3545;
+  background-color: #f8d4d4;
+  color: #dc3545;
+}
+.table td .status-color-warning {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #f0bd00;
+  background-color: #ffe5a8;
+  color: #f0bd00;
+}
+.table td .status-color-info {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #3d7dcf;
+  background-color: #c4e3f8;
+  color: #3d7dcf;
+}
+.table td .status-color-primary {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #776b5d;
+  background-color: #b0a695;
+  color: #776b5d;
+}
+.table td .status-color-purple {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #8a2be2;
+  background-color: #e0c3fc;
+  color: #8a2be2;
+}
+.table td .status-color-secondary {
+  padding: 0.25rem;
+  border-radius: 3px;
+  border: 1px solid #6a6a6a;
+  background-color: #b4b4b8;
+  color: #6a6a6a;
 }
 
 .carousel-inner {

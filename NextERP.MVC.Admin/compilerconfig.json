@@ -1,10 +1,14 @@
-﻿[
+[
   {
     "outputFile": "wwwroot/css/main.css",
-    "inputFile": "wwwroot/sass/main.scss"
+    "inputFile": "wwwroot/sass/main.scss",
+    "sourceMap": false,
+    "outputUTF8Identifier": true
   },
   {
     "outputFile": "wwwroot/css/login.css",
-    "inputFile": "wwwroot/sass/login.scss"
+    "inputFile": "wwwroot/sass/login.scss",
+    "sourceMap": false,
+    "outputUTF8Identifier": true
   }
 ]

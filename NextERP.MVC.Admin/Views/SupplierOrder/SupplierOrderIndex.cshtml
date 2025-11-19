@@ -215,6 +215,8 @@
 			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
 			$supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
 
+			const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
+
 			if ($length == 1) {
 				$("#signature-button").removeClass('disabled');
 			}

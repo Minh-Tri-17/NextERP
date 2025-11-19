@@ -129,7 +129,7 @@
 				$formData.set("@Constants.Id", "@Guid.Empty");
 			}
 
-			$form.find("input[type=checkbox]").each(function () {
+			$saveForm.find("input[type=checkbox]").each(function () {
 				$formData.set(this.name, $(this).is(":checked"));
 			});
 

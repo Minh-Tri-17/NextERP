@@ -48,6 +48,8 @@
                         {
                             var value = field.GetValue(row);
 
+                            string statusColorClass = string.Empty;
+
                             if (field.Name == FeedbackModel.AttributeNames.Rating)
                             {
                                 <td>
@@ -78,7 +80,7 @@
                             }
                             else
                             {
-                                <td localize-content>@(value ?? "")</td>
+                                <td><span localize-content class="@statusColorClass">@Html.Raw(value ?? "")</span></td>
                             }
                         }
                     </tr>

@@ -47,7 +47,23 @@
                         @foreach (var field in listField)
                         {
                             var value = field.GetValue(row);
-                            <td localize-content>@(value ?? "")</td>
+
+                            string statusColorClass = string.Empty;
+
+                            if (field.Name == nameof(Enums.OperatingStatus).ToString())
+                            {
+                                switch (value)
+                                {
+                                    case nameof(Enums.OperatingStatus.Active):
+                                        statusColorClass = "status-color-success";
+                                        break;
+                                    case nameof(Enums.OperatingStatus.Inactive):
+                                        statusColorClass = "status-color-danger";
+                                        break;
+                                }
+                            }
+
+                            <td><span localize-content class="@statusColorClass">@Html.Raw(value ?? "")</span></td>
                         }
                     </tr>
 
