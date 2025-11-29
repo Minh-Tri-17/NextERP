@@ -50,7 +50,8 @@
 
 							string statusColorClass = string.Empty;
 
-							if (field.Name == nameof(Enums.OperatingStatus).ToString())
+							if (field.Name == nameof(Enums.OperatingStatus).ToString()
+								|| field.Name == nameof(Enums.SpaServiceLevel).ToString())
 							{
 								switch (value)
 								{
@@ -59,6 +60,15 @@
 										break;
 									case nameof(Enums.OperatingStatus.Inactive):
 										statusColorClass = "status-color-danger";
+										break;
+									case nameof(Enums.SpaServiceLevel.Basic):
+										statusColorClass = "status-color-primary";
+										break;
+									case nameof(Enums.SpaServiceLevel.Premium):
+										statusColorClass = "status-color-secondary";
+										break;
+									case nameof(Enums.SpaServiceLevel.Advanced):
+										statusColorClass = "status-color-purple";
 										break;
 								}
 							}
