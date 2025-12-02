@@ -542,13 +542,32 @@
     }
 
     .loader {
+        @include flex-center();
         position: absolute;
         width: $w-100;
         height: $h-100;
-        @include flex-center;
         top: 0;
         left: 0;
         z-index: $z-index-1;
         background-color: #c7c8cc70;
+        user-select: none;
+
+        .star {
+            opacity: 0;
+            fill: $primary-color;
+            animation: star-loader-animation 2s infinite alternate;
+
+            &2 {
+                height: 35px;
+                margin-left: -7px;
+                animation-delay: 0.25s;
+            }
+
+            &3 {
+                height: 25px;
+                margin-left: -15px;
+                animation-delay: 0.5s;
+            }
+        }
     }
 }

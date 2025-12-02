@@ -765,6 +765,16 @@ thead.sticky-active {
     stroke-dasharray: 68 68 0 0;
   }
 }
+@keyframes star-loader-animation {
+  0%, 10% {
+    opacity: 0;
+    transform: translateY(0) translateX(50px) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-20px) translateX(0) rotate(360deg);
+  }
+}
 .login-wrapper {
   display: flex;
   justify-content: center;

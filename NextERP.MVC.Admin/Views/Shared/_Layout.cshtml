@@ -3,728 +3,736 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
-	var culture = CultureInfo.CurrentCulture.Name;
+    var culture = CultureInfo.CurrentCulture.Name;
 
-	//Model Employee
-	string ctrModuleEmployee = $"{TableName.Employee},{TableName.Salary},{TableName.Attendance}," +
-		$"{TableName.LeaveRequest},{TableName.Schedule},{TableName.Position},{TableName.TrainingSession}";
-	string actModuleEmployee = $"{ScreenName.Employee.EmployeeIndex},{ScreenName.Salary.SalaryIndex}," +
-		$"{ScreenName.Attendance.AttendanceIndex},{ScreenName.LeaveRequest.LeaveRequestIndex},{ScreenName.Schedule.ScheduleIndex},{ScreenName.Position.PositionIndex},{ScreenName.TrainingSession.TrainingSessionIndex}";
-	//Model Organization
-	string ctrModuleOrganization = $"{TableName.Branch},{TableName.Department}";
-	string actModuleOrganization = $"{ScreenName.Branch.BranchIndex},{ScreenName.Department.DepartmentIndex}";
-	//Model Service
-	string ctrModuleService = $"{TableName.SpaService},{TableName.SpaServiceCategory}";
-	string actModuleService = $"{ScreenName.SpaService.SpaServiceIndex},{ScreenName.SpaServiceCategory.SpaServiceCategoryIndex}";
-	//Model Customer
-	string ctrModuleCustomer = $"{TableName.Customer},{TableName.Feedback},{TableName.Appointment}";
-	string actModuleCustomer = $"{ScreenName.Customer.CustomerIndex},{ScreenName.Feedback.FeedbackIndex}," +
-		$"{ScreenName.Appointment.AppointmentIndex}";
-	//Model Payment
-	string ctrModulePayment = $"{TableName.Invoice},{TableName.InvoiceDetail}";
-	string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex},{ScreenName.InvoiceDetail.InvoiceDetailIndex}";
-	//Model Merchandise
-	string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder}," +
-		$"{TableName.Supplier}";
-	string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex}," +
-		$"{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
-	//Model System
-	string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.HistoryNotification},{TableName.HistoryMail}," +
-		$"{TableName.TemplateMail},{TableName.TemplateNotification}";
-	string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.HistoryNotification.HistoryNotificationIndex}," +
-		$"{ScreenName.HistoryMail.HistoryMailIndex},{ScreenName.TemplateMail.TemplateMailIndex},{ScreenName.TemplateNotification.TemplateNotificationIndex}";
+    //Model Employee
+    string ctrModuleEmployee = $"{TableName.Employee},{TableName.Salary},{TableName.Attendance}," +
+        $"{TableName.LeaveRequest},{TableName.Schedule},{TableName.Position},{TableName.TrainingSession}";
+    string actModuleEmployee = $"{ScreenName.Employee.EmployeeIndex},{ScreenName.Salary.SalaryIndex}," +
+        $"{ScreenName.Attendance.AttendanceIndex},{ScreenName.LeaveRequest.LeaveRequestIndex},{ScreenName.Schedule.ScheduleIndex},{ScreenName.Position.PositionIndex},{ScreenName.TrainingSession.TrainingSessionIndex}";
+    //Model Organization
+    string ctrModuleOrganization = $"{TableName.Branch},{TableName.Department}";
+    string actModuleOrganization = $"{ScreenName.Branch.BranchIndex},{ScreenName.Department.DepartmentIndex}";
+    //Model Service
+    string ctrModuleService = $"{TableName.SpaService},{TableName.SpaServiceCategory}";
+    string actModuleService = $"{ScreenName.SpaService.SpaServiceIndex},{ScreenName.SpaServiceCategory.SpaServiceCategoryIndex}";
+    //Model Customer
+    string ctrModuleCustomer = $"{TableName.Customer},{TableName.Feedback},{TableName.Appointment}";
+    string actModuleCustomer = $"{ScreenName.Customer.CustomerIndex},{ScreenName.Feedback.FeedbackIndex}," +
+        $"{ScreenName.Appointment.AppointmentIndex}";
+    //Model Payment
+    string ctrModulePayment = $"{TableName.Invoice},{TableName.InvoiceDetail}";
+    string actModulePayment = $"{ScreenName.Invoice.InvoiceIndex},{ScreenName.InvoiceDetail.InvoiceDetailIndex}";
+    //Model Merchandise
+    string ctrModuleMerchandise = $"{TableName.Product},{TableName.ProductCategory},{TableName.SupplierOrder}," +
+        $"{TableName.Supplier}";
+    string actModuleMerchandise = $"{ScreenName.Product.ProductIndex},{ScreenName.ProductCategory.ProductCategoryIndex}," +
+        $"{ScreenName.SupplierOrder.SupplierOrderIndex},{ScreenName.Supplier.SupplierIndex}";
+    //Model System
+    string ctrModuleSystem = $"{TableName.Role},{TableName.User},{TableName.HistoryNotification},{TableName.HistoryMail}," +
+        $"{TableName.TemplateMail},{TableName.TemplateNotification}";
+    string actModuleSystem = $"{ScreenName.Role.RoleIndex},{ScreenName.User.UserIndex},{ScreenName.HistoryNotification.HistoryNotificationIndex}," +
+        $"{ScreenName.HistoryMail.HistoryMailIndex},{ScreenName.TemplateMail.TemplateMailIndex},{ScreenName.TemplateNotification.TemplateNotificationIndex}";
 }
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>NextERP | @Localizer[ViewBag.Title]</title>
-	<link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-	<link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
-	<link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/lib/fontawesome-free-6.7.2-web/css/all.min.css" />
-	<link rel="stylesheet" href="~/lib/css/tippy/light.css" />
-	<link rel="stylesheet" href="~/css/main.css" />
-	<script src="~/lib/js/ckeditor/ckeditor.js"></script>
-	<script src="~/lib/js/jquery/jquery.min.js"></script>
-	<script src="~/lib/js/signature/signature_pad.umd.min.js"></script>
-	<script src="~/js/helper.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextERP | @Localizer[ViewBag.Title]</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
+    <link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.7.2-web/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/css/tippy/light.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
+    <script src="~/lib/js/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/js/jquery/jquery.min.js"></script>
+    <script src="~/lib/js/signature/signature_pad.umd.min.js"></script>
+    <script src="~/js/helper.js"></script>
 </head>
 <body>
-	<div class="layout-wrapper">
-		<!--& SIDEBAR -->
-		<aside class="sidebar d-none d-lg-block">
-			<div class="sidebar-header">
-				<a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
-					<img src="~/images/logo.png" alt="Logo" />
-					<h3>NextERP</h3>
-				</a>
-			</div>
+    <div class="layout-wrapper">
+        <!--& SIDEBAR -->
+        <aside class="sidebar d-none d-lg-block">
+            <div class="sidebar-header">
+                <a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
+                    <img src="~/images/logo.png" alt="Logo" />
+                    <h3>NextERP</h3>
+                </a>
+            </div>
 
-			<ul class="sidebar-menu">
-				<li class="sidebar-menu-item @Html.IsActive("Dashboard", @ScreenName.DashboardIndex, "active")">
-					<a asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
-						<span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
-					</a>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-employee" aria-expanded="false">
-						<span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "fa-minus", "fa-plus")"></i>
-					</a>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item @Html.IsActive("Dashboard", @ScreenName.DashboardIndex, "active")">
+                    <a asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
+                        <span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-employee" aria-expanded="false">
+                        <span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "show")" id="submenu-employee" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Employee, ScreenName.Employee.EmployeeIndex, "active")">
-							<a asp-action="@ScreenName.Employee.EmployeeIndex" asp-controller="@TableName.Employee" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Salary, ScreenName.Salary.SalaryIndex, "active")">
-							<a asp-action="@ScreenName.Salary.SalaryIndex" asp-controller="@TableName.Salary" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-hand-holding-dollar"></i><span localize-content>Salary</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Attendance, ScreenName.Attendance.AttendanceIndex, "active")">
-							<a asp-action="@ScreenName.Attendance.AttendanceIndex" asp-controller="@TableName.Attendance" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user-tag"></i><span localize-content>Attendance</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.LeaveRequest, ScreenName.LeaveRequest.LeaveRequestIndex, "active")">
-							<a asp-action="@ScreenName.LeaveRequest.LeaveRequestIndex" asp-controller="@TableName.LeaveRequest" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-calendar-xmark"></i><span localize-content>LeaveRequest</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Schedule, ScreenName.Schedule.ScheduleIndex, "active")">
-							<a asp-action="@ScreenName.Schedule.ScheduleIndex" asp-controller="@TableName.Schedule" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-calendar-days"></i><span localize-content>Schedule</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Position, ScreenName.Position.PositionIndex, "active")">
-							<a asp-action="@ScreenName.Position.PositionIndex" asp-controller="@TableName.Position" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user-tie"></i><span localize-content>Position</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.TrainingSession, ScreenName.TrainingSession.TrainingSessionIndex, "active")">
-							<a asp-action="@ScreenName.TrainingSession.TrainingSessionIndex" asp-controller="@TableName.TrainingSession" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user-graduate"></i><span localize-content>TrainingSession</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-organize" aria-expanded="false">
-						<span><i class="fa-solid fa-building-ngo"></i><span localize-content>Organization</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "show")" id="submenu-employee" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Employee, ScreenName.Employee.EmployeeIndex, "active")">
+                            <a asp-action="@ScreenName.Employee.EmployeeIndex" asp-controller="@TableName.Employee" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Salary, ScreenName.Salary.SalaryIndex, "active")">
+                            <a asp-action="@ScreenName.Salary.SalaryIndex" asp-controller="@TableName.Salary" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-hand-holding-dollar"></i><span localize-content>Salary</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Attendance, ScreenName.Attendance.AttendanceIndex, "active")">
+                            <a asp-action="@ScreenName.Attendance.AttendanceIndex" asp-controller="@TableName.Attendance" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user-tag"></i><span localize-content>Attendance</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.LeaveRequest, ScreenName.LeaveRequest.LeaveRequestIndex, "active")">
+                            <a asp-action="@ScreenName.LeaveRequest.LeaveRequestIndex" asp-controller="@TableName.LeaveRequest" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-calendar-xmark"></i><span localize-content>LeaveRequest</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Schedule, ScreenName.Schedule.ScheduleIndex, "active")">
+                            <a asp-action="@ScreenName.Schedule.ScheduleIndex" asp-controller="@TableName.Schedule" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-calendar-days"></i><span localize-content>Schedule</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Position, ScreenName.Position.PositionIndex, "active")">
+                            <a asp-action="@ScreenName.Position.PositionIndex" asp-controller="@TableName.Position" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user-tie"></i><span localize-content>Position</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.TrainingSession, ScreenName.TrainingSession.TrainingSessionIndex, "active")">
+                            <a asp-action="@ScreenName.TrainingSession.TrainingSessionIndex" asp-controller="@TableName.TrainingSession" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user-graduate"></i><span localize-content>TrainingSession</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-organize" aria-expanded="false">
+                        <span><i class="fa-solid fa-building-ngo"></i><span localize-content>Organization</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "show")" id="submenu-organize" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Branch, ScreenName.Branch.BranchIndex, "active")">
-							<a asp-action="@ScreenName.Branch.BranchIndex" asp-controller="@TableName.Branch" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-building"></i><span localize-content>Branch</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Department, ScreenName.Department.DepartmentIndex, "active")">
-							<a asp-action="@ScreenName.Department.DepartmentIndex" asp-controller="@TableName.Department" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-building-user"></i><span localize-content>Department</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleService, actModuleService, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-service" aria-expanded="false">
-						<span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleService, actModuleService, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "show")" id="submenu-organize" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Branch, ScreenName.Branch.BranchIndex, "active")">
+                            <a asp-action="@ScreenName.Branch.BranchIndex" asp-controller="@TableName.Branch" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-building"></i><span localize-content>Branch</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Department, ScreenName.Department.DepartmentIndex, "active")">
+                            <a asp-action="@ScreenName.Department.DepartmentIndex" asp-controller="@TableName.Department" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-building-user"></i><span localize-content>Department</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleService, actModuleService, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-service" aria-expanded="false">
+                        <span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleService, actModuleService, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleService, actModuleService, "show")" id="submenu-service" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.SpaService, ScreenName.SpaService.SpaServiceIndex, "active")">
-							<a asp-action="@ScreenName.SpaService.SpaServiceIndex" asp-controller="@TableName.SpaService" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.SpaServiceCategory, ScreenName.SpaServiceCategory.SpaServiceCategoryIndex, "active")">
-							<a asp-action="@ScreenName.SpaServiceCategory.SpaServiceCategoryIndex" asp-controller="@TableName.SpaServiceCategory" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-table-list"></i><span localize-content>SpaServiceCategory</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-customer" aria-expanded="false">
-						<span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleService, actModuleService, "show")" id="submenu-service" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.SpaService, ScreenName.SpaService.SpaServiceIndex, "active")">
+                            <a asp-action="@ScreenName.SpaService.SpaServiceIndex" asp-controller="@TableName.SpaService" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.SpaServiceCategory, ScreenName.SpaServiceCategory.SpaServiceCategoryIndex, "active")">
+                            <a asp-action="@ScreenName.SpaServiceCategory.SpaServiceCategoryIndex" asp-controller="@TableName.SpaServiceCategory" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-table-list"></i><span localize-content>SpaServiceCategory</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-customer" aria-expanded="false">
+                        <span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "show")" id="submenu-customer" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Customer, ScreenName.Customer.CustomerIndex, "active")">
-							<a asp-action="@ScreenName.Customer.CustomerIndex" asp-controller="@TableName.Customer" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Feedback, ScreenName.Feedback.FeedbackIndex, "active")">
-							<a asp-action="@ScreenName.Feedback.FeedbackIndex" asp-controller="@TableName.Feedback" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-comment"></i><span localize-content>Feedback</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Appointment, ScreenName.Appointment.AppointmentIndex, "active")">
-							<a asp-action="@ScreenName.Appointment.AppointmentIndex" asp-controller="@TableName.Appointment" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user-clock"></i><span localize-content>Appointment</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModulePayment, actModulePayment, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-payment" aria-expanded="false">
-						<span><i class="fa-solid fa-cash-register"></i><span localize-content>Payment</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModulePayment, actModulePayment, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "show")" id="submenu-customer" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Customer, ScreenName.Customer.CustomerIndex, "active")">
+                            <a asp-action="@ScreenName.Customer.CustomerIndex" asp-controller="@TableName.Customer" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Feedback, ScreenName.Feedback.FeedbackIndex, "active")">
+                            <a asp-action="@ScreenName.Feedback.FeedbackIndex" asp-controller="@TableName.Feedback" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-comment"></i><span localize-content>Feedback</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Appointment, ScreenName.Appointment.AppointmentIndex, "active")">
+                            <a asp-action="@ScreenName.Appointment.AppointmentIndex" asp-controller="@TableName.Appointment" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user-clock"></i><span localize-content>Appointment</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModulePayment, actModulePayment, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-payment" aria-expanded="false">
+                        <span><i class="fa-solid fa-cash-register"></i><span localize-content>Payment</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModulePayment, actModulePayment, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModulePayment, actModulePayment, "show")" id="submenu-payment" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
-							<a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
-							<a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-commodity" aria-expanded="false">
-						<span><i class="fa-solid fa-boxes-stacked"></i><span localize-content>Merchandise</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModulePayment, actModulePayment, "show")" id="submenu-payment" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
+                            <a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
+                            <a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-commodity" aria-expanded="false">
+                        <span><i class="fa-solid fa-boxes-stacked"></i><span localize-content>Merchandise</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "show")" id="submenu-commodity" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Product, ScreenName.Product.ProductIndex, "active")">
-							<a asp-action="@ScreenName.Product.ProductIndex" asp-controller="@TableName.Product" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-spray-can-sparkles"></i><span localize-content>Product</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.ProductCategory, ScreenName.ProductCategory.ProductCategoryIndex, "active")">
-							<a asp-action="@ScreenName.ProductCategory.ProductCategoryIndex" asp-controller="@TableName.ProductCategory" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-table-list"></i><span localize-content>ProductCategory</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
-							<a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">
-							<a asp-action="@ScreenName.Supplier.SupplierIndex" asp-controller="@TableName.Supplier" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-parachute-box"></i><span localize-content>Supplier</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(TableName.Promotion, ScreenName.Promotion.PromotionIndex, "active")">
-					<a asp-action="PromotionIndex" asp-controller="@TableName.Promotion" asp-route-culture="@culture">
-						<span><i class="fa-solid fa-tag"></i><span localize-content>Promotion</span></span>
-					</a>
-				</li>
-				<li class="sidebar-menu-item @Html.IsActive(ctrModuleSystem, actModuleSystem, "active")">
-					<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-system" aria-expanded="false">
-						<span><i class="fa-solid fa-user-shield"></i><span localize-content>System</span></span>
-						<i class="fa-solid @Html.IsActive(ctrModuleSystem, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
-					</a>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "show")" id="submenu-commodity" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Product, ScreenName.Product.ProductIndex, "active")">
+                            <a asp-action="@ScreenName.Product.ProductIndex" asp-controller="@TableName.Product" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-spray-can-sparkles"></i><span localize-content>Product</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.ProductCategory, ScreenName.ProductCategory.ProductCategoryIndex, "active")">
+                            <a asp-action="@ScreenName.ProductCategory.ProductCategoryIndex" asp-controller="@TableName.ProductCategory" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-table-list"></i><span localize-content>ProductCategory</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
+                            <a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">
+                            <a asp-action="@ScreenName.Supplier.SupplierIndex" asp-controller="@TableName.Supplier" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-parachute-box"></i><span localize-content>Supplier</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(TableName.Promotion, ScreenName.Promotion.PromotionIndex, "active")">
+                    <a asp-action="PromotionIndex" asp-controller="@TableName.Promotion" asp-route-culture="@culture">
+                        <span><i class="fa-solid fa-tag"></i><span localize-content>Promotion</span></span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item @Html.IsActive(ctrModuleSystem, actModuleSystem, "active")">
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-system" aria-expanded="false">
+                        <span><i class="fa-solid fa-user-shield"></i><span localize-content>System</span></span>
+                        <i class="fa-solid @Html.IsActive(ctrModuleSystem, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
+                    </a>
 
-					<ul class="collapse submenu @Html.IsActive(ctrModuleSystem, actModuleSystem, "show")" id="submenu-system" data-bs-parent=".sidebar-menu">
-						<li class="sidebar-menu-item @Html.IsActive(TableName.Role, ScreenName.Role.RoleIndex, "active")">
-							<a asp-action="@ScreenName.Role.RoleIndex" asp-controller="@TableName.Role" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user-tag"></i><span localize-content>Role</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.User, ScreenName.User.UserIndex, "active")">
-							<a asp-action="@ScreenName.User.UserIndex" asp-controller="@TableName.User" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
-							<a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
-							<a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
-							<a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
-							</a>
-						</li>
-						<li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
-							<a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail" asp-route-culture="@culture">
-								<span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</aside>
+                    <ul class="collapse submenu @Html.IsActive(ctrModuleSystem, actModuleSystem, "show")" id="submenu-system" data-bs-parent=".sidebar-menu">
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.Role, ScreenName.Role.RoleIndex, "active")">
+                            <a asp-action="@ScreenName.Role.RoleIndex" asp-controller="@TableName.Role" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user-tag"></i><span localize-content>Role</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.User, ScreenName.User.UserIndex, "active")">
+                            <a asp-action="@ScreenName.User.UserIndex" asp-controller="@TableName.User" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
+                            <a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
+                            <a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
+                            <a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
+                            <a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail" asp-route-culture="@culture">
+                                <span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
 
-		<!--& SIDEBAR OFFCANVAS -->
-		<div class="offcanvas offcanvas-start" id="offcanvas-menu">
-			<aside class="sidebar">
-				<div class="sidebar-header">
-					<a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
-						<img src="~/images/logo.png" alt="Logo" />
-						<h3>NextERP</h3>
-					</a>
-				</div>
+        <!--& SIDEBAR OFFCANVAS -->
+        <div class="offcanvas offcanvas-start" id="offcanvas-menu">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
+                        <img src="~/images/logo.png" alt="Logo" />
+                        <h3>NextERP</h3>
+                    </a>
+                </div>
 
-				<ul class="sidebar-menu-offcanvas">
-					<li class="sidebar-menu-item @Html.IsActive("Dashboard", @ScreenName.DashboardIndex, "active")">
-						<a asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
-							<span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
-						</a>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-employee" aria-expanded="false">
-							<span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "fa-minus", "fa-plus")"></i>
-						</a>
+                <ul class="sidebar-menu-offcanvas">
+                    <li class="sidebar-menu-item @Html.IsActive("Dashboard", @ScreenName.DashboardIndex, "active")">
+                        <a asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard" asp-route-culture="@culture">
+                            <span><i class="fa-solid fa-house"></i><span localize-content>Dashboard</span></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-employee" aria-expanded="false">
+                            <span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "show")" id="submenu-employee" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Employee, ScreenName.Employee.EmployeeIndex, "active")">
-								<a asp-action="@ScreenName.Employee.EmployeeIndex" asp-controller="@TableName.Employee" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Salary, ScreenName.Salary.SalaryIndex, "active")">
-								<a asp-action="@ScreenName.Salary.SalaryIndex" asp-controller="@TableName.Salary" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-hand-holding-dollar"></i><span localize-content>Salary</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Attendance, ScreenName.Attendance.AttendanceIndex, "active")">
-								<a asp-action="@ScreenName.Attendance.AttendanceIndex" asp-controller="@TableName.Attendance" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user-tag"></i><span localize-content>Attendance</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.LeaveRequest, ScreenName.LeaveRequest.LeaveRequestIndex, "active")">
-								<a asp-action="@ScreenName.LeaveRequest.LeaveRequestIndex" asp-controller="@TableName.LeaveRequest" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-calendar-xmark"></i><span localize-content>LeaveRequest</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Schedule, ScreenName.Schedule.ScheduleIndex, "active")">
-								<a asp-action="@ScreenName.Schedule.ScheduleIndex" asp-controller="@TableName.Schedule" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-calendar-days"></i><span localize-content>Schedule</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Position, ScreenName.Position.PositionIndex, "active")">
-								<a asp-action="@ScreenName.Position.PositionIndex" asp-controller="@TableName.Position" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user-tie"></i><span localize-content>Position</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.TrainingSession, ScreenName.TrainingSession.TrainingSessionIndex, "active")">
-								<a asp-action="@ScreenName.TrainingSession.TrainingSessionIndex" asp-controller="@TableName.TrainingSession" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user-graduate"></i><span localize-content>TrainingSession</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-organize" aria-expanded="false">
-							<span><i class="fa-solid fa-building-ngo"></i><span localize-content>Organization</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleEmployee, actModuleEmployee, "show")" id="submenu-employee" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Employee, ScreenName.Employee.EmployeeIndex, "active")">
+                                <a asp-action="@ScreenName.Employee.EmployeeIndex" asp-controller="@TableName.Employee" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user"></i><span localize-content>Employee</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Salary, ScreenName.Salary.SalaryIndex, "active")">
+                                <a asp-action="@ScreenName.Salary.SalaryIndex" asp-controller="@TableName.Salary" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-hand-holding-dollar"></i><span localize-content>Salary</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Attendance, ScreenName.Attendance.AttendanceIndex, "active")">
+                                <a asp-action="@ScreenName.Attendance.AttendanceIndex" asp-controller="@TableName.Attendance" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user-tag"></i><span localize-content>Attendance</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.LeaveRequest, ScreenName.LeaveRequest.LeaveRequestIndex, "active")">
+                                <a asp-action="@ScreenName.LeaveRequest.LeaveRequestIndex" asp-controller="@TableName.LeaveRequest" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-calendar-xmark"></i><span localize-content>LeaveRequest</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Schedule, ScreenName.Schedule.ScheduleIndex, "active")">
+                                <a asp-action="@ScreenName.Schedule.ScheduleIndex" asp-controller="@TableName.Schedule" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-calendar-days"></i><span localize-content>Schedule</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Position, ScreenName.Position.PositionIndex, "active")">
+                                <a asp-action="@ScreenName.Position.PositionIndex" asp-controller="@TableName.Position" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user-tie"></i><span localize-content>Position</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.TrainingSession, ScreenName.TrainingSession.TrainingSessionIndex, "active")">
+                                <a asp-action="@ScreenName.TrainingSession.TrainingSessionIndex" asp-controller="@TableName.TrainingSession" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user-graduate"></i><span localize-content>TrainingSession</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-organize" aria-expanded="false">
+                            <span><i class="fa-solid fa-building-ngo"></i><span localize-content>Organization</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "show")" id="submenu-organize" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Branch, ScreenName.Branch.BranchIndex, "active")">
-								<a asp-action="@ScreenName.Branch.BranchIndex" asp-controller="@TableName.Branch" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-building"></i><span localize-content>Branch</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Department, ScreenName.Department.DepartmentIndex, "active")">
-								<a asp-action="@ScreenName.Department.DepartmentIndex" asp-controller="@TableName.Department" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-building-user"></i><span localize-content>Department</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleService, actModuleService, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-service" aria-expanded="false">
-							<span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleService, actModuleService, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleOrganization, actModuleOrganization, "show")" id="submenu-organize" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Branch, ScreenName.Branch.BranchIndex, "active")">
+                                <a asp-action="@ScreenName.Branch.BranchIndex" asp-controller="@TableName.Branch" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-building"></i><span localize-content>Branch</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Department, ScreenName.Department.DepartmentIndex, "active")">
+                                <a asp-action="@ScreenName.Department.DepartmentIndex" asp-controller="@TableName.Department" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-building-user"></i><span localize-content>Department</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleService, actModuleService, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-service" aria-expanded="false">
+                            <span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleService, actModuleService, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleService, actModuleService, "show")" id="submenu-service" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.SpaService, ScreenName.SpaService.SpaServiceIndex, "active")">
-								<a asp-action="@ScreenName.SpaService.SpaServiceIndex" asp-controller="@TableName.SpaService" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.SpaServiceCategory, ScreenName.SpaServiceCategory.SpaServiceCategoryIndex, "active")">
-								<a asp-action="@ScreenName.SpaServiceCategory.SpaServiceCategoryIndex" asp-controller="@TableName.SpaServiceCategory" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-table-list"></i><span localize-content>SpaServiceCategory</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-customer" aria-expanded="false">
-							<span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleService, actModuleService, "show")" id="submenu-service" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.SpaService, ScreenName.SpaService.SpaServiceIndex, "active")">
+                                <a asp-action="@ScreenName.SpaService.SpaServiceIndex" asp-controller="@TableName.SpaService" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-hand-sparkles"></i><span localize-content>SpaService</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.SpaServiceCategory, ScreenName.SpaServiceCategory.SpaServiceCategoryIndex, "active")">
+                                <a asp-action="@ScreenName.SpaServiceCategory.SpaServiceCategoryIndex" asp-controller="@TableName.SpaServiceCategory" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-table-list"></i><span localize-content>SpaServiceCategory</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-customer" aria-expanded="false">
+                            <span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "show")" id="submenu-customer" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Customer, ScreenName.Customer.CustomerIndex, "active")">
-								<a asp-action="@ScreenName.Customer.CustomerIndex" asp-controller="@TableName.Customer" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Feedback, ScreenName.Feedback.FeedbackIndex, "active")">
-								<a asp-action="@ScreenName.Feedback.FeedbackIndex" asp-controller="@TableName.Feedback" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-comment"></i><span localize-content>Feedback</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Appointment, ScreenName.Appointment.AppointmentIndex, "active")">
-								<a asp-action="@ScreenName.Appointment.AppointmentIndex" asp-controller="@TableName.Appointment" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user-clock"></i><span localize-content>Appointment</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModulePayment, actModulePayment, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-payment" aria-expanded="false">
-							<span><i class="fa-solid fa-cash-register"></i><span localize-content>Payment</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModulePayment, actModulePayment, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleCustomer, actModuleCustomer, "show")" id="submenu-customer" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Customer, ScreenName.Customer.CustomerIndex, "active")">
+                                <a asp-action="@ScreenName.Customer.CustomerIndex" asp-controller="@TableName.Customer" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user"></i><span localize-content>Customer</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Feedback, ScreenName.Feedback.FeedbackIndex, "active")">
+                                <a asp-action="@ScreenName.Feedback.FeedbackIndex" asp-controller="@TableName.Feedback" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-comment"></i><span localize-content>Feedback</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Appointment, ScreenName.Appointment.AppointmentIndex, "active")">
+                                <a asp-action="@ScreenName.Appointment.AppointmentIndex" asp-controller="@TableName.Appointment" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user-clock"></i><span localize-content>Appointment</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModulePayment, actModulePayment, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-payment" aria-expanded="false">
+                            <span><i class="fa-solid fa-cash-register"></i><span localize-content>Payment</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModulePayment, actModulePayment, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModulePayment, actModulePayment, "show")" id="submenu-payment" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
-								<a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
-								<a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-commodity" aria-expanded="false">
-							<span><i class="fa-solid fa-boxes-stacked"></i><span localize-content>Merchandise</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModulePayment, actModulePayment, "show")" id="submenu-payment" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Invoice, ScreenName.Invoice.InvoiceIndex, "active")">
+                                <a asp-action="@ScreenName.Invoice.InvoiceIndex" asp-controller="@TableName.Invoice" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>Invoice</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.InvoiceDetail, ScreenName.InvoiceDetail.InvoiceDetailIndex, "active")">
+                                <a asp-action="@ScreenName.InvoiceDetail.InvoiceDetailIndex" asp-controller="@TableName.InvoiceDetail" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>InvoiceDetail</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-commodity" aria-expanded="false">
+                            <span><i class="fa-solid fa-boxes-stacked"></i><span localize-content>Merchandise</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "show")" id="submenu-commodity" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Product, ScreenName.Product.ProductIndex, "active")">
-								<a asp-action="@ScreenName.Product.ProductIndex" asp-controller="@TableName.Product" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-spray-can-sparkles"></i><span localize-content>Product</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.ProductCategory, ScreenName.ProductCategory.ProductCategoryIndex, "active")">
-								<a asp-action="@ScreenName.ProductCategory.ProductCategoryIndex" asp-controller="@TableName.ProductCategory" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-table-list"></i><span localize-content>ProductCategory</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
-								<a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">
-								<a asp-action="@ScreenName.Supplier.SupplierIndex" asp-controller="@TableName.Supplier" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-parachute-box"></i><span localize-content>Supplier</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(TableName.Promotion, ScreenName.Promotion.PromotionIndex, "active")">
-						<a asp-action="PromotionIndex" asp-controller="@TableName.Promotion" asp-route-culture="@culture">
-							<span><i class="fa-solid fa-tag"></i><span localize-content>Promotion</span></span>
-						</a>
-					</li>
-					<li class="sidebar-menu-item @Html.IsActive(ctrModuleSystem, actModuleSystem, "active")">
-						<a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-system" aria-expanded="false">
-							<span><i class="fa-solid fa-user-shield"></i><span localize-content>System</span></span>
-							<i class="fa-solid @Html.IsActive(ctrModuleSystem, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
-						</a>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleMerchandise, actModuleMerchandise, "show")" id="submenu-commodity" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Product, ScreenName.Product.ProductIndex, "active")">
+                                <a asp-action="@ScreenName.Product.ProductIndex" asp-controller="@TableName.Product" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-spray-can-sparkles"></i><span localize-content>Product</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.ProductCategory, ScreenName.ProductCategory.ProductCategoryIndex, "active")">
+                                <a asp-action="@ScreenName.ProductCategory.ProductCategoryIndex" asp-controller="@TableName.ProductCategory" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-table-list"></i><span localize-content>ProductCategory</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.SupplierOrder, ScreenName.SupplierOrder.SupplierOrderIndex, "active")">
+                                <a asp-action="@ScreenName.SupplierOrder.SupplierOrderIndex" asp-controller="@TableName.SupplierOrder" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-file-invoice-dollar"></i><span localize-content>SupplierOrder</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Supplier, ScreenName.Supplier.SupplierIndex, "active")">
+                                <a asp-action="@ScreenName.Supplier.SupplierIndex" asp-controller="@TableName.Supplier" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-parachute-box"></i><span localize-content>Supplier</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(TableName.Promotion, ScreenName.Promotion.PromotionIndex, "active")">
+                        <a asp-action="PromotionIndex" asp-controller="@TableName.Promotion" asp-route-culture="@culture">
+                            <span><i class="fa-solid fa-tag"></i><span localize-content>Promotion</span></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item @Html.IsActive(ctrModuleSystem, actModuleSystem, "active")">
+                        <a href="#" data-bs-toggle="collapse" data-bs-target="#submenu-system" aria-expanded="false">
+                            <span><i class="fa-solid fa-user-shield"></i><span localize-content>System</span></span>
+                            <i class="fa-solid @Html.IsActive(ctrModuleSystem, actModuleMerchandise, "fa-minus", "fa-plus")"></i>
+                        </a>
 
-						<ul class="collapse submenu @Html.IsActive(ctrModuleSystem, actModuleSystem, "show")" id="submenu-system" data-bs-parent=".sidebar-menu">
-							<li class="sidebar-menu-item @Html.IsActive(TableName.Role, ScreenName.Role.RoleIndex, "active")">
-								<a asp-action="@ScreenName.Role.RoleIndex" asp-controller="@TableName.Role" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user-tag"></i><span localize-content>Role</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.User, ScreenName.User.UserIndex, "active")">
-								<a asp-action="@ScreenName.User.UserIndex" asp-controller="@TableName.User" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
-								<a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
-								<a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
-								<a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
-								</a>
-							</li>
-							<li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
-								<a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail" asp-route-culture="@culture">
-									<span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</aside>
-		</div>
+                        <ul class="collapse submenu @Html.IsActive(ctrModuleSystem, actModuleSystem, "show")" id="submenu-system" data-bs-parent=".sidebar-menu">
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.Role, ScreenName.Role.RoleIndex, "active")">
+                                <a asp-action="@ScreenName.Role.RoleIndex" asp-controller="@TableName.Role" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user-tag"></i><span localize-content>Role</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.User, ScreenName.User.UserIndex, "active")">
+                                <a asp-action="@ScreenName.User.UserIndex" asp-controller="@TableName.User" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-user"></i><span localize-content>User</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryNotification, ScreenName.HistoryNotification.HistoryNotificationIndex, " active")">
+                                <a asp-action="@ScreenName.HistoryNotification.HistoryNotificationIndex" asp-controller="@TableName.HistoryNotification" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>HistoryNotification</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateNotification, ScreenName.TemplateNotification.TemplateNotificationIndex, " active")">
+                                <a asp-action="@ScreenName.TemplateNotification.TemplateNotificationIndex" asp-controller="@TableName.TemplateNotification" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-paper-plane"></i><span localize-content>TemplateNotification</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.HistoryMail, ScreenName.HistoryMail.HistoryMailIndex, " active")">
+                                <a asp-action="@ScreenName.HistoryMail.HistoryMailIndex" asp-controller="@TableName.HistoryMail" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>HistoryMail</span></span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item @Html.IsActive(TableName.TemplateMail, ScreenName.TemplateMail.TemplateMailIndex, " active")">
+                                <a asp-action="@ScreenName.TemplateMail.TemplateMailIndex" asp-controller="@TableName.TemplateMail" asp-route-culture="@culture">
+                                    <span><i class="fa-solid fa-envelope"></i><span localize-content>TemplateMail</span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+        </div>
 
-		<!--& CONTENT -->
-		<div class="layout-content">
-			<!--& HEADER -->
-			<header class="header">
-				<div class="header-logo d-flex d-lg-none">
-					<button class="btn-icon" id="toggle-menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-menu">
-						<img src="~/images/menu.png" alt="Mở/Đóng menu" />
-					</button>
-					<a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard">
-						<img src="~/images/logo.png" alt="Logo" />
-					</a>
-				</div>
+        <!--& CONTENT -->
+        <div class="layout-content">
+            <!--& HEADER -->
+            <header class="header">
+                <div class="header-logo d-flex d-lg-none">
+                    <button class="btn-icon" id="toggle-menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-menu">
+                        <img src="~/images/menu.png" alt="Mở/Đóng menu" />
+                    </button>
+                    <a class="logo" asp-action="@ScreenName.DashboardIndex" asp-controller="Dashboard">
+                        <img src="~/images/logo.png" alt="Logo" />
+                    </a>
+                </div>
 
-				<div class="header-left">
-					<h4 class="mt-3" localize-content>@ViewBag.Title</h4>
-					<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							@if (ViewBag.Breadcrumbs != null)
-							{
-								foreach (var item in ViewBag.Breadcrumbs)
-								{
-									string title = item.Item1;
-									string url = item.Item2;
-									bool isActive = item.Item3;
+                <div class="header-left">
+                    <h4 class="mt-3" localize-content>@ViewBag.Title</h4>
+                    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            @if (ViewBag.Breadcrumbs != null)
+                            {
+                                foreach (var item in ViewBag.Breadcrumbs)
+                                {
+                                    string title = item.Item1;
+                                    string url = item.Item2;
+                                    bool isActive = item.Item3;
 
-									if (isActive)
-									{
-										<li class="breadcrumb-item active" aria-current="page">
-											<span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
-										</li>
-									}
-									else
-									{
-										<li class="breadcrumb-item">
-											<a href="@url">
-												<span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
-											</a>
-										</li>
-									}
-								}
-							}
-						</ol>
-					</nav>
-				</div>
+                                    if (isActive)
+                                    {
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="breadcrumb-item">
+                                            <a href="@url">
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px" title="@(Localizer[title])" localize-content>@title</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        </ol>
+                    </nav>
+                </div>
 
-				<div class="header-center">
-					<form class="search-form">
-						<input class="form-control form-control-sm" list="datalistOptions" localize-content placeholder="@Localizer["Search"]" />
-						<datalist id="datalistOptions">
-							<option value="San Francisco"></option>
-							<option value="New York"></option>
-							<option value="Seattle"></option>
-							<option value="Los Angeles"></option>
-							<option value="Chicago"></option>
-						</datalist>
+                <div class="header-center">
+                    <form class="search-form">
+                        <input class="form-control form-control-sm" list="datalistOptions" localize-content placeholder="@Localizer["Search"]" />
+                        <datalist id="datalistOptions">
+                            <option value="San Francisco"></option>
+                            <option value="New York"></option>
+                            <option value="Seattle"></option>
+                            <option value="Los Angeles"></option>
+                            <option value="Chicago"></option>
+                        </datalist>
 
-						<button type="button">
-							<img src="~/images/search.png" localize-content alt="Search" />
-						</button>
-					</form>
-				</div>
+                        <button type="button">
+                            <img src="~/images/search.png" localize-content alt="Search" />
+                        </button>
+                    </form>
+                </div>
 
-				<div class="header-right">
-					<img src="~/images/merry-christmas.gif" alt="Hình động chúc mừng năm mới" />
+                <div class="header-right">
+                    <img src="~/images/merry-christmas.gif" alt="Hình động chúc mừng năm mới" />
 
-					<div class="toggle-mode">
-						<label>
-							<input type="checkbox" />
-							<div class="slider">
-								<div class="circle"></div>
-							</div>
-						</label>
-					</div>
+                    <div class="toggle-mode">
+                        <label>
+                            <input type="checkbox" />
+                            <div class="slider">
+                                <div class="circle"></div>
+                            </div>
+                        </label>
+                    </div>
 
-					<div class="header-controls">
-						<div class="notification">
-							<button type="button" class="btn-icon" data-bs-toggle="dropdown">
-								<img src="~/images/notification.png" alt="Thông báo" />
-								<div class="count">15</div>
-							</button>
+                    <div class="header-controls">
+                        <div class="notification">
+                            <button type="button" class="btn-icon" data-bs-toggle="dropdown">
+                                <img src="~/images/notification.png" alt="Thông báo" />
+                                <div class="count">15</div>
+                            </button>
 
-							<ul class="dropdown-menu">
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-info">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo thông tin</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-warning">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo cảnh báo</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-danger">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo nguy hiểm</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-primary">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo chính</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-secondary">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo phụ cấp 1</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-success">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo hoàn thành</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="notification-item notification-purple">
-											<div class="notification-item-icon"></div>
-											<div class="notification-item-content">
-												<div class="notification-text capitalize">bạn nhận được 1 thông báo tím</div>
-												<div class="notification-time">1 giờ trước</div>
-											</div>
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-info">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo thông tin</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-warning">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo cảnh báo</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-danger">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo nguy hiểm</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-primary">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo chính</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-secondary">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo phụ cấp 1</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-success">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo hoàn thành</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="notification-item notification-purple">
+                                            <div class="notification-item-icon"></div>
+                                            <div class="notification-item-content">
+                                                <div class="notification-text capitalize">bạn nhận được 1 thông báo tím</div>
+                                                <div class="notification-time">1 giờ trước</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-						<div class="profile">
-							<button type="button" class="btn-icon" data-bs-toggle="dropdown">
-								<img src="~/images/account.png" alt="Tài khoản" />
-							</button>
+                        <div class="profile">
+                            <button type="button" class="btn-icon" data-bs-toggle="dropdown">
+                                <img src="~/images/account.png" alt="Tài khoản" />
+                            </button>
 
-							<ul class="dropdown-menu">
-								<li>
-									<a class="dropdown-item" href="#">
-										<div class="profile-basic">
-											<div class="profile-img"><img src="~/images/avartar.jpg" alt="" /></div>
-											<div class="profile-info">
-												<div class="profile-user-name text-capitalize">nguyễn minh trí</div>
-												<div class="profile-role" localize-content>Admin</div>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<hr class="dropdown-divider" />
-								</li>
-								<li>
-									<a class="dropdown-item" id="logout" asp-action="Logout" asp-controller="Account" asp-route-culture="@culture">
-										<div localize-content>Logout</div>
-										<i class="fa-solid fa-arrow-right-from-bracket"></i>
-									</a>
-								</li>
-							</ul>
-						</div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="profile-basic">
+                                            <div class="profile-img"><img src="~/images/avartar.jpg" alt="" /></div>
+                                            <div class="profile-info">
+                                                <div class="profile-user-name text-capitalize">nguyễn minh trí</div>
+                                                <div class="profile-role" localize-content>Admin</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" id="logout" asp-action="Logout" asp-controller="Account" asp-route-culture="@culture">
+                                        <div localize-content>Logout</div>
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-						<div class="setting">
-							<button type="button" class="btn-icon">
-								<img src="~/images/setting.png" alt="Cài đặt" />
-							</button>
-						</div>
+                        <div class="setting">
+                            <button type="button" class="btn-icon">
+                                <img src="~/images/setting.png" alt="Cài đặt" />
+                            </button>
+                        </div>
 
-						<div class="inline-spacing">
-							<div class="btn-group">
-								<p class="dropdown-toggle"
-								   data-bs-toggle="dropdown"
-								   aria-expanded="false" style="font-size:20px">
-									@culture
-								</p>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="/vi/Dashboard/SetCultureCookie?cltr=vi&returnUrl=/vi" localize-content>Vietnamese</a></li>
-									<li><a class="dropdown-item" href="/en/Dashboard/SetCultureCookie?cltr=en&returnUrl=/en" localize-content>English</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+                        <div class="inline-spacing">
+                            <div class="btn-group">
+                                <p class="dropdown-toggle"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false" style="font-size:20px">
+                                    @culture
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/vi/Dashboard/SetCultureCookie?cltr=vi&returnUrl=/vi" localize-content>Vietnamese</a></li>
+                                    <li><a class="dropdown-item" href="/en/Dashboard/SetCultureCookie?cltr=en&returnUrl=/en" localize-content>English</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-			<!--& LOADER -->
-			<div class="loader">
-				<l-infinity size="55" stroke="4" stroke-length="0.15" bg-opacity="0.1" speed="1.3" color="black"></l-infinity>
-			</div>
+            <!--& LOADER -->
+            <div class="loader">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" class="star star1" viewBox="0 0 256 256">
+                    <path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" class="star star2" viewBox="0 0 256 256">
+                    <path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" class="star star3" viewBox="0 0 256 256">
+                    <path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
+                </svg>
+            </div>
 
-			<!--& MAIN -->
-			<main class="main">
-				<div class="main-wrapper">@RenderBody()</div>
-			</main>
-		</div>
-	</div>
+            <!--& MAIN -->
+            <main class="main">
+                <div class="main-wrapper">@RenderBody()</div>
+            </main>
+        </div>
+    </div>
 
-	<script src="~/lib/js/apexcharts/apexcharts.min.js"></script>
-	<script src="~/lib/js/bootstrap/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/js/bootstrap/popper.min.js"></script>
-	<script src="~/lib/js/fullcalendar/index.global.js"></script>
-	<script src="~/lib/js/moment/moment.min.js"></script>
-	<script src="~/lib/js/sortable/sortable.min.js"></script>
-	<script src="~/lib/js/tippy/tippy-bundle.umd.min.js"></script>
-	<script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/infinity.js"></script>
-	<script src="~/js/main.js"></script>
-	<script src="~/js/chart.js"></script>
-	<script src="~/js/layout.js"></script>
-	<script src="~/js/helper.js"></script>
+    <script src="~/lib/js/apexcharts/apexcharts.min.js"></script>
+    <script src="~/lib/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/js/bootstrap/popper.min.js"></script>
+    <script src="~/lib/js/fullcalendar/index.global.js"></script>
+    <script src="~/lib/js/moment/moment.min.js"></script>
+    <script src="~/lib/js/sortable/sortable.min.js"></script>
+    <script src="~/lib/js/tippy/tippy-bundle.umd.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/infinity.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/chart.js"></script>
+    <script src="~/js/layout.js"></script>
+    <script src="~/js/helper.js"></script>
 </body>
 </html>
