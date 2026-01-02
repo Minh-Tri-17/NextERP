@@ -16,6 +16,7 @@ namespace NextERP.MVC.Admin.Services.Interfaces
         public Task<APIBaseResult<DataChartSingleModel>> GetChartLine();
         public Task<APIBaseResult<DataChartXYModel>> GetChartSlope();
         public Task<APIBaseResult<DataChartSingleModel>> GetChartFunnel();
+        public Task<APIBaseResult<DataChartTreeModel>> GetChartTree();
         public Task<APIBaseResult<decimal>> GetStatisticsProfit();
         public Task<APIBaseResult<decimal>> GetStatisticsRevenue();
         public Task<APIBaseResult<decimal>> GetStatisticsSpending();

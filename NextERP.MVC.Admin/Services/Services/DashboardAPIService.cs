@@ -60,6 +60,11 @@ namespace NextERP.MVC.Admin.Services.Services
             return await GetAsync<APIBaseResult<DataChartSingleModel>>(Constants.UrlGetChartFunnel);
         }
 
+        public async Task<APIBaseResult<DataChartTreeModel>> GetChartTree()
+        {
+            return await GetAsync<APIBaseResult<DataChartTreeModel>>(Constants.UrlGetChartTree);
+        }
+
         public async Task<APIBaseResult<decimal>> GetStatisticsProfit()
         {
             return await GetAsync<APIBaseResult<decimal>>(Constants.UrlGetStatisticsProfit);

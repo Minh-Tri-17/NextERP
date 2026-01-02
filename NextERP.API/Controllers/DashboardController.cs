@@ -95,6 +95,16 @@ namespace NextERP.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet(nameof(GetChartTree))]
+        public async Task<ActionResult<IEnumerable<decimal>>> GetChartTree()
+        {
+            var result = await _dashboardService.GetChartTree();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpGet(nameof(GetStatisticsProfit))]
         public async Task<ActionResult<IEnumerable<decimal>>> GetStatisticsProfit()
         {

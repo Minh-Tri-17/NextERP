@@ -217,6 +217,86 @@ namespace NextERP.BLL.Service
             return new APISuccessResult<DataChartXYModel>(Messages.GetListResultSuccess, dataChart);
         }
 
+        public async Task<APIBaseResult<DataChartTreeModel>> GetChartTree()
+        {
+            var dataChart = new DataChartTreeModel
+            {
+                Id = "Lucas_Alex",
+                Data = new NodeData
+                {
+                    Name = "Lucas Alex",
+                    ImageURL = "https://i.pravatar.cc/300?img=68",
+                    BorderColor = "#94ddff"
+                },
+                Children = new List<DataChartTreeModel>
+                {
+                    new DataChartTreeModel
+                    {
+                        Id = "Alex_Lee",
+                        Data = new NodeData
+                        {
+                            Name = "Alex Lee",
+                            ImageURL = "https://i.pravatar.cc/300?img=69",
+                            BorderColor = "#ffc7c2"
+                        },
+                        Children = new List<DataChartTreeModel>
+                        {
+                            new DataChartTreeModel
+                            {
+                                Id = "Mia_Patel",
+                                Data = new NodeData { Name = "Mia Patel", ImageURL = "https://i.pravatar.cc/300?img=49", BorderColor = "#e3c2ff" }
+                            },
+                            new DataChartTreeModel
+                            {
+                                Id = "Ryan_Clark",
+                                Data = new NodeData { Name = "Ryan Clark", ImageURL = "https://i.pravatar.cc/300?img=13", BorderColor = "#e3c2ff" }
+                            },
+                            new DataChartTreeModel
+                            {
+                                Id = "Zoe_Wang",
+                                Data = new NodeData { Name = "Zoe Wang", ImageURL = "https://i.pravatar.cc/300?img=54", BorderColor = "#e3c2ff" }
+                            }
+                        }
+                    },
+                    new DataChartTreeModel
+                    {
+                        Id = "Leo_Kim",
+                        Data = new NodeData
+                        {
+                            Name = "Leo Kim",
+                            ImageURL = "https://i.pravatar.cc/300?img=43",
+                            BorderColor = "#ffc7c2"
+                        },
+                        Children = new List<DataChartTreeModel>
+                        {
+                            new DataChartTreeModel
+                            {
+                                Id = "Ava_Jones",
+                                Data = new NodeData { Name = "Ava Jones", ImageURL = "https://i.pravatar.cc/300?img=51", BorderColor = "#d2edc5" }
+                            },
+                            new DataChartTreeModel
+                            {
+                                Id = "Maya_Gupta",
+                                Data = new NodeData { Name = "Maya Gupta", ImageURL = "https://i.pravatar.cc/300?img=45", BorderColor = "#d2edc5" }
+                            }
+                        }
+                    },
+                    new DataChartTreeModel
+                    {
+                        Id = "Max_Ruiz",
+                        Data = new NodeData
+                        {
+                            Name = "Max Ruiz",
+                            ImageURL = "https://i.pravatar.cc/300?img=50",
+                            BorderColor = "#ffc7c2"
+                        }
+                    }
+                }
+            };
+
+            return new APISuccessResult<DataChartTreeModel>(Messages.GetListResultSuccess, dataChart);
+        }
+
         #endregion
 
         #endregion

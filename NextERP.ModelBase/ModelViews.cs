@@ -668,6 +668,20 @@ namespace NextERP.ModelBase
         public string[]? Labels { get; set; }
     }
 
+    public class DataChartTreeModel
+    {
+        public string Id { get; set; } = string.Empty;
+        public NodeData Data { get; set; } = new NodeData();
+        public List<DataChartTreeModel>? Children { get; set; } = new List<DataChartTreeModel>();
+    }
+
+    public class NodeData
+    {
+        public string Name { get; set; } = string.Empty;
+        public string ImageURL { get; set; } = string.Empty;
+        public string BorderColor { get; set; } = string.Empty;
+    }
+
     public class DataChartXYModel
     {
         public List<XYSeriesModel>? Values { get; set; }

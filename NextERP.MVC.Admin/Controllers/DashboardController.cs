@@ -93,6 +93,12 @@ namespace NextERP.MVC.Admin.Controllers
             return Json(data);
         }
 
+        public async Task<ActionResult> GetChartTree()
+        {
+            var data = await _dashboardAPIService.GetChartTree();
+            return Json(data);
+        }
+
         #endregion
 
         #endregion

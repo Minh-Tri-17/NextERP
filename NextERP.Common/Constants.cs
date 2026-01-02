@@ -84,6 +84,7 @@
         public const string UrlGetChartLine = "/api/Dashboard/GetChartLine";
         public const string UrlGetChartSlope = "/api/Dashboard/GetChartSlope";
         public const string UrlGetChartFunnel = "/api/Dashboard/GetChartFunnel";
+        public const string UrlGetChartTree = "/api/Dashboard/GetChartTree";
         public const string UrlGetStatisticsProfit = "/api/Dashboard/GetStatisticsProfit";
         public const string UrlGetStatisticsRevenue = "/api/Dashboard/GetStatisticsRevenue";
         public const string UrlGetStatisticsSpending = "/api/Dashboard/GetStatisticsSpending";
@@ -455,6 +456,7 @@
         public const string GetChartLine = "GetChartLine";
         public const string GetChartFunnel = "GetChartFunnel";
         public const string GetChartSlope = "GetChartSlope";
+        public const string GetChartTree = "GetChartTree";
         public const string Login = "Login";
         public const string Account = "Account";
         public const string ResetPassword = "ResetPassword";

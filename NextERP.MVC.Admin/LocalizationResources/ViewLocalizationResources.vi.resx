@@ -1050,8 +1050,8 @@
   <data name="RegisterSuccess" xml:space="preserve">
     <value>S:Đăng ký thành công</value>
   </data>
-  <data name="zstring230" xml:space="preserve">
-    <value />
+  <data name="Profile" xml:space="preserve">
+    <value>Hồ sơ</value>
   </data>
   <data name="ButtonRegister" xml:space="preserve">
     <value>Đăng ký</value>
@@ -1179,8 +1179,8 @@
   <data name="RegisterFailed" xml:space="preserve">
     <value>F:Đăng ký thất bại</value>
   </data>
-  <data name="zstring231" xml:space="preserve">
-    <value />
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
   </data>
   <data name="ButtonSendOTP" xml:space="preserve">
     <value>Gửi mã xác nhận</value>

@@ -1050,8 +1050,8 @@
   <data name="RegisterSuccess" xml:space="preserve">
     <value>S:Register success</value>
   </data>
-  <data name="zstring230" xml:space="preserve">
-    <value />
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="ButtonRegister" xml:space="preserve">
     <value>Register</value>
@@ -1179,8 +1179,8 @@
   <data name="RegisterFailed" xml:space="preserve">
     <value>F:Register failed</value>
   </data>
-  <data name="zstring231" xml:space="preserve">
-    <value />
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="ButtonSendOTP" xml:space="preserve">
     <value>Send OTP</value>
