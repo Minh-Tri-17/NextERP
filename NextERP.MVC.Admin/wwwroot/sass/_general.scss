@@ -1,23 +1,53 @@
-﻿@use "variable" as *;
+﻿@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:color";
+@use "variable" as *;
+@use "mixins" as *;
 
-.btn-icon {
-    border: none;
-    background: none;
+.tippy-box[data-theme~="custom-dark"] {
+    background-color: $color-level-100-dark !important;
+    color: $color-level-100-light !important;
+    border-radius: $radius-sm;
+    padding: $padding-1;
+    box-shadow: $shadow-sm;
+}
+
+.btn-loading-state {
+    position: relative !important;
+    color: $color-mid-warm;
+    pointer-events: none;
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 1rem;
+        height: 1rem;
+        top: calc(50% - 0.5rem) !important;
+        left: calc(50% - 0.5rem) !important;
+        border: 0.15em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: text-bottom;
+        animation: spinner-border .75s linear infinite;
+        z-index: 2;
+    }
 }
 
 .fold {
-    z-index: 1;
+    @include transition($transition-duration-slow, $ease-in-out);
+    z-index: $z-index-high;
     position: absolute;
     top: 0;
     right: 0;
     height: 1rem;
     width: 1rem;
     display: inline-block;
-    transition: all 0.5s ease-in-out;
-    background: radial-gradient( 100% 75% at 55%, rgba(227, 225, 217, 0.8) 0%, rgba(227, 225, 217, 0) 100% );
-    box-shadow: 0 0 3px black;
+    background: radial-gradient(100% 75% at 55%, rgba(227, 225, 217, 0.8) 0%, rgba(227, 225, 217, 0) 100%);
+    box-shadow: 0 0 3px $color-level-100-dark;
     border-bottom-left-radius: 0.5rem;
-    border-top-right-radius: var(--round);
+    border-top-right-radius: 0.75rem;
 
     &::after {
         content: "";
@@ -32,37 +62,22 @@
     }
 }
 
-.button {
-    --h-button: 48px;
-    --w-button: 102px;
-    --round: 0.75rem;
-    --background-dark: #585858;
-    --text-light: #e3e1d9;
-    --background-light: #e1dbcc;
+.button,
+.button-outline {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: radial-gradient( 65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100% ), linear-gradient(0deg, var(--background-dark), var(--background-dark));
     outline: none;
 
-    &::before, &::after {
+    &::before,
+    &::after {
+        @include transition($transition-duration-slow, $ease-in-out);
         content: "";
         position: absolute;
         inset: var(--space);
-        transition: all 0.5s ease-in-out;
-        z-index: 0;
-    }
-
-    &::before {
-        --space: 1px;
-        background: linear-gradient( 177.95deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100% );
-    }
-
-    &::after {
-        --space: 2px;
-        background: radial-gradient( 65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100% ), linear-gradient(0deg, var(--background-dark), var(--background-dark));
+        z-index: $z-index-base;
     }
 
     &:active {
@@ -70,13 +85,13 @@
     }
 
     &:focus svg.icon {
-        fill: white;
+        fill: $color-level-100-light;
     }
 
     &:hover {
         .fold {
-            margin-top: -1rem;
-            margin-right: -1rem;
+            margin-top: -$margin-4;
+            margin-right: -$margin-4;
         }
 
         svg.icon {
@@ -86,358 +101,111 @@
     }
 }
 
-.points-wrapper {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-
-    .point {
-        bottom: -10px;
-        position: absolute;
-        animation: floating-points infinite ease-in-out;
-        pointer-events: none;
-        width: 3px;
-        height: 3px;
-        background-color: #fff;
-        border-radius: 9999px;
-
-        &:nth-child(1) {
-            left: 4%;
-            opacity: 0.8;
-            animation-duration: 2.35s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(2) {
-            left: 11%;
-            opacity: 0.7;
-            animation-duration: 2.5s;
-            animation-delay: 0.5s;
-        }
-
-        &:nth-child(3) {
-            left: 18%;
-            opacity: 0.9;
-            animation-duration: 2.2s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(4) {
-            left: 25%;
-            opacity: 0.6;
-            animation-duration: 2.05s;
-            animation-delay: 0.4s;
-        }
-
-        &:nth-child(5) {
-            left: 32%;
-            opacity: 1;
-            animation-duration: 1.9s;
-            animation-delay: 0.0s;
-        }
-
-        &:nth-child(6) {
-            left: 39%;
-            opacity: 0.5;
-            animation-duration: 1.5s;
-            animation-delay: 1.5s;
-        }
-
-        &:nth-child(7) {
-            left: 46%;
-            opacity: 0.9;
-            animation-duration: 2.2s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(8) {
-            left: 53%;
-            opacity: 0.8;
-            animation-duration: 2.25s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(9) {
-            left: 60%;
-            opacity: 0.6;
-            animation-duration: 2.6s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(10) {
-            left: 67%;
-            opacity: 1;
-            animation-duration: 2.5s;
-            animation-delay: 0.3s;
-        }
-
-        &:nth-child(11) {
-            left: 74%;
-            opacity: 0.7;
-            animation-duration: 2.1s;
-            animation-delay: 0.4s;
-        }
-
-        &:nth-child(12) {
-            left: 81%;
-            opacity: 0.5;
-            animation-duration: 1.8s;
-            animation-delay: 1.0s;
-        }
-
-        &:nth-child(13) {
-            left: 88%;
-            opacity: 0.9;
-            animation-duration: 2.4s;
-            animation-delay: 0.3s;
-        }
-
-        &:nth-child(14) {
-            left: 93%;
-            opacity: 0.6;
-            animation-duration: 2.7s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(15) {
-            left: 98%;
-            opacity: 1;
-            animation-duration: 2.0s;
-            animation-delay: 0.8s;
-        }
-    }
-}
-
-.inner {
-    z-index: 2;
-    gap: 6px;
-    position: relative;
-    width: 100%;
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease-in-out;
-
-    svg.icon {
-        width: 20px;
-        height: 20px;
-        transition: fill 0.1s linear;
-    }
-}
-
-.button-outline {
-    --h-button: 48px;
-    --w-button: 102px;
-    --round: 0.75rem;
-    --text-light: #e3e1d9;
-    --background-light: #e1dbcc;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: radial-gradient( 65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100% ), linear-gradient(0deg, var(--background-dark), var(--background-dark));
-    outline: none;
-
-    &::before, &::after {
-        content: "";
-        position: absolute;
-        inset: var(--space);
-        transition: all 0.5s ease-in-out;
-        z-index: 0;
-    }
+.button {
+    background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100%), linear-gradient(0deg, #585858, #585858);
 
     &::before {
         --space: 1px;
-        border-radius: 5px;
-        border: 1px solid #000;
-        background: linear-gradient( 177.95deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100% );
+        background: linear-gradient(177.95deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100%);
     }
 
     &::after {
         --space: 2px;
-        background: radial-gradient( 65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100% ), linear-gradient(0deg, var(--background-dark), var(--background-dark));
+        background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100%), linear-gradient(0deg, #585858, #585858);
+    }
+}
+
+.button-outline {
+    &::before {
+        --space: 0px;
+        border-radius: $radius-sm;
+        border: 1px solid #585858;
     }
 
-    &:active {
-        transform: scale(0.95);
-    }
-
-    &:focus svg.icon {
-        fill: white;
+    &::after {
+        --space: 2px;
     }
 
     &:hover {
-        --background-dark: #585858;
-        --background-light: #e1dbcc;
+        background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100%), linear-gradient(0deg, #585858, #585858);
 
         &::before {
             border: none;
         }
 
-        .inner-outline {
-            color: #fff;
+        &::after {
+            background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(227, 225, 217, 0.6) 0%, rgba(227, 225, 217, 0) 100%), linear-gradient(0deg, #585858, #585858);
         }
 
-        .fold {
-            margin-top: -1rem;
-            margin-right: -1rem;
+        .inner-outline {
+            @include transition($transition-duration-base, $ease-in-out);
+            color: $color-level-100-light;
         }
 
         .point {
-            background-color: #fff;
-        }
-
-        svg.icon {
-            fill: transparent;
-            animation: dasharray 1s linear forwards, 0.1s linear forwards 0.95s;
+            background-color: $color-level-100-light;
         }
     }
 }
 
+.points-wrapper,
 .points-wrapper-outline {
     overflow: hidden;
-    width: 95%;
-    height: 90%;
     pointer-events: none;
     position: absolute;
-    z-index: 1;
+    z-index: $z-index-high;
 
     .point {
+        @include float-points-config;
         bottom: -10px;
         position: absolute;
         animation: floating-points infinite ease-in-out;
         pointer-events: none;
         width: 3px;
         height: 3px;
-        background-color: #000;
-        border-radius: 9999px;
-
-        &:nth-child(1) {
-            left: 4%;
-            opacity: 0.8;
-            animation-duration: 2.35s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(2) {
-            left: 11%;
-            opacity: 0.7;
-            animation-duration: 2.5s;
-            animation-delay: 0.5s;
-        }
-
-        &:nth-child(3) {
-            left: 18%;
-            opacity: 0.9;
-            animation-duration: 2.2s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(4) {
-            left: 25%;
-            opacity: 0.6;
-            animation-duration: 2.05s;
-            animation-delay: 0.4s;
-        }
-
-        &:nth-child(5) {
-            left: 32%;
-            opacity: 1;
-            animation-duration: 1.9s;
-            animation-delay: 0.0s;
-        }
-
-        &:nth-child(6) {
-            left: 39%;
-            opacity: 0.5;
-            animation-duration: 1.5s;
-            animation-delay: 1.5s;
-        }
-
-        &:nth-child(7) {
-            left: 46%;
-            opacity: 0.9;
-            animation-duration: 2.2s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(8) {
-            left: 53%;
-            opacity: 0.8;
-            animation-duration: 2.25s;
-            animation-delay: 0.2s;
-        }
-
-        &:nth-child(9) {
-            left: 60%;
-            opacity: 0.6;
-            animation-duration: 2.6s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(10) {
-            left: 67%;
-            opacity: 1;
-            animation-duration: 2.5s;
-            animation-delay: 0.3s;
-        }
-
-        &:nth-child(11) {
-            left: 74%;
-            opacity: 0.7;
-            animation-duration: 2.1s;
-            animation-delay: 0.4s;
-        }
-
-        &:nth-child(12) {
-            left: 81%;
-            opacity: 0.5;
-            animation-duration: 1.8s;
-            animation-delay: 1.0s;
-        }
-
-        &:nth-child(13) {
-            left: 88%;
-            opacity: 0.9;
-            animation-duration: 2.4s;
-            animation-delay: 0.3s;
-        }
-
-        &:nth-child(14) {
-            left: 93%;
-            opacity: 0.6;
-            animation-duration: 2.7s;
-            animation-delay: 0.1s;
-        }
-
-        &:nth-child(15) {
-            left: 98%;
-            opacity: 1;
-            animation-duration: 2.0s;
-            animation-delay: 0.8s;
-        }
+        border-radius: $radius-full;
     }
 }
 
+.points-wrapper {
+    width: $width-100;
+    height: $height-100;
+
+    .point {
+        background-color: $color-level-100-light;
+    }
+}
+
+.points-wrapper-outline {
+    width: $width-100;
+    height: $height-100;
+
+    .point {
+        background-color: $color-level-100-dark;
+    }
+}
+
+.inner,
 .inner-outline {
+    @include flex-center();
+    @include transition($transition-duration-fast, $ease-in-out, color);
     z-index: 2;
     gap: 6px;
     position: relative;
-    width: 100%;
-    color: #000;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease-in-out;
+    width: $width-100;
+    padding: 1px 0;
 
     svg.icon {
         width: 20px;
         height: 20px;
         transition: fill 0.1s linear;
     }
+}
+
+.inner {
+    color: $color-level-100-light;
+}
+
+.inner-outline {
+    color: $color-level-100-dark;
 }

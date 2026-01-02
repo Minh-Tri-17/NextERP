@@ -1,7 +1,4 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.DepartmentModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.DepartmentModel
 
 <div class="modal fade" id="create-edit-modal" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -60,17 +57,17 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+					<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
 					</button>
-					<button type="button" class="button-outline btn save-button" id="only-save-button">
+					<button type="button" class="button-outline btn btn-sm save-button" id="only-save-button">
 						@{
 							var saveIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
 						}
 
 						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSave, iconHtml = saveIcon })
 					</button>
-					<button type="button" class="button btn save-button" data-bs-dismiss="modal">
+					<button type="button" class="button btn btn-sm save-button" data-bs-dismiss="modal">
 						@{
 							var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
 						}
@@ -89,6 +86,9 @@
 		'use strict';
 
 		$(".save-button").click(function () {
+			const $btn = $(this);
+			$btn.startLoading();
+
 			const $searchForm = $("#@TableName.Department-search-form");
 			const $saveForm = $(this).closest("form");
 			const $formElement = $saveForm.get(0);
@@ -110,6 +110,9 @@
 				})
 				.catch(err => {
 					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				})
+				.finally(() => {
+					$btn.stopLoading();
 				});
 		});
 	});

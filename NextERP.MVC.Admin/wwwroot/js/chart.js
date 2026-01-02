@@ -166,9 +166,10 @@ function renderChartSlope(id, title, data) {
     const chart = new ApexCharts(chartElement, {
         series: data.values,
         chart: {
-            height: 350,
-            width: 600,
-            type: 'line',
+            height: 400,
+            width: "100%",
+            type: "line",
+            toolbar: { show: true, tools: { download: true } },
         },
         title: {
             text: title,
@@ -190,9 +191,10 @@ function renderChartSlope(id, title, data) {
                 enabled: true,
             },
             formatter(val, opts) {
-                const seriesName = opts.w.config.series[opts.seriesIndex].name
-                return val !== null ? seriesName : ''
+                const seriesName = opts.w.config.series[opts.seriesIndex].name;
+                return val !== null ? seriesName : "";
             },
+            offsetY: 5,
         },
         yaxis: {
             show: true,
@@ -201,18 +203,18 @@ function renderChartSlope(id, title, data) {
             },
         },
         xaxis: {
-            position: 'bottom',
+            position: "bottom",
         },
         legend: {
             show: true,
-            position: 'top',
-            horizontalAlign: 'left',
+            position: "top",
+            horizontalAlign: "left",
         },
         stroke: {
             width: [2, 3, 4, 2],
             dashArray: [0, 0, 5, 2],
-            curve: 'smooth',
-        }
+            curve: "smooth",
+        },
     });
 
     chart.render();
@@ -232,8 +234,8 @@ function renderChartFunnel(id, title, data) {
             },
         ],
         chart: {
-            type: 'bar',
-            height: 350,
+            type: "bar",
+            height: 400,
             dropShadow: {
                 enabled: true,
             },
@@ -247,7 +249,7 @@ function renderChartFunnel(id, title, data) {
                 borderRadius: 0,
                 horizontal: true,
                 distributed: true,
-                barHeight: '80%',
+                barHeight: "80%",
                 isFunnel: true,
             },
         },
@@ -255,7 +257,7 @@ function renderChartFunnel(id, title, data) {
         dataLabels: {
             enabled: true,
             formatter: function (val, opt) {
-                return opt.w.globals.labels[opt.dataPointIndex]
+                return opt.w.globals.labels[opt.dataPointIndex];
             },
             dropShadow: {
                 enabled: true,
@@ -270,4 +272,36 @@ function renderChartFunnel(id, title, data) {
     });
 
     chart.render();
+}
+
+//& Biểu đồ Tree
+function renderChartTree(id, title, data) {
+    //! ApexTree yêu cầu bạn phải truyền vào một DOM element thật sự, không phải một jQuery object
+    const chartElement = document.querySelector(id);
+    if (!chartElement) return;
+
+    const chart = new ApexTree(chartElement, {
+        contentKey: "data",
+        width: "100%",
+        height: "100%",
+        nodeWidth: 150,
+        nodeHeight: 70,
+        childrenSpacing: 70,
+        siblingSpacing: 30,
+        direction: "top",
+        nodeTemplate: (content) => {
+            return `<div style="display: flex; flex-direction: column; height: 100%;">
+                    <div style='display: flex;flex-direction: row;justify-content: space-between;align-items: center;height: 100%; box-shadow: 1px 2px 4px #ccc; padding: 0 7px;'>
+                      <img style='width: 50px;height: 50px;border-radius: 50%;' src='${content.imageURL}' alt='' />
+                      <div style="font-weight: bold; font-family: Arial; font-size: 14px">${content.name}</div>
+                    </div>
+                    <div style='margin-top: auto; border-bottom: 10px solid ${content.borderColor}'></div>
+                  </div>`;
+        },
+        nodeStyle: "box-shadow: -3px -6px 8px -5px rgba(0,0,0,0.31);",
+        enableExpandCollapse: true,
+        enableToolbar: true,
+    });
+
+    chart.render(data);
 }

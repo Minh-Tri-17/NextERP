@@ -1,212 +1,224 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@using static NextERP.Util.Enums
+﻿@using static NextERP.Util.Enums
 @model NextERP.ModelBase.UserModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
 
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Next ERP | @Localizer[ViewBag.Title]</title>
-	<link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-	<link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
-	<link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/login.css" />
-	<script src="~/lib/js/jquery/jquery.min.js"></script>
-	<script src="~/js/helper.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Next ERP | @Localizer[ViewBag.Title]</title>
+
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+
+    <link rel="stylesheet" href="~/lib/css/apexcharts/apexcharts.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.7.2-web/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+
+    <script src="~/lib/js/jquery/jquery.min.js"></script>
+    <script src="~/js/helper.js"></script>
 </head>
 
 <body>
-	<div class="login-wrapper" id="loginWrapper">
-		<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <div class="login-wrapper">
+        <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
-		<!--& LOGIN -->
-		<form class="card login-container needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
-			<input type="hidden" asp-for="GroupRole" value="Admin" />
+        <div class="left">
+            <img src="~/images/topic.png" alt="Illustration" />
+        </div>
+        <div class="right">
+            <!-- Form Login -->
+            <form id="login-form" class="form-container needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
+                <input type="hidden" asp-for="GroupRole" value="Admin" />
 
-			<h2 class="text-center" localize-content>Account</h2>
-			<div class="login-form">
-				<div class="mb-2">
-					<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
-					<div class="col-md-12">
-						<input class="form-control form-control-sm" type="text" asp-for="Username" />
-						<div class="invalid-feedback" localize-content>InvalidUsername</div>
-					</div>
-				</div>
+                <h2 localize-content>Login</h2>
 
-				<div class="mb-2">
-					<label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Password</label>
-					<div class="col-md-12">
-						<input class="form-control form-control-sm" type="password" asp-for="Password" />
-						<div class="invalid-feedback" localize-content>InvalidPassword</div>
-					</div>
-				</div>
+                <div class="mb-2">
+                    <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="Username" />
+                        <div class="invalid-feedback" localize-content>InvalidUsername</div>
+                    </div>
+                </div>
 
-				<div class="d-flex justify-content-between align-items-center my-3">
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" asp-for="Remember" />
-						<label class="form-check-label" for="@UserModel.AttributeNames.Remember" localize-content>@UserModel.AttributeNames.Remember</label>
-					</div>
-					<a href="#" id="forgot-password" localize-content>ForgotPassword</a>
-				</div>
+                <div class="mb-2">
+                    <label for="@UserModel.AttributeNames.Password" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Password</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="password" asp-for="Password" />
+                        <div class="invalid-feedback" localize-content>InvalidPassword</div>
+                    </div>
+                </div>
 
-				<div class="d-flex justify-content-end">
-					<button type="submit" class="button btn">
-						@{
-							string loginIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4""></path><polyline points=""10 17 15 12 10 7""></polyline><line x1=""15"" y1=""12"" x2=""3"" y2=""12""></line></svg>";
-						}
+                <div class="d-flex justify-content-between my-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="Remember" />
+                        <label class="form-check-label" for="@UserModel.AttributeNames.Remember" localize-content>@UserModel.AttributeNames.Remember</label>
+                    </div>
+                    <a class="link" onclick="showForgotPassword()" localize-content>ForgotPassword</a>
+                </div>
 
-						@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonLogin, iconHtml = loginIcon })
-					</button>
-				</div>
-			</div>
-		</form>
+                <button type="submit" class="button btn btn-sm">
+                    @{
+                        string loginIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4""></path><polyline points=""10 17 15 12 10 7""></polyline><line x1=""15"" y1=""12"" x2=""3"" y2=""12""></line></svg>";
+                    }
 
-		<!--& FORGOT PASSWORD -->
-		<div class="card forgot-container">
-			<h2 class="text-center" localize-content>ForgotPassword</h2>
-			<form class="needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
-				<h4 class="text-center" localize-content>StepSendOTP</h4>
-				<div class="forgot-form">
-					<div class="mb-2">
-						<label for="To" class="col-form-label col-md-12" localize-content>Mail</label>
-						<div class="col-md-12">
-							<input class="form-control form-control-sm" type="text" id="mail-to" name="To" />
-							<div class="invalid-feedback" id="invalid-To" localize-content></div>
-						</div>
-					</div>
+                    @await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonLogin, iconHtml = loginIcon })
+                </button>
+            </form>
 
-					<div class="my-3 text-center">
-						<button type="button" id="send-otp" class="button-outline btn">
-							@{
-								string sendOTPIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z""></path><polyline points=""22,6 12,13 2,6""></polyline></svg>";
-							}
+            <!-- Form Forgot Password -->
+            <form id="forgot-form" class="form-container needs-validation hidden" asp-action="AccountIndex" asp-controller="Account" novalidate>
+                <h4 class="text-center" localize-content>StepSendOTP</h4>
 
-							@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSendOTP, iconHtml = sendOTPIcon })
-						</button>
-					</div>
-				</div>
-			</form>
-			<hr>
-			<form class="needs-validation" asp-action="AccountIndex" asp-controller="Account" novalidate>
-				<h4 class="text-center" localize-content>StepResetPassword</h4>
-				<div class="forgot-form">
-					<input type="hidden" asp-for="Mail" />
-					<div class="mb-2">
-						<label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
-						<div class="col-md-12">
-							<input class="form-control form-control-sm" type="text" asp-for="Username" />
-							<div class="invalid-feedback" localize-content>InvalidUsername</div>
-						</div>
-					</div>
+                <div class="mb-2">
+                    <label for="To" class="col-form-label col-md-12" localize-content>Mail</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" id="mail-to" name="To" />
+                        <div class="invalid-feedback" id="invalid-To" localize-content></div>
+                    </div>
+                </div>
 
-					<div class="mb-2">
-						<label for="New-@UserModel.AttributeNames.Password" class="col-form-label" localize-content>@UserModel.AttributeNames.NewPassword</label>
-						<div class="col-md-12">
-							<input class="form-control form-control-sm" type="password" id="New-@UserModel.AttributeNames.Password" asp-for="Password" />
-							<div class="invalid-feedback" localize-content>InvalidNewPassword</div>
-						</div>
-					</div>
+                <button type="button" id="send-otp" class="button-outline btn btn-sm">
+                    @{
+                        string sendOTPIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z""></path><polyline points=""22,6 12,13 2,6""></polyline></svg>";
+                    }
 
-					<div class="mb-2">
-						<label for="@UserModel.AttributeNames.PhoneNumber" class="col-form-label" localize-content>@UserModel.AttributeNames.PhoneNumberRegistered</label>
-						<div class="col-md-12">
-							<input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" />
-							<div class="invalid-feedback" localize-content>InvalidPhoneNumberRegistered</div>
-						</div>
-					</div>
+                    @await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSendOTP, iconHtml = sendOTPIcon })
+                </button>
 
-					<div class="mb-2">
-						<label for="@UserModel.AttributeNames.Otp" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Otp</label>
-						<div class="col-md-12">
-							<input class="form-control form-control-sm" type="text" asp-for="Otp" />
-							<div class="invalid-feedback" localize-content>InvalidOTP</div>
-						</div>
-					</div>
+                <a class="link mt-3" onclick="backToLogin()">Back to Login</a>
+            </form>
 
-					<div class="my-3 text-center">
-						<button type="button" id="reset-password" class="button btn">
-							@{
-								var registerIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2""></path><circle cx=""8.5"" cy=""7"" r=""4""></circle><line x1=""20"" y1=""8"" x2=""20"" y2=""14""></line><line x1=""23"" y1=""11"" x2=""17"" y2=""11""></line></svg>";
-							}
+            <!-- Form OTP -->
+            <form id="otp-form" class="form-container needs-validation hidden" asp-action="AccountIndex" asp-controller="Account" novalidate>
+                <input type="hidden" asp-for="Mail" />
 
-							@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonRegister, iconHtml = registerIcon })
-						</button>
-					</div>
-				</div>
-			</form>
+                <h4 class="text-center" localize-content>StepResetPassword</h4>
 
-			<div class="text-center">
-				<a href="#" id="back-login" localize-content>BackLogin</a>
-			</div>
-		</div>
-	</div>
+                <div class="mb-2">
+                    <label for="@UserModel.AttributeNames.Username" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Username</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="Username" />
+                        <div class="invalid-feedback" localize-content>InvalidUsername</div>
+                    </div>
+                </div>
 
-	<script>
-		$(function () {
-			// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-			'use strict';
+                <div class="mb-2">
+                    <label for="New-@UserModel.AttributeNames.Password" class="col-form-label" localize-content>@UserModel.AttributeNames.NewPassword</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="password" id="New-@UserModel.AttributeNames.Password" asp-for="Password" />
+                        <div class="invalid-feedback" localize-content>InvalidNewPassword</div>
+                    </div>
+                </div>
 
-			// Lấy tất cả form cần validation
-			const forms = document.querySelectorAll('.needs-validation');
+                <div class="mb-2">
+                    <label for="@UserModel.AttributeNames.PhoneNumber" class="col-form-label" localize-content>@UserModel.AttributeNames.PhoneNumberRegistered</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="PhoneNumber" />
+                        <div class="invalid-feedback" localize-content>InvalidPhoneNumberRegistered</div>
+                    </div>
+                </div>
 
-			Array.from(forms).forEach(form => {
-				form.addEventListener('submit', event => {
-					if (!form.checkValidity()) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
+                <div class="mb-2">
+                    <label for="@UserModel.AttributeNames.Otp" class="col-form-label col-md-12" localize-content>@UserModel.AttributeNames.Otp</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" asp-for="Otp" />
+                        <div class="invalid-feedback" localize-content>InvalidOTP</div>
+                    </div>
+                </div>
 
-			$("#send-otp").click(function () {
-				const $saveForm = $(this).closest("form");
-				const $formElement = $saveForm.get(0);
-				const $formData = new FormData($formElement);
+                <button type="button" id="reset-password" class="button btn btn-sm">
+                    @{
+                        var registerIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2""></path><circle cx=""8.5"" cy=""7"" r=""4""></circle><line x1=""20"" y1=""8"" x2=""20"" y2=""14""></line><line x1=""23"" y1=""11"" x2=""17"" y2=""11""></line></svg>";
+                    }
 
-				callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", $formData)
-					.then(data => {
-						if (data && Array.isArray(data)) {
-							showInvalid(data, $formElement);
-						}
+                    @await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonRegister, iconHtml = registerIcon })
+                </button>
 
-						const mailTo = $("#mail-to").val();
-						$("#Mail").val(mailTo);
-					})
-					.catch(err => {
-						showMessage("@Localizer[Messages.ErrorCallAPI]");
-					});
-			});
+                <a class="link mt-3" onclick="backToLogin()">Back to Login</a>
+            </form>
+        </div>
+    </div>
 
-			$("#reset-password").click(function () {
-				const $saveForm = $(this).closest("form");
-				const $formElement = $saveForm.get(0);
-				const $formData = new FormData($formElement);
+    <script src="~/lib/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/js/jquery/jquery.min.js"></script>
+    <script src="~/js/login.js"></script>
+    <script src="~/js/helper.js"></script>
 
-				callApi("@Url.Action(Constants.ResetPassword, Constants.Account)", "POST", $formData)
-					.then(data => {
-						if (data && Array.isArray(data)) {
-							showInvalid(data, $formElement);
-						}
-					})
-					.catch(err => {
-						showMessage("@Localizer[Messages.ErrorCallAPI]");
-					});
-			});
-		});
-	</script>
+    <script>
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-	<script src="~/lib/js/bootstrap/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/js/bootstrap/popper.min.js"></script>
-	<script src="~/lib/js/jquery/jquery.min.js"></script>
-	<script src="~/js/login.js"></script>
-	<script src="~/js/helper.js"></script>
+            // Lấy tất cả form cần validation
+            const forms = document.querySelectorAll('.needs-validation');
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+
+            $("#send-otp").click(function () {
+                const $btn = $(this);
+                $btn.startLoading();
+
+                const $saveForm = $(this).closest("form");
+                const $formElement = $saveForm.get(0);
+                const $formData = new FormData($formElement);
+
+                callApi("@Url.Action(Constants.SendOTP, Constants.Account)", "POST", $formData)
+                    .then(data => {
+                        if (data && Array.isArray(data)) {
+                            showInvalid(data, $formElement);
+                        }
+                        else{
+                            switchForm($forgotForm, $otpForm);
+                        }
+
+                        const mailTo = $("#mail-to").val();
+                        $("#Mail").val(mailTo);
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    })
+                    .finally(() => {
+                        $btn.stopLoading();
+                    });
+            });
+
+            $("#reset-password").click(function () {
+                const $btn = $(this);
+                $btn.startLoading();
+
+                const $saveForm = $(this).closest("form");
+                const $formElement = $saveForm.get(0);
+                const $formData = new FormData($formElement);
+
+                callApi("@Url.Action(Constants.ResetPassword, Constants.Account)", "POST", $formData)
+                    .then(data => {
+                        if (data && Array.isArray(data)) {
+                            showInvalid(data, $formElement);
+                        }
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    })
+                    .finally(() => {
+                        $btn.stopLoading();
+                    });
+            });
+        });
+    </script>
 </body>
 </html>

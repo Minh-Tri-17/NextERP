@@ -1,6 +1,4 @@
-﻿@using NextERP.Util
-@model string
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model string
 
 <div class="modal fade" id="import-modal" aria-hidden="true" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
@@ -28,10 +26,10 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+					<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
 					</button>
-					<button type="button" class="button btn" id="start-import-button">
+					<button type="button" class="button btn btn-sm" id="start-import-button">
 						@{
 							var startImportIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4""></path><polyline points=""7 10 12 15 17 10""></polyline><line x1=""12"" y1=""15"" x2=""12"" y2=""3""></line></svg>";
 						}
@@ -44,8 +42,11 @@
 	</div>
 </div>
 
-<script>
+<script >
 	$("#start-import-button").click(function () {
+		const $btn = $(this);
+		$btn.startLoading();
+
 		const $form = $(this).closest("form");
 		const $formData = new FormData($form.get(0));
 
@@ -80,6 +81,9 @@
 				})
 				.catch(err => {
 					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				})
+				.finally(() => {
+					$btn.stopLoading();
 				});
 		}, 500);
 	});

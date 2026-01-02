@@ -1,29 +1,35 @@
-//* Khởi tạo tất cả sự kiện
-function initEvents() {
-    handleForgotPasswordClick();
-    handleBackToLoginClick();
+﻿$(window).on("load", function () {
+    $("body").addClass("loaded");
+
+    setTimeout(() => {
+        $("#login-form").addClass("active");
+    }, 800);
+});
+
+const $loginForm = $("#login-form");
+const $forgotForm = $("#forgot-form");
+const $otpForm = $("#otp-form");
+
+// Hàm chuyển form với animation
+function switchForm($hideForm, $showForm) {
+    $hideForm.removeClass("active");
+
+    setTimeout(() => {
+        $hideForm.addClass("hidden");
+        $showForm.removeClass("hidden");
+
+        setTimeout(() => {
+            $showForm.addClass("active");
+        }, 20);
+    }, 300);
 }
 
-initEvents();
-
-//& Xử lý khi nhấn "Quên mật khẩu"
-function handleForgotPasswordClick() {
-    $("#forgot-password").on("click", function () {
-        $("#loginWrapper").addClass("show-forgot");
-        $(".login-container")[0].reset();
-        $(".login-container").removeClass("was-validated");
-    });
+function showForgotPassword() {
+    switchForm($loginForm, $forgotForm);
 }
 
-//& Xử lý khi quay lại từ form "Quên mật khẩu"
-function handleBackToLoginClick() {
-    $("#back-login").on("click", function () {
-        $("#loginWrapper").removeClass("show-forgot");
 
-        // Reset tất cả form trong forgot-container
-        $(".forgot-container form").each(function () {
-            this.reset();
-            $(this).removeClass("was-validated");
-        });
-    });
+function backToLogin() {
+    const $currentForm = $forgotForm.hasClass("hidden") ? $otpForm : $forgotForm;
+    switchForm($currentForm, $loginForm);
 }

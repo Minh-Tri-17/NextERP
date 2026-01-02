@@ -89,9 +89,9 @@ function parseResponse(response) {
     const contentType = response.headers.get("content-type");
 
     if (contentType && contentType.includes("application/json")) {
-        return response.json().then(data => ({type: 'json', data}));
+        return response.json().then(data => ({ type: 'json', data }));
     } else {
-        return response.text().then(data => ({type: 'html', data}));
+        return response.text().then(data => ({ type: 'html', data }));
     }
 }
 
@@ -208,3 +208,17 @@ async function callApi(url, method = "GET", data = null, id) {
 
     return result;
 }
+
+// Hàm bật loading
+$.fn.startLoading = function () {
+    return this.each(function () {
+        $(this).addClass('btn-loading-state').prop('disabled', true);
+    });
+};
+
+// Hàm tắt loading
+$.fn.stopLoading = function () {
+    return this.each(function () {
+        $(this).removeClass('btn-loading-state').prop('disabled', false);
+    });
+};

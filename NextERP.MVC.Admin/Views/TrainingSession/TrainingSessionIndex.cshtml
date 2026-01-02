@@ -1,7 +1,4 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.TrainingSessionModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.TrainingSessionModel
 
 @{
     ViewData["Title"] = TableName.TrainingSession;
@@ -20,32 +17,32 @@
     <section class="filter-panel card">
         <form method="post">
             <div class="filter-actions">
-                <button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                <button type="button" class="btn btn-sm btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
                     <i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
                 </button>
-                <button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                <button type="button" class="btn btn-sm btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
                     <i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
                 </button>
                 <input type="text" name="Ids" id="Ids" hidden />
-                <button type="button" class="btn btn-danger disabled" id="delete-button">
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-button">
                     <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
                 </button>
-                <button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-permanently-button">
                     <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
                 </button>
-                <button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+                <button type="button" class="btn btn-sm btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
                     <i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
                 </button>
-                <button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+                <button type="button" class="btn btn-sm btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
                     <i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
                     <i class="fa-solid fa-filter"></i>
                 </button>
                 <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-                <div class="d-flex align-items-center ms-2 pb-2">
+                <div class="ms-2">
                     <input class="form-check-input" type="checkbox" value="" id="is-delete">
-                    <label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
+                    <label class="form-check-label" for="is-delete" localize-content>IsDelete</label>
                 </div>
             </div>
         </form>
@@ -86,10 +83,10 @@
                 </div>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-info" id="search-button">
+                    <button type="button" class="btn btn-sm btn-info" id="search-button">
                         <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
                     </button>
-                    <button type="button" class="btn btn-secondary" id="clear-button">
+                    <button type="button" class="btn btn-sm btn-secondary" id="clear-button">
                         <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
                     </button>
                 </div>
@@ -113,131 +110,139 @@
     </section>
 </div>
 
-<script>
-    let $trainingSessionId;
-    let $searchForm;
+@section Scripts {
+    <script>
+        let $trainingSessionId;
+        let $searchForm;
 
-    $(function () {
-        // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-        'use strict';
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-        $searchForm = $("#@TableName.TrainingSession-search-form");
+            $searchForm = $("#@TableName.TrainingSession-search-form");
 
-        loadTrainingSessions($searchForm);
-
-        $("#refresh-list").click(function(){
             loadTrainingSessions($searchForm);
+
+            $("#refresh-list").click(function(){
+                loadTrainingSessions($searchForm);
+            });
+
+            $("#is-delete").change(function () {
+                loadTrainingSessions($searchForm);
+            });
+
+            $(document).on("change", ".@TableName.TrainingSession-checkbox", function () {
+                // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+                $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val() : "";
+
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                const $length = $(".@TableName.TrainingSession-checkbox:checked").length;
+                checkLengthCheckbox($length, true, true, true, true, "@TableName.TrainingSession-checkbox");
+            });
+
+            $("#create-button").click(function () {
+                $("#only-save-button").css("display", "flex");
+            });
+
+            $("#edit-button").click(function () {
+                $("#only-save-button").css("display", "none");
+
+                callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
+                    .then(data => {
+                        // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionId").val(data.id);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionCode").val(data.trainingSessionCode);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionName").val(data.trainingSessionName);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Trainer").val(data.trainer);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Duration").val(data.duration);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingDate").val(formatDateToInput(data.trainingDate));
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Note").val(data.note);
+                        $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    });
+            });
+
+            $("#delete-button").click(function () {
+                deleteTrainingSession("@Constants.Delete", $(this).closest("form"));
+            });
+
+            $("#delete-permanently-button").click(function () {
+                deleteTrainingSession("@Constants.DeletePermanently", $(this).closest("form"));
+            });
+
+            $("#search-button").click(function () {
+                 loadTrainingSessions($searchForm);
+            });
+
+            $("#clear-button").click(function () {
+                 $searchForm.get(0).reset();
+
+                loadTrainingSessions($searchForm);
+            });
         });
 
-        $("#is-delete").change(function () {
-            loadTrainingSessions($searchForm);
-        });
+        function deleteTrainingSession(actionName, $form) {
+            const $btn = $(this);
+            $btn.startLoading();
 
-        $(document).on("change", ".@TableName.TrainingSession-checkbox", function () {
-            // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-            $trainingSessionId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val() : "";
+            // Lấy tất cả các Id của các checkbox đã chọn
+            const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
+                return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
+            }).get().join(",");
 
-            // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-            const $length = $(".@TableName.TrainingSession-checkbox:checked").length;
-            checkLengthCheckbox($length, true, true, true, true, "@TableName.TrainingSession-checkbox");
-        });
+            $form.find("#Ids").val($ids);
 
-        $("#create-button").click(function () {
-            $("#only-save-button").css("display", "flex");
-        });
+            // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+            const baseUrl = "@Url.Action("", TableName.TrainingSession)";
 
-        $("#edit-button").click(function () {
-            $("#only-save-button").css("display", "none");
+            // Thay thế 'actionName' vào URL
+            const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-            callApi("@Url.Action(Constants.CreateOrEdit, TableName.TrainingSession)/" + $trainingSessionId, "GET")
+            const $formData = new FormData($form.get(0));
+
+            callApi(apiUrl, "POST", $formData)
                 .then(data => {
-                    // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionId").val(data.id);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionCode").val(data.trainingSessionCode);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingSessionName").val(data.trainingSessionName);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Trainer").val(data.trainer);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Duration").val(data.duration);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.TrainingDate").val(formatDateToInput(data.trainingDate));
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.Note").val(data.note);
-                    $("#@TableName.TrainingSession #@TrainingSessionModel.AttributeNames.SessionStatus").val(data.sessionStatus).trigger("change");
+                    loadTrainingSessions($searchForm);
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                })
+                .finally(() => {
+                    $btn.stopLoading();
+                });
+        }
+
+        function loadTrainingSessions($form, pageIndex) {
+            $(".loader").fadeIn(350);
+
+            const $formData = new FormData($form.get(0));
+
+            const filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
+
+            const $isDelete = $("#is-delete").is(":checked");
+            filter.append("@Constants.IsDelete", $isDelete);
+
+            // Xóa các key không cần thiết (__Invariant)
+            for (const [key, value] of $formData.entries()) {
+                if (key !== "__Invariant") {
+                    filter.append(key, value);
+                }
+            }
+
+            callApi("@Url.Action(Constants.GetList, TableName.TrainingSession)", "POST", filter, "#@TableName.TrainingSession-table")
+                .then(data => {
+                    // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                    checkLengthCheckbox(0, true, true, true, true, "@TableName.TrainingSession-checkbox");
+
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    $trainingSessionId = "";
                 })
                 .catch(err => {
                     showMessage("@Localizer[Messages.ErrorCallAPI]");
                 });
-        });
-
-        $("#delete-button").click(function () {
-		    deleteTrainingSession("@Constants.Delete", $(this).closest("form"));
-	    });
-
-	    $("#delete-permanently-button").click(function () {
-		    deleteTrainingSession("@Constants.DeletePermanently", $(this).closest("form"));
-	    });
-
-        $("#search-button").click(function () {
-             loadTrainingSessions($searchForm);
-        });
-
-        $("#clear-button").click(function () {
-             $searchForm.get(0).reset();
-
-            loadTrainingSessions($searchForm);
-        });
-    });
-
-    function deleteTrainingSession(actionName, $form) {
-        // Lấy tất cả các Id của các checkbox đã chọn
-        const $ids = $(".@TableName.TrainingSession-checkbox:checked").map(function () {
-            return $(this).closest("tr").find('input[name="@TrainingSessionModel.AttributeNames.TrainingSessionId"]').val();
-        }).get().join(",");
-
-        $form.find("#Ids").val($ids);
-
-        // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
-        const baseUrl = "@Url.Action("", TableName.TrainingSession)";
-
-        // Thay thế 'actionName' vào URL
-        const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
-
-        const $formData = new FormData($form.get(0));
-
-        callApi(apiUrl, "POST", $formData)
-            .then(data => {
-                loadTrainingSessions($searchForm);
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    }
-
-    function loadTrainingSessions($form, pageIndex) {
-        $(".loader").fadeIn(350);
-
-        const $formData = new FormData($form.get(0));
-
-        const filter = new FormData();
-        filter.append("@Constants.PageIndex", pageIndex);
-
-        const $isDelete = $("#is-delete").is(":checked");
-        filter.append("@Constants.IsDelete", $isDelete);
-
-        // Xóa các key không cần thiết (__Invariant)
-        for (const [key, value] of $formData.entries()) {
-            if (key !== "__Invariant") {
-                filter.append(key, value);
-            }
         }
-
-        callApi("@Url.Action(Constants.GetList, TableName.TrainingSession)", "POST", filter, "#@TableName.TrainingSession-table")
-            .then(data => {
-                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-                checkLengthCheckbox(0, true, true, true, true, "@TableName.TrainingSession-checkbox");
-
-                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-                $trainingSessionId = "";
-            })
-            .catch(err => {
-                showMessage("@Localizer[Messages.ErrorCallAPI]");
-            });
-    }
-</script>
+    </script>
+}

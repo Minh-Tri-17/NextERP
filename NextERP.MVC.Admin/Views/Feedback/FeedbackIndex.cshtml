@@ -1,220 +1,226 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.FeedbackModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.FeedbackModel
 
 @{
-	ViewData["Title"] = TableName.Feedback;
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    ViewData["Title"] = TableName.Feedback;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-		(TableName.Feedback + "List", "", true),
-	};
+        (TableName.Feedback + "List", "", true),
+    };
 }
 
 <div class="main-container">
-	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
-	<input type="hidden" id="current-page-index" value="1" />
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
 
-	<!--& FILTER -->
-	<section class="filter-panel card">
-		<form method="post">
-			<div class="filter-actions">
-				<button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-					<i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
-				</button>
-				<button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-					<i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
-				</button>
-				<input type="text" name="Ids" id="Ids" hidden />
-				<button type="button" class="btn btn-danger disabled" id="delete-button">
-					<i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
-				</button>
-				<button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
-					<i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
-				</button>
-				<button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
-					<i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
-				</button>
-				<button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
-					<i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
-				</button>
-				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
-					<i class="fa-solid fa-filter"></i>
-				</button>
-				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-				<div class="d-flex align-items-center ms-2 pb-2">
-					<input class="form-check-input" type="checkbox" value="" id="is-delete">
-					<label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
-				</div>
-			</div>
-		</form>
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-sm btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
+                </button>
+                <input type="text" name="Ids" id="Ids" hidden />
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-permanently-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+                    <i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+                <div class="ms-2">
+                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
+                    <label class="form-check-label" for="is-delete" localize-content>IsDelete</label>
+                </div>
+            </div>
+        </form>
 
-		<div class="collapse" id="filter-inputs">
-			<form id="@TableName.Feedback-search-form" class="m-2">
-				<div class="row g-2 mb-2">
-					<div class="col-3">
-						<label for="@FeedbackModel.AttributeNames.FeedbackCode" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.FeedbackCode</label>
-						<input type="text" class="form-control form-control-sm" asp-for="FeedbackCode" />
-					</div>
+        <div class="collapse" id="filter-inputs">
+            <form id="@TableName.Feedback-search-form" class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@FeedbackModel.AttributeNames.FeedbackCode" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.FeedbackCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="FeedbackCode" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@FeedbackModel.AttributeNames.DateFeedback" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.DateFeedback</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateFeedback" />
-					</div>
-				</div>
+                    <div class="col-3">
+                        <label for="@FeedbackModel.AttributeNames.DateFeedback" class="col-form-label col-md-12" localize-content>@FeedbackModel.AttributeNames.DateFeedback</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateFeedback" />
+                    </div>
+                </div>
 
-				<div class="text-end">
-					<button type="button" class="btn btn-info" id="search-button">
-						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
-					</button>
-					<button type="button" class="btn btn-secondary" id="clear-button">
-						<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
+                <div class="text-end">
+                    <button type="button" class="btn btn-sm btn-info" id="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="clear-button">
+                        <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-	<!--& TABLE -->
-	<section class="table-wrapper card">
-		<div class="table-wrapper-body row">
-			<div class="table-wrapper-main" id="@TableName.Feedback-table">
-			</div>
-		</div>
-	</section>
+    <!--& TABLE -->
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main" id="@TableName.Feedback-table">
+            </div>
+        </div>
+    </section>
 
-	<!--& MODAL -->
-	<section class="modal-wrapper">
-		@await Html.PartialAsync(ScreenName.Feedback.FeedbackForm, Model)
-		@await Component.InvokeAsync(Constants.Import, TableName.Feedback)
-		@await Component.InvokeAsync(Constants.Export, TableName.Feedback)
-	</section>
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ScreenName.Feedback.FeedbackForm, Model)
+        @await Component.InvokeAsync(Constants.Import, TableName.Feedback)
+        @await Component.InvokeAsync(Constants.Export, TableName.Feedback)
+    </section>
 </div>
 
-<script>
-	let $feedbackId;
-	let $searchForm;
+@section Scripts {
+    <script>
+        let $feedbackId;
+        let $searchForm;
 
-	$(function () {
-		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-		'use strict';
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-		let $feedbackId;
-		$searchForm = $("#@TableName.Feedback-search-form");
+            let $feedbackId;
+            $searchForm = $("#@TableName.Feedback-search-form");
 
-		loadFeedbacks($searchForm);
+            loadFeedbacks($searchForm);
 
-		$("#refresh-list").click(function(){
-			loadFeedbacks($searchForm);
-		});
+            $("#refresh-list").click(function(){
+                loadFeedbacks($searchForm);
+            });
 
-		$("#is-delete").change(function () {
-			loadFeedbacks($searchForm);
-		});
+            $("#is-delete").change(function () {
+                loadFeedbacks($searchForm);
+            });
 
-		$(document).on("change", ".@TableName.Feedback-checkbox", function () {
-			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-			$feedbackId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val() : "";
+            $(document).on("change", ".@TableName.Feedback-checkbox", function () {
+                // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+                $feedbackId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val() : "";
 
-			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-			const $length = $(".@TableName.Feedback-checkbox:checked").length;
-			checkLengthCheckbox($length, true, true, true, true, "@TableName.Feedback-checkbox");
-		});
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                const $length = $(".@TableName.Feedback-checkbox:checked").length;
+                checkLengthCheckbox($length, true, true, true, true, "@TableName.Feedback-checkbox");
+            });
 
-		$("#create-button").click(function () {
-			$("#only-save-button").css("display", "flex");
-		});
+            $("#create-button").click(function () {
+                $("#only-save-button").css("display", "flex");
+            });
 
-		$("#edit-button").click(function () {
-			$("#only-save-button").css("display", "none");
+            $("#edit-button").click(function () {
+                $("#only-save-button").css("display", "none");
 
-			callApi("@Url.Action(Constants.CreateOrEdit, TableName.Feedback)/" + $feedbackId, "GET")
-				.then(data => {
-					// Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackId").val(data.id);
-					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackCode").val(data.feedbackCode);
-					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.Comment").val(data.comment);
-					$("#@TableName.Feedback #@FeedbackModel.AttributeNames.DateFeedback").val(formatDateToInput(data.dateFeedback));
-					$('input[name="Rating"][value="' + data.rating + '"]').prop('checked', true);
-				})
-				.catch(err => {
-					showMessage("@Localizer[Messages.ErrorCallAPI]");
-				});
-		});
+                callApi("@Url.Action(Constants.CreateOrEdit, TableName.Feedback)/" + $feedbackId, "GET")
+                    .then(data => {
+                        // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                        $("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackId").val(data.id);
+                        $("#@TableName.Feedback #@FeedbackModel.AttributeNames.FeedbackCode").val(data.feedbackCode);
+                        $("#@TableName.Feedback #@FeedbackModel.AttributeNames.Comment").val(data.comment);
+                        $("#@TableName.Feedback #@FeedbackModel.AttributeNames.DateFeedback").val(formatDateToInput(data.dateFeedback));
+                        $('input[name="Rating"][value="' + data.rating + '"]').prop('checked', true);
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    });
+            });
 
-		$("#delete-button").click(function () {
-			deleteFeedback("@Constants.Delete", $(this).closest("form"));
-		});
+            $("#delete-button").click(function () {
+                deleteFeedback("@Constants.Delete", $(this).closest("form"));
+            });
 
-		$("#delete-permanently-button").click(function () {
-			deleteFeedback("@Constants.DeletePermanently", $(this).closest("form"));
-		});
+            $("#delete-permanently-button").click(function () {
+                deleteFeedback("@Constants.DeletePermanently", $(this).closest("form"));
+            });
 
-		$("#search-button").click(function () {
-			 loadFeedbacks($searchForm);
-		});
+            $("#search-button").click(function () {
+                 loadFeedbacks($searchForm);
+            });
 
-		$("#clear-button").click(function () {
-			 $searchForm.get(0).reset();
+            $("#clear-button").click(function () {
+                 $searchForm.get(0).reset();
 
-			loadFeedbacks($searchForm);
-		});
-	});
+                loadFeedbacks($searchForm);
+            });
+        });
 
-	function deleteFeedback(actionName, $form) {
-		// Lấy tất cả các Id của các checkbox đã chọn
-		const $ids = $(".@TableName.Feedback-checkbox:checked").map(function () {
-			return $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val();
-		}).get().join(",");
+        function deleteFeedback(actionName, $form) {
+            const $btn = $(this);
+            $btn.startLoading();
 
-		$form.find("#Ids").val($ids);
+            // Lấy tất cả các Id của các checkbox đã chọn
+            const $ids = $(".@TableName.Feedback-checkbox:checked").map(function () {
+                return $(this).closest("tr").find('input[name="@FeedbackModel.AttributeNames.FeedbackId"]').val();
+            }).get().join(",");
 
-		// Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
-		const baseUrl = "@Url.Action("", TableName.Feedback)";
+            $form.find("#Ids").val($ids);
 
-		// Thay thế 'actionName' vào URL
-		const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
+            // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+            const baseUrl = "@Url.Action("", TableName.Feedback)";
 
-		const $formData = new FormData($form.get(0));
+            // Thay thế 'actionName' vào URL
+            const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-		callApi(apiUrl, "POST", $formData)
-			.then(data => {
-				loadFeedbacks($searchForm);
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
+            const $formData = new FormData($form.get(0));
 
-	function loadFeedbacks($form, pageIndex) {
-		$(".loader").fadeIn(350);
-        
-		const $formData = new FormData($form.get(0));
+            callApi(apiUrl, "POST", $formData)
+                .then(data => {
+                    loadFeedbacks($searchForm);
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                })
+                .finally(() => {
+                    $btn.stopLoading();
+                });
+        }
 
-		const filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
+        function loadFeedbacks($form, pageIndex) {
+            $(".loader").fadeIn(350);
 
-		const $isDelete = $("#is-delete").is(":checked");
-		filter.append("@Constants.IsDelete", $isDelete);
+            const $formData = new FormData($form.get(0));
 
-		// Xóa các key không cần thiết (__Invariant)
-		for (const [key, value] of $formData.entries()) {
-			if (key !== "__Invariant") {
-				filter.append(key, value);
-			}
-		}
+            const filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
 
-		callApi("@Url.Action(Constants.GetList, TableName.Feedback)", "POST", filter, "#@TableName.Feedback-table")
-			.then(data => {
-				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-				checkLengthCheckbox(0, true, true, true, true, "@TableName.Feedback-checkbox");
+            const $isDelete = $("#is-delete").is(":checked");
+            filter.append("@Constants.IsDelete", $isDelete);
 
-				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-				$feedbackId = "";
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
-</script>
+            // Xóa các key không cần thiết (__Invariant)
+            for (const [key, value] of $formData.entries()) {
+                if (key !== "__Invariant") {
+                    filter.append(key, value);
+                }
+            }
+
+            callApi("@Url.Action(Constants.GetList, TableName.Feedback)", "POST", filter, "#@TableName.Feedback-table")
+                .then(data => {
+                    // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                    checkLengthCheckbox(0, true, true, true, true, "@TableName.Feedback-checkbox");
+
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    $feedbackId = "";
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
+
+    </script>
+}

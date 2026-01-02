@@ -1,11 +1,11 @@
 //& Xử lý sự kiện click sidebar menu
-$(".sidebar-menu-item > a").on("click", function () {
+$(".nav-item > .nav-link").on("click", function () {
     if ($(this).closest(".submenu").length) return;
 
     const $currentIcon = $(this).find("i.fa-plus, i.fa-minus");
     toggleIconAnimation($currentIcon, !$currentIcon.hasClass("fa-minus"));
 
-    $(".sidebar-menu-item > a")
+    $(".nav-item > .nav-link")
         .not(this)
         .each(function () {
             const $otherIcon = $(this).find("i.fa-minus");
@@ -29,21 +29,46 @@ function toggleIconAnimation($icon, toMinus) {
 }
 
 //& Xử lý chế độ sáng / tối
-if (localStorage.getItem("theme") === "dark") {
-    $("body").addClass("dark-mode");
-    $(".dark-mode .toggle-mode input").prop("checked", true);
-} else {
-    $("body").removeClass("dark-mode");
-    $(".dark-mode .toggle-mode input").prop("checked", false);
+function themeManager() {
+    const $toggleBtn = $("#darkModeToggle");
+
+    if ($toggleBtn.length === 0) {
+        return;
+    }
+
+    const $toggleIcon = $toggleBtn.find("i");
+    const $htmlElement = $("html");
+    const THEME_KEY = "admin_theme";
+
+    //& Xử lý chế độ sáng / tối
+    const setTheme = (theme) => {
+        if (theme === "dark") {
+            $htmlElement.attr("data-theme", "dark");
+            $toggleIcon.removeClass("fa-moon dark-mode-icon").addClass("fa-sun light-mode-icon");
+        } else {
+            $htmlElement.removeAttr("data-theme");
+            $toggleIcon.removeClass("fa-sun light-mode-icon").addClass("fa-moon dark-mode-icon");
+        }
+
+        localStorage.setItem(THEME_KEY, theme);
+    };
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else if (systemPrefersDark) {
+        setTheme("dark");
+    }
+
+    //@ Khi user click nút toggle
+    $toggleBtn.on("click", function () {
+        const currentTheme = $htmlElement.attr("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        setTheme(newTheme);
+    });
 }
 
-// Khi user thay đổi checkbox
-$(".toggle-mode input").on("change", function () {
-    if ($(this).is(":checked")) {
-        $("body").addClass("dark-mode");
-        localStorage.setItem("theme", "dark");
-    } else {
-        $("body").removeClass("dark-mode");
-        localStorage.setItem("theme", "light");
-    }
-});
+themeManager();

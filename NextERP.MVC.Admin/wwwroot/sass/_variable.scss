@@ -1,140 +1,174 @@
-﻿//& <====================================== COLOR PROPERTIES ======================================>
-$background-light: #e1dbcc;
-$text-dark: #585858;
+﻿@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:color";
 
-$background-mid: #edeef3;
-$text-primary: #776b5d;
-$text-secondary: #6a6a6a;
-
-$background-dark: #585858;
-$text-light: #e3e1d9;
-
-$border-color: #c7c8cc;
-$hover-color: #f2efe5;
-
-$success-light-color: #d4f8c4;
-$warning-light-color: #ffe5a8;
-$danger-light-color: #f8d4d4;
-$info-light-color: #c4e3f8;
-$primary-light-color: #b0a695;
-$secondary-light-color: #b4b4b8;
-$purple-light-color: #e0c3fc;
-
+//&------------------------ COLORS ------------------------//
+//? Core Colors
+//* Dark Colors
+$primary-color: #776b5d;
+$secondary-color: #6a6a6a;
 $success-color: #28a745;
 $warning-color: #f0bd00;
 $danger-color: #dc3545;
 $info-color: #3d7dcf;
-$primary-color: #776b5d;
-$secondary-color: #6a6a6a;
 $purple-color: #8a2be2;
+//* Light Colors
+$primary-light-color: #b0a695;
+$secondary-light-color: #b4b4b8;
+$success-light-color: #d4f8c4;
+$warning-light-color: #ffe5a8;
+$danger-light-color: #f8d4d4;
+$info-light-color: #c4e3f8;
+$purple-light-color: #e0c3fc;
 
-$light-mode-bg: #f8f5f2;
-$light-mode-text: #6a6a6a;
+$button-colors: ( primary: ( $primary-light-color, $primary-color, ), success: ( $success-light-color, $success-color, ), danger: ( $danger-light-color, $danger-color, ), warning: ( $warning-light-color, $warning-color, ), info: ( $info-light-color, $info-color, ), secondary: ( $secondary-light-color, $secondary-color, ), );
 
-$dark-mode-bg: #2f2f2f;
-$dark-mode-text: #b0a695;
-//& <====================================== END COLOR PROPERTIES ======================================>
+//? Mode Colors
+//* Light Tones
+$color-level-100-light: #f9f9f9;
+$color-level-200-light: #f2f2f2;
+$color-level-300-light: #e8e8e8;
+$color-level-400-light: #d1d1d1;
+//* Mid Tones
+$color-mid-warm: #8d8681;
+$color-mid-neutral: #757575;
+//* Dark Tones
+$color-level-400-dark: #585858;
+$color-level-300-dark: #444444;
+$color-level-200-dark: #333333;
+$color-level-100-dark: #1f1f1f;
+//* Backdrop Tones
+$color-backdrop-light: #44444499;
+$color-backdrop-dark: #0000004d;
 
-//& <====================================== TYPOGRAPHY PROPERTIES ======================================>
-//? <====================== FONT WEIGHT ======================>
-$fw-1: 100;
-$fw-2: 200;
-$fw-3: 400;
-$fw-4: 600;
-$fw-5: 800;
-//? <====================== END FONT WEIGHT ======================>
+//@------------------------ COLORS MAPPING------------------------//
+:root {
+    --body-bg: #{$color-level-300-light};
+    --body-color: #{$color-level-100-dark};
+    --header-sidebar-bg: #{$color-level-400-light};
+    --border: #{$color-level-400-dark};
+    --input-bg: #{$color-level-300-light};
+    --icon-hover: #{$color-mid-neutral};
+    --loader-color: #{$color-level-100-light};
+    --loader-bg: #{$color-backdrop-dark};
+    --menu-item-bg: #{$color-mid-warm};
+    --submenu-item-bg: #{$color-mid-neutral};
+    --menu-icon-bg: #{$color-level-100-dark};
+    --menu-icon-color: #{$color-mid-warm};
+    --menu-icon-active-bg: #{$color-level-100-light};
+    --menu-icon-active-color: #{$color-mid-neutral};
+}
 
-//? <====================== FONT SIZE ======================>
-$fs-1: 0.75rem;
-$fs-2: 0.875rem;
-$fs-3: 1rem;
-$fs-4: 1.25rem;
-$fs-5: 1.5rem;
-$fs-6: 2rem;
-$fs-7: 2.5rem;
-//? <====================== END FONT SIZE ======================>
+    :root[data-theme="dark"] {
+        --body-bg: #{$color-level-200-dark};
+        --body-color: #{$color-level-100-light};
+        --header-sidebar-bg: #{$color-level-100-dark};
+        --border: #{$color-level-300-light};
+        --input-bg: #{$color-level-200-dark};
+        --icon-hover: #{$color-mid-warm};
+        --loader-color: #{$color-level-100-dark};
+        --loader-bg: #{$color-backdrop-light};
+        --menu-item-bg: #{$color-mid-neutral};
+        --submenu-item-bg: #{$color-mid-warm};
+        --menu-icon-bg: #{$color-level-100-light};
+        --menu-icon-color: #{$color-mid-neutral};
+        --menu-icon-active-bg: #{$color-level-100-dark};
+        --menu-icon-active-color: #{$color-mid-warm};
+    }
 
-//? <====================== FONT FAMILY ======================>
+//&------------------------ TYPOGRAPHY ------------------------//
+//? Font Families
 $font-sans-serif: "Inter", "Manrope", "SF Pro Display", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 $font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-//? <====================== END LETTER SPACING ======================>
 
-//? <====================== LETTER SPACING ======================>
-$ls-tight: -0.05rem;
-$ls-normal: 0rem;
-$ls-wide: 0.05rem;
-//? <====================== END LETTER SPACING ======================>
+//? Font Weights
+$font-weight-1: 100;
+$font-weight-2: 200;
+$font-weight-3: 400;
+$font-weight-4: 600;
+$font-weight-5: 800;
 
-//? <====================== LINE HIGHT ======================>
-$lh-1: 1;
-$lh-2: 1.25;
-$lh-3: 1.5;
-$lh-4: 1.75;
-$lh-5: 2;
-//? <====================== END LINE HIGHT ======================>
-//& <====================================== END TYPOGRAPHY PROPERTIES ======================================>
+//? Font Sizes
+$font-size-1: 0.75rem; //* 12px
+$font-size-2: 0.875rem; //* 14px
+$font-size-3: 1rem; //* 16px
+$font-size-4: 1.25rem; //* 20px
+$font-size-5: 1.5rem; //* 24px
+$font-size-6: 2rem; //* 32px
+$font-size-7: 2.5rem; //* 40px
 
-//& <====================================== SPACING PROPERTIES ======================================>
-//? <====================== MARGIN ======================>
-$mr-1: 0.25rem;
-$mr-2: 0.5rem;
-$mr-3: 0.75rem;
-$mr-4: 1rem;
-$mr-5: 1.5rem;
-$mr-6: 2rem;
-$mr-7: 2.5rem;
-//? <====================== END MARGIN ======================>
+//? Line Heights
+$line-height-1: 1;
+$line-height-2: 1.25;
+$line-height-3: 1.5;
+$line-height-4: 1.75;
+$line-height-5: 2;
 
-//? <====================== PADDING ======================>
-$pd-1: 0.25rem;
-$pd-2: 0.5rem;
-$pd-3: 0.75rem;
-$pd-4: 1rem;
-$pd-5: 1.5rem;
-$pd-6: 2rem;
-$pd-7: 2.5rem;
-//? <====================== END PADDING ======================>
-//& <====================================== END SPACING PROPERTIES ======================================>
+//&------------------------ SPACING & DIMENSIONS ------------------------//
+$spacing-scale: ( 1: 0.25rem, 2: 0.5rem, 3: 0.75rem, 4: 1rem, 5: 1.5rem, 6: 2rem, 7: 2.5rem, );
 
-//& <====================================== DIMENSION PROPERTIES ======================================>
-//? <====================== WIDTH ======================>
-$w-25: 25%;
-$w-50: 50%;
-$w-75: 75%;
-$w-100: 100%;
-$w-auto: auto;
-//? <====================== END WIDTH ======================>
+//? Margins/Paddings
+$margin-1: map.get($spacing-scale, 1);
+$margin-2: map.get($spacing-scale, 2);
+$margin-3: map.get($spacing-scale, 3);
+$margin-4: map.get($spacing-scale, 4);
+$margin-5: map.get($spacing-scale, 5);
+$margin-6: map.get($spacing-scale, 6);
+$margin-7: map.get($spacing-scale, 7);
+$padding-1: map.get($spacing-scale, 1);
+$padding-2: map.get($spacing-scale, 2);
+$padding-3: map.get($spacing-scale, 3);
+$padding-4: map.get($spacing-scale, 4);
+$padding-5: map.get($spacing-scale, 5);
+$padding-6: map.get($spacing-scale, 6);
+$padding-7: map.get($spacing-scale, 7);
 
-//? <====================== HEIGHT ======================>
-$h-25: 25%;
-$h-50: 50%;
-$h-75: 75%;
-$h-100: 100%;
-$h-auto: auto;
-//? <====================== END HEIGHT ======================>
-//& <====================================== END DIMENSION PROPERTIES ======================================>
+//? Widths/Heights
+$width-25: 25%;
+$width-50: 50%;
+$width-75: 75%;
+$width-100: 100%;
+$width-auto: auto;
+$height-25: 25%;
+$height-50: 50%;
+$height-75: 75%;
+$height-100: 100%;
+$height-auto: auto;
 
-//& <====================================== POSITION PROPERTIES ======================================>
-$z-index-1: 1020;
-$z-index-2: 1040;
-$z-index-3: 1080;
-$z-index-4: 1160;
-//& <====================================== END POSITION PROPERTIES ======================================>
+//? Sizes
+$icon-size: 20px;
+$point-size: 3px;
+$point-offset-bottom: -10px;
 
-//& <====================================== VISUAL EFFECT PROPERTIES ======================================>
-//? <====================== EASING ======================>
-$transition-fast: 0.3s;
-$transition-normal: 0.5s;
-$transition-slow: 0.7s;
+//? Radius
+$radius-sm: 5px;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-full: 9999px;
 
+//? Z-Index
+$z-index-base: 1;
+$z-index-high: 2;
+$z-index-fixed-sidebar-header: 1010;
+$z-index-modal-backdrop: 1020;
+$z-index-tooltips-popovers: 1080;
+$z-index-modals-offcanvas: 1160;
+
+//&------------------------ VISUAL EFFECTS & TRANSITIONS ------------------------//
+//? Transition Durations
+$transition-duration-fastest: 0.1s;
+$transition-duration-fast: 0.2s;
+$transition-duration-base: 0.3s;
+$transition-duration-slow: 0.5s;
+$transition-duration-slowest: 0.7s;
+
+//? Transition Easings
 $ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 $ease-in: cubic-bezier(0.4, 0, 1, 1);
 $ease-out: cubic-bezier(0, 0, 0.2, 1);
-//? <====================== END EASING ======================>
 
-//? <====================== SHADOW ======================>
-$shadow-sm: 0 2px 6px rgba(119, 107, 93, 0.2);
-$shadow-md: 0 4px 12px rgba(119, 107, 93, 0.3);
-$shadow-lg: 0 6px 18px rgba(119, 107, 93, 0.4);
-//? <====================== END SHADOW ======================>
-//& <====================================== END VISUAL EFFECT PROPERTIES ======================================>
+//? Shadows
+$shadow-sm: 0 2px 6px rgba($color-mid-neutral, 0.2);
+$shadow-md: 0 4px 12px rgba($color-mid-neutral, 0.3);
+$shadow-lg: 0 6px 18px rgba($color-mid-neutral, 0.4);

@@ -1,9 +1,4 @@
-﻿@using NextERP.ModelBase
-@using NextERP.ModelBase.APIResult
-@using NextERP.ModelBase.PagingResult
-@using NextERP.Util
-@model APIBaseResult<PagingResult<ProductModel>>
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model APIBaseResult<PagingResult<ProductModel>>
 
 <div class="table-container">
 	@if (Model != null && Model.Result != null && Model.Result.Items != null)
@@ -58,7 +53,7 @@
 							</div>
 
 							<div class="d-grid">
-								<button type="button" class="button btn add-button">
+								<button type="button" class="button btn btn-sm add-button">
 									@{
 										var createIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5"">
 														<path d=""M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z""></path>
@@ -102,6 +97,9 @@
 		});
 
 		$(".add-button").click(function () {
+			const $btn = $(this);
+			$btn.startLoading();
+
 			const $saveForm = $(this).closest("form");
 			const $formElement = $saveForm.get(0);
 			const $formData = new FormData($formElement);
@@ -119,6 +117,9 @@
 				})
 				.catch(err => {
 					showMessage("@Localizer[Messages.ErrorCallAPI]");
+				})
+				.finally(() => {
+					$btn.stopLoading();
 				});
 		});
 	});

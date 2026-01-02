@@ -1,14 +1,166 @@
-@keyframes pop-up {
-    0% {
-        transform: translateY(0);
+@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:color";
+@use "variable" as *;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin transition($time, $ease, $properties...) {
+    $transitions: ();
+
+    @each $prop in $properties {
+        $transitions: list.append($transitions, #{$prop} $time $ease, comma);
     }
 
-    50% {
-        transform: translateY(-5px);
+    @if list.length($transitions) > 0 {
+        transition: $transitions;
+    }
+    @else {
+        transition: all $time $ease;
+    }
+}
+
+@mixin grid-span($col-span, $row-span, $col-start: null, $row-start: null) {
+    grid-column: span $col-span / span $col-span;
+    grid-row: span $row-span / span $row-span;
+
+    @if $col-start {
+        grid-column-start: $col-start;
     }
 
-    100% {
-        transform: translateY(0);
+    @if $row-start {
+        grid-row-start: $row-start;
+    }
+}
+
+@mixin scrollbar() {
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: $radius-sm;
+        background-color: $color-mid-warm;
+        cursor: pointer;
+    }
+}
+
+@mixin float-points-config {
+    &:nth-child(1) {
+        left: 4%;
+        opacity: 0.8;
+        animation-duration: 2.35s;
+        animation-delay: 0.2s;
+    }
+
+    &:nth-child(2) {
+        left: 11%;
+        opacity: 0.7;
+        animation-duration: 2.5s;
+        animation-delay: 0.5s;
+    }
+
+    &:nth-child(3) {
+        left: 18%;
+        opacity: 0.9;
+        animation-duration: 2.2s;
+        animation-delay: 0.1s;
+    }
+
+    &:nth-child(4) {
+        left: 25%;
+        opacity: 0.6;
+        animation-duration: 2.05s;
+        animation-delay: 0.4s;
+    }
+
+    &:nth-child(5) {
+        left: 32%;
+        opacity: 1;
+        animation-duration: 1.9s;
+        animation-delay: 0s;
+    }
+
+    &:nth-child(6) {
+        left: 39%;
+        opacity: 0.5;
+        animation-duration: 1.5s;
+        animation-delay: 1.5s;
+    }
+
+    &:nth-child(7) {
+        left: 46%;
+        opacity: 0.9;
+        animation-duration: 2.2s;
+        animation-delay: 0.2s;
+    }
+
+    &:nth-child(8) {
+        left: 53%;
+        opacity: 0.8;
+        animation-duration: 2.25s;
+        animation-delay: 0.2s;
+    }
+
+    &:nth-child(9) {
+        left: 60%;
+        opacity: 0.6;
+        animation-duration: 2.6s;
+        animation-delay: 0.1s;
+    }
+
+    &:nth-child(10) {
+        left: 67%;
+        opacity: 1;
+        animation-duration: 2.5s;
+        animation-delay: 0.3s;
+    }
+
+    &:nth-child(11) {
+        left: 74%;
+        opacity: 0.7;
+        animation-duration: 2.1s;
+        animation-delay: 0.4s;
+    }
+
+    &:nth-child(12) {
+        left: 81%;
+        opacity: 0.5;
+        animation-duration: 1.8s;
+        animation-delay: 1s;
+    }
+
+    &:nth-child(13) {
+        left: 88%;
+        opacity: 0.9;
+        animation-duration: 2.4s;
+        animation-delay: 0.3s;
+    }
+
+    &:nth-child(14) {
+        left: 93%;
+        opacity: 0.6;
+        animation-duration: 2.7s;
+        animation-delay: 0.1s;
+    }
+
+    &:nth-child(15) {
+        left: 98%;
+        opacity: 1;
+        animation-duration: 2s;
+        animation-delay: 0.8s;
     }
 }
 
@@ -68,6 +220,69 @@
     }
 }
 
+@keyframes subtle-wobble {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(5deg) scale(1.1);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+@keyframes moon-drift {
+    0%, 100% {
+        transform: rotate(0deg) translateX(0) translateY(0);
+        opacity: 1;
+    }
+
+    30% {
+        transform: rotate(2deg) translateX(-1px) translateY(-2px);
+    }
+
+    70% {
+        transform: rotate(-2deg) translateX(1px) translateY(2px);
+    }
+}
+
+@keyframes sun-radiate {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.08) rotate(10deg);
+    }
+
+    50% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    75% {
+        transform: scale(1.08) rotate(-10deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes star-loader {
+    0%, 10% {
+        opacity: 0;
+        transform: translateY(0) translateX(50px) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(-20px) translateX(0) rotate(360deg);
+    }
+}
+
 @keyframes floating-points {
     0% {
         transform: translateY(0);
@@ -93,54 +308,8 @@
     }
 }
 
-@keyframes star-loader-animation {
-    0%, 10% {
-        opacity: 0;
-        transform: translateY(0) translateX(50px) rotate(0deg);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(-20px) translateX(0) rotate(360deg);
-    }
-}
-
-@mixin transition($time, $ease, $properties...) {
-    $transitions: ();
-
-    @each $prop in $properties {
-        $transitions: append($transitions, #{$prop} $time $ease, comma);
-    }
-
-    @if length($transitions) > 0 {
-        transition: $transitions;
-    }
-    @else {
-        transition: all $time $ease;
-    }
-}
-
-@mixin flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@mixin flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@mixin grid-span($col-span, $row-span, $col-start: null, $row-start: null) {
-    grid-column: span $col-span / span $col-span;
-    grid-row: span $row-span / span $row-span;
-
-    @if $col-start {
-        grid-column-start: $col-start;
-    }
-
-    @if $row-start {
-        grid-row-start: $row-start;
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
     }
 }

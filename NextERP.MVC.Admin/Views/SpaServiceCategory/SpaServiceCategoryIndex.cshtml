@@ -1,223 +1,222 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.SpaServiceCategoryModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.SpaServiceCategoryModel
 
 @{
-	ViewData["Title"] = TableName.SpaServiceCategory;
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    ViewData["Title"] = TableName.SpaServiceCategory;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-		(TableName.SpaServiceCategory + "List", "", true),
-	};
+        (TableName.SpaServiceCategory + "List", "", true),
+    };
 }
 
 <div class="main-container">
-	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
-	<input type="hidden" id="current-page-index" value="1" />
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
 
-	<!--& FILTER -->
-	<section class="filter-panel card">
-		<form method="post">
-			<div class="filter-actions">
-				<button type="button" class="btn btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-					<i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
-				</button>
-				<button type="button" class="btn btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
-					<i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
-				</button>
-				<input type="text" name="Ids" id="Ids" hidden />
-				<button type="button" class="btn btn-danger disabled" id="delete-button">
-					<i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
-				</button>
-				<button type="button" class="btn btn-danger disabled" id="delete-permanently-button">
-					<i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
-				</button>
-				<button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
-					<i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
-				</button>
-				<button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
-					<i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
-				</button>
-				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
-					<i class="fa-solid fa-filter"></i>
-				</button>
-				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-				<div class="d-flex align-items-center ms-2 pb-2">
-					<input class="form-check-input" type="checkbox" value="" id="is-delete">
-					<label class="form-check-label fs-5" for="is-delete" localize-content>IsDelete</label>
-				</div>
-			</div>
-		</form>
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-sm btn-success" id="create-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-plus"></i> <span localize-content>@Constants.ButtonCreate</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-warning disabled" id="edit-button" data-bs-toggle="modal" data-bs-target="#create-edit-modal">
+                    <i class="fa-solid fa-pen"></i> <span localize-content>@Constants.ButtonEdit</span>
+                </button>
+                <input type="text" name="Ids" id="Ids" hidden />
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDelete</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger disabled" id="delete-permanently-button">
+                    <i class="fa-solid fa-trash"></i> <span localize-content>@Constants.ButtonDeletePermanently</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+                    <i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+                <div class="ms-2">
+                    <input class="form-check-input" type="checkbox" value="" id="is-delete">
+                    <label class="form-check-label" for="is-delete" localize-content>IsDelete</label>
+                </div>
+            </div>
+        </form>
 
-		<div class="collapse" id="filter-inputs">
-			<form id="@TableName.SpaServiceCategory-search-form" class="m-2">
-				<div class="row g-2 mb-2">
-					<div class="col-3">
-						<label for="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode" class="col-form-label col-md-12" localize-content>@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode</label>
-						<input type="text" class="form-control form-control-sm" asp-for="SpaServiceCategoryCode" />
-					</div>
+        <div class="collapse" id="filter-inputs">
+            <form id="@TableName.SpaServiceCategory-search-form" class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode" class="col-form-label col-md-12" localize-content>@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="SpaServiceCategoryCode" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
-					</div>
-				</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
 
-				<div class="text-end">
-					<button type="button" class="btn btn-info" id="search-button">
-						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
-					</button>
-					<button type="button" class="btn btn-secondary" id="clear-button">
-						<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
+                <div class="text-end">
+                    <button type="button" class="btn btn-sm btn-info" id="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="clear-button">
+                        <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-	<!--& TABLE -->
-	<section class="table-wrapper card">
-		<div class="table-wrapper-body row">
-			<div class="table-wrapper-main" id="@TableName.SpaServiceCategory-table">
-			</div>
-		</div>
-	</section>
+    <!--& TABLE -->
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main" id="@TableName.SpaServiceCategory-table">
+            </div>
+        </div>
+    </section>
 
-	<!--& MODAL -->
-	<section class="modal-wrapper">
-		@await Html.PartialAsync(ScreenName.SpaServiceCategory.SpaServiceCategoryForm, Model)
-		@await Component.InvokeAsync(Constants.Import, TableName.SpaServiceCategory)
-		@await Component.InvokeAsync(Constants.Export, TableName.SpaServiceCategory)
-	</section>
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Html.PartialAsync(ScreenName.SpaServiceCategory.SpaServiceCategoryForm, Model)
+        @await Component.InvokeAsync(Constants.Import, TableName.SpaServiceCategory)
+        @await Component.InvokeAsync(Constants.Export, TableName.SpaServiceCategory)
+    </section>
 </div>
 
-<script>
-	let $spaServiceCategoryId;
-	let $searchForm;
+@section Scripts {
+    <script>
+        let $spaServiceCategoryId;
+        let $searchForm;
 
-	$(function () {
-		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-		'use strict';
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-		$searchForm = $("#@TableName.SpaServiceCategory-search-form");
+            $searchForm = $("#@TableName.SpaServiceCategory-search-form");
 
-		loadSpaServiceCategorys($searchForm);
+            loadSpaServiceCategorys($searchForm);
 
-		$("#refresh-list").click(function(){
-			loadSpaServiceCategorys($searchForm);
-		});
+            $("#refresh-list").click(function(){
+                loadSpaServiceCategorys($searchForm);
+            });
 
-		$("#is-delete").change(function () {
-			loadSpaServiceCategorys($searchForm);
-		});
+            $("#is-delete").change(function () {
+                loadSpaServiceCategorys($searchForm);
+            });
 
-		$(document).on("change", ".@TableName.SpaServiceCategory-checkbox", function () {
-			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-			$spaServiceCategoryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId"]').val() : "";
+            $(document).on("change", ".@TableName.SpaServiceCategory-checkbox", function () {
+                // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+                $spaServiceCategoryId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId"]').val() : "";
 
-			// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-			const $length = $(".@TableName.SpaServiceCategory-checkbox:checked").length;
-			checkLengthCheckbox($length, true, true, true, true, "@TableName.SpaServiceCategory-checkbox");
-		});
+                // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                const $length = $(".@TableName.SpaServiceCategory-checkbox:checked").length;
+                checkLengthCheckbox($length, true, true, true, true, "@TableName.SpaServiceCategory-checkbox");
+            });
 
-		$("#create-button").click(function () {
-			$("#only-save-button").css("display", "flex");
-		});
+            $("#create-button").click(function () {
+                $("#only-save-button").css("display", "flex");
+            });
 
-		$("#edit-button").click(function () {
-			$("#only-save-button").css("display", "none");
+            $("#edit-button").click(function () {
+                $("#only-save-button").css("display", "none");
 
-			callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaServiceCategory)/" + $spaServiceCategoryId, "GET")
-				.then(data => {
-					// Khi trả ra json các field sẽ bị viết thường chữ cái đâu
-					$("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId").val(data.id);
-					$("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode").val(data.spaServiceCategoryCode);
-					$("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryName").val(data.spaServiceCategoryName);
-					$("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.Note").val(data.note);
-				})
-				.catch(err => {
-					showMessage("@Localizer[Messages.ErrorCallAPI]");
-				});
-		});
+                callApi("@Url.Action(Constants.CreateOrEdit, TableName.SpaServiceCategory)/" + $spaServiceCategoryId, "GET")
+                    .then(data => {
+                        // Khi trả ra json các field sẽ bị viết thường chữ cái đâu
+                        $("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId").val(data.id);
+                        $("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryCode").val(data.spaServiceCategoryCode);
+                        $("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryName").val(data.spaServiceCategoryName);
+                        $("#@TableName.SpaServiceCategory #@SpaServiceCategoryModel.AttributeNames.Note").val(data.note);
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    });
+            });
 
-		$("#delete-button").click(function () {
-			deleteSpaServiceCategory("@Constants.Delete", $(this).closest("form"));
-		});
+            $("#delete-button").click(function () {
+                deleteSpaServiceCategory("@Constants.Delete", $(this).closest("form"));
+            });
 
-		$("#delete-permanently-button").click(function () {
-			deleteSpaServiceCategory("@Constants.DeletePermanently", $(this).closest("form"));
-		});
+            $("#delete-permanently-button").click(function () {
+                deleteSpaServiceCategory("@Constants.DeletePermanently", $(this).closest("form"));
+            });
 
-		$("#search-button").click(function () {
-			 loadSpaServiceCategorys($searchForm);
-		});
+            $("#search-button").click(function () {
+                 loadSpaServiceCategorys($searchForm);
+            });
 
-		$("#clear-button").click(function () {
-			 $searchForm.get(0).reset();
+            $("#clear-button").click(function () {
+                 $searchForm.get(0).reset();
 
-			loadSpaServiceCategorys($searchForm);
-		});
-	});
+                loadSpaServiceCategorys($searchForm);
+            });
+        });
 
-	function deleteSpaServiceCategory(actionName, $form) {
-		// Lấy tất cả các Id của các checkbox đã chọn
-		const $ids = $(".@TableName.SpaServiceCategory-checkbox:checked").map(function () {
-			return $(this).closest("tr").find('input[name="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId"]').val();
-		}).get().join(",");
+        function deleteSpaServiceCategory(actionName, $form) {
+            // Lấy tất cả các Id của các checkbox đã chọn
+            const $ids = $(".@TableName.SpaServiceCategory-checkbox:checked").map(function () {
+                return $(this).closest("tr").find('input[name="@SpaServiceCategoryModel.AttributeNames.SpaServiceCategoryId"]').val();
+            }).get().join(",");
 
-		$form.find("#Ids").val($ids);
+            $form.find("#Ids").val($ids);
 
-		// Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
-		const baseUrl = "@Url.Action("", TableName.SpaServiceCategory)";
+            // Tạo URL API bằng JavaScript lấy URL cơ bản của Controller (tùy chọn)
+            const baseUrl = "@Url.Action("", TableName.SpaServiceCategory)";
 
-		// Thay thế 'actionName' vào URL
-		const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
+            // Thay thế 'actionName' vào URL
+            const apiUrl = baseUrl.endsWith('/') ? baseUrl + actionName : baseUrl + '/' + actionName;
 
-		const $formData = new FormData($form.get(0));
+            const $formData = new FormData($form.get(0));
 
-		callApi(apiUrl, "POST", $formData)
-			.then(data => {
-				loadSpaServiceCategorys($searchForm);
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
+            callApi(apiUrl, "POST", $formData)
+                .then(data => {
+                    loadSpaServiceCategorys($searchForm);
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
 
-	function loadSpaServiceCategorys($form, pageIndex) {
-		$(".loader").fadeIn(350);
+        function loadSpaServiceCategorys($form, pageIndex) {
+            $(".loader").fadeIn(350);
 
-		const $formData = new FormData($form.get(0));
+            const $formData = new FormData($form.get(0));
 
-		const filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
+            const filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
 
-		const $isDelete = $("#is-delete").is(":checked");
-		filter.append("@Constants.IsDelete", $isDelete);
+            const $isDelete = $("#is-delete").is(":checked");
+            filter.append("@Constants.IsDelete", $isDelete);
 
-		// Xóa các key không cần thiết (__Invariant)
-		for (const [key, value] of $formData.entries()) {
-			if (key !== "__Invariant") {
-				filter.append(key, value);
-			}
-		}
+            // Xóa các key không cần thiết (__Invariant)
+            for (const [key, value] of $formData.entries()) {
+                if (key !== "__Invariant") {
+                    filter.append(key, value);
+                }
+            }
 
-		callApi("@Url.Action(Constants.GetList, TableName.SpaServiceCategory)", "POST", filter, "#@TableName.SpaServiceCategory-table")
-			.then(data => {
-				// Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
-				checkLengthCheckbox(0, true, true, true, true, "@TableName.SpaServiceCategory-checkbox");
+            callApi("@Url.Action(Constants.GetList, TableName.SpaServiceCategory)", "POST", filter, "#@TableName.SpaServiceCategory-table")
+                .then(data => {
+                    // Kiểm tra số lượng checkbox đã chọn và cập nhật trạng thái của các nút
+                    checkLengthCheckbox(0, true, true, true, true, "@TableName.SpaServiceCategory-checkbox");
 
-				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-				$spaServiceCategoryId = "";
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
-</script>
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    $spaServiceCategoryId = "";
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
+    </script>
+}

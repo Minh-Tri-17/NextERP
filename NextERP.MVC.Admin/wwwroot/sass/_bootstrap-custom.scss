@@ -1,183 +1,197 @@
-﻿@use "variable" as *;
+﻿@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:color";
+@use "variable" as *;
+@use "mixins" as *;
+
 // Nên !important để sau này bootstrap có update thuộc tính thì không lỗi
-.form-control,
-.form-select,
-.form-check,
-.page-link,
-.form-check-input {
-    &:focus {
-        border: 1px solid $primary-color !important;
-        box-shadow: $shadow-md !important;
-    }
-}
-
-.form-check-input:checked {
-    background-color: $background-dark !important;
-    color: $text-light !important;
-    border: 1px solid $primary-color !important;
-    box-shadow: $shadow-md !important;
-}
-
 .offcanvas-start {
-    max-width: 250px !important;
+    width: 260px !important;
 }
 
-.page-item {
-    &.active .page-link {
-        background-color: $background-dark !important;
-        color: $text-light !important;
-        border: 1px solid $border-color !important;
-    }
-
-    .page-link {
-        color: $text-primary !important;
-    }
-}
-
-thead {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 10 !important;
-    color: $text-primary !important;
-    transition: $transition-normal $ease-in-out !important;
-
-    &.sticky-active {
-        background-color: $background-dark !important;
-        color: $text-light !important;
-        transition: $transition-normal $ease-in-out !important;
-    }
-}
-
-.table td {
-    color: $text-secondary !important;
-
-    &:hover {
-        color: $text-secondary !important;
-        background-color: $background-mid !important;
-    }
-
-    .status-color-success {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $success-color;
-        background-color: $success-light-color;
-        color: $success-color;
-    }
-
-    .status-color-danger {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $danger-color;
-        background-color: $danger-light-color;
-        color: $danger-color;
-    }
-
-    .status-color-warning {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $warning-color;
-        background-color: $warning-light-color;
-        color: $warning-color;
-    }
-
-    .status-color-info {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $info-color;
-        background-color: $info-light-color;
-        color: $info-color;
-    }
-
-    .status-color-primary {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $primary-color;
-        background-color: $primary-light-color;
-        color: $primary-color;
-    }
-
-    .status-color-purple {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $purple-color;
-        background-color: $purple-light-color;
-        color: $purple-color;
-    }
-
-    .status-color-secondary {
-        padding: $pd-1;
-        border-radius: 3px;
-        border: 1px solid $secondary-color;
-        background-color: $secondary-light-color;
-        color: $secondary-color;
-    }
+.cursor-pointer {
+    cursor: pointer !important;
 }
 
 .carousel-inner {
     width: 200px !important;
 }
 
+.dropdown-divider {
+    border-top: 1px solid var(--border) !important;
+}
+
+.form-control,
+.form-select,
+.form-check,
+.page-link,
+.form-check-input {
+    &:focus {
+        border: 1px solid $color-mid-warm !important;
+        box-shadow: $shadow-sm !important;
+    }
+}
+
+    .form-check-input:checked {
+        background-color: $color-level-100-dark !important;
+        color: $color-level-100-light !important;
+        border: 1px solid $color-mid-warm !important;
+        box-shadow: $shadow-sm !important;
+    }
+
 .modal {
-    z-index: $z-index-4 !important;
+    color: $color-level-100-dark !important;
 
     .modal-body {
-        max-height: calc(100vh - 200px) !important;
+        @include scrollbar();
+        max-height: calc(100vh - 230px) !important;
         overflow-y: auto !important;
     }
 }
 
-.position-fixed {
-    z-index: $z-index-4 !important;
-}
-
-.bg-primary {
-    background-color: $primary-color !important;
+.card {
+    @include transition($transition-duration-base, $ease-in-out);
+    background-color: #ffffff !important;
+    color: $color-level-100-dark !important;
+    padding: 0.75rem !important;
 }
 
 .btn {
-    color: #ffffff !important;
+    @include transition($transition-duration-base, $ease-in-out);
     border: none !important;
-    transition: $transition-normal $ease-in-out;
-    min-width: 100px !important;
-    font-weight: $fw-5;
+    font-weight: 800 !important;
 }
-
-$button-colors: ( primary: ( $primary-light-color, $primary-color, ), success: ( $success-light-color, $success-color, ), danger: ( $danger-light-color, $danger-color, ), warning: ( $warning-light-color, $warning-color, ), info: ( $info-light-color, $info-color, ), secondary: ( $secondary-light-color, $secondary-color, ), );
 
 @each $name, $colors in $button-colors {
     .btn-#{$name} {
-        color: $text-secondary !important;
-        background-color: nth($colors, 1) !important;
+        color: $color-mid-neutral !important;
+        background-color: list.nth($colors, 1) !important;
 
         &:hover {
-            box-shadow: -4px 5px 5px nth($colors, 2) !important;
+            box-shadow: -4px 5px 5px list.nth($colors, 2) !important;
             transform: translateY(-2px) translateX(2px) !important;
         }
     }
 }
 
-.btn-outline-primary {
-    color: $primary-color !important;
-    border: 1px solid $primary-color !important;
-
-    &:hover {
-        color: #ffffff !important;
-        background-color: $primary-light-color !important;
-        border: 1px solid $primary-color !important;
-    }
-}
-
 .btn-outline-secondary {
-    color: $secondary-color !important;
+    color: $color-mid-warm !important;
+    border: 1px solid $color-mid-warm !important;
 
     &:hover {
-        color: #ffffff !important;
+        color: $color-level-100-light !important;
+        background-color: $color-mid-neutral !important;
     }
 }
 
-.card {
-    border-radius: 10px !important;
-    box-shadow: $shadow-sm !important;
-    padding: $pd-3 !important;
-    background-color: #ffffff !important;
+.btn-outline-primary {
+    color: $color-mid-neutral !important;
+    border: 1px solid $color-mid-neutral !important;
+
+    &:hover {
+        color: $color-level-100-light !important;
+        background-color: $color-mid-warm !important;
+    }
+}
+
+.table {
+    thead {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: $z-index-high !important;
+
+        th {
+            @include transition($transition-duration-base, $ease-in-out);
+            color: $color-mid-neutral !important;
+            background-color: inherit !important;
+        }
+
+        &.sticky-active {
+            background-color: $color-level-300-dark !important;
+
+            th {
+                @include transition($transition-duration-base, $ease-in-out);
+                background-color: inherit !important;
+                color: $color-level-100-light !important;
+            }
+        }
+    }
+
+    td {
+        color: $color-level-100-dark !important;
+
+        &:hover {
+            color: $color-level-100-light !important;
+            background-color: $color-mid-neutral !important;
+        }
+
+        .status-color-success {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $success-color;
+            background-color: $success-light-color;
+            color: $success-color;
+        }
+
+        .status-color-danger {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $danger-color;
+            background-color: $danger-light-color;
+            color: $danger-color;
+        }
+
+        .status-color-warning {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $warning-color;
+            background-color: $warning-light-color;
+            color: $warning-color;
+        }
+
+        .status-color-info {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $info-color;
+            background-color: $info-light-color;
+            color: $info-color;
+        }
+
+        .status-color-primary {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $primary-color;
+            background-color: $primary-light-color;
+            color: $primary-color;
+        }
+
+        .status-color-purple {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $purple-color;
+            background-color: $purple-light-color;
+            color: $purple-color;
+        }
+
+        .status-color-secondary {
+            padding: $padding-1;
+            border-radius: $radius-sm;
+            border: 1px solid $secondary-color;
+            background-color: $secondary-light-color;
+            color: $secondary-color;
+        }
+    }
+}
+
+.page-item {
+    &.active .page-link {
+        background-color: $color-level-200-dark !important;
+        color: $color-level-100-light !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    .page-link {
+        color: $color-level-100-dark !important;
+    }
 }

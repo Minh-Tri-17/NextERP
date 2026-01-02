@@ -1,190 +1,185 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.InvoiceModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.InvoiceModel
 
 @{
-	ViewData["Title"] = TableName.InvoiceDetail;
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    ViewData["Title"] = TableName.InvoiceDetail;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-		(TableName.InvoiceDetail + "List", "", true),
-	};
+        (TableName.InvoiceDetail + "List", "", true),
+    };
 }
 
 <div class="main-container">
-	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
-	<input type="hidden" id="current-page-index" value="1" />
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
 
-	<!--& FILTER -->
-	<section class="filter-panel card">
-		<form method="post">
-			<div class="filter-actions">
-				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
-					<i class="fa-solid fa-filter"></i>
-				</button>
-				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-			</div>
-		</form>
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+            </div>
+        </form>
 
-		<div class="collapse" id="filter-inputs">
-			<form id="@TableName.Invoice-search-form" class="m-2">
-				<div class="row g-2 mb-2">
-					<div class="col-3">
-						<label for="@InvoiceModel.AttributeNames.InvoiceCode" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.InvoiceCode</label>
-						<input type="text" class="form-control form-control-sm" asp-for="InvoiceCode" />
-					</div>
+        <div class="collapse" id="filter-inputs">
+            <form id="@TableName.Invoice-search-form" class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@InvoiceModel.AttributeNames.InvoiceCode" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.InvoiceCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="InvoiceCode" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@InvoiceModel.AttributeNames.PaymentMethod" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.PaymentMethod</label>
-						<select class="form-select form-select-sm" asp-for="PaymentMethod">
-							<option value=""></option>
-							@foreach (var item in Enum.GetValues(typeof(Enums.PaymentMethod)))
-							{
-								<option value="@item" localize-content>@item</option>
-							}
-						</select>
-					</div>
+                    <div class="col-3">
+                        <label for="@InvoiceModel.AttributeNames.PaymentMethod" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.PaymentMethod</label>
+                        <select class="form-select form-select-sm" asp-for="PaymentMethod">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.PaymentMethod)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
 
-					<div class="col-3">
-						<label for="@InvoiceModel.AttributeNames.PaymentStatus" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.PaymentStatus</label>
-						<select class="form-select form-select-sm" asp-for="PaymentStatus">
-							<option value=""></option>
-							@foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
-							{
-								<option value="@item" localize-content>@item</option>
-							}
-						</select>
-					</div>
+                    <div class="col-3">
+                        <label for="@InvoiceModel.AttributeNames.PaymentStatus" class="col-form-label col-md-12" localize-content>@InvoiceModel.AttributeNames.PaymentStatus</label>
+                        <select class="form-select form-select-sm" asp-for="PaymentStatus">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
-					</div>
-				</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
 
-				<div class="text-end">
-					<button type="button" class="btn btn-info" id="search-button">
-						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
-					</button>
-					<button type="button" class="btn btn-secondary" id="clear-button">
-						<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
+                <div class="text-end">
+                    <button type="button" class="btn btn-sm btn-info" id="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="clear-button">
+                        <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-	<!--& TABLE -->
-	<section class="table-wrapper card">
-		<div class="table-wrapper-body col-12 row">
-			<div class="table-wrapper-main col-7" id="@TableName.Invoice-table">
-			</div>
+    <!--& TABLE -->
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main col-8" id="@TableName.Invoice-table">
+            </div>
 
-			<div class="col-1 d-flex justify-content-center">
-				<div class="border-start border-2"></div>
-			</div>
+            <div class="table-wrapper-secondary col-4 border-start border-2" id="@TableName.InvoiceDetail-table">
+            </div>
+        </div>
+    </section>
 
-			<div class="table-wrapper-secondary col-4" id="@TableName.InvoiceDetail-table">
-			</div>
-		</div>
-	</section>
-
-	<!--& MODAL -->
-	<section class="modal-wrapper">
-		@await Component.InvokeAsync(Constants.Export, TableName.Invoice)
-	</section>
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Component.InvokeAsync(Constants.Export, TableName.Invoice)
+    </section>
 </div>
 
-<script>
-	let $invoiceId;
-	let $searchForm;
+@section Scripts {
+    <script>
+        let $invoiceId;
+        let $searchForm;
 
-	$(function () {
-		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-		'use strict';
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-		$searchForm = $("#@TableName.Invoice-search-form");
+            $searchForm = $("#@TableName.Invoice-search-form");
 
-		loadInvoices($searchForm);
+            loadInvoices($searchForm);
 
-		$("#refresh-list").click(function(){
-			loadInvoices($searchForm);
+            $("#refresh-list").click(function(){
+                loadInvoices($searchForm);
 
-			// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-			$invoiceId = "";
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $invoiceId = "";
 
-			loadInvoiceDetails();
-		});
+                loadInvoiceDetails();
+            });
 
-		$(document).on("change", ".@TableName.Invoice-checkbox", function () {
-			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-			$invoiceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@InvoiceModel.AttributeNames.InvoiceId"]').val() : "";
-		});
+            $(document).on("change", ".@TableName.Invoice-checkbox", function () {
+                // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+                $invoiceId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@InvoiceModel.AttributeNames.InvoiceId"]').val() : "";
+            });
 
-		$("#@TableName.Invoice-table").on("click", "tbody > tr", function () {
-			$invoiceId = $(this).closest("tr").find('input[name="@InvoiceModel.AttributeNames.InvoiceId"]').val()
-			loadInvoiceDetails();
-		});
+            $("#@TableName.Invoice-table").on("click", "tbody > tr", function () {
+                $invoiceId = $(this).closest("tr").find('input[name="@InvoiceModel.AttributeNames.InvoiceId"]').val()
+                loadInvoiceDetails();
+            });
 
-		$("#search-button").click(function () {
-			 loadInvoices($searchForm);
-		});
+            $("#search-button").click(function () {
+                 loadInvoices($searchForm);
+            });
 
-		$("#clear-button").click(function () {
-			$searchForm.get(0).reset();
+            $("#clear-button").click(function () {
+                $searchForm.get(0).reset();
 
-			loadInvoices($searchForm);
-		});
-	});
+                loadInvoices($searchForm);
+            });
+        });
 
-	function loadInvoices($form, pageIndex) {
-		$(".loader").fadeIn(350);
+        function loadInvoices($form, pageIndex) {
+            $(".loader").fadeIn(350);
 
-		const $formData = new FormData($form.get(0));
+            const $formData = new FormData($form.get(0));
 
-		const filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
+            const filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
 
-		const $isDelete = $("#is-delete").is(":checked");
-		filter.append("@Constants.IsDelete", $isDelete);
+            const $isDelete = $("#is-delete").is(":checked");
+            filter.append("@Constants.IsDelete", $isDelete);
 
-		// Xóa các key không cần thiết (__Invariant)
-		for (const [key, value] of $formData.entries()) {
-			if (key !== "__Invariant") {
-				filter.append(key, value);
-			}
-		}
+            // Xóa các key không cần thiết (__Invariant)
+            for (const [key, value] of $formData.entries()) {
+                if (key !== "__Invariant") {
+                    filter.append(key, value);
+                }
+            }
 
-		callApi("@Url.Action(Constants.GetList, TableName.Invoice)", "POST", filter, "#@TableName.Invoice-table")
-			.then(data => {
-				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-				$invoiceId = "";
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
+            callApi("@Url.Action(Constants.GetList, TableName.Invoice)", "POST", filter, "#@TableName.Invoice-table")
+                .then(data => {
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    $invoiceId = "";
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
 
-	function loadInvoiceDetails(pageIndex) {
-		// Khỏi tạo filter và gán giá trị
-		let filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
-		filter.append("@InvoiceModel.AttributeNames.InvoiceId", $invoiceId);
+        function loadInvoiceDetails(pageIndex) {
+            // Khỏi tạo filter và gán giá trị
+            let filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
+            filter.append("@InvoiceModel.AttributeNames.InvoiceId", $invoiceId);
 
-		$(".loader").fadeIn(350);
+            $(".loader").fadeIn(350);
 
-		callApi("@Url.Action(Constants.GetList, TableName.InvoiceDetail)", "POST", filter, "#@TableName.InvoiceDetail-table")
-			.then(data => {
+            callApi("@Url.Action(Constants.GetList, TableName.InvoiceDetail)", "POST", filter, "#@TableName.InvoiceDetail-table")
+                .then(data => {
 
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
-</script>
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
+    </script>
+}

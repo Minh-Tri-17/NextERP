@@ -1,48 +1,106 @@
-@use "base";
-@use "general";
-@use "bootstrap-custom";
-@use "variable" as *;
+﻿@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "sass:color";
 @use "mixins" as *;
+@use "variable" as *;
+@use "base";
+@use "bootstrap-custom";
+@use "general";
+
+body {
+    display: flex;
+    height: 100vh;
+}
 
 .login-wrapper {
-    @include flex-center();
-    min-height: $h-100;
-    background-color: #f8f5f2;
-    position: relative;
+    display: flex;
+    width: 100%;
 
-    .login-container,
-    .forgot-container {
-        position: absolute;
-        width: 400px;
-        transition: transform 0.6s ease, opacity 0.6s ease;
-        backface-visibility: hidden;
+    .left,
+    .right {
+        @include transition($transition-duration-slowest, $ease-in-out);
+        @include flex-center();
+        flex: 1;
     }
 
-    .login-container {
-        z-index: 2;
-        transform: rotateY(0deg);
-    }
+    .left {
+        background-color: $color-level-200-dark;
+        transform: translateY(-100%);
 
-    .forgot-container {
-        z-index: 1;
-        transform: rotateY(180deg);
-        opacity: 0;
-    }
-
-    &.show-forgot {
-        .login-container {
-            transform: rotateY(-180deg);
-            opacity: 0;
+        img {
+            max-width: $width-50;
+            max-height: $height-50;
+            border-radius: $radius-md;
+            box-shadow: $shadow-md;
         }
+    }
 
-        .forgot-container {
-            transform: rotateY(0deg);
+    .right {
+        padding: $padding-3;
+        background-color: $color-level-200-light;
+        transform: translateY(100%);
+    }
+}
+
+body.loaded {
+    .left,
+    .right {
+        transform: translateY(0);
+    }
+
+        .left img {
             opacity: 1;
-            z-index: 2;
+            transform: scale(1);
         }
+}
+
+.form-container {
+    @include transition($transition-duration-slow, $ease-in-out, opacity, transform);
+    width: $width-100;
+    max-width: 400px;
+    padding: $padding-6;
+    border-radius: $radius-md;
+    box-shadow: $shadow-md;
+    background-color: #ffffff;
+    opacity: 0;
+    transform: scale(0.9);
+
+    &.active {
+        opacity: 1;
+        transform: translateY(0);
     }
 
-    .login-actions {
-        @include flex-between();
+    h2 {
+        text-align: center;
+        margin-bottom: $margin-5;
+        color: $color-mid-neutral;
     }
+
+    label {
+        display: block;
+        margin-bottom: $margin-1;
+        color: $color-level-100-dark;
+    }
+
+    .link {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.button,
+.button-outline {
+    margin: 0 auto;
+    display: block;
 }

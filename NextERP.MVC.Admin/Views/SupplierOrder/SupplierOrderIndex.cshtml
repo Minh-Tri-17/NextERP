@@ -1,351 +1,352 @@
-﻿@using NextERP.ModelBase
-@using NextERP.Util
-@model NextERP.ModelBase.SupplierOrderModel
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer Localizer
+﻿@model NextERP.ModelBase.SupplierOrderModel
 
 @{
-	ViewData["Title"] = TableName.SupplierOrder;
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
+    ViewData["Title"] = TableName.SupplierOrder;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Breadcrumbs = new List<(string Title, string Url, bool IsActive)>
 {
-		(TableName.SupplierOrder + "List", "", true),
-	};
+        (TableName.SupplierOrder + "List", "", true),
+    };
 }
 
 <div class="main-container">
-	<div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
-	<input type="hidden" id="current-page-index" value="1" />
+    <div id="success-msg" class="position-fixed top-0 end-0 p-3 m-2 d-none" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <input type="hidden" id="current-page-index" value="1" />
 
-	<!--& FILTER -->
-	<section class="filter-panel card">
-		<form method="post">
-			<div class="filter-actions">
-				<button type="button" class="btn btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
-					<i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
-				</button>
-				<button type="button" class="btn btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
-					<i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
-				</button>
-				<button type="button" class="btn btn-primary disabled" id="signature-button" data-bs-toggle="modal" data-bs-target="#signature-modal">
-					<i class="fa-solid fa-signature"></i> <span localize-content>@Constants.ButtonSignature</span>
-				</button>
-				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
-					<i class="fa-solid fa-filter"></i>
-				</button>
-				<a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
-			</div>
-		</form>
+    <!--& FILTER -->
+    <section class="filter-panel card">
+        <form method="post">
+            <div class="filter-actions">
+                <button type="button" class="btn btn-sm btn-secondary" id="import-button" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <i class="fa-solid fa-file-import"></i> <span localize-content>@Constants.ButtonImport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="export-button" data-bs-toggle="modal" data-bs-target="#export-modal">
+                    <i class="fa-solid fa-file-export"></i> <span localize-content>@Constants.ButtonExport</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-primary disabled" id="signature-button" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    <i class="fa-solid fa-signature"></i> <span localize-content>@Constants.ButtonSignature</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#filter-inputs" aria-expanded="true" aria-controls="filter-inputs">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <a href="#" id="refresh-list"><i class="fa-solid fa-rotate"></i></a>
+            </div>
+        </form>
 
-		<div class="collapse" id="filter-inputs">
-			<form id="@TableName.SupplierOrder-search-form" class="m-2">
-				<div class="row g-2 mb-2">
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.SupplierOrderCode" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.SupplierOrderCode</label>
-						<input type="text" class="form-control form-control-sm" asp-for="SupplierOrderCode" />
-					</div>
+        <div class="collapse" id="filter-inputs">
+            <form id="@TableName.SupplierOrder-search-form" class="m-2">
+                <div class="row g-2 mb-2">
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.SupplierOrderCode" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.SupplierOrderCode</label>
+                        <input type="text" class="form-control form-control-sm" asp-for="SupplierOrderCode" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.OrderStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderStatus</label>
-						<select class="form-select form-select-sm" asp-for="OrderStatus">
-							<option value=""></option>
-							@foreach (var item in Enum.GetValues(typeof(Enums.OrderStatus)))
-							{
-								<option value="@item" localize-content>@item</option>
-							}
-						</select>
-					</div>
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.OrderStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderStatus</label>
+                        <select class="form-select form-select-sm" asp-for="OrderStatus">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.OrderStatus)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
 
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.PaymentStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.PaymentStatus</label>
-						<select class="form-select form-select-sm" asp-for="PaymentStatus">
-							<option value=""></option>
-							@foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
-							{
-								<option value="@item" localize-content>@item</option>
-							}
-						</select>
-					</div>
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.PaymentStatus" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.PaymentStatus</label>
+                        <select class="form-select form-select-sm" asp-for="PaymentStatus">
+                            <option value=""></option>
+                            @foreach (var item in Enum.GetValues(typeof(Enums.PaymentStatus)))
+                            {
+                                <option value="@item" localize-content>@item</option>
+                            }
+                        </select>
+                    </div>
 
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.OrderDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderDate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="OrderDate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.OrderDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.OrderDate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="OrderDate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="ExpectedDeliveryDate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ExpectedDeliveryDate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="ExpectedDeliveryDate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@SupplierOrderModel.AttributeNames.ActualDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ActualDeliveryDate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="ActualDeliveryDate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@SupplierOrderModel.AttributeNames.ActualDeliveryDate" class="col-form-label col-md-12" localize-content>@SupplierOrderModel.AttributeNames.ActualDeliveryDate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="ActualDeliveryDate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
-					</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateCreate" class="col-form-label col-md-12" localize-content>@Constants.DateCreate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateCreate" />
+                    </div>
 
-					<div class="col-3">
-						<label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
-						<input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
-					</div>
-				</div>
+                    <div class="col-3">
+                        <label for="@Constants.DateUpdate" class="col-form-label col-md-12" localize-content>@Constants.DateUpdate</label>
+                        <input type="date" class="form-control form-control-sm" asp-for="DateUpdate" />
+                    </div>
+                </div>
 
-				<div class="text-end">
-					<button type="button" class="btn btn-info" id="search-button">
-						<i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
-					</button>
-					<button type="button" class="btn btn-secondary" id="clear-button">
-						<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
+                <div class="text-end">
+                    <button type="button" class="btn btn-sm btn-info" id="search-button">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span localize-content>@Constants.ButtonSearch</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="clear-button">
+                        <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-	<!--& TABLE -->
-	<section class="table-wrapper card">
-		<div class="table-wrapper-body col-12 row">
-			<div class="table-wrapper-main col-7" id="@TableName.SupplierOrder-table">
-			</div>
+    <!--& TABLE -->
+    <section class="table-wrapper card">
+        <div class="table-wrapper-body row">
+            <div class="table-wrapper-main col-8" id="@TableName.SupplierOrder-table">
+            </div>
 
-			<div class="col-1 d-flex justify-content-center">
-				<div class="border-start border-2"></div>
-			</div>
+            <div class="table-wrapper-secondary col-4 border-start border-2" id="@TableName.SupplierOrderDetail-table">
+            </div>
+        </div>
+    </section>
 
-			<div class="table-wrapper-secondary col-4" id="@TableName.SupplierOrderDetail-table">
-			</div>
-		</div>
-	</section>
+    <!--& MODAL -->
+    <section class="modal-wrapper">
+        @await Component.InvokeAsync(Constants.Import, TableName.SupplierOrder)
+        @await Component.InvokeAsync(Constants.Export, TableName.SupplierOrder)
 
-	<!--& MODAL -->
-	<section class="modal-wrapper">
-		@await Component.InvokeAsync(Constants.Import, TableName.SupplierOrder)
-		@await Component.InvokeAsync(Constants.Export, TableName.SupplierOrder)
+        <div class="modal fade" id="signature-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <form class="needs-validation" novalidate>
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>Signature</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-2">
+                                <label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
+                                <div class="col-md-12">
+                                    <div style="border: 1px solid #ccc; height: 250px;">
+                                        <canvas id="signature-pad" style="width: 100%; height: 100%; display: block;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-secondary" id="clear-signature-button">
+                                <i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
+                            </button>
+                            <button type="button" class="button btn btn-sm save-button" id="save-signature-button" data-bs-dismiss="modal">
+                                @{
+                                    var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
+                                }
 
-		<div class="modal fade" id="signature-modal" aria-hidden="true" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<form class="needs-validation" novalidate>
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>Signature</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="mb-2">
-								<label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
-								<div class="col-md-12">
-									<div style="border: 1px solid #ccc; height: 250px;">
-										<canvas id="signature-pad" style="width: 100%; height: 100%; display: block;"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-								<i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span>
-							</button>
-							<button type="button" class="btn btn-secondary" id="clear-signature-button">
-								<i class="fa-solid fa-broom"></i> <span localize-content>@Constants.ButtonClear</span>
-							</button>
-							<button type="button" class="button btn save-button" id="save-signature-button" data-bs-dismiss="modal">
-								@{
-									var saveAndCloseIcon = @"<svg class=""icon"" fill=""none"" stroke=""currentColor"" viewBox=""0 0 24 24"" xmlns=""http://www.w3.org/2000/svg"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2.5""><path d=""M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z""></path><polyline points=""17 21 17 13 7 13 7 21""></polyline><polyline points=""7 3 7 8 15 8""></polyline></svg>";
-								}
+                                @await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSaveAndClose, iconHtml = saveAndCloseIcon })
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-								@await Component.InvokeAsync(Constants.Button, new { nameButton = Constants.ButtonSaveAndClose, iconHtml = saveAndCloseIcon })
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<div class="modal fade" id="view-signature-modal" aria-hidden="true" tabindex="-1">
-			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<form class="needs-validation" novalidate>
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>Signature</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="mb-2">
-								<label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
-								<div class="col-md-12">
-									<img src="" alt="Signature" style="max-width:100%; height:auto;">
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+        <div class="modal fade" id="view-signature-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <form class="needs-validation" novalidate>
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" localize-content>Signature</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-2">
+                                <label for="Signature" class="col-form-label col-md-12" localize-content>Signature</label>
+                                <div class="col-md-12">
+                                    <img src="" alt="Signature" style="max-width:100%; height:auto;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> <span localize-content>@Constants.ButtonClose</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
-<script>
-	let $supplierOrderId;
-	let $searchForm;
-	let signaturePad;
+@section Scripts {
+    <script>
+        let $supplierOrderId;
+        let $searchForm;
+        let signaturePad;
 
-	$(function () {
-		// Kích hoạt strict mode cho toàn bộ code bên trong hàm này
-		'use strict';
+        $(function () {
+            // Kích hoạt strict mode cho toàn bộ code bên trong hàm này
+            'use strict';
 
-		$searchForm = $("#@TableName.SupplierOrder-search-form");
-		signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
+            $searchForm = $("#@TableName.SupplierOrder-search-form");
+            signaturePad = signaturePadInit("#signature-modal", "#signature-pad");
 
-		loadSupplierOrders($searchForm);
+            loadSupplierOrders($searchForm);
 
-		$("#refresh-list").click(function(){
-			loadSupplierOrders($searchForm);
+            $("#refresh-list").click(function(){
+                loadSupplierOrders($searchForm);
 
-			// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-			$supplierOrderId = "";
+                // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                $supplierOrderId = "";
 
-			loadSupplierOrderDetails();
-		});
+                loadSupplierOrderDetails();
+            });
 
-		$(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
-			// Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
-			$supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
+            $(document).on("change", ".@TableName.SupplierOrder-checkbox", function () {
+                // Gán giá trị cho biến Id để sử dụng với các hành động (sửa, xóa, v.v.)
+                $supplierOrderId = $(this).is(":checked") ? $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val() : "";
 
-			const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
+                const $length = $(".@TableName.SupplierOrder-checkbox:checked").length;
 
-			if ($length == 1) {
-				$("#signature-button").removeClass('disabled');
-			}
-			else {
-				$("#signature-button").addClass('disabled');
-			}
-		});
+                if ($length == 1) {
+                    $("#signature-button").removeClass('disabled');
+                }
+                else {
+                    $("#signature-button").addClass('disabled');
+                }
+            });
 
-		$("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
-			$supplierOrderId = $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val()
-			loadSupplierOrderDetails();
-		});
+            $("#@TableName.SupplierOrder-table").on("click", "tbody > tr", function () {
+                $supplierOrderId = $(this).closest("tr").find('input[name="@SupplierOrderModel.AttributeNames.SupplierOrderId"]').val()
+                loadSupplierOrderDetails();
+            });
 
-		$("#search-button").click(function () {
-			 loadSupplierOrders($searchForm);
-		});
+            $("#search-button").click(function () {
+                loadSupplierOrders($searchForm);
+            });
 
-		$("#clear-button").click(function () {
-			 $searchForm.get(0).reset();
+            $("#clear-button").click(function () {
+                $searchForm.get(0).reset();
 
-			loadSupplierOrders($searchForm);
-		});
+                loadSupplierOrders($searchForm);
+            });
 
-		$("#clear-signature-button").click(function () {
-			signaturePad.clear();
-		});
+            $("#clear-signature-button").click(function () {
+                signaturePad.clear();
+            });
 
-		$("#save-signature-button").click(function () {
-			const $form = $(this).closest("form");
-			const $formData = new FormData($form.get(0));
-			const $formElement = $form.get(0);
-			$formData.set("@Constants.Id", $supplierOrderId);
+            $("#save-signature-button").click(function () {
+                const $btn = $(this);
+                $btn.startLoading();
 
-			// Xuất ra Base64 (JPG)
-			const dataUrl = signaturePad.toDataURL("image/jpg");
+                const $form = $(this).closest("form");
+                const $formData = new FormData($form.get(0));
+                const $formElement = $form.get(0);
+                $formData.set("@Constants.Id", $supplierOrderId);
 
-			// Thêm base64 image vào form data để map vào model
-			$formData.append("@Constants.Base64Image", dataUrl);
+                // Xuất ra Base64 (JPG)
+                const dataUrl = signaturePad.toDataURL("image/jpg");
 
-			callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", $formData)
-				.then(data => {
-					loadSupplierOrders($searchForm);
-					loadSupplierOrderDetails();
+                // Thêm base64 image vào form data để map vào model
+                $formData.append("@Constants.Base64Image", dataUrl);
 
-					if (data && Array.isArray(data)) {
-						showInvalid(data, $formElement);
-					}
-				})
-				.catch(err => {
-					showMessage("@Localizer[Messages.ErrorCallAPI]");
-				});
-		});
-	});
+                callApi("@Url.Action(Constants.Signature, TableName.SupplierOrder)", "POST", $formData)
+                    .then(data => {
+                        loadSupplierOrders($searchForm);
+                        loadSupplierOrderDetails();
 
-	function loadSupplierOrders($form, pageIndex) {
-		$(".loader").fadeIn(350);
+                        if (data && Array.isArray(data)) {
+                            showInvalid(data, $formElement);
+                        }
+                    })
+                    .catch(err => {
+                        showMessage("@Localizer[Messages.ErrorCallAPI]");
+                    })
+                    .finally(() => {
+                        $btn.stopLoading();
+                    });
+            });
+        });
 
-		const $formData = new FormData($form.get(0));
+        function loadSupplierOrders($form, pageIndex) {
+            $(".loader").fadeIn(350);
 
-		const filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
+            const $formData = new FormData($form.get(0));
 
-		const $isDelete = $("#is-delete").is(":checked");
-		filter.append("@Constants.IsDelete", $isDelete);
+            const filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
 
-		// Xóa các key không cần thiết (__Invariant)
-		for (const [key, value] of $formData.entries()) {
-			if (key !== "__Invariant") {
-				filter.append(key, value);
-			}
-		}
+            const $isDelete = $("#is-delete").is(":checked");
+            filter.append("@Constants.IsDelete", $isDelete);
 
-		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrder)", "POST", filter, "#@TableName.SupplierOrder-table")
-			.then(data => {
-				// Load lại table thì gán lại "" để khi bám nút thêm không lỗi
-				$supplierOrderId = "";
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
+            // Xóa các key không cần thiết (__Invariant)
+            for (const [key, value] of $formData.entries()) {
+                if (key !== "__Invariant") {
+                    filter.append(key, value);
+                }
+            }
 
-	function loadSupplierOrderDetails(pageIndex) {
-		// Khỏi tạo filter và gán giá trị
-		let filter = new FormData();
-		filter.append("@Constants.PageIndex", pageIndex);
-		filter.append("@SupplierOrderModel.AttributeNames.SupplierOrderId", $supplierOrderId);
+            callApi("@Url.Action(Constants.GetList, TableName.SupplierOrder)", "POST", filter, "#@TableName.SupplierOrder-table")
+                .then(data => {
+                    // Load lại table thì gán lại "" để khi bám nút thêm không lỗi
+                    $supplierOrderId = "";
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
 
-		$(".loader").fadeIn(350);
+        function loadSupplierOrderDetails(pageIndex) {
+            // Khỏi tạo filter và gán giá trị
+            let filter = new FormData();
+            filter.append("@Constants.PageIndex", pageIndex);
+            filter.append("@SupplierOrderModel.AttributeNames.SupplierOrderId", $supplierOrderId);
 
-		callApi("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", "POST", filter, "#@TableName.SupplierOrderDetail-table")
-			.then(data => {
+            $(".loader").fadeIn(350);
 
-			})
-			.catch(err => {
-				showMessage("@Localizer[Messages.ErrorCallAPI]");
-			});
-	}
+            callApi("@Url.Action(Constants.GetList, TableName.SupplierOrderDetail)", "POST", filter, "#@TableName.SupplierOrderDetail-table")
+                .then(data => {
 
-	function signaturePadInit(modalSelector, canvasSelector) {
-		// Tạo đối tượng SignaturePad
-		const canvas = document.querySelector(canvasSelector);
-		const signaturePad = new SignaturePad(canvas, {
-			backgroundColor: "rgb(255,255,255)",
-			penColor: "rgb(0, 0, 0)"
-		});
+                })
+                .catch(err => {
+                    showMessage("@Localizer[Messages.ErrorCallAPI]");
+                });
+        }
 
-		// Hàm resizeCanvas -> đảm bảo chữ ký luôn rõ nét
-		function resizeCanvas() {
-			const ratio = Math.max(window.devicePixelRatio || 1, 1);
-			const rect = canvas.getBoundingClientRect();
-			canvas.width = rect.width * ratio;
-			canvas.height = rect.height * ratio;
-			canvas.getContext("2d").scale(ratio, ratio);
-			signaturePad.clear();
-		}
+        function signaturePadInit(modalSelector, canvasSelector) {
+            // Tạo đối tượng SignaturePad
+            const canvas = document.querySelector(canvasSelector);
+            const signaturePad = new SignaturePad(canvas, {
+                backgroundColor: "rgb(255,255,255)",
+                penColor: "rgb(0, 0, 0)"
+            });
 
-		// Resize khi modal mở ra
-		$(modalSelector).on("shown.bs.modal", function () {
-			resizeCanvas();
-		});
+            // Hàm resizeCanvas -> đảm bảo chữ ký luôn rõ nét
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * ratio;
+                canvas.height = rect.height * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                signaturePad.clear();
+            }
 
-		// Resize khi thay đổi kích thước màn hình
-		$(window).on("resize", function () {
-			resizeCanvas();
-		});
+            // Resize khi modal mở ra
+            $(modalSelector).on("shown.bs.modal", function () {
+                resizeCanvas();
+            });
 
-		resizeCanvas();
+            // Resize khi thay đổi kích thước màn hình
+            $(window).on("resize", function () {
+                resizeCanvas();
+            });
 
-		return signaturePad;
-	}
-</script>
+            resizeCanvas();
+
+            return signaturePad;
+        }
+    </script>
+}
